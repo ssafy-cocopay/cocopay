@@ -28,7 +28,7 @@ public class UserController {
         return ResponseEntity.ok("회원가입 완료");
     }
 
-    //사용자 조회 - uuid
+    //사용자 조회
     @GetMapping
     public ResponseEntity findUser(@RequestBody UserFindDto userFindDto) {
         User user = userService.findUser(userFindDto.getUuid(), userFindDto.getTel());
@@ -36,5 +36,13 @@ public class UserController {
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         return ResponseEntity.ok(userResponseDto);
+    }
+
+    //사용자 탈퇴
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity deleteUser(@PathVariable("uuid") Integer uuid) {
+        userService.deleteUser(uuid);
+
+        return ResponseEntity.ok("회원 탈퇴 완료");
     }
 }
