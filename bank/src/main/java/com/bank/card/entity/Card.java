@@ -1,6 +1,6 @@
-package com.bank.card.domain;
+package com.bank.card.entity;
 
-import com.bank.bank.domain.Bank;
+import com.bank.bank.entity.Bank;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,7 +20,7 @@ public class Card {
 
     @Column(name = "performance")
     private Integer performance;
-    
+
     @Column(name = "type")
     private String type;
 

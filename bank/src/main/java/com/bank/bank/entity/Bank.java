@@ -1,4 +1,4 @@
-package com.bank.bank.domain;
+package com.bank.bank.entity;
 
 import jakarta.persistence.*;
 
