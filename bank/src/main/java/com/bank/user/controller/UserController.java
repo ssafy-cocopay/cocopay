@@ -1,7 +1,9 @@
 package com.bank.user.controller;
 
+import com.bank.user.dto.UserFindDto;
 import com.bank.user.dto.UserRegistDto;
 import com.bank.user.dto.UserResponseDto;
+import com.bank.user.entity.User;
 import com.bank.user.mapper.UserMapper;
 import com.bank.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +28,12 @@ public class UserController {
         return ResponseEntity.ok("회원가입 완료");
     }
 
-    //사용자 조회
-    @GetMapping("/{uuid}")
-    public ResponseEntity findUser(@PathVariable("uuid") int uuid) {
-        UserResponseDto userResponseDto = userMapper.userToUserResponseDto(userService.findUser(uuid));
+    //사용자 조회 - uuid
+    @GetMapping
+    public ResponseEntity findUser(@RequestBody UserFindDto userFindDto) {
+        User user = userService.findUser(userFindDto.getUuid(), userFindDto.getTel());
+
+        UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         return ResponseEntity.ok(userResponseDto);
     }
