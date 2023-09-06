@@ -22,7 +22,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return Optional.ofNullable(jpaQueryFactory
                 .selectFrom(user)
                 .where(uuidEq(uuid),
-                        telEq(tel))
+                        telEq(tel),
+                        user.withdrawDate.isNull())
                 .fetchOne());
     }
 

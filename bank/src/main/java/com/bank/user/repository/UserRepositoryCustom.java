@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface UserRepositoryCustom {
 
-    public Optional<User> findUser(Integer uuid, String tel);
+    Optional<User> findUser(Integer uuid, String tel);
 }
