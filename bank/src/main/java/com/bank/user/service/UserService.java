@@ -27,8 +27,8 @@ public class UserService {
 
 
     //사용자 조회 - uuid로
-    public User findUser(int uuid) {
-        Optional<User> findUser = userRepository.findById(uuid);
+    public User findUser(Integer uuid, String tel) {
+        Optional<User> findUser = userRepository.findUser(uuid,tel);
 
         //조회 결과 유효한지 판단 후 return
         return findUser
