@@ -28,6 +28,6 @@ public class UserCard {
     @Column(name = "user_performance")
     private Integer userPerformance;
 
-    @Column(name = "is_perfromanced")
+    @Column(name = "is_performanced")
     private Boolean isPerformanced;
 }
