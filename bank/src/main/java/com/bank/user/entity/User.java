@@ -27,7 +27,7 @@ public class User {
     @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(length = 13, nullable = false)
+    @Column(length = 13, nullable = false, unique = true)
     private String tel;
 
     @CreatedDate
@@ -36,5 +36,3 @@ public class User {
 
     private LocalDateTime withdrawDate;
 }
-
-
