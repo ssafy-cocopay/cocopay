@@ -1,15 +1,17 @@
 package com.bank.card.repository.usercard;
 
-
-import com.bank.card.dto.UserCardResponseDto;
 import com.bank.card.entity.UserCard;
-import com.querydsl.core.types.Projections;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.expression.spel.ast.Projection;
+
 
 import java.util.List;
 import java.util.Optional;
+
+
+import static com.bank.card.entity.QUserCard.userCard;
+
 
 
 @RequiredArgsConstructor
@@ -19,10 +21,11 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
 
     @Override
     public List<UserCard> findUserCardByUUID(Integer uuid) {
-//        return jpaQueryFactory
-//                .select(new QUserCardResponseDto(user))
-//                .from(userCard)
-//                .where(userCard.account.user.uuid.eq(uuid)).fetch();
-        return null;
+        return jpaQueryFactory
+                .selectFrom(userCard)
+                .where(userCard.account.user.uuid.eq(uuid)).fetch();
+
+//        .join(userCard.account, account).fetchJoin()
+//                .join(account.user, user).fetchJoin()
     }
 }
