@@ -5,14 +5,16 @@ import com.bank.card.repository.usercard.UserCardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserCardService {
+
     private final UserCardRepository userCardRepository;
 
-    public UserCard getUserCardList(Integer uuid)
-    {
-        //Optional<UserCard> result = userCardRepository.findByUserId();
-        return null;
+    public List<UserCard> getUserCardList(Integer uuid) {
+        return userCardRepository.findUserCardByUUID(uuid);
     }
 }
