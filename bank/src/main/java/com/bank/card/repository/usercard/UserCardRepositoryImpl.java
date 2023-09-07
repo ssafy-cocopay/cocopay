@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+import static com.bank.card.entity.QUserCard.userCard;
+
 @RequiredArgsConstructor
 public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
 
@@ -13,7 +15,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
 
     @Override
     public Optional<UserCard> findUserCardByUUID(Integer uuid) {
-        //return Optional.ofNullable(jpaQueryFactory.select(userCard).from(userCard).where(userCard.));
-        return null;
+        return Optional.ofNullable(jpaQueryFactory.select(userCard).from(userCard).where(userCard.));
+        //return null;
     }
 }
