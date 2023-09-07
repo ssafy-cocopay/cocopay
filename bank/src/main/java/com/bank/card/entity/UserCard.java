@@ -2,9 +2,16 @@ package com.bank.card.entity;
 
 import com.bank.account.entity.Account;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user_card")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserCard {
 
     @Id @GeneratedValue

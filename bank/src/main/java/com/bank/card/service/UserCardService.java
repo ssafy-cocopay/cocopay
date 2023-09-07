@@ -14,6 +14,11 @@ public class UserCardService {
 
     private final UserCardRepository userCardRepository;
 
+    public void save(UserCard userCard)
+    {
+        userCardRepository.save(userCard);
+    }
+
     public List<UserCard> getUserCardList(Integer uuid) {
         return userCardRepository.findUserCardByUUID(uuid);
     }
