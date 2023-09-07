@@ -1,9 +1,11 @@
 package com.bank.bank.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "bank")
+@Data
 public class Bank {
 
     @Id @GeneratedValue
