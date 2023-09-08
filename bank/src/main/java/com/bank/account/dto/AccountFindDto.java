@@ -13,4 +13,7 @@ public class AccountFindDto {
 
     //은행 id
     private Integer bankId;
+
+    //계좌번호
+    private String accountNum;
 }
