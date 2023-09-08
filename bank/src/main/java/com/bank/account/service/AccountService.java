@@ -38,16 +38,40 @@ public class AccountService {
     }
 
     //계좌 조회
-    public List<Account> findAccount(Integer id, Integer uuid, Integer bankId){
-        List<Account> findAccount = accountRepository.findAccount(id, uuid, bankId);
+    public List<Account> findAccount(Integer id, Integer uuid, Integer bankId, String accountNum){
+        List<Account> findAccount = accountRepository.findAccount(id, uuid, bankId,accountNum);
 
         return findAccount;
     }
 
+    //계좌 삭제
     public void deleteAccount(int id) {
-        List<Account> findAccount = findAccount(id,null,null);
+        List<Account> findAccount = findAccount(id,null,null,null);
         Account account = findAccount.get(0);
         account.setWithdrawDate(LocalDateTime.now());
+
+        accountRepository.save(account);
+    }
+
+    //출금(돈 나감)
+    public void minus(String accountNum, int price){
+        List<Account> findAccount = findAccount(null,null,null,accountNum);
+        Account account = findAccount.get(0);
+        if (account.getBalance()<price){
+            throw new IllegalArgumentException("잔액이 부족합니다.");
+        }
+        Integer result = account.getBalance()-price;
+        account.setBalance(result);
+
+        accountRepository.save(account);
+    }
+
+    //입금(돈 들어옴)
+    public void plus(String accountNum, int price){
+        List<Account> findAccount = findAccount(null,null,null, accountNum);
+        Account account = findAccount.get(0);
+        Integer result = account.getBalance()+price;
+        account.setBalance(result);
 
         accountRepository.save(account);
     }
