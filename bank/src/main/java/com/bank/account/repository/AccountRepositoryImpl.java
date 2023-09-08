@@ -16,20 +16,26 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     //카드 조회
+    //계좌id만 들어오면 id로 검색
     //사용자uuid만 들어오면 uuid로 검색
     //은행id만 들어오면 bankId로 검색
+    //계좌번호만 들어오면 accountNum으로 검색
     @Override
-    public List<Account> findAccount(Integer id, Integer uuid, Integer bankId) {
+    public List<Account> findAccount(Integer id, Integer uuid, Integer bankId, String accountNum) {
         return (List<Account>) jpaQueryFactory
                 .selectFrom(account)
                 .where(idEq(id),
                         uuidEq(uuid),
                         bankIdEq(bankId),
+                        accountNumEq(accountNum),
                         account.withdrawDate.isNull()).fetch();
     }
 
     private static BooleanExpression idEq(Integer id) {
         return id != null ? account.id.eq(id) : null;
+    }
+    private static BooleanExpression accountNumEq(String accountNum) {
+        return accountNum != null ? account.num.eq(accountNum) : null;
     }
     private static BooleanExpression uuidEq(Integer uuid) {
         return uuid != null ? account.user.uuid.eq(uuid) : null;
