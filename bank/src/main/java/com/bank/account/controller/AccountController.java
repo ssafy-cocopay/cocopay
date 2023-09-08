@@ -35,28 +35,13 @@ public class AccountController {
     }
 
     //계좌 조회
-//    @GetMapping
-//    public ResponseEntity findAccount(@RequestBody AccountFindDto accountFindDto) {
-//        Account account = accountService.findAccount(accountFindDto.getId(), accountFindDto.getUuid(), accountFindDto.getBankId());
+    @GetMapping
+    public ResponseEntity<List<AccountResponseDto>> findAccount(@RequestBody AccountFindDto accountFindDto) {
+        List<Account> all = accountService.findAccount(accountFindDto.getId(), accountFindDto.getUuid(), accountFindDto.getBankId(), accountFindDto.getAccountNum());
 //        System.out.println(accountFindDto.getId());
 //        System.out.println(accountFindDto.getUuid());
 //        System.out.println(accountFindDto.getBankId());
-//        AccountResponseDto accountResponseDto = accountMapper.accountToAccountResponseDto(account);
-//
-//        return ResponseEntity.ok(accountResponseDto);
-//    }
-    @GetMapping
-    public ResponseEntity<List<AccountResponseDto>> findAccount(@RequestBody AccountFindDto accountFindDto) {
-        List<Account> all = accountService.findAccount(accountFindDto.getId(), accountFindDto.getUuid(), accountFindDto.getBankId());
-        System.out.println(accountFindDto.getId());
-        System.out.println(accountFindDto.getUuid());
-        System.out.println(accountFindDto.getBankId());
-        List<AccountResponseDto> responseList = new ArrayList<>();
-        for (Account account : all) {
-            AccountResponseDto accountResponseDto = accountMapper.accountToAccountResponseDto(account);
-
-            responseList.add(accountResponseDto);
-        }
+        List<AccountResponseDto> responseList = accountMapper.TodtoList(all);
 
         return ResponseEntity.ok(responseList);
     }
