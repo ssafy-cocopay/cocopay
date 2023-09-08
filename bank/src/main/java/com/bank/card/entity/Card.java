@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "card")
 @Data
@@ -30,10 +33,14 @@ public class Card {
     @Column(name = "type")
     private String type;
 
+
     /*
     type 부분 string으로 해놓을까? Enum으로 해야되지 않을까?
     DB도 varchar가 아니라 tiny int로 해야 될거같기도 함
      */
+
+    @OneToMany(mappedBy = "card")
+    private List<UserCard> userCards = new ArrayList<>();
 
 
 }

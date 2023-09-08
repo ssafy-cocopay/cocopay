@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.bank.card.entity.QUserCard.userCard;
 
@@ -18,7 +17,6 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-
     public List<UserCard> findUserCardByUUID(Integer uuid) {
         return jpaQueryFactory
                 .selectFrom(userCard)
