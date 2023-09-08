@@ -6,12 +6,16 @@ import com.bank.account.entity.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
     @Mapping(source = "account_num", target = "num")
     Account accountRegistDtoToAccount(AccountRegistDto accountRegistDto);
 
-    @Mapping(source = "user.name",target = "user_name")
-    @Mapping(source = "bank.bankName",target = "bank_name")
+    @Mapping(source = "user.name",target = "userName")
+    @Mapping(source = "bank.bankName",target = "bankName")
     AccountResponseDto accountToAccountResponseDto(Account account);
+
+    List<AccountResponseDto> TodtoList(List<Account> accounts);
 }
