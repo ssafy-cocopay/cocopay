@@ -24,8 +24,8 @@ public class AccountResponseDto {
     private LocalDateTime withdrawDate;
 
 //    private User user;
-    private String user_name;
+    private String userName;
 
 //    private Bank bank;
-    private String bank_name;
+    private String bankName;
 }
