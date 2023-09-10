@@ -36,6 +36,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
 
     //추후 리팩토링
     //가독성 너무 개판임
+    //이게..최선인가..?
     @Override
     public Optional<PerformanceResponseDto> findUserCardPerformance(Integer cardUuid) {
         BooleanExpression isPerformance = new CaseBuilder()
@@ -44,7 +45,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                 .otherwise(false);
 
 
-        return Optional.ofNullable((PerformanceResponseDto) jpaQueryFactory
+        return Optional.ofNullable(jpaQueryFactory
                 .select(Projections.bean(PerformanceResponseDto.class,
                                 userCard.id.as("cardUuid"),
                                 userCard.card.performance,
