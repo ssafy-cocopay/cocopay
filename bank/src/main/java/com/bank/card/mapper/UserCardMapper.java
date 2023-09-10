@@ -20,4 +20,6 @@ public interface UserCardMapper {
     @Mapping(source = "account.id", target = "accountId")
     @Mapping(source = "card.id", target = "cardId")
     UserCardResponseDto userCardToResponseDto(UserCard userCard);
+
+    List<UserCardResponseDto> toDtoList(List<UserCard> userCardResponseDtos);
 }

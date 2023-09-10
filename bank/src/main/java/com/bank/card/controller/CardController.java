@@ -34,12 +34,14 @@ public class CardController {
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getUserCardList(@PathVariable Integer uuid) {
         List<UserCard> result = userCardService.getUserCardList(uuid);
-        List<UserCardResponseDto> res = new ArrayList<>();
 
-        for (UserCard uc : result) {
-            res.add(userCardMapper.userCardToResponseDto(uc));
-        }
+        return ResponseEntity.ok(userCardMapper.toDtoList(result));
+    }
 
-        return ResponseEntity.ok(res);
+
+    //사용자 카드 실적 조회
+    @GetMapping("/performance/{card_uuid}")
+    ResponseEntity<?> getUserCardPerformanceList(@PathVariable("card_uuid") Integer cardUuid) {
+        return ResponseEntity.ok(userCardService.getUserCardPerformance(cardUuid));
     }
 }
