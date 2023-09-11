@@ -4,6 +4,7 @@ import com.bank.bank.entity.Bank;
 import com.bank.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,13 +15,14 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "account")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
-    private String id;
+    private Integer id;
 
     @Column(name = "account_num", length = 19, nullable = false)
     private String num;
@@ -30,6 +32,7 @@ public class Account {
     private int balance;
 
     @CreatedDate
+    @Builder.Default
     @Column(nullable = false)
     private LocalDateTime registedDate = LocalDateTime.now();
 
