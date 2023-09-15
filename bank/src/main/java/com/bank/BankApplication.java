@@ -18,5 +18,5 @@ public class BankApplication {
     JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
         return new JPAQueryFactory(entityManager);
     }
-//pushevent test
+//pushevent testa
 }
