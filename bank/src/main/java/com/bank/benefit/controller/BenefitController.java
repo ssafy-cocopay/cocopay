@@ -22,7 +22,7 @@ public class BenefitController {
     //혜택 조회
     @GetMapping("/{card_uuid}")
     ResponseEntity<?> getBenefit(@PathVariable ("card_uuid") Integer cardUuid) {
-        List<Benefit> result = benefitService.getBenefit(cardUuid);
+        List<Benefit> result = benefitService.getBenefitList(cardUuid);
 
         return ResponseEntity.ok(benefitMapper.toDtoList(result));
     }

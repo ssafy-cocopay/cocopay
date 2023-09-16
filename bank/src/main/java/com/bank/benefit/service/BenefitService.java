@@ -12,7 +12,7 @@ import java.util.List;
 public class BenefitService {
     private final BenefitRepository benefitRepository;
 
-    public List<Benefit> getBenefit(Integer cardUuid) {
-        return benefitRepository.getBenefitByCardUid(cardUuid);
+    public List<Benefit> getBenefitList(Integer cardUuid) {
+        return benefitRepository.getBenefitListByCardUid(cardUuid);
     }
 }

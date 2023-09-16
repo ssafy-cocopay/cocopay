@@ -16,7 +16,7 @@ import static com.bank.card.entity.QUserCard.userCard;
 public class BenefitRepositoryImpl implements BenefitRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
     @Override
-    public List<Benefit> getBenefitByCardUid(Integer cardUuid) {
+    public List<Benefit> getBenefitListByCardUid(Integer cardUuid) {
         return jpaQueryFactory
                 .selectFrom(benefit)
                 .leftJoin(benefit.card, card)

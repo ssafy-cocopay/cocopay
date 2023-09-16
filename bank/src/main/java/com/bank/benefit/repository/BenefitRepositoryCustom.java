@@ -5,5 +5,5 @@ import com.bank.benefit.entity.Benefit;
 import java.util.List;
 
 public interface BenefitRepositoryCustom {
-    List<Benefit> getBenefitByCardUid(Integer cardUuid);
+    List<Benefit> getBenefitListByCardUid(Integer cardUuid);
 }
