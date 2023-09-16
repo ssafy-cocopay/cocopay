@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +26,26 @@ public class Card {
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    @Column(name = "card_name")
+    @Column(name = "card_name", length = 20, nullable = false)
     private String cardName;
 
     @Column(name = "performance")
     private Integer performance;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CardType type;
+
+    @Column(name="card_default_image", nullable = false)
+    private String cardDefaultImage;
+
+    @Column(name = "visa", nullable = false)
+    @ColumnDefault("0")
+    private Boolean visa;
+
+    @Column(name = "master", nullable = false)
+    @ColumnDefault("0")
+    private Boolean master;
 
 
     /*
