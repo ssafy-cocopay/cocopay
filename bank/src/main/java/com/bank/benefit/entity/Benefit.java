@@ -32,4 +32,7 @@ public class Benefit {
 
     @Column(name = "benefit_limit")
     private Integer limit;
+
+    @Column(name = "type")
+    private Boolean type;
 }
