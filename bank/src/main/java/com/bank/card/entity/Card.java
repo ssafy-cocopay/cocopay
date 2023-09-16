@@ -16,7 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Card {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id")
     private Integer id;
 

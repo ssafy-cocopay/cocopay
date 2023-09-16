@@ -14,7 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserCard {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_uuid")
     private Integer id;
 

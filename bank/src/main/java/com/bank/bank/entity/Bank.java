@@ -8,7 +8,8 @@ import lombok.Data;
 @Data
 public class Bank {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bank_id")
     private Integer id;
 

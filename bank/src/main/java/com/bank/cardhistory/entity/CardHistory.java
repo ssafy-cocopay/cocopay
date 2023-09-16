@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CardHistory {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_history_id")
     private Integer id;
 

@@ -7,13 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "benefit")
+@Table(name = "card_benefit")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Benefit {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "benefit_id")
     private Integer id;
 
@@ -30,6 +30,6 @@ public class Benefit {
     @Column(name = "discount")
     private Integer discount;
 
-    @Column(name = "limit")
+    @Column(name = "benefit_limit")
     private Integer limit;
 }
