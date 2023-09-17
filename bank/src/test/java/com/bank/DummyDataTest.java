@@ -5,6 +5,8 @@ import com.bank.account.repository.AccountRepository;
 import com.bank.bank.entity.Bank;
 import com.bank.bank.entity.QBank;
 import com.bank.bank.repository.BankRepository;
+import com.bank.benefit.entity.Benefit;
+import com.bank.benefit.repository.BenefitRepository;
 import com.bank.card.entity.Card;
 import com.bank.card.repository.card.CardRepository;
 import com.bank.user.entity.User;
@@ -55,6 +57,9 @@ public class DummyDataTest {
 
     @Autowired
     CardRepository cardRepository;
+
+    @Autowired
+    BenefitRepository benefitRepository;
 
     enum CardList{
         Deep_Dream_체크("신한","Deep Dream 체크카드","체크"),
@@ -169,5 +174,25 @@ public class DummyDataTest {
                 .selectFrom(bank)
                 .where(bank.bankName.eq(bankName))
                 .fetchOne();
+    }
+
+    //혜택은 다 달라서 별 수 없이 수작업 진행해야할 듯
+    @Test
+    public void benefitDummy() {
+        //변수들로 수정
+        int cardId = 3;
+
+        Card card = cardRepository.findById(cardId).get();
+
+        Benefit benefit = new Benefit();
+
+        benefit.setCard(card);
+        benefit.setCategory("스타벅스");
+        benefit.setStoreName("카페/디저트");
+        benefit.setDiscount(10);
+        benefit.setLimit(3000);
+        benefit.setType(true);
+
+        benefitRepository.save(benefit);
     }
 }
