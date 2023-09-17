@@ -3,12 +3,17 @@ package com.bank;
 import com.bank.account.entity.Account;
 import com.bank.account.repository.AccountRepository;
 import com.bank.bank.entity.Bank;
+import com.bank.bank.entity.QBank;
 import com.bank.bank.repository.BankRepository;
+import com.bank.card.entity.Card;
+import com.bank.card.repository.card.CardRepository;
 import com.bank.user.entity.User;
 import com.bank.user.repository.UserRepository;
 import com.bank.user.service.UserService;
 import com.github.javafaker.Faker;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,19 +21,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import static com.bank.bank.entity.QBank.*;
 
 
 @SpringBootTest
 public class DummyDataTest {
 
-    JPAQueryFactory jpaQueryFactory;
-
     Faker faker = new Faker(new Locale("ko"));
 
     //휴대폰 번호 정규식
     String pattern = "^01[0-9]-\\d{4}-\\d{4}$";
+
+    JPAQueryFactory jpaQueryFactory;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Autowired
     UserService userService;
@@ -41,6 +52,29 @@ public class DummyDataTest {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    CardRepository cardRepository;
+
+    enum CardList{
+        Deep_Dream_체크("신한","Deep Dream 체크카드","체크"),
+        Nori2_체크("국민","노리2 체크카드","체크");
+
+        final String bankName;
+        final String cardName;
+        final String type;
+
+        CardList(String bankName, String cardName, String type) {
+            this.bankName = bankName;
+            this.cardName = cardName;
+            this.type = type;
+        }
+    }
+
+    @BeforeEach
+    public void init() {
+        jpaQueryFactory = new JPAQueryFactory(entityManager);
+    }
 
     @Test
     public void userDummy() {
@@ -106,5 +140,34 @@ public class DummyDataTest {
             }
         }
         accountRepository.saveAll(accountList);
+    }
+
+    //상단 enum에 있는 카드들 전부 db 저장
+    @Test
+    public void cardDummy() {
+        CardList[] enumList = CardList.values();
+
+        List<Card> newCardList = Arrays.stream(enumList)
+                .map(enumCard -> {
+                    Bank findBank = findBankByBankName(enumCard.bankName);
+
+                    Card card = new Card();
+                    card.setBank(findBank);
+                    card.setCardName(enumCard.cardName);
+                    card.setType(enumCard.type);
+                    card.setPerformance(1); //뭔지 몰라서 일단 1
+
+                    return card;
+                }).toList();
+
+        cardRepository.saveAll(newCardList);
+
+    }
+
+    public Bank findBankByBankName(String bankName) {
+        return jpaQueryFactory
+                .selectFrom(bank)
+                .where(bank.bankName.eq(bankName))
+                .fetchOne();
     }
 }
