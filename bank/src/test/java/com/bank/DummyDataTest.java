@@ -3,12 +3,15 @@ package com.bank;
 import com.bank.account.entity.Account;
 import com.bank.account.repository.AccountRepository;
 import com.bank.bank.entity.Bank;
-import com.bank.bank.entity.QBank;
 import com.bank.bank.repository.BankRepository;
 import com.bank.benefit.entity.Benefit;
+import com.bank.benefit.entity.UserCardBenefit;
 import com.bank.benefit.repository.BenefitRepository;
+import com.bank.benefit.repository.UserCardBenefitRepository;
 import com.bank.card.entity.Card;
+import com.bank.card.entity.UserCard;
 import com.bank.card.repository.card.CardRepository;
+import com.bank.card.repository.usercard.UserCardRepository;
 import com.bank.user.entity.User;
 import com.bank.user.repository.UserRepository;
 import com.bank.user.service.UserService;
@@ -19,7 +22,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,7 +29,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import static com.bank.bank.entity.QBank.*;
+import static com.bank.bank.entity.QBank.bank;
+import static com.bank.benefit.entity.QBenefit.benefit;
+import static com.bank.card.entity.QCard.card;
 
 
 @SpringBootTest
@@ -61,9 +65,15 @@ public class DummyDataTest {
     @Autowired
     BenefitRepository benefitRepository;
 
-    enum CardList{
-        Deep_Dream_체크("신한","Deep Dream 체크카드","체크"),
-        Nori2_체크("국민","노리2 체크카드","체크");
+    @Autowired
+    UserCardRepository userCardRepository;
+
+    @Autowired
+    UserCardBenefitRepository userCardBenefitRepository;
+
+    enum CardList {
+        Deep_Dream_체크("신한", "Deep Dream 체크카드", "체크"),
+        Nori2_체크("국민", "노리2 체크카드", "체크");
 
         final String bankName;
         final String cardName;
@@ -180,19 +190,86 @@ public class DummyDataTest {
     @Test
     public void benefitDummy() {
         //변수들로 수정
-        int cardId = 3;
+        int cardId = 2;
 
         Card card = cardRepository.findById(cardId).get();
 
         Benefit benefit = new Benefit();
 
         benefit.setCard(card);
-        benefit.setCategory("스타벅스");
-        benefit.setStoreName("카페/디저트");
+        benefit.setCategory("편의점");
+        benefit.setStoreName("CU");
         benefit.setDiscount(10);
         benefit.setLimit(3000);
         benefit.setType(true);
 
         benefitRepository.save(benefit);
     }
+
+    //사용자 카드 더미
+    //사용자 카드 더미가 생성되는 순간 사용자별 혜택도 같이 생성이 되어야 함
+    @Test
+    public void userCardAndUserBenefitDummy() {
+        //유저가 가지고 있는 해당 은행의 계좌와 카드를 랜덤으로 가지고 옴
+        //데이터가 꼬임을 방지하기 위함
+        int uuid = 1;
+        String bankName = "신한";
+
+        Bank findBank = findBankByBankName(bankName);
+
+        List<Account> accountList = findAccountList(uuid, findBank.getId());
+
+        List<Card> cardList = findCardList(findBank);
+
+        int accountIdx = faker.number().numberBetween(0, accountList.size() - 1);
+        int cardIdx = faker.number().numberBetween(0, cardList.size() - 1);
+        Card card = cardList.get(cardIdx);
+
+        UserCard userCard = getUserCard(accountList, accountIdx, card);
+
+        //사용자 카드 저장
+        UserCard saved = userCardRepository.save(userCard);
+
+        List<Benefit> benefitList = findBenefitList(card);
+
+        List<UserCardBenefit> userCardBenefitList = benefitList.stream()
+                .map(benefit -> {
+                    UserCardBenefit userCardBenefit = new UserCardBenefit();
+                    userCardBenefit.setUserCard(saved);
+                    userCardBenefit.setBenefit(benefit);
+                    userCardBenefit.setDiscountAmount(benefit.getLimit());
+                    return userCardBenefit;
+                }).toList();
+
+        userCardBenefitRepository.saveAll(userCardBenefitList);
+    }
+
+    private UserCard getUserCard(List<Account> accountList, int accountIdx, Card card) {
+        UserCard userCard = new UserCard();
+        userCard.setCard(card);
+        userCard.setAccount(accountList.get(accountIdx));
+        userCard.setSerialNumber(faker.numerify("####-####-####-####"));
+        userCard.setUserPerformance(1); //entity 수정에 따라 삭제 가능성 있음
+        userCard.setIsPerformanced(true);
+        return userCard;
+    }
+
+    public List<Benefit> findBenefitList(Card card) {
+        return jpaQueryFactory
+                .selectFrom(benefit)
+                .where(benefit.card.id.eq(card.getId()))
+                .fetch();
+    }
+
+    public List<Account> findAccountList(int uuid, int bankId) {
+        return accountRepository.findAccount(null, uuid, bankId, null);
+    }
+
+    public List<Card> findCardList(Bank bank) {
+        return jpaQueryFactory
+                .selectFrom(card)
+                .where(card.bank.eq(bank))
+                .fetch();
+    }
+
 }
