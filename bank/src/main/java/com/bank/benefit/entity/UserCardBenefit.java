@@ -1,6 +1,6 @@
 package com.bank.benefit.entity;
 
-import com.bank.card.entity.Card;
+import com.bank.card.entity.UserCard;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class UserCardBenefit {
 
     @ManyToOne
     @JoinColumn(name = "card_uuid")
-    private Card card;
+    private UserCard userCard;
 
     @ManyToOne
     @JoinColumn(name = "benefit_id")

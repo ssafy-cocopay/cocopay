@@ -15,7 +15,7 @@ public class UserCardBenefitRepositoryImpl implements UserCardBenefitRepositoryC
         return jpaQueryFactory
                 .select(userCardBenefit.discountAmount)
                 .from(userCardBenefit)
-                .where(userCardBenefit.card.id.eq(cardUuid),
+                .where(userCardBenefit.userCard.id.eq(cardUuid),
                         userCardBenefit.benefit.id.eq(benefitId))
                 .fetchOne();
     }
