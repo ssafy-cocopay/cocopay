@@ -1,8 +1,11 @@
 package com.bank;
 
+import com.bank.account.entity.Account;
+import com.bank.account.repository.AccountRepository;
 import com.bank.bank.entity.Bank;
 import com.bank.bank.repository.BankRepository;
 import com.bank.user.entity.User;
+import com.bank.user.repository.UserRepository;
 import com.bank.user.service.UserService;
 import com.github.javafaker.Faker;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +35,12 @@ public class DummyDataTest {
 
     @Autowired
     BankRepository bankRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     @Test
     public void userDummy() {
@@ -72,5 +82,29 @@ public class DummyDataTest {
                 }).toList();
 
         bankRepository.saveAll(bankList);
+    }
+
+    @Test
+    public void accountDummy() {
+        List<User> userList = userRepository.findAll();
+
+        List<Bank> bankList = bankRepository.findAll();
+
+        List<Account> accountList = new ArrayList<>();
+
+        for (int i = 0; i < userList.size(); i++) {
+            for (int j = 0; j < bankList.size(); j++) {
+                Account account = Account.builder()
+                        .user(userList.get(i))
+                        .bank(bankList.get(j))
+                        .num(faker.bothify("#######-##-######"))
+                        .registedDate(LocalDateTime.now())
+                        .balance(faker.number().numberBetween(0, 100000000))
+                        .build();
+
+                accountList.add(account);
+            }
+        }
+        accountRepository.saveAll(accountList);
     }
 }
