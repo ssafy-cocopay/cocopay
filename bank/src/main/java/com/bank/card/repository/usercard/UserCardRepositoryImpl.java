@@ -39,22 +39,23 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
     //이게..최선인가..?
     @Override
     public Optional<PerformanceResponseDto> findUserCardPerformance(Integer cardUuid) {
-        BooleanExpression isPerformance = new CaseBuilder()
-                .when(userCard.userPerformance.goe(userCard.card.performance))
-                .then(true)
-                .otherwise(false);
-
-
-        return Optional.ofNullable(jpaQueryFactory
-                .select(Projections.bean(PerformanceResponseDto.class,
-                                userCard.id.as("cardUuid"),
-                                userCard.card.performance,
-                                userCard.userPerformance,
-                                isPerformance.as("isPerformance"),
-                                userCard.isPerformanced.as("isPerformancePre")))
-                .from(userCard)
-                .leftJoin(userCard).fetchJoin()
-                .where(userCard.id.eq(cardUuid))
-                .fetchOne());
+//        BooleanExpression isPerformance = new CaseBuilder()
+//                .when(userCard.userPerformance.goe(userCard.card.performance))
+//                .then(true)
+//                .otherwise(false);
+//
+//
+//        return Optional.ofNullable(jpaQueryFactory
+//                .select(Projections.bean(PerformanceResponseDto.class,
+//                                userCard.id.as("cardUuid"),
+//                                userCard.card.performance,
+//                                userCard.userPerformance,
+//                                isPerformance.as("isPerformance"),
+//                                userCard.isPerformanced.as("isPerformancePre")))
+//                .from(userCard)
+//                .leftJoin(userCard).fetchJoin()
+//                .where(userCard.id.eq(cardUuid))
+//                .fetchOne());
+        return null;
     }
 }

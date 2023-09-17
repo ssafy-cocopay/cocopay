@@ -39,12 +39,10 @@ public class Card {
     @Column(name="card_default_image", nullable = false)
     private String cardDefaultImage;
 
-    @Column(name = "visa", nullable = false)
-    @ColumnDefault("0")
+    @Column(name = "visa", columnDefinition = "TINYINT", nullable = false)
     private Boolean visa;
 
-    @Column(name = "master", nullable = false)
-    @ColumnDefault("0")
+    @Column(name = "master", columnDefinition = "TINYINT", nullable = false)
     private Boolean master;
 
 
