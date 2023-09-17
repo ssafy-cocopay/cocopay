@@ -92,11 +92,11 @@ public class DummyDataTest {
 
         List<Account> accountList = new ArrayList<>();
 
-        for (int i = 0; i < userList.size(); i++) {
-            for (int j = 0; j < bankList.size(); j++) {
+        for (User user : userList) {
+            for (Bank bank : bankList) {
                 Account account = Account.builder()
-                        .user(userList.get(i))
-                        .bank(bankList.get(j))
+                        .user(user)
+                        .bank(bank)
                         .num(faker.bothify("#######-##-######"))
                         .registedDate(LocalDateTime.now())
                         .balance(faker.number().numberBetween(0, 100000000))
