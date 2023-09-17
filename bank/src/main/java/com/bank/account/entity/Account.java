@@ -35,7 +35,6 @@ public class Account {
     @Builder.Default
     @Column(nullable = false)
     private LocalDateTime registedDate = LocalDateTime.now();
-
     private LocalDateTime withdrawDate;
 
     //======= 매핑 =======

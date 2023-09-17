@@ -27,15 +27,24 @@ public class UserCard {
     @JoinColumn(name = "card_id")
     private Card card;
 
-    @Column(name = "card_nickname")
+    @Column(name = "password", length = 75, nullable = false)
+    private String password;
+
+    @Column(name = "card_nickname", length = 20)
     private String cardNickName;
 
-    @Column(name = "serial_number")
+    @Column(name = "serial_number", length = 20, nullable = false)
     private String serialNumber;
-
-    @Column(name = "user_performance")
-    private Integer userPerformance;
 
     @Column(name = "is_performanced")
     private Boolean isPerformanced;
+
+    @Column(name = "valid_date", length = 5, nullable = false)
+    private String validDate;
+
+    @Column(name = "cvc", length = 3, nullable = false)
+    private String cvc;
+
+    @Column(name = "performance_level")
+    private Integer performanceLevel;
 }
