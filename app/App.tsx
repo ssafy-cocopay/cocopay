@@ -5,7 +5,8 @@
  * @format
  */
 
-import React from 'react';
+import React, {MutableRefObject} from 'react';
+import {useRef} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -17,6 +18,11 @@ import {
   View,
 } from 'react-native';
 import WebView from 'react-native-webview';
+import {
+  WebViewErrorEvent,
+  WebViewNavigationEvent,
+  WebViewMessageEvent,
+} from 'react-native-webview/lib/WebViewTypes';
 
 import {
   Colors,
@@ -56,15 +62,44 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
+  //웹뷰와 RN과의 소통은 아래의 ref 값을 이용하여 이루어진다
+  let webviewRef = useRef<WebView>(null);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  // WebView 로딩 완료시
+  const handleEndLoading = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
+    console.log('handleEndLoading', e);
+    // RN에서 웹뷰로 정보 보내는 메소드
+    webviewRef.current?.postMessage('로딩완료시 webview로 정보 보내는 곳');
   };
 
-  return <WebView source={{uri: 'http://localhost:3000'}} />;
-}
+  enum Event{
+    BIO_AUTH
+  }
+  /** 웹뷰에서 rn으로 값을 보낼때 거치는 함수 */
+  const handleOnMessage = async (e: WebViewMessageEvent) => {
+    // data에 웹뷰에서 보낸 값이 들어옵니다.
+    console.log(e.nativeEvent.data);
+    switch(Event.convert(e.nativeEvent.data)){
+      case Event.BIO_AUTH:
+        await handleBioAuth();
+    }
+  };
+
+  const handleBioAuth = () => {
+    //complete
+    webviewRef.current?.postMessage('SUCCESS')
+  }
+
+  return (
+    <WebView
+      onLoadEnd={handleEndLoading}
+      onMessage={handleOnMessage}
+      webviewRef={webviewRef}
+      source={{uri: 'http://localhost:3000'}}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   sectionContainer: {
