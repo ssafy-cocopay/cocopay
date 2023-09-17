@@ -1,5 +1,7 @@
 package com.bank.cardhistory.dto;
 
+import com.bank.cardhistory.entity.DiscountType;
+import com.bank.cardhistory.entity.TransactionType;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +18,7 @@ public class HistoryResponseDto {
     private Long amount;
     private String store;
     private Long accountBalance;
+    private Integer discountAmount;
+    private DiscountType discountType;
+    private TransactionType transactionType;
 }
