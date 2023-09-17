@@ -27,12 +27,23 @@ public class CardHistory {
     @Column(name = "transaction_date")
     private LocalDateTime transactionDate = LocalDateTime.now();
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private Long amount;
 
-    @Column(name = "store")
+    @Column(name = "store", nullable = false, length = 20)
     private String store;
 
-    @Column(name = "account_balance")
+    @Column(name = "account_balance", nullable = false)
     private Long accountBalance;
+
+    @Column(name = "discount_amount")
+    private Integer discountAmount;
+
+    @Column(name = "discount_type")
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
+
+    @Column(name = "transaction_type")
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
 }
