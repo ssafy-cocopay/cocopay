@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "card_benefit")
+@Table(name = "benefit",indexes = @Index(name = "idx__store_name", columnList = "category"))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,4 +32,7 @@ public class Benefit {
 
     @Column(name = "benefit_limit")
     private Integer limit;
+
+    @Column(name = "type")
+    private Boolean type;
 }
