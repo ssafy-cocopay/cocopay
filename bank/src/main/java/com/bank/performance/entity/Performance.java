@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Performance {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "performance_id")
     private Integer id;
 
@@ -26,7 +26,7 @@ public class Performance {
 
     // mapping
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "card_id")
     private Card card;
 
 }
