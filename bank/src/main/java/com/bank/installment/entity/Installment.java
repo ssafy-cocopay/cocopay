@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Installment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     //결제 예정 금액
@@ -38,6 +38,6 @@ public class Installment {
 
     //mapping
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "card_uuid")
     private UserCard userCard;
 }
