@@ -7,8 +7,8 @@ public class AccountRegistDto {
 
     private int uuid;
 
-    private int bank_id;
+    private int bankId;
 
-    private String account_num;
+    private String accountNum;
 
 }

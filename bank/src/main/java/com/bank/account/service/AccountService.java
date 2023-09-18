@@ -25,14 +25,14 @@ public class AccountService {
     //계좌 등록
     public void resistAccount(AccountRegistDto accountRegistDto){
         Integer uuid = accountRegistDto.getUuid();
-        Integer bankId = accountRegistDto.getBank_id();
+        Integer bankId = accountRegistDto.getBankId();
         Optional<User> user = userRepository.findUser(uuid,null);
         Optional<Bank> bank = bankRepository.findById(bankId);
 
         Account account = Account.builder()
                 .user(user.get())
                 .bank(bank.get())
-                .num(accountRegistDto.getAccount_num())
+                .num(accountRegistDto.getAccountNum())
                 .build();
         accountRepository.save(account);
     }
