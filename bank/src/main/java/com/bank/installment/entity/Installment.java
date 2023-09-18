@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "installment")
@@ -40,7 +40,7 @@ public class Installment {
 
     //이용날짜
     @Column(name = "transaction_date")
-    private LocalDateTime transactionDate;
+    private LocalDate transactionDate;
 
     //mapping
     @ManyToOne
