@@ -6,8 +6,11 @@ import com.bank.performance.dto.PerformanceRegistDto;
 import com.bank.performance.entity.Performance;
 import com.bank.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +32,11 @@ public class PerformanceService {
                 .levelPrice(performanceRegistDto.getLevelPrice())
                 .build();
         performanceRepository.save(performance);
+    }
+
+    //실적 조회
+    public List<Performance> findPerformance(Integer id, Integer cardId, Integer level){
+        List<Performance> findPerformance = performanceRepository.findPerformance(id,cardId,level);
+        return findPerformance;
     }
 }
