@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import static com.bank.benefit.entity.QBenefit.benefit;
+import static com.bank.benefit.entity.QUserCardBenefit.userCardBenefit;
 import static com.bank.card.entity.QCard.card;
 import static com.bank.card.entity.QUserCard.userCard;
 
@@ -33,17 +34,19 @@ public class BenefitRepositoryImpl implements BenefitRepositoryCustom {
 
         return jpaQueryFactory
                 .select(Projections.fields(BenefitInfoResponseDto.class,
+                        benefit.id.as("benefitId"),
+                        userCard.id.as("cardUuid"),
                         benefit.category,
                         benefit.storeName,
                         benefit.limit,
                         benefit.discount,
-                        userCard.id.as("cardUuid")))
-                .from(benefit)
-                .join(benefit.card, card)
-                .join(card.userCards, userCard)
-                .on(userCard.id.in(cardUuidList),
-                        benefit.category.eq(category),
+                        userCardBenefit.discountAmount))
+                .from(userCardBenefit)
+                .join(userCardBenefit.benefit, benefit)
+                .on(benefit.category.eq(category),
                         benefit.storeName.eq(storeName))
+                .join(userCardBenefit.userCard, userCard)
+                .on(userCard.id.in(cardUuidList))
                 .fetch();
     }
 }
