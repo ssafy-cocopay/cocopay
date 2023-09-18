@@ -1,7 +1,7 @@
-package com.bank.cardhistory.repository;
+package com.bank.card_history.repository;
 
-import com.bank.cardhistory.dto.HistoryFindDto;
-import com.bank.cardhistory.entity.CardHistory;
+import com.bank.card_history.dto.HistoryFindDto;
+import com.bank.card_history.entity.CardHistory;
 
 import java.util.List;
 

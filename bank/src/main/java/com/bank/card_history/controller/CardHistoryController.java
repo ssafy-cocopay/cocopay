@@ -1,9 +1,9 @@
-package com.bank.cardhistory.controller;
+package com.bank.card_history.controller;
 
-import com.bank.cardhistory.dto.HistoryFindDto;
-import com.bank.cardhistory.entity.CardHistory;
-import com.bank.cardhistory.mapper.CardHistoryMapper;
-import com.bank.cardhistory.service.CardHistoryService;
+import com.bank.card_history.dto.HistoryFindDto;
+import com.bank.card_history.entity.CardHistory;
+import com.bank.card_history.mapper.CardHistoryMapper;
+import com.bank.card_history.service.CardHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
