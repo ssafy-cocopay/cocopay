@@ -1,7 +1,7 @@
-package com.bank.cardhistory.mapper;
+package com.bank.card_history.mapper;
 
-import com.bank.cardhistory.dto.HistoryResponseDto;
-import com.bank.cardhistory.entity.CardHistory;
+import com.bank.card_history.dto.HistoryResponseDto;
+import com.bank.card_history.entity.CardHistory;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

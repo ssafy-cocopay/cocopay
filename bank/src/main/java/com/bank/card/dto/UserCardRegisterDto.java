@@ -6,9 +6,13 @@ import lombok.Getter;
 public class UserCardRegisterDto {
     private Integer accountId;
     private Integer cardId;
-    private String cardNickName;
+    private String password;
+    private String cardNickname;
     private String serialNumber;
-    private Integer userPerformance;
     private Boolean isPerformanced;
+    private String validDate;
+    private String cvc;
+    private Integer performanceLevel;
+
 
 }
