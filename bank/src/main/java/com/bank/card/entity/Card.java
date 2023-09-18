@@ -29,9 +29,6 @@ public class Card {
     @Column(name = "card_name", length = 20, nullable = false)
     private String cardName;
 
-    @Column(name = "performance")
-    private Integer performance;
-
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private CardType type;
