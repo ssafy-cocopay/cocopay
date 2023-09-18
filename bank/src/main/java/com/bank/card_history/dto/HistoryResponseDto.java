@@ -1,7 +1,7 @@
-package com.bank.cardhistory.dto;
+package com.bank.card_history.dto;
 
-import com.bank.cardhistory.entity.DiscountType;
-import com.bank.cardhistory.entity.TransactionType;
+import com.bank.card_history.entity.DiscountType;
+import com.bank.card_history.entity.TransactionType;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

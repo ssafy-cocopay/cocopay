@@ -31,7 +31,7 @@ public class UserCard {
     private String password;
 
     @Column(name = "card_nickname", length = 20)
-    private String cardNickName;
+    private String cardNickname;
 
     @Column(name = "serial_number", length = 20, nullable = false)
     private String serialNumber;

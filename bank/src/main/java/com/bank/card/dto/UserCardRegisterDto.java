@@ -7,7 +7,7 @@ public class UserCardRegisterDto {
     private Integer accountId;
     private Integer cardId;
     private String password;
-    private String cardNickName;
+    private String cardNickname;
     private String serialNumber;
     private Boolean isPerformanced;
     private String validDate;

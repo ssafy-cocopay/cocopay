@@ -1,8 +1,8 @@
-package com.bank.cardhistory.service;
+package com.bank.card_history.service;
 
-import com.bank.cardhistory.dto.HistoryFindDto;
-import com.bank.cardhistory.entity.CardHistory;
-import com.bank.cardhistory.repository.CardHistoryRepository;
+import com.bank.card_history.dto.HistoryFindDto;
+import com.bank.card_history.entity.CardHistory;
+import com.bank.card_history.repository.CardHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

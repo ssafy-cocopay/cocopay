@@ -1,4 +1,4 @@
-package com.bank.cardhistory.entity;
+package com.bank.card_history.entity;
 
 import com.bank.card.entity.UserCard;
 import jakarta.persistence.*;
