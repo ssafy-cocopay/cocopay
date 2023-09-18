@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
-    @Mapping(source = "account_num", target = "num")
+    @Mapping(source = "accountNum", target = "num")
     Account accountRegistDtoToAccount(AccountRegistDto accountRegistDto);
 
     @Mapping(source = "user.name",target = "userName")
