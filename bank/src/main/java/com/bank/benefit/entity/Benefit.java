@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "benefit",indexes = @Index(name = "idx__card_id__category__store_name", columnList = "card_id, category, store_name"))
+@Table(name = "benefit",indexes = @Index(name = "idx__store_name", columnList = "category"))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
