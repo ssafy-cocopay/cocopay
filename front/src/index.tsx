@@ -5,8 +5,8 @@ import AppRouter from "./router/routes";
 import { RecoilRoot } from "recoil";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "../styles/GlobalStyle";
-import theme from "../styles/theme";
+import GlobalStyle from "@/styles/GlobalStyle";
+import theme from "@/styles/theme";
 import "@/styles/font.css";
 import reportWebVitals from "./reportWebVitals";
 
