@@ -10,7 +10,8 @@ import com.bank.installment.repository.InstallmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +22,7 @@ public class InstallmentService {
     private final UserCardRepository userCardRepository;
 
 
-    //혜택 등록
+    //할부 등록
     public void resistInstallment(InstallmentRegistDto installmentRegistDto){
         Integer cardUuid = installmentRegistDto.getCardUuid();
         Optional<UserCard> userCard = userCardRepository.findById(cardUuid);
@@ -35,9 +36,16 @@ public class InstallmentService {
                 .total(total)
                 .period(period)
                 .paymentCount(0)
-                .transactionDate(LocalDateTime.now())
+                .transactionDate(LocalDate.now())
                 .build();
 
         installmentRepository.save(installment);
+    }
+
+    //할부 조회
+    public List<Installment> findInstallment(Integer id, Integer cardId){
+        List<Installment> findInstallment = installmentRepository.findInstallment(id, cardId);
+
+        return findInstallment;
     }
 }
