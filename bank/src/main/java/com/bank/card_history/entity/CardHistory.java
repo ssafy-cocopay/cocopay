@@ -27,6 +27,7 @@ public class CardHistory {
     private UserCard userCard;
 
     @Column(name = "transaction_date")
+    @Builder.Default
     private LocalDateTime transactionDate = LocalDateTime.now();
 
     @Column(name = "amount", nullable = false)

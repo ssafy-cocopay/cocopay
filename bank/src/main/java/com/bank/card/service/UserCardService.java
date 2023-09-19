@@ -49,7 +49,16 @@ public class UserCardService {
         if (benefitId == null) {
             UserCard userCard = userCardRepository.findById(paymentRequestDto.getCardUuid()).get();
             accountService.minus(userCard.getAccount().getNum(), paymentRequestDto.getRequestPrice());
-            //cardHistoryRepository.save();
+
+            CardHistory cardHistory = CardHistory.builder()
+                    .userCard(userCard)
+                    .amount(Long.valueOf(paymentRequestDto.getRequestPrice()))
+                    .store(paymentRequestDto.getStoreName())
+                    .accountBalance(0L)
+                    .discountType(paymentRequestDto.getDiscountType())
+                    .transactionType(paymentRequestDto.getTransactionType())
+                    .build();
+            cardHistoryRepository.save(cardHistory);
         }
         //benefit id가 조회가 됐다면 할인 적용해서 결제 프로세스 진행하면 됨.
         else paymentWithBenefitId(paymentRequestDto);
