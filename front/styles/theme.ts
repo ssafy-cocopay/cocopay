@@ -19,16 +19,11 @@ const fontSize = {
   heading1: '36px',
   subtitle1: '28px',
   subtitle2: '24px',
-  subtitle3: '24px',
   body1: '20px',
-  body2: '20px',
-  body3: '20px',
-  body4: '18px',
-  body5: '18px',
+  body2: '18px',
   small1: '16px',
   small2: '14px',
   small3: '12px',
-  small4: '12px'
 } as const;
 
 // 나중에 값 조정 예정
