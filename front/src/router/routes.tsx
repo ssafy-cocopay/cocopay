@@ -1,5 +1,5 @@
-import App from "@/App";
 import React from "react";
+import App from "@/App";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import SignupPage from "@/pages/SignupPage/SignupPage"
