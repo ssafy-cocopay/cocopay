@@ -39,9 +39,6 @@ public class DummyDataTest {
 
     Faker faker = new Faker(new Locale("ko"));
 
-    //휴대폰 번호 정규식
-    String pattern = "^01[0-9]-\\d{4}-\\d{4}$";
-
     JPAQueryFactory jpaQueryFactory;
 
     @Autowired
@@ -169,8 +166,6 @@ public class DummyDataTest {
                     Card card = new Card();
                     card.setBank(findBank);
                     card.setCardName(enumCard.cardName);
-                    card.setType(enumCard.type);
-                    card.setPerformance(1); //뭔지 몰라서 일단 1
 
                     return card;
                 }).toList();
@@ -249,7 +244,6 @@ public class DummyDataTest {
         userCard.setCard(card);
         userCard.setAccount(accountList.get(accountIdx));
         userCard.setSerialNumber(faker.numerify("####-####-####-####"));
-        userCard.setUserPerformance(1); //entity 수정에 따라 삭제 가능성 있음
         userCard.setIsPerformanced(true);
         return userCard;
     }
