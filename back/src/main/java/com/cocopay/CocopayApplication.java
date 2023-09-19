@@ -1,4 +1,4 @@
-package com.bank;
+package com.cocopay;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -8,15 +8,15 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-public class BankApplication {
+public class CocopayApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BankApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(CocopayApplication.class, args);
+	}
 
-    @Bean
-    JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
-        return new JPAQueryFactory(entityManager);
-    }
-//pushevent testa
+	@Bean
+	JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
+		return new JPAQueryFactory(entityManager);
+	}
+
 }
