@@ -1,5 +1,6 @@
 package com.cocopay.usercard.entity;
 
+import com.cocopay.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class UserCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     //코코페이인지
     @Column(name = "coco_type")
     private boolean cocoType;
@@ -54,7 +55,7 @@ public class UserCard {
     @Column(name = "master")
     private boolean master;
 
-    @Column(name = "card_nickname",length = 50)
+    @Column(name = "card_nickname", length = 50)
     private String cardNickname;
 
     @Column(name = "card_default_image")
@@ -62,4 +63,8 @@ public class UserCard {
 
     @Column(name = "card_custom_image")
     private String cardCustomImage;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
