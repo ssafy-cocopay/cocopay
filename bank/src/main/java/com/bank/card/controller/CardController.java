@@ -1,5 +1,6 @@
 package com.bank.card.controller;
 
+import com.bank.card.dto.PaymentRequestDto;
 import com.bank.card.dto.UserCardRegisterDto;
 import com.bank.card.dto.UserCardResponseDto;
 import com.bank.card.entity.UserCard;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/bank/card")
 public class CardController {
@@ -43,5 +44,19 @@ public class CardController {
     @GetMapping("/performance/{card_uuid}")
     ResponseEntity<?> getUserCardPerformanceList(@PathVariable("card_uuid") Integer cardUuid) {
         return ResponseEntity.ok(userCardService.getUserCardPerformance(cardUuid));
+    }
+
+    @PostMapping("/pay")
+    ResponseEntity<?> payment(@RequestBody PaymentRequestDto paymentRequestDto) {
+        //입력값 검증
+
+        //서비스 호출
+        if (paymentRequestDto.getBenefitId() == null) {
+            userCardService.paymentWithoutBenefitId(paymentRequestDto);
+        } else {
+            userCardService.paymentWithBenefitId(paymentRequestDto);
+        }
+
+        return null;
     }
 }
