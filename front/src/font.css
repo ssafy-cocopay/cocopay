@@ -1,0 +1,27 @@
+@font-face {
+    font-family: "Pretendard";
+    /* src: local("Happiness-Sans"), url(${Font_R}) format('truetype');  */
+    src : url('/src/assets/fonts/Pretendard-Bold.ttf');
+    font-weight: bold;
+  }
+  
+@font-face {
+  font-family: "Pretendard";
+  /* src: local("Happiness-Sans"), url(${Font_B}) format('truetype'); */
+  src : url('/src/assets/fonts/Pretendard-Medium.ttf');
+  font-weight: medium;
+}
+  
+@font-face {
+  font-family: "Pretendard";
+  /* src: local("Happiness-Sans"), url(${Font_B}) format('truetype'); */
+  src : url('/src/assets/fonts/Pretendard-Regular.ttf');
+  font-weight: regular;
+}
+  
+@font-face {
+  font-family: "Pretendard";
+  /* src: local("Happiness-Sans"), url(${Font_B}) format('truetype'); */
+  src : url('/src/assets/fonts/Pretendard-Light.ttf');
+  font-weight: light;
+}
