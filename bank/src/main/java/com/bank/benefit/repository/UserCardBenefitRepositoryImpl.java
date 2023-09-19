@@ -1,5 +1,6 @@
 package com.bank.benefit.repository;
 
+import com.bank.benefit.entity.UserCardBenefit;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,15 @@ public class UserCardBenefitRepositoryImpl implements UserCardBenefitRepositoryC
         return jpaQueryFactory
                 .select(userCardBenefit.discountAmount)
                 .from(userCardBenefit)
+                .where(userCardBenefit.userCard.id.eq(cardUuid),
+                        userCardBenefit.benefit.id.eq(benefitId))
+                .fetchOne();
+    }
+
+    @Override
+    public UserCardBenefit findUserCardBenefit(Integer cardUuid, Integer benefitId) {
+        return jpaQueryFactory
+                .selectFrom(userCardBenefit)
                 .where(userCardBenefit.userCard.id.eq(cardUuid),
                         userCardBenefit.benefit.id.eq(benefitId))
                 .fetchOne();
