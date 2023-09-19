@@ -1,8 +1,6 @@
-import { Suspense } from "react";
-import React from "react";
-import "./App.css";
+import { Suspense } from "react"; // 추후에 비동기 처리하면서 시간 지연시 활용할 예정
 
-function WebApp() {
+function App() {
   return (
     <div
       style={{
@@ -18,4 +16,4 @@ function WebApp() {
   );
 }
 
-export default WebApp;
+export default App;
