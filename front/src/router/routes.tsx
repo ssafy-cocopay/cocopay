@@ -1,3 +1,4 @@
+import React from "react";
 import App from "@/App";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { PATH } from "@/constants/path";
