@@ -13,4 +13,3 @@ public interface RedisMapper {
 
     List<PerformanceKey> toPerformanceKeyList(List<PerformanceResponseDto> dtoList);
 }
-경
