@@ -1,10 +1,16 @@
+import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react"
 
 const PayOfflinePage = () => {
     return (
-        <div>
+        <Background
+        colormode="gradient"
+        style={{
+            minHeight: "100vh"
+        }}
+        >
             오프라인 결제완료 페이지
-        </div>
+        </Background>
     )
 }
 
