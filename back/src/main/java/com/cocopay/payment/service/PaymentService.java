@@ -6,12 +6,12 @@ import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
+import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -30,29 +30,30 @@ public class PaymentService {
 
     //온라인 결제
     public List<CardOfferResponseDto> onlinePay(int userId, int cardId, int totalPrice) {
-//        List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(userId);
-        List<Integer> findUserCardList = new ArrayList<>();
-        findUserCardList.add(1);
-        findUserCardList.add(2);
-        findUserCardList.add(3);
-//        findUserCardList.add(4);
+        List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(userId);
 
         log.info("findUserCardList : {}", findUserCardList);
 
         //api call
         //사용자 카드 실적 정보 조회
+        log.info("사용자 카드 실적 정보 조회 진행");
         PerformanceResponseListDto performanceInfoList = apiCallService.userCardPerformanceInfo(findUserCardList);
+        log.info("사용자 카드 실적 정보 조회 끝");
+
         performanceKeyService.performanceKeySave(performanceInfoList.getPerformanceList());
 
         List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList);
 
-        return performanceFirst(responseDtoList);
-//        //실적 우선, 할인 우선 분기
-//        if (findUser(userId).isRecommendType()) {
-//
-//        } else {
-//            performanceFirst();
-//        }
+
+        //실적 우선, 할인 우선 분기
+        if (findUser(userId).isRecommendType()) {
+            log.info("할인 우선으로 계산 진행");
+            //할인 로직 필요
+            return null;
+        } else {
+            log.info("실적 우선으로 계산 진행");
+            return performanceFirst(responseDtoList);
+        }
     }
 
     //실적 우선
@@ -60,22 +61,11 @@ public class PaymentService {
         //정렬 조건
         // 1. 실적 단계가 가장 낮은 거
         // 2. 같을 경우 사용자 우선 순위 낮은 거
-        //스트림 sorted 람다 처리 또는 comparator 사용
 
-        List<CardOfferResponseDto> list = responseDtoList.stream()
-                .sorted(Comparator.comparing(CardOfferResponseDto::getLevel))
+        return responseDtoList.stream()
+                .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
+                        .thenComparing(CardOfferResponseDto::getCardOrder))
                 .toList();
-
-        for (CardOfferResponseDto cardOfferResponseDto : list) {
-            log.info("CardOfferResponseDto : {}", cardOfferResponseDto);
-        }
-
-        return list;
-//        responseDtoList.stream()
-//                .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
-//                        .thenComparing(CardOfferResponseDto::getCardOrder));
-
-
     }
 
     //할인 우선
