@@ -45,7 +45,7 @@ public class PerformanceRepositoryImpl implements PerformanceRepositoryCustom {
                 .from(performance)
                 .join(card).on(card.id.eq(performance.card.id))
                 .join(userCard).on(userCard.card.id.eq(card.id))
-                .where(userCard.id.in(cardUuidList), performance.level.between(userCard.performanceLevel, userCard.performanceLevel))
+                .where(userCard.id.in(cardUuidList), performance.level.between(userCard.performanceLevel, userCard.performanceLevel.add(1)))
                 .groupBy(userCard.id, userCard.performanceLevel).fetch();
 
         return result;
