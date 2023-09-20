@@ -5,18 +5,19 @@ import Button from "@/components/atoms/Button/Button";
 
 function App() {
   return (
-    <Background colorMode="blue">
-      <div
-        style={{
-          paddingTop: "100px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "200px",
-        }}
-      >
-        <div>COCOPAY</div>
-        <Button size="medium" $width="200px">
+    <Background
+    colormode="blue"
+      style={{
+        minHeight: "100vh",
+        paddingTop: "100px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "200px",
+      }}
+    >
+      <div className="App">COCOPAY</div>
+      <Button size="medium" $width="200px">
           로그인
         </Button>
         <Button option="activated" size="medium" $width="200px">
@@ -28,8 +29,7 @@ function App() {
         <Button option="danger" size="medium" $width="200px">
           활성화
         </Button>
-        <button style={{ width: "100px", marginTop: "30px" }}>인증하기</button>
-      </div>
+      <button style={{ width: "100px", marginTop: "30px" }}>인증하기</button>
     </Background>
   );
 }
