@@ -1,23 +1,24 @@
 import React from "react";
 
-// 자식 컴포넌트의 DOM 요소에 접근하려 할 때 forwardRef 사용
-// 부모 컴포넌트로부터 전달받은 ref를 자식 컴포넌트의 DOM 요소에 연결
+// // 자식 컴포넌트의 DOM 요소에 접근하려 할 때 forwardRef 사용
+// // 부모 컴포넌트로부터 전달받은 ref를 자식 컴포넌트의 DOM 요소에 연결
 import { forwardRef } from "react";
 import type { ForwardedRef } from "react";
 
-//  *는 해당 모듈에서 export된 모든 것들
+// //  *는 해당 모듈에서 export된 모든 것들
 import * as S from "./Button.styles";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   option?: "default" | "activated" | "deActivated" | "dashed" | "danger";
-  size?: "small" | "medium";
+  size?: "small" | "medium" | "large";
   $backgroundColor?: string;
   $borderColor?: string;
   $border?: string;
   $borderRadius?: string;
   $textAlign?: string; // 기본으로 center으로하면 상관없?
   $color?: string;
+  $width?: string;
 }
 
 const Button = (
@@ -28,6 +29,7 @@ const Button = (
     $borderColor,
     $border,
     $color,
+    $width,
     children,
     ...attributes
   }: ButtonProps,
@@ -35,20 +37,22 @@ const Button = (
 ) => {
   return (
     <>
-      {/* <S.Button
-      ref={ref}
-      option={option}
-      size={size}
-      $border={$border}
-      $backgroundColor={$backgroundColor}
-      $borderColor={$borderColor}
-      $color={$color}
-      {...attributes}
-    >
-      {children}
-    </S.Button> */}
+      <S.Button
+        ref={ref}
+        option={option}
+        size={size}
+        $border={$border}
+        $backgroundColor={$backgroundColor}
+        $borderColor={$borderColor}
+        $color={$color}
+        $width={$width}
+        {...attributes}
+      >
+        {children}
+      </S.Button>
     </>
   );
 };
 
 export default forwardRef(Button);
+// export {};
