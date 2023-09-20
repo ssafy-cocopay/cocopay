@@ -19,7 +19,8 @@ const PATH = {
   MYPAGE: "/mypage",
   MYPAGE_WITHDRAWAL: "/mypage/withdrawal",
   PAYONLINE: "/pay/online",
-  PAYONLINECOMPLETE: "/pay/online/complete"
+  PAYONLINECOMPLETE: "/pay/online/complete",
+  MAIN: "/mainpage",
 } as const;
 
 export { PATH };

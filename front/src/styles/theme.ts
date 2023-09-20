@@ -37,7 +37,7 @@ const shadow = {
 } as const;
 
 const gradient = {
-  gradient1: 'linear-gradient(180deg, #E8EBF2 0%, #FFF 100%))'
+  gradient1: 'linear-gradient(180deg, #E8EBF2 0%, #FFFFFF 100%)'
 };
 
 const theme: DefaultTheme = {

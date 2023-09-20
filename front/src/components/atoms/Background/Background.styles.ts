@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 interface BackgroundProps {
-  colorMode?: "gradient" | "blue";
+  colormode?: "gradient" | "blue";
 }
 
 const Background = styled.div<BackgroundProps>`
   background: ${(props) => {
-    switch (props.colorMode) {
+    switch (props.colormode) {
       case "gradient":
         return props.theme.gradient.gradient1;
       case "blue":
-        return props.theme.gradient.blue;
+        return props.theme.color.blue;
       default:
         return props.theme.color.white;
     }
