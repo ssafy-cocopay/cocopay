@@ -14,7 +14,7 @@ export interface TextProps {
   color?: typeof theme.color;
   //width 단위는 픽셀
   width?: number;
-  $fontWeight?: string;
+  fontWeight?: "bold" | "medium" | "regular" | "light";
 }
 
 const getSizeStyling = (size: Required<TextProps>["size"] = "heading1") => {
@@ -23,10 +23,10 @@ const getSizeStyling = (size: Required<TextProps>["size"] = "heading1") => {
       font-size: ${({ theme }) => theme.fontSize.heading1};
     `,
     subtitle1: css`
-      font-size: ${({ theme }) => theme.fontSize.subtitile1};
+      font-size: ${({ theme }) => theme.fontSize.subtitle1};
     `,
     subtitle2: css`
-      font-size: ${({ theme }) => theme.fontSize.subtitile2};
+      font-size: ${({ theme }) => theme.fontSize.subtitle2};
     `,
     body1: css`
       font-size: ${({ theme }) => theme.fontSize.body1};
@@ -47,10 +47,23 @@ const getSizeStyling = (size: Required<TextProps>["size"] = "heading1") => {
   return style[size];
 };
 
+const getFontWeightStyling = (weight?: TextProps["fontWeight"]) => {
+  switch (weight) {
+    case "bold":
+      return "bold";
+    case "medium":
+      return "500"; // 'medium'의 경우 CSS에서 표준 값은 500
+    case "light":
+      return "300"; // 'light'의 경우 CSS에서 표준 값은 300
+    default:
+      return "400";
+  }
+};
+
 const Text = styled.p<TextProps>`
   ${({ size = "heading1" }) => getSizeStyling(size)};
-  color: ${(props) => props.color || props.theme.color.black1};
-  font-weight: ${(props) => `${props.$fontWeight}`};
+  color: ${(props) => props.color ? props.theme.color[props.color] : props.theme.color.black1};
+  font-weight: ${(props) => getFontWeightStyling(props.fontWeight)};
 `;
 
 export { Text };
