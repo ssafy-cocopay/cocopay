@@ -8,11 +8,11 @@ import java.util.List;
 @Getter
 @Builder
 public class OnlinePayPostDto {
+    private List<OrderPostDto> orderPostDtoList;
+
     private int userId;
 
     private int cardId;
-
-    private List<OrderPostDto> orderPostDtoList;
 
     private int totalPrice;
 }
