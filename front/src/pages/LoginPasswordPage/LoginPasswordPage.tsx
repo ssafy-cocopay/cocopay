@@ -1,10 +1,16 @@
+import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react"
 
 const LoginPasswordPage = () => {
     return (
-        <div>
+        <Background
+        colormode="gradient"
+        style={{
+            minHeight: "100vh"
+        }}
+        >
             간편 비밀번호 로그인
-        </div>
+        </Background>
     )
 }
 

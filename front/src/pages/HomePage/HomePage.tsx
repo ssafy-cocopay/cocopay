@@ -1,10 +1,16 @@
+import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react"
 
 const HomePage = () => {
     return (
-        <div>
-            메인 페이지
-        </div>
+        <Background
+        colormode="gradient"
+        style={{
+            minHeight: "100vh"
+        }}
+        >
+            홈페이지
+        </Background>
     )
 }
 
