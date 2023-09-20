@@ -93,10 +93,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: PATH.HOME,
-    element: <HomePage />,
-  },
+  // {
+  //   path: PATH.HOME,
+  //   element: <HomePage />,
+  // },
   {
     path: PATH.PAYOFFLINE,
     element: <PayOfflinePage />,
