@@ -2,6 +2,7 @@ package com.cocopay.payment.controller;
 
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
+import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,8 @@ public class PaymentController {
                 onlinePayPostDto.getCardId(),
                 onlinePayPostDto.getTotalPrice());
 
-        return ResponseEntity.ok(responseDtoList);
+        OnlineResponse<?> onlineResponse = new OnlineResponse<>(responseDtoList,1000);
+
+        return ResponseEntity.ok(onlineResponse);
     }
 }
