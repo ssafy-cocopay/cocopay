@@ -42,7 +42,7 @@ public class PaymentService {
 
         performanceKeyService.performanceKeySave(performanceInfoList.getPerformanceList());
 
-        List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList);
+        List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList,postDto.getOrderPrice());
 
         //주문 정보 저장
         orderKeyService.orderKeySave(postDto);
@@ -65,8 +65,9 @@ public class PaymentService {
         // 2. 같을 경우 사용자 우선 순위 낮은 거
 
         return responseDtoList.stream()
-                .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
-                        .thenComparing(CardOfferResponseDto::getCardOrder))
+                .sorted(Comparator
+                        .comparing((CardOfferResponseDto dto) -> dto.getPerformance().getLevel()) // 1번 조건
+                        .thenComparing((CardOfferResponseDto dto) -> dto.getCard().getCardOrder())) // 2번 조건
                 .toList();
     }
 
