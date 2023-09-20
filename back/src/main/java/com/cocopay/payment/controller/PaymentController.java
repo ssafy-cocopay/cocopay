@@ -23,11 +23,8 @@ public class PaymentController {
 
     @PostMapping("/online")
     public ResponseEntity onlinePay(@RequestBody OnlinePayPostDto onlinePayPostDto) {
-        log.info("onlinePayPostDto : {}",onlinePayPostDto.getCardId());
 
-        List<CardOfferResponseDto> responseDtoList = paymentService.onlinePay(onlinePayPostDto.getUserId(),
-                onlinePayPostDto.getCardId(),
-                onlinePayPostDto.getTotalPrice());
+        List<CardOfferResponseDto> responseDtoList = paymentService.onlinePay(onlinePayPostDto);
 
         OnlineResponse<?> onlineResponse = new OnlineResponse<>(responseDtoList,1000);
 
