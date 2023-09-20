@@ -2,6 +2,8 @@ package com.bank.performance.controller;
 
 import com.bank.performance.dto.PerformanceFindDto;
 import com.bank.performance.dto.PerformanceRegistDto;
+import com.bank.performance.dto.PerformanceResponseListDto;
+import com.bank.performance.dto.UserCardPerformanceFindDto;
 import com.bank.performance.entity.Performance;
 import com.bank.performance.service.PerformanceService;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +31,12 @@ public class PerformanceController {
     public ResponseEntity<List<Performance>> findPerformance(@RequestBody PerformanceFindDto performanceFindDto){
         List<Performance> performanceList = performanceService.findPerformance(performanceFindDto.getId(),performanceFindDto.getCardId(),performanceFindDto.getLevel());
         return ResponseEntity.ok(performanceList);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity findallPerformance(@RequestBody UserCardPerformanceFindDto userCardPerformanceFindDto){
+        List<PerformanceResponseListDto> performanceResponseListDtoList = performanceService.findPerformanceList(userCardPerformanceFindDto.getCardUuidList());
+
+        return ResponseEntity.ok(performanceResponseListDtoList);
     }
 }
