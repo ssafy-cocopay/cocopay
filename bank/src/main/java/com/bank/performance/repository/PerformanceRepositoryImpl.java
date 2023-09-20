@@ -1,6 +1,6 @@
 package com.bank.performance.repository;
 
-import com.bank.performance.dto.PerformanceResponseListDto;
+import com.bank.performance.dto.PerformanceResponseDto;
 import com.bank.performance.entity.Performance;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -23,7 +23,7 @@ public class PerformanceRepositoryImpl implements PerformanceRepositoryCustom {
     //실적단계만 들어오면 level로 검색
 
     @Override
-    public List<Performance> findPerformance(Integer id, Integer cardId, Integer level){
+    public List<Performance> findPerformance(Integer id, Integer cardId, Integer level) {
         return (List<Performance>) jpaQueryFactory
                 .selectFrom(performance)
                 .where(idEq(id),
@@ -33,15 +33,15 @@ public class PerformanceRepositoryImpl implements PerformanceRepositoryCustom {
     }
 
     @Override
-    public List<PerformanceResponseListDto> findPerformanceByCardList(List<Integer> cardUuidList) {
-        List<PerformanceResponseListDto> result = jpaQueryFactory
-                .select(Projections.fields(PerformanceResponseListDto.class,
-                userCard.id.as("cardUuid"),
-                userCard.performanceLevel.as("level"),
-                performance.level.max().as("nextlevel"),
-                performance.levelPrice.max().as("price"),
-                userCard.totalPrice,
-                userCard.isPerformanced.as("pastPerformance")))
+    public List<PerformanceResponseDto> findPerformanceByCardList(List<Integer> cardUuidList) {
+        List<PerformanceResponseDto> result = jpaQueryFactory
+                .select(Projections.fields(PerformanceResponseDto.class,
+                        userCard.id.as("cardUuid"),
+                        userCard.performanceLevel.as("level"),
+                        performance.level.max().as("nextLevel"),
+                        performance.levelPrice.max().as("price"),
+                        userCard.totalPrice,
+                        userCard.isPerformanced.as("pastPerformance")))
                 .from(performance)
                 .join(card).on(card.id.eq(performance.card.id))
                 .join(userCard).on(userCard.card.id.eq(card.id))
@@ -50,6 +50,7 @@ public class PerformanceRepositoryImpl implements PerformanceRepositoryCustom {
 
         return result;
     }
+
     private static BooleanExpression idEq(Integer id) {
         return id != null ? performance.id.eq(id) : null;
     }
