@@ -1,9 +1,8 @@
-import { Suspense } from "react";
 import React from "react";
-import "./App.css";
-import { Background } from "./components/atoms/Background/Background.styles";
+import { Suspense } from "react"; // 추후에 비동기 처리하면서 시간 지연시 활용할 예정
+import { Background } from "@/components/atoms/Background/Background.styles";
 
-function WebApp() {
+function App() {
   return (
     <Background
     colormode="blue"
@@ -21,4 +20,4 @@ function WebApp() {
   );
 }
 
-export default WebApp;
+export default App;

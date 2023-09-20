@@ -19,5 +19,4 @@ const Background = styled.div<BackgroundProps>`
 
 export { Background };
 
-
 // 사용예시: <Background colorMode="gradient" /><Background />
