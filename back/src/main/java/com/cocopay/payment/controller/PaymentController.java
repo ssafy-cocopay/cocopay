@@ -26,7 +26,7 @@ public class PaymentController {
 
         List<CardOfferResponseDto> responseDtoList = paymentService.onlinePay(onlinePayPostDto);
 
-        OnlineResponse<?> onlineResponse = new OnlineResponse<>(responseDtoList,1000);
+        OnlineResponse<?> onlineResponse = new OnlineResponse<>(responseDtoList);
 
         return ResponseEntity.ok(onlineResponse);
     }
