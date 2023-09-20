@@ -18,7 +18,8 @@ public class UserCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    
+    //코코페이인지
     @Column(name = "coco_type")
     private boolean cocoType;
 
