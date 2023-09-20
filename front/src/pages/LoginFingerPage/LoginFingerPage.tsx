@@ -1,10 +1,16 @@
+import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react"
 
 const LoginFingerPage = () => {
     return (
-        <div>
+        <Background
+        colormode="gradient"
+        style={{
+            minHeight: "100vh"
+        }}
+        >
             지문 로그인
-        </div>
+        </Background>
     )
 }
 
