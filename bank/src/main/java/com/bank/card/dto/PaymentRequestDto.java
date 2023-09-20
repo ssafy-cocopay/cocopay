@@ -16,7 +16,7 @@ public class PaymentRequestDto {
     private Integer benefitId;
     private Integer requestPrice;
     private String category;
-    private String storeName;
+    private String store;
     private DiscountType discountType;
     private TransactionType transactionType;
 }
