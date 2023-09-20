@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Test {
+public class CardUuidListDto {
     private List<Integer> cardUuidList;
 }
