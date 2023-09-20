@@ -5,7 +5,7 @@ import com.cocopay.payment.dto.res.PerformanceResponseDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.redis.mapper.RedisMapper;
-import com.cocopay.redis.repository.PerformanceHashRepository;
+import com.cocopay.redis.repository.PerformanceKeyRepository;
 import com.cocopay.usercard.entity.UserCard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @Slf4j
 public class PerformanceKeyService {
 
-    private final PerformanceHashRepository performanceHashRepository;
+    private final PerformanceKeyRepository performanceKeyRepository;
 
     private final RedisMapper redisMapper;
 
@@ -31,12 +31,12 @@ public class PerformanceKeyService {
 
         List<PerformanceKey> performanceKeyList = redisMapper.toPerformanceKeyList(dtoList);
         log.info("redis에 저장할 개수 : {}", performanceKeyList.size());
-        performanceHashRepository.saveAll(performanceKeyList);
+        performanceKeyRepository.saveAll(performanceKeyList);
     }
 
     //사용자 카드 실적 정보 redis 조회
     public PerformanceKey findPerformanceKey(String cardId) {
-        Optional<PerformanceKey> findPerformance = performanceHashRepository.findById(cardId);
+        Optional<PerformanceKey> findPerformance = performanceKeyRepository.findById(cardId);
 
         return findPerformance
                 .orElseThrow(() -> new RuntimeException("해당 카드와 매칭되는 실적 정보 없음"));
@@ -53,7 +53,7 @@ public class PerformanceKeyService {
             PerformanceKey findPerformanceKey = findPerformanceKey(userCardId);
 
             //조회 후 삭제
-            performanceHashRepository.deleteById(userCardId);
+            performanceKeyRepository.deleteById(userCardId);
 
             CardOfferResponseDto responseDtoTest = paymentMapper.toResponseDto(findPerformanceKey, userCard);
             responseDtoList.add(responseDtoTest);
