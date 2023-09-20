@@ -2,16 +2,13 @@ package com.bank.card.controller;
 
 import com.bank.card.dto.PaymentRequestDto;
 import com.bank.card.dto.UserCardRegisterDto;
-import com.bank.card.dto.UserCardResponseDto;
 import com.bank.card.entity.UserCard;
 import com.bank.card.mapper.UserCardMapper;
 import com.bank.card.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
