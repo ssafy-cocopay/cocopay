@@ -1,5 +1,6 @@
 package com.cocopay.payment.dto.res;
 
+import com.cocopay.redis.key.PerformanceKey;
 import lombok.*;
 
 @Getter
@@ -8,27 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class CardOfferResponseDto {
-    private int cardUuid;
+    private CardResponseDto card;
 
-    private String serialNumber;
+    private PerformanceKey performance;
 
-    private String cardName;
-
-    private Boolean visa;
-
-    private Boolean master;
-
-    private String cardDefaultImage;
-
-    private int level;
-
-    private Integer nextLevel;
-
-    private Integer price;
-
-    private Integer totalPrice;
-
-    private int cardOrder;
-
-    private Integer orderPrice;
+    private int orderPrice;
 }
