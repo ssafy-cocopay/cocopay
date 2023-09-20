@@ -6,6 +6,7 @@ import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.redis.mapper.RedisMapper;
 import com.cocopay.redis.repository.PerformanceHashRepository;
+import com.cocopay.usercard.entity.UserCard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class PerformanceKeyService {
     public void performanceKeySave(List<PerformanceResponseDto> dtoList) {
 
         List<PerformanceKey> performanceKeyList = redisMapper.toPerformanceKeyList(dtoList);
-
+        log.info("redis에 저장할 개수 : {}", performanceKeyList.size());
         performanceHashRepository.saveAll(performanceKeyList);
     }
 
@@ -42,15 +43,19 @@ public class PerformanceKeyService {
     }
 
     //사용자 카드 우선순위와 실적 정보 매핑 진행
-    //List<Integer>는 임시이며
     //List<UserCard>로 변경해야함
-    public List<CardOfferResponseDto> performanceKeyMapping(List<Integer> findUserCardList) {
+    public List<CardOfferResponseDto> performanceKeyMapping(List<UserCard> findUserCardList) {
+        log.info("실적 정보 + 사용자 카드 매핑 진행");
         List<CardOfferResponseDto> responseDtoList = new ArrayList<>();
 
-        for (Integer integer : findUserCardList) {
-            PerformanceKey findPerformanceKey = findPerformanceKey(String.valueOf(integer));
+        for (UserCard userCard : findUserCardList) {
+            String userCardId = String.valueOf(userCard.getId());
+            PerformanceKey findPerformanceKey = findPerformanceKey(userCardId);
 
-            CardOfferResponseDto responseDtoTest = paymentMapper.toResponseDtoTest(findPerformanceKey, integer);
+            //조회 후 삭제
+            performanceHashRepository.deleteById(userCardId);
+
+            CardOfferResponseDto responseDtoTest = paymentMapper.toResponseDto(findPerformanceKey, userCard);
             responseDtoList.add(responseDtoTest);
         }
 
