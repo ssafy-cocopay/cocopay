@@ -1,5 +1,6 @@
 package com.bank.card.controller;
 
+import com.bank.card.dto.FindBySerialNumber;
 import com.bank.card.dto.UserCardRegisterDto;
 import com.bank.card.dto.UserCardResponseDto;
 import com.bank.card.entity.UserCard;
@@ -41,7 +42,13 @@ public class CardController {
 
     //사용자 카드 실적 조회
     @GetMapping("/performance/{card_uuid}")
-    ResponseEntity<?> getUserCardPerformanceList(@PathVariable("card_uuid") Integer cardUuid) {
+    public ResponseEntity<?> getUserCardPerformanceList(@PathVariable("card_uuid") Integer cardUuid) {
         return ResponseEntity.ok(userCardService.getUserCardPerformance(cardUuid));
+    }
+
+    //시리얼 번호로 카드 조회
+    @PostMapping("/search")
+    public ResponseEntity<?> getUserCard(@RequestBody FindBySerialNumber findBySerialNumber){
+        return ResponseEntity.ok(userCardService.getUserCard(findBySerialNumber.getSerialNumber(),findBySerialNumber.getCvc(),findBySerialNumber.getPassword()));
     }
 }
