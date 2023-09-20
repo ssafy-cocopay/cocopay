@@ -67,7 +67,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
     public UserCardDto findUSerCardBySerialNumber(String serialNumber, String cvc, String password) {
         return jpaQueryFactory
                 .select(Projections.fields(UserCardDto.class,
-                userCard.card.id.as("cardId"),
+                userCard.id.as("userCardId"),
                 userCard.serialNumber,
                 card.type.as("cardType"),
                 card.cardName,
