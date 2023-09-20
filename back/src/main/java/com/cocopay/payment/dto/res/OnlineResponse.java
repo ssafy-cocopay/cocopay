@@ -10,6 +10,4 @@ import lombok.NoArgsConstructor;
 public class OnlineResponse<T> {
 
     private T data;
-
-    private int totalPrice;
 }
