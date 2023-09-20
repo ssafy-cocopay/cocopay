@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserCardDto {
-    private int cardId;
+    private int userCardId;
     private String serialNumber;
     private CardType cardType;
     private String cardName;
