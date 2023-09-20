@@ -9,7 +9,7 @@ const HomePage = () => {
             minHeight: "100vh"
         }}
         >
-            메인 페이지
+            홈페이지
         </Background>
     )
 }
