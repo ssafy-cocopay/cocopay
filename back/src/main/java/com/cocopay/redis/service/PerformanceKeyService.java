@@ -1,6 +1,7 @@
 package com.cocopay.redis.service;
 
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
+import com.cocopay.payment.dto.res.CardResponseDto;
 import com.cocopay.payment.dto.res.PerformanceResponseDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.PerformanceKey;
@@ -44,7 +45,7 @@ public class PerformanceKeyService {
 
     //사용자 카드 우선순위와 실적 정보 매핑 진행
     //List<UserCard>로 변경해야함
-    public List<CardOfferResponseDto> performanceKeyMapping(List<UserCard> findUserCardList) {
+    public List<CardOfferResponseDto> performanceKeyMapping(List<UserCard> findUserCardList, int orderPrice) {
         log.info("실적 정보 + 사용자 카드 매핑 진행");
         List<CardOfferResponseDto> responseDtoList = new ArrayList<>();
 
@@ -54,8 +55,8 @@ public class PerformanceKeyService {
 
             //조회 후 삭제
             performanceKeyRepository.deleteById(userCardId);
-
-            CardOfferResponseDto responseDtoTest = paymentMapper.toResponseDto(findPerformanceKey, userCard);
+            CardResponseDto cardResponseDto = paymentMapper.toCardResponseDto(userCard);
+            CardOfferResponseDto responseDtoTest = paymentMapper.toResponseDto(findPerformanceKey, cardResponseDto, orderPrice);
             responseDtoList.add(responseDtoTest);
         }
 
