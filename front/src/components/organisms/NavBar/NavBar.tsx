@@ -11,7 +11,7 @@ const NavBar = () => {
     
     return (
         <>
-            <div onClick={() => navigatePage(PATH.HOME)}>1</div>
+            <div onClick={() => navigatePage(PATH.MAIN)}>1</div>
             <div onClick={() => navigatePage(PATH.CARDLIST)}>2</div>
             <div>3</div>
             <div onClick={() => navigatePage(PATH.STATISTICS)}>4</div>
