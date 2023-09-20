@@ -3,6 +3,7 @@ package com.cocopay.usercard.entity;
 import com.cocopay.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user_card")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCard {
@@ -25,7 +27,7 @@ public class UserCard {
     private boolean cocoType;
 
     @Column(name = "card_uuid", nullable = false)
-    private String cardUuid;
+    private int cardUuid;
 
     @Column(name = "serial_number", nullable = false, length = 19)
     private String serialNumber;
@@ -34,6 +36,7 @@ public class UserCard {
     private int cardOrder;
 
     @CreatedDate
+    @Builder.Default
     @Column(name = "registed_date", nullable = false)
     private LocalDateTime registedDate = LocalDateTime.now();
 
@@ -41,7 +44,7 @@ public class UserCard {
     private LocalDateTime withdrawDate;
 
     @Column(name = "card_type")
-    private Integer cardType;
+    private CardType cardType;
 
     @Column(name = "card_name", length = 50)
     private String cardName;
