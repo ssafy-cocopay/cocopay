@@ -1,12 +1,16 @@
 package com.bank.performance.repository;
 
+import com.bank.performance.dto.PerformanceResponseListDto;
 import com.bank.performance.entity.Performance;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import static com.bank.card.entity.QCard.card;
+import static com.bank.card.entity.QUserCard.userCard;
 import static com.bank.performance.entity.QPerformance.performance;
 
 @RequiredArgsConstructor
@@ -28,6 +32,24 @@ public class PerformanceRepositoryImpl implements PerformanceRepositoryCustom {
                 ).fetch();
     }
 
+    @Override
+    public List<PerformanceResponseListDto> findPerformanceByCardList(List<Integer> cardUuidList) {
+        List<PerformanceResponseListDto> result = jpaQueryFactory
+                .select(Projections.fields(PerformanceResponseListDto.class,
+                userCard.id.as("cardUuid"),
+                userCard.performanceLevel.as("level"),
+                performance.level.max().as("nextlevel"),
+                performance.levelPrice.max().as("price"),
+                userCard.totalPrice,
+                userCard.isPerformanced.as("pastPerformance")))
+                .from(performance)
+                .join(card).on(card.id.eq(performance.card.id))
+                .join(userCard).on(userCard.card.id.eq(card.id))
+                .where(userCard.id.in(cardUuidList), performance.level.between(userCard.performanceLevel, userCard.performanceLevel))
+                .groupBy(userCard.id, userCard.performanceLevel).fetch();
+
+        return result;
+    }
     private static BooleanExpression idEq(Integer id) {
         return id != null ? performance.id.eq(id) : null;
     }
