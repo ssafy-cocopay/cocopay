@@ -1,9 +1,12 @@
 package com.bank.card.repository.usercard;
 
+import com.bank.benefit.dto.BenefitInfoResponseDto;
 import com.bank.card.dto.PerformanceResponseDto;
+import com.bank.card.dto.UserCardDto;
 import com.bank.card.dto.UserCardResponseDto;
 import com.bank.card.entity.UserCard;
 
+import com.bank.performance.dto.PerformanceResponseListDto;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -17,6 +20,7 @@ import java.util.Optional;
 
 import static com.bank.card.entity.QUserCard.userCard;
 import static com.bank.card.entity.QCard.card;
+import static com.bank.performance.entity.QPerformance.performance;
 
 
 @RequiredArgsConstructor
@@ -57,5 +61,23 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
 //                .where(userCard.id.eq(cardUuid))
 //                .fetchOne());
         return null;
+    }
+
+    @Override
+    public UserCardDto findUSerCardBySerialNumber(String serialNumber, String cvc, String password) {
+        return jpaQueryFactory
+                .select(Projections.fields(UserCardDto.class,
+                userCard.card.id.as("cardId"),
+                userCard.serialNumber,
+                card.type.as("cardType"),
+                card.cardName,
+                userCard.validDate,
+                card.visa,card.master,
+                        card.cardDefaultImage))
+                .from(userCard)
+                .join(card).on(card.id.eq(userCard.card.id))
+                .where(userCard.serialNumber.eq(serialNumber),
+                        userCard.cvc.eq(cvc),
+                        userCard.password.like(password+'%')).fetchOne();
     }
 }
