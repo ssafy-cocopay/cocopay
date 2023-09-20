@@ -12,8 +12,8 @@ const getOptionStyling = (
     `,
     activated: css`
       background: ${({ theme }) => theme.color.blue};
-      border: none;
       color: ${({ theme }) => theme.color.white};
+      border-color: ${({ theme }) => theme.color.white};
     `,
     deActivated: css`
       background: ${({ theme }) => theme.color.grey4};
