@@ -11,13 +11,14 @@ import * as S from "./Button.styles";
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   option?: "default" | "activated" | "deActivated" | "dashed" | "danger";
-  size?: "small" | "medium";
+  size?: "small" | "medium" | "large";
   $backgroundColor?: string;
   $borderColor?: string;
   $border?: string;
   $borderRadius?: string;
   $textAlign?: string; // 기본으로 center으로하면 상관없?
   $color?: string;
+  $width?: string;
 }
 
 const Button = (
@@ -28,6 +29,7 @@ const Button = (
     $borderColor,
     $border,
     $color,
+    $width,
     children,
     ...attributes
   }: ButtonProps,
@@ -35,7 +37,7 @@ const Button = (
 ) => {
   return (
     <>
-      {/* <S.Button
+      <S.Button
       ref={ref}
       option={option}
       size={size}
@@ -43,10 +45,11 @@ const Button = (
       $backgroundColor={$backgroundColor}
       $borderColor={$borderColor}
       $color={$color}
+      $width={$width}
       {...attributes}
     >
       {children}
-    </S.Button> */}
+    </S.Button>
     </>
   );
 };

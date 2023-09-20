@@ -5,7 +5,7 @@ interface BackgroundProps {
 }
 
 const Background = styled.div<BackgroundProps>`
-  background: ${(props) => {
+  background-color: ${(props) => {
     switch (props.colorMode) {
       case "gradient":
         return props.theme.gradient.gradient1;
