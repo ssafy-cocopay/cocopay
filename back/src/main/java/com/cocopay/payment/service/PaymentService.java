@@ -1,8 +1,10 @@
 package com.cocopay.payment.service;
 
 import com.cocopay.payment.apicall.ApiCallService;
+import com.cocopay.payment.dto.req.OnlinePayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.redis.service.OrderKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
@@ -21,16 +23,14 @@ import java.util.Optional;
 @Slf4j
 public class PaymentService {
     private final UserCardRepository userCardRepository;
-
     private final UserRepository userRepository;
-
     private final ApiCallService apiCallService;
-
     private final PerformanceKeyService performanceKeyService;
+    private final OrderKeyService orderKeyService;
 
     //온라인 결제
-    public List<CardOfferResponseDto> onlinePay(int userId, int cardId, int totalPrice) {
-        List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(userId);
+    public List<CardOfferResponseDto> onlinePay(OnlinePayPostDto postDto) {
+        List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(postDto.getUserId());
 
         log.info("findUserCardList : {}", findUserCardList);
 
@@ -44,9 +44,11 @@ public class PaymentService {
 
         List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList);
 
+        //주문 정보 저장
+        orderKeyService.orderKeySave(postDto);
 
         //실적 우선, 할인 우선 분기
-        if (findUser(userId).isRecommendType()) {
+        if (findUser(postDto.getUserId()).isRecommendType()) {
             log.info("할인 우선으로 계산 진행");
             //할인 로직 필요
             return null;
