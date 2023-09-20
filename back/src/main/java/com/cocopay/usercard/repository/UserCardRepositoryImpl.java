@@ -20,7 +20,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom{
         return jpaQueryFactory
                 .selectFrom(userCard)
                 .where(userCard.user.id.eq(userId),
-                        userCard.cocoType.eq(true))
+                        userCard.cocoType.eq(false))
                 .fetch();
     }
 }
