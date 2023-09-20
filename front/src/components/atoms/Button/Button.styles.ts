@@ -1,5 +1,5 @@
-// import styled, { css } from "styled-components";
-// import { ButtonProps } from "./Button";
+import styled, { css } from "styled-components";
+import { ButtonProps } from "./Button";
 
 const getOptionStyling = (
   option: Required<ButtonProps>["option"],
