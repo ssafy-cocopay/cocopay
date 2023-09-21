@@ -2,6 +2,7 @@ package com.cocopay.payment.service;
 
 import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
+import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.redis.service.OrderKeyService;
@@ -82,6 +83,10 @@ public class PaymentService {
 
         return findUser
                 .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
+    }
+
+    public void cardPick(PickDto pickDto) {
+
     }
 
 }
