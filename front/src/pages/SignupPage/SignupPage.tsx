@@ -1,12 +1,13 @@
 import React from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import {} from "./SignupPage.styles";
+// import {} from "./SignupPage.styles";
 import Button from "@/components/atoms/Button/Button";
-import { Container } from "@/components/atoms/Container/Container.styles";
 import { PATH } from "@/constants/path";
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { Container } from "@/components/atoms/Container/Container.styles";
+import Input from "@/components/atoms/Input/Input";
+import { Text } from "@/components/atoms/Text/Text.styles";
 interface FormValue {
   name: string;
   identification_number: number;
@@ -30,10 +31,19 @@ const SignupPage = () => {
   };
 
   return (
-    <Container>
+    <Container border={true} paddingTop="70px">
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <div>
-          <input
+          <Text size="subtitle1">
+            코코페이 이용을 위해
+            <br /> <b>본인확인</b>을 진행해주세요.
+          </Text>
+          <Input placeholder="이름을 작성해주세요"></Input>
+          <Input placeholder="주민등록번호 앞자리"></Input>
+          <Text size="subtitle1">-</Text>
+          <Input width={35} textAlign="center" paddingLeft={0}></Input>
+
+          {/* <input
             id="name"
             type="text"
             placeholder="이름을 작성해주세요"
@@ -44,7 +54,7 @@ const SignupPage = () => {
               maxLength: { value: 8, message: "최대 8자 까지 가능합니다." },
             })}
           />
-          {errors.name && <small role="alert">{errors.name.message}</small>}
+          {errors.name && <small role="alert">{errors.name.message}</small>} */}
 
           <label>주민등록번호</label>
           <input
