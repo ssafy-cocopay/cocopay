@@ -79,11 +79,74 @@ public class DockerDbDummyTest {
         jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
 
+    //사용방법
+    //name, tel 변수 세팅 후 아래 메서드 하나만 진행
+    //이후 2번메서드 userCardDummy()에 userId와 보라색 부분의 카드이름을 변경 후 실행
     @Test
-    public void userDummy() {
+    public void makeDummy() {
+        String name = "";
+        String tel = "";
+        userDummy(name,tel);
+        bankDummy();
+        cardDummy();
+        accountDummy();
+        performanceDummy();
+        benefitDummy();
+    }
+
+    @Test
+    public void userCardDummy() {
+        //유저 찾기
+        //변수 필요하면 바꾸면 댐
+        int userId = 1;
+        User findUser = userRepository.findById(userId).get();
+
+        //만들고 싶은 카드 이름 가져오기
+        //CardList.만들고싶은거 고르고
+        //.getCardName 까지 진행하야함
+        //보라색 부분만 수정하면 됨
+        String cardName = CardList.Deep_Dream_체크.getCardName();
+        String bankName = CardList.Deep_Dream_체크.getBankName();
+
+        Card findCard = findCardByName(cardName);
+        Bank findBank = findBankByBankName(bankName);
+
+        Account findAccount = findAccount(findUser, findBank);
+
+        UserCard build = UserCard.builder()
+                .account(findAccount)
+                .card(findCard)
+                .password("0000")
+                .serialNumber(faker.numerify("####-####-####-####"))
+                .isPerformanced(false)
+                .validDate("12/25")
+                .cvc("000")
+                .performanceLevel(0)
+                .totalPrice(0)
+                .build();
+        UserCard save = userCardRepository.save(build);
+
+        //사용자 별 혜택도 맹그러야 댐
+
+        List<Benefit> benefitList = findBenefitList(findCard);
+
+        List<UserCardBenefit> userCardBenefitList = benefitList.stream()
+                .map(benefit -> {
+                    UserCardBenefit userCardBenefit = new UserCardBenefit();
+                    userCardBenefit.setUserCard(save);
+                    userCardBenefit.setBenefit(benefit);
+                    userCardBenefit.setDiscountAmount(benefit.getLimit());
+                    return userCardBenefit;
+                }).toList();
+
+        userCardBenefitRepository.saveAll(userCardBenefitList);
+    }
+
+    @Test
+    public void userDummy(String name, String tel) {
         User user = User.builder()
-                .name("한성현")
-                .tel("010-5136-5349")
+                .name(name)
+                .tel(tel)
                 .build();
 
         userRepository.save(user);
@@ -203,53 +266,7 @@ public class DockerDbDummyTest {
     //유저 카드 생성 시 유저 혜택도 같이 생겨야함
     //유저 카드는 원클릭으로 다 만들기 힘들어서
     //하나씩 진행
-    @Test
-    public void userCardDummy() {
-        //유저 찾기
-        //변수 필요하면 바꾸면 댐
-        int userId = 1;
-        User findUser = userRepository.findById(userId).get();
-        
-        //만들고 싶은 카드 이름 가져오기
-        //CardList.만들고싶은거 고르고
-        //.getCardName 까지 진행하야함
-        //보라색 부분만 수정하면 됨
-        String cardName = CardList.Deep_Dream_체크.getCardName();
-        String bankName = CardList.Deep_Dream_체크.getBankName();
 
-        Card findCard = findCardByName(cardName);
-        Bank findBank = findBankByBankName(bankName);
-
-        Account findAccount = findAccount(findUser, findBank);
-
-        UserCard build = UserCard.builder()
-                .account(findAccount)
-                .card(findCard)
-                .password("0000")
-                .serialNumber(faker.numerify("####-####-####-####"))
-                .isPerformanced(false)
-                .validDate("12/25")
-                .cvc("000")
-                .performanceLevel(0)
-                .totalPrice(0)
-                .build();
-        UserCard save = userCardRepository.save(build);
-
-        //사용자 별 혜택도 맹그러야 댐
-
-        List<Benefit> benefitList = findBenefitList(findCard);
-
-        List<UserCardBenefit> userCardBenefitList = benefitList.stream()
-                .map(benefit -> {
-                    UserCardBenefit userCardBenefit = new UserCardBenefit();
-                    userCardBenefit.setUserCard(save);
-                    userCardBenefit.setBenefit(benefit);
-                    userCardBenefit.setDiscountAmount(benefit.getLimit());
-                    return userCardBenefit;
-                }).toList();
-
-        userCardBenefitRepository.saveAll(userCardBenefitList);
-    }
 
     public List<Benefit> findBenefitList(Card card) {
         return jpaQueryFactory
