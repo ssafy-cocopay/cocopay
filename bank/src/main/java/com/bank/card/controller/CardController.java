@@ -50,12 +50,10 @@ public class CardController {
 
         //서비스 호출
         if (paymentRequestDto.getBenefitId() == null) {
-            userCardService.paymentWithoutBenefitId(paymentRequestDto);
+            return ResponseEntity.ok(userCardService.paymentWithoutBenefitId(paymentRequestDto));
         } else {
-            userCardService.paymentWithBenefitId(paymentRequestDto);
+            return ResponseEntity.ok(userCardService.paymentWithBenefitId(paymentRequestDto));
         }
-
-        return null;
     }
 
     //시리얼 번호로 카드 조회

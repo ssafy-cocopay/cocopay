@@ -1,11 +1,12 @@
 package com.bank.card.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class PayResponseDto {
+    String cardName;
+    Integer discount;
 }
