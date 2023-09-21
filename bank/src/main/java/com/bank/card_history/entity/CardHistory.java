@@ -49,4 +49,8 @@ public class CardHistory {
     @Column(name = "transaction_type")
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
+
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private Category category;
 }
