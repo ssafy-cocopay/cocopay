@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Background
-      colormode="blue"
+      // colormode="white"
       style={{
         // minHeight: "100vh",
         paddingTop: "100px",
