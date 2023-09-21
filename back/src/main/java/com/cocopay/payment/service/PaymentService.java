@@ -1,10 +1,13 @@
 package com.cocopay.payment.service;
 
 import com.cocopay.payment.apicall.ApiCallService;
+import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.payment.mapper.PaymentMapper;
+import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.service.OrderKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
@@ -28,9 +31,11 @@ public class PaymentService {
     private final ApiCallService apiCallService;
     private final PerformanceKeyService performanceKeyService;
     private final OrderKeyService orderKeyService;
+    private final PaymentMapper paymentMapper;
 
     //온라인 결제
     public List<CardOfferResponseDto> onlinePay(OnlinePayPostDto postDto) {
+        //사용자 카드 목록 조회
         List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(postDto.getUserId());
 
         log.info("findUserCardList : {}", findUserCardList);
@@ -91,7 +96,10 @@ public class PaymentService {
     }
 
     public void cardPick(PickDto pickDto) {
-
+        //주문 정보(카테고리, 매장명) 조회 후 매핑 진행
+        OrderKey findOrder = orderKeyService.findOrderKey(pickDto.getUserId());
+        PaymentRequestDto paymentRequestDto = paymentMapper.toPaymentRequestDto(findOrder, pickDto);
+        apiCallService.payApiCall(paymentRequestDto);
     }
 
 }
