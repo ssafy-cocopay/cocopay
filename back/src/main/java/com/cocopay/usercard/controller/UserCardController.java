@@ -1,5 +1,6 @@
 package com.cocopay.usercard.controller;
 
+import com.cocopay.usercard.dto.FindHistoryByUserId;
 import com.cocopay.usercard.dto.UserCardDto;
 import com.cocopay.usercard.dto.UserCardRegisterDto;
 import com.cocopay.usercard.entity.UserCard;
@@ -33,5 +34,11 @@ public class UserCardController {
     public ResponseEntity<?> DeleteUserCard(@PathVariable("cardId") Integer cardId){
         userCardService.deleteUserCard(cardId);
         return ResponseEntity.ok("사용자 카드 삭제 성공");
+    }
+
+    //사용자 통계 조회
+    @PostMapping("/total")
+    ResponseEntity<?> getCardHistoryByUserId(@RequestBody FindHistoryByUserId findHistoryByUserId){
+        return ResponseEntity.ok(userCardService.getAllamount(findHistoryByUserId));
     }
 }

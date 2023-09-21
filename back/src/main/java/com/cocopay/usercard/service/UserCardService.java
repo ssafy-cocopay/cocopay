@@ -2,8 +2,7 @@ package com.cocopay.usercard.service;
 
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
-import com.cocopay.usercard.dto.UserCardDto;
-import com.cocopay.usercard.dto.UserCardRegisterDto;
+import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
 import lombok.RequiredArgsConstructor;
@@ -71,4 +70,24 @@ public class UserCardService {
         userCard.get().setWithdrawDate(LocalDateTime.now());
         userCardRepository.save(userCard.get());
     }
+
+    public CategoryResponseDto getAllamount(FindHistoryByUserId findHistoryByUserId){
+        WebClient webClient = WebClient.create();
+
+        //api 주소
+        String url = "http://localhost:8081/bank/card-history/total";
+
+        //임시 동기 요청
+        CategoryResponseDto categoryResponseDto = webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(findHistoryByUserId)
+                .retrieve()
+                .bodyToMono(CategoryResponseDto.class)
+                .block();
+
+
+        return categoryResponseDto;
+    }
+
 }
