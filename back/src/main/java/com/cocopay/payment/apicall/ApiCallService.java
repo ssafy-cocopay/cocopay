@@ -1,9 +1,12 @@
 package com.cocopay.payment.apicall;
 
+import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
+import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.usercard.entity.UserCard;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ApiCallService {
 
@@ -41,5 +45,21 @@ public class ApiCallService {
                 .retrieve()
                 .bodyToMono(PerformanceResponseListDto.class)
                 .block();
+    }
+
+    //결제요청 api 콜 진행
+    public void payApiCall(PaymentRequestDto requestDto) {
+        WebClient webClient = WebClient.create();
+        
+        log.info("결제 요청 api call 진행");
+        String reponse = webClient.post()
+                .uri(localUrl + "card/pay")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(requestDto)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        log.info("결제 요청 api call 종료");
+        log.info("reponse : {}", reponse);
     }
 }
