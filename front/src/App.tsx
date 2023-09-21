@@ -18,7 +18,6 @@ function App() {
     <Background
       colormode="blue"
       style={{
-        minHeight: "100vh",
         paddingTop: "100px",
         display: "flex",
         flexDirection: "column",

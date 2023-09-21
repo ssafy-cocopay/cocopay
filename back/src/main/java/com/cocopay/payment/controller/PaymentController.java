@@ -1,6 +1,7 @@
 package com.cocopay.payment.controller;
 
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
+import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.service.PaymentService;
@@ -29,5 +30,10 @@ public class PaymentController {
         OnlineResponse<?> onlineResponse = new OnlineResponse<>(responseDtoList);
 
         return ResponseEntity.ok(onlineResponse);
+    }
+
+    @PostMapping("/online/pick")
+    public ResponseEntity cardPick(@RequestBody PickDto pickDto) {
+        return null;
     }
 }
