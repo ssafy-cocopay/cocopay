@@ -9,7 +9,7 @@ public enum CardList {
     Deep_Dream_체크("신한", "신한카드 Deep Dream 체크", CardType.체크카드,true,false),
     카카오_프렌즈_체크("카카오뱅크", "카카오뱅크 프렌즈 체크카드", CardType.체크카드,false,true),
     노리2("국민", "노리2 체크카드(KB Pay)", CardType.체크카드,true,true),
-    신한마이라이프("신한", "신한카드 Mr.Life", CardType.신용카드,,true,true),
+    신한마이라이프("신한", "신한카드 Mr.Life", CardType.신용카드,true,true),
     삼성탭탭("삼성", "taptap DIGITAL", CardType.신용카드,true,false),
     삼성온카드("삼성", "삼성 iD ON 카드", CardType.신용카드,false,true),
     현대제로("현대", "현대카드ZERO Edition2(할인형)", CardType.신용카드,true,false),
