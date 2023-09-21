@@ -14,7 +14,7 @@ const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
   const style = {
     // 기본 input
     text: css`
-      border: 1.75px solid ${({ theme }) => theme.color.grey3};
+      border: 1.75px solid ${({ theme }) => theme.color.grey4};
       display: flex;
       flex-direction: row;
       justify-content: center;
