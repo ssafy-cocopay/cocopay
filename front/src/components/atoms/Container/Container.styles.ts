@@ -12,14 +12,12 @@ export const Container = styled.div<ContainerProps>`
   height: 100vh;
   width: 100vw;
   max-width: 390px;
-  margin: ${(props) => props.margin|| '0 36px'};
-  padding: ${(props) => props.padding|| '0 36px'};
+  margin: ${(props) => props.margin || "0 auto"};
+  padding: ${(props) => props.padding || "0 36px"};
 `;
 
 export const CardListContainer = styled.div`
   height: 100vh;
   max-width: 390px;
 `;
-
-
 
