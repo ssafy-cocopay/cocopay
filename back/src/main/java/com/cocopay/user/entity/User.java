@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer id;
 
     @Column(name = "uuid")
@@ -31,7 +32,7 @@ public class User {
     @Column(name = "tel", length = 13, nullable = false,unique = true)
     private String tel;
 
-    private LocalDate birth;
+    private String birth;
 
     @Column(name = "age", nullable = false)
     private Integer age;

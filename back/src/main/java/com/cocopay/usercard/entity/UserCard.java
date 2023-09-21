@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @Table(name = "user_card")
 @Data
 @Builder
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_card_id")
     private Integer id;
 
     //코코페이인지
@@ -25,7 +25,7 @@ public class UserCard {
     private boolean cocoType;
 
     @Column(name = "card_uuid", nullable = false)
-    private int cardUuid;
+    private Integer cardUuid;
 
     @Column(name = "serial_number", nullable = false, length = 19)
     private String serialNumber;

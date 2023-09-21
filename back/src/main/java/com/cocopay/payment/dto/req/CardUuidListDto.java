@@ -1,12 +1,14 @@
 package com.cocopay.payment.dto.req;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CardUuidListDto {
