@@ -1,7 +1,6 @@
 package com.cocopay.redis.service;
 
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
-import com.cocopay.payment.dto.res.CardResponseDto;
 import com.cocopay.payment.dto.res.PerformanceResponseDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.PerformanceKey;
@@ -55,9 +54,13 @@ public class PerformanceKeyService {
 
             //조회 후 삭제
             performanceKeyRepository.deleteById(userCardId);
-            CardResponseDto cardResponseDto = paymentMapper.toCardResponseDto(userCard);
-            CardOfferResponseDto responseDtoTest = paymentMapper.toResponseDto(findPerformanceKey, cardResponseDto, orderPrice);
-            responseDtoList.add(responseDtoTest);
+            //카드, 실적 분할 반환 버전
+//            CardResponseDto cardResponseDto = paymentMapper.toCardResponseDto(userCard);
+//            CardOfferResponseDto2 responseDtoTest = paymentMapper.toResponseDto2(findPerformanceKey, cardResponseDto, orderPrice);
+
+            //카드, 실적 합친 반환 버전
+            CardOfferResponseDto responseDto = paymentMapper.toResponseDto(findPerformanceKey, userCard, orderPrice);
+            responseDtoList.add(responseDto);
         }
 
         return responseDtoList;
