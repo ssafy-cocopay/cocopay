@@ -24,6 +24,7 @@ import MypageWithdrawalPage from "@/pages/MyPageWithdrawalPage/MyPageWithdrawalP
 import PayOnlinePage from "@/pages/PayOnlinePage/PayOnlinePage";
 import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineCompletePage";
 import MainPage from "@/pages/MainPage/MainPage";
+import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
 
 const router = createBrowserRouter([
   {
@@ -71,21 +72,26 @@ const router = createBrowserRouter([
       {
         path: PATH.CARDLIST,
         element: <CardListPage />,
-        children: [
-          { index: true, element: <CardDetailPage /> },
-          {
-            path: PATH.SCAN_CARDINFO,
-            element: <ScanCardInfoPage />,
-          },
-          {
-            path: PATH.CARD_DETAIL_PURCHASED,
-            element: <CardDetailPurchasedPage />,
-          },
-        ],
+      },
+      {
+        path: PATH.QRCAMERA,
+        element: <QrCameraPage />,
+      },
+      {
+        path: PATH.SCAN_CARDINFO,
+        element: <ScanCardInfoPage />,
       },
       {
         path: PATH.STATISTICS,
         element: <StatisticsPage />,
+      },
+      {
+        path: PATH.CARD_DETAIL,
+        element: <CardDetailPage />,
+      },
+      {
+        path: PATH.CARD_DETAIL_PURCHASED,
+        element: <CardDetailPurchasedPage />,
       },
       {
         path: PATH.MYPAGE,
@@ -93,10 +99,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: PATH.HOME,
-    element: <HomePage />,
-  },
+  // {
+  //   path: PATH.HOME,
+  //   element: <HomePage />,
+  // },
   {
     path: PATH.PAYOFFLINE,
     element: <PayOfflinePage />,

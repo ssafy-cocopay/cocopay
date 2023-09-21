@@ -8,6 +8,7 @@ import com.bank.benefit.entity.UserCardBenefit;
 import com.bank.benefit.repository.BenefitRepository;
 import com.bank.benefit.repository.UserCardBenefitRepository;
 import com.bank.card.dto.PaymentRequestDto;
+import com.bank.card.dto.FindBySerialNumber;
 import com.bank.card.dto.PerformanceResponseDto;
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.usercard.UserCardRepository;
@@ -101,5 +102,11 @@ public class UserCardService {
             findUserCardBenefit.setDiscountAmount(0);
             userCardBenefitRepository.save(findUserCardBenefit);
         }
+    }
+
+    //카드 고유번호로 카드 조회
+    public UserCardDto getUserCard(String serialNumber, String cvc, String password){
+        UserCardDto userCard = userCardRepository.findUSerCardBySerialNumber(serialNumber,cvc,password);
+        return userCard;
     }
 }
