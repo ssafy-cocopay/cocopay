@@ -2,7 +2,7 @@ import theme from "@/styles/theme";
 import { css, styled } from "styled-components";
 
 export interface InputStyleProps {
-  inputType?: "text"; // TODO: password 만들기
+  inputType?: "text" | "dropdown"; //TODO: password 만들기
   height?: number | string;
   $borderRadius?: number;
   $unit?: "rem" | "px" | "em" | "%";
@@ -32,6 +32,18 @@ const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
         color: transparent;
       }
     `,
+    dropdown: css`
+    border: 1.75px solid ${({ theme }) => theme.color.grey4};
+    display: flex;
+    background-color: ${({ theme }) => theme.color.white};
+    color: ${({ theme }) => theme.color.black1};
+    padding-left: 24px;
+
+    &:focus {
+      outline: none;
+      border: 2px solid ${({ theme }) => theme.color.lightblue};
+    }
+  `,
     //password 용 input
     // password: css`
     //   border: none;

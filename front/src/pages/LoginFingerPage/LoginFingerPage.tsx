@@ -3,6 +3,8 @@ import { Background } from "@/components/atoms/Background/Background.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import Back from "@/components/atoms/Back/Back";
 import { Text } from "@/components/atoms/Text/Text.styles";
+import { Image } from "@/components/atoms/Image/Image";
+import fingerPrint from "@/assets/images/img-fingerprint-blue.png";
 
 const LoginFingerPage = () => {
   return (
@@ -21,6 +23,7 @@ const LoginFingerPage = () => {
           <Text size="body1" fontWeight="medium">
             지문 인증을 완료해주세요
           </Text>
+          <Image src={fingerPrint} width={10}></Image>
         </Container>
       </Container>
     </Background>

@@ -54,7 +54,7 @@ const getFontWeightStyling = (weight?: TextProps["fontWeight"]) => {
     case "bold":
       return "bold";
     case "medium":
-      return "500"; // 'medium'의 경우 CSS에서 표준 값은 500
+      return "550"; // 'medium'의 경우 CSS에서 표준 값은 500
     case "light":
       return "300"; // 'light'의 경우 CSS에서 표준 값은 300
     default:
