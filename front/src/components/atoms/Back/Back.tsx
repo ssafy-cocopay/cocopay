@@ -18,7 +18,12 @@ const Back = ({ children = "뒤로가기" }: BackProps) => {
   return (
     <S.Back onClick={RouteHandler}>
       <Image src={backArrow} width={1} />
-      <Text color={"black3"} size={"body2"} style={{ marginLeft: "0.5rem" }}>
+      <Text
+        color={"black1"}
+        size={"body2"}
+        fontWeight={"bold"}
+        style={{ marginLeft: "0.5rem" }}
+      >
         {children}
       </Text>
     </S.Back>
