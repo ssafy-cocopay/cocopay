@@ -2,9 +2,7 @@ package com.bank.card.entity;
 
 import com.bank.bank.entity.Bank;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
@@ -12,7 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "card")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Card {
@@ -26,7 +25,7 @@ public class Card {
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    @Column(name = "card_name", length = 20, nullable = false)
+    @Column(name = "card_name", length = 50, nullable = false)
     private String cardName;
 
     @Column(name = "type", nullable = false)

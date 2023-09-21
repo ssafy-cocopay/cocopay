@@ -37,12 +37,4 @@ public class UserController {
 
         return ResponseEntity.ok(userResponseDto);
     }
-
-    //사용자 탈퇴
-    @DeleteMapping("/{uuid}")
-    public ResponseEntity deleteUser(@PathVariable("uuid") Integer uuid) {
-        userService.deleteUser(uuid);
-
-        return ResponseEntity.ok("회원 탈퇴 완료");
-    }
 }
