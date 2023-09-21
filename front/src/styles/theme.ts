@@ -5,8 +5,9 @@ const color = {
   black1: '#303030',
   grey1: '#838383',
   grey2: '#AEAEAE',
-  grey3: '#E8E8E8',
-  grey4: '#F5F5F5',
+  grey3: '#CDCDCD',
+  grey4: '#E8E8E8',
+  grey5: '#F5F5F5',
   white: '#FFFFFF',
 
   // main color
