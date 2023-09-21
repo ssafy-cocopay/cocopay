@@ -1,5 +1,7 @@
 package com.bank.card_history.mapper;
 
+import com.bank.card.dto.PaymentRequestDto;
+import com.bank.card.entity.UserCard;
 import com.bank.card_history.dto.HistoryResponseDto;
 import com.bank.card_history.entity.CardHistory;
 import org.mapstruct.Mapper;
@@ -15,4 +17,16 @@ public interface CardHistoryMapper {
     HistoryResponseDto historyToResponseDto(CardHistory cardHistory);
 
     List<HistoryResponseDto> toDtoList(List<CardHistory> cardHistories);
+
+    @Mapping(source = "userCard", target = "userCard")
+    @Mapping(source = "amount", target = "amount")
+    @Mapping(source = "accountBalance", target = "accountBalance")
+    @Mapping(source = "paymentRequestDto.store", target = "store")
+    @Mapping(source = "userCard.id", target = "id", ignore = true)
+    @Mapping(source = "discountAmount", target = "discountAmount")
+    CardHistory payRequestDtoToHistory(PaymentRequestDto paymentRequestDto,
+                                       UserCard userCard,
+                                       Long amount,
+                                       Integer accountBalance,
+                                       Integer discountAmount);
 }
