@@ -6,7 +6,9 @@ import com.bank.account.repository.AccountRepository;
 import com.bank.bank.entity.Bank;
 import com.bank.bank.repository.BankRepository;
 import com.bank.benefit.entity.Benefit;
+import com.bank.benefit.entity.UserCardBenefit;
 import com.bank.benefit.repository.BenefitRepository;
+import com.bank.benefit.repository.UserCardBenefitRepository;
 import com.bank.card.entity.Card;
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.card.CardRepository;
@@ -33,6 +35,7 @@ import java.util.Locale;
 
 import static com.bank.account.entity.QAccount.*;
 import static com.bank.bank.entity.QBank.bank;
+import static com.bank.benefit.entity.QBenefit.benefit;
 import static com.bank.card.entity.QCard.card;
 
 @SpringBootTest
@@ -67,6 +70,9 @@ public class DockerDbDummyTest {
 
     @Autowired
     UserCardRepository userCardRepository;
+
+    @Autowired
+    UserCardBenefitRepository userCardBenefitRepository;
 
     @BeforeEach
     public void init() {
@@ -209,12 +215,9 @@ public class DockerDbDummyTest {
         //.getCardName 까지 진행하야함
         //보라색 부분만 수정하면 됨
         String cardName = CardList.Deep_Dream_체크.getCardName();
-
-        //아래 변수들 직접 채워 넣어야함
-
+        String bankName = CardList.Deep_Dream_체크.getBankName();
 
         Card findCard = findCardByName(cardName);
-        String bankName = findCard.getBank().getBankName();
         Bank findBank = findBankByBankName(bankName);
 
         Account findAccount = findAccount(findUser, findBank);
@@ -230,8 +233,29 @@ public class DockerDbDummyTest {
                 .performanceLevel(0)
                 .totalPrice(0)
                 .build();
-        userCardRepository.save(build);
+        UserCard save = userCardRepository.save(build);
 
+        //사용자 별 혜택도 맹그러야 댐
+
+        List<Benefit> benefitList = findBenefitList(findCard);
+
+        List<UserCardBenefit> userCardBenefitList = benefitList.stream()
+                .map(benefit -> {
+                    UserCardBenefit userCardBenefit = new UserCardBenefit();
+                    userCardBenefit.setUserCard(save);
+                    userCardBenefit.setBenefit(benefit);
+                    userCardBenefit.setDiscountAmount(benefit.getLimit());
+                    return userCardBenefit;
+                }).toList();
+
+        userCardBenefitRepository.saveAll(userCardBenefitList);
+    }
+
+    public List<Benefit> findBenefitList(Card card) {
+        return jpaQueryFactory
+                .selectFrom(benefit)
+                .where(benefit.card.id.eq(card.getId()))
+                .fetch();
     }
 
     public Account findAccount(User user, Bank bank) {
