@@ -236,8 +236,8 @@ public class DummyDataTest {
     public void userCardAndUserBenefitDummy() {
         //유저가 가지고 있는 해당 은행의 계좌와 카드를 랜덤으로 가지고 옴
         //데이터가 꼬임을 방지하기 위함
-        int uuid = 2;
-        String bankName = "국민";
+        int uuid = 4;
+        String bankName = "신한";
 
         Bank findBank = findBankByBankName(bankName);
 
@@ -277,6 +277,7 @@ public class DummyDataTest {
         userCard.setAccount(accountList.get(accountIdx));
         userCard.setSerialNumber(faker.numerify("####-####-####-####"));
         userCard.setIsPerformanced(true);
+        userCard.setTotalPrice(297607);
 
         return userCard;
     }

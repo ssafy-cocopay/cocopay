@@ -10,6 +10,7 @@ import com.bank.benefit.repository.UserCardBenefitRepository;
 import com.bank.card.dto.PaymentRequestDto;
 import com.bank.card.dto.FindBySerialNumber;
 import com.bank.card.dto.PerformanceResponseDto;
+import com.bank.card.dto.UserCardDto;
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.usercard.UserCardRepository;
 import com.bank.card_history.entity.CardHistory;

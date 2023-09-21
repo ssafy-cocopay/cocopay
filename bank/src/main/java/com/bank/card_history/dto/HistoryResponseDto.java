@@ -1,5 +1,6 @@
 package com.bank.card_history.dto;
 
+import com.bank.card_history.entity.Category;
 import com.bank.card_history.entity.DiscountType;
 import com.bank.card_history.entity.TransactionType;
 import lombok.Data;
@@ -21,4 +22,5 @@ public class HistoryResponseDto {
     private Integer discountAmount;
     private DiscountType discountType;
     private TransactionType transactionType;
+    private Category category;
 }

@@ -2,6 +2,7 @@ package com.cocopay.payment.service;
 
 import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
+import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.redis.service.OrderKeyService;
@@ -63,11 +64,16 @@ public class PaymentService {
         //정렬 조건
         // 1. 실적 단계가 가장 낮은 거
         // 2. 같을 경우 사용자 우선 순위 낮은 거
+        //버전2 정렬 조건
+//        return responseDtoList.stream()
+//                .sorted(Comparator
+//                        .comparing((CardOfferResponseDto2 dto) -> dto.getPerformance().getLevel()) // 1번 조건
+//                        .thenComparing((CardOfferResponseDto2 dto) -> dto.getCard().getCardOrder())) // 2번 조건
+//                .toList();
 
         return responseDtoList.stream()
-                .sorted(Comparator
-                        .comparing((CardOfferResponseDto dto) -> dto.getPerformance().getLevel()) // 1번 조건
-                        .thenComparing((CardOfferResponseDto dto) -> dto.getCard().getCardOrder())) // 2번 조건
+                .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
+                        .thenComparing(CardOfferResponseDto::getCardOrder))
                 .toList();
     }
 
@@ -82,6 +88,10 @@ public class PaymentService {
 
         return findUser
                 .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
+    }
+
+    public void cardPick(PickDto pickDto) {
+
     }
 
 }
