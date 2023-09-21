@@ -1,13 +1,16 @@
 package com.bank;
 
 import com.bank.account.entity.Account;
+import com.bank.account.entity.QAccount;
 import com.bank.account.repository.AccountRepository;
 import com.bank.bank.entity.Bank;
 import com.bank.bank.repository.BankRepository;
 import com.bank.benefit.entity.Benefit;
 import com.bank.benefit.repository.BenefitRepository;
 import com.bank.card.entity.Card;
+import com.bank.card.entity.UserCard;
 import com.bank.card.repository.card.CardRepository;
+import com.bank.card.repository.usercard.UserCardRepository;
 import com.bank.enumlist.BenefitList;
 import com.bank.enumlist.CardList;
 import com.bank.enumlist.PerformanceList;
@@ -28,6 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static com.bank.account.entity.QAccount.*;
 import static com.bank.bank.entity.QBank.bank;
 import static com.bank.card.entity.QCard.card;
 
@@ -60,6 +64,9 @@ public class DockerDbDummyTest {
 
     @Autowired
     BenefitRepository benefitRepository;
+
+    @Autowired
+    UserCardRepository userCardRepository;
 
     @BeforeEach
     public void init() {
@@ -185,6 +192,55 @@ public class DockerDbDummyTest {
                 .toList();
 
         benefitRepository.saveAll(list);
+    }
+
+    //유저 카드 생성 시 유저 혜택도 같이 생겨야함
+    //유저 카드는 원클릭으로 다 만들기 힘들어서
+    //하나씩 진행
+    @Test
+    public void userCardDummy() {
+        //유저 찾기
+        //변수 필요하면 바꾸면 댐
+        int userId = 1;
+        User findUser = userRepository.findById(userId).get();
+        
+        //만들고 싶은 카드 이름 가져오기
+        //CardList.만들고싶은거 고르고
+        //.getCardName 까지 진행하야함
+        //보라색 부분만 수정하면 됨
+        String cardName = CardList.Deep_Dream_체크.getCardName();
+
+        //아래 변수들 직접 채워 넣어야함
+
+
+        Card findCard = findCardByName(cardName);
+        String bankName = findCard.getBank().getBankName();
+        Bank findBank = findBankByBankName(bankName);
+
+        Account findAccount = findAccount(findUser, findBank);
+
+        UserCard build = UserCard.builder()
+                .account(findAccount)
+                .card(findCard)
+                .password("0000")
+                .serialNumber(faker.numerify("####-####-####-####"))
+                .isPerformanced(false)
+                .validDate("12/25")
+                .cvc("000")
+                .performanceLevel(0)
+                .totalPrice(0)
+                .build();
+        userCardRepository.save(build);
+
+    }
+
+    public Account findAccount(User user, Bank bank) {
+        return jpaQueryFactory
+                .select(account)
+                .from(account)
+                .where(account.bank.eq(bank),
+                        account.user.eq(user))
+                .fetchOne();
     }
 
 
