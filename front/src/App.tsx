@@ -7,6 +7,7 @@ import coco from "@/assets/images/COCO.png";
 import { PATH } from "@/constants/path";
 import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
 function App() {
   const navigate = useNavigate();
@@ -26,7 +27,6 @@ function App() {
     >
       <Container>
         <Image src={coco} width={10} />
-        
         <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="large">
           로그인
         </Button>
