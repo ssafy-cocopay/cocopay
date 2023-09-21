@@ -15,3 +15,9 @@ export const CardListContainer = styled.div`
   height: 100vh;
   max-width: 390px;
 `;
+
+export const CardDetailContainer = styled.div`
+  height: 100vh;
+  max-width: 390px;
+  padding: 36px 24px;
+`;
