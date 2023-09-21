@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 type ContainerProps = {
+  height?: string;
   margin?: string;
   marginTop?: string;
   padding?: string;
@@ -15,7 +16,7 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => (props.left ? "flex-start" : "center")};
-  height: 100vh;
+  height: ${(props) => props.height || "100vh"};
   width: 100%;
   max-width: 390px;
   margin: ${(props) => props.margin || "0 auto"};

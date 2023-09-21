@@ -21,7 +21,7 @@ export interface ButtonProps
   $color?: string;
   $width?: string;
 }
-      // TODO: borderRadius값이 적용 안됨 .. 
+// TODO: borderRadius값이 적용 안됨 ..
 const Button = (
   {
     option,
@@ -39,7 +39,6 @@ const Button = (
 ) => {
   return (
     <>
-
       <S.Button
         ref={ref}
         option={option}
