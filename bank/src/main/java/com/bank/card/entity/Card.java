@@ -25,7 +25,7 @@ public class Card {
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    @Column(name = "card_name", length = 20, nullable = false)
+    @Column(name = "card_name", length = 50, nullable = false)
     private String cardName;
 
     @Column(name = "type", nullable = false)
