@@ -25,7 +25,7 @@ const getSizeStyling = (size: Required<TextProps>["size"] = "heading1") => {
     `,
     subtitle1: css`
       font-size: ${({ theme }) => theme.fontSize.subtitle1};
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     `,
     subtitle2: css`
       font-size: ${({ theme }) => theme.fontSize.subtitle2};
@@ -54,7 +54,7 @@ const getFontWeightStyling = (weight?: TextProps["fontWeight"]) => {
     case "bold":
       return "bold";
     case "medium":
-      return "550"; // 'medium'의 경우 CSS에서 표준 값은 500
+      return "500"; // 'medium'의 경우 CSS에서 표준 값은 500
     case "light":
       return "300"; // 'light'의 경우 CSS에서 표준 값은 300
     default:
@@ -70,4 +70,4 @@ const Text = styled.p<TextProps>`
   font-weight: ${(props) => getFontWeightStyling(props.fontWeight)};
 `;
 
-export { Text };
+export { Text, getFontWeightStyling };
