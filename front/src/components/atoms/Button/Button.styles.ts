@@ -22,6 +22,9 @@ const getOptionStyling = (
     `,
     dashed: css`
       background: ${({ theme }) => theme.color.white};
+      border: 0.1em dashed;
+      border-color: ${({ theme }) => theme.color.grey3};
+      color: ${({ theme }) => theme.color.grey1};
     `,
     danger: css`
       background: ${({ theme }) => theme.color.danger};
@@ -67,6 +70,7 @@ const Button = styled.button<ButtonProps>`
     ${({ size = "large" }) => getSizeStyling(size)};
     ${({ option = "default", ...props }) => getOptionStyling(option, props)};
   border-radius: ${(props) => props.$borderRadius || "23px"};
+  font-size: ${(props) => props.$fontSize || "20px"};
   background-color: ${(props) => props.$backgroundColor};
   margin-top: 10px; // 임시
 `;
