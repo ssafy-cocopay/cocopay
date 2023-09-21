@@ -70,7 +70,6 @@ public class DummyTest {
         userCard.setUser(user);
         userCard.setCocoType(cocoType);
         userCard.setSerialNumber(faker.numerify("####-####-####-####"));
-        userCard.setCardType(1);
         userCard.setCardName("카드이름");
         userCard.setValidDate("12-25");
         userCard.setVisa(true);
