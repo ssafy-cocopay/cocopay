@@ -2,7 +2,6 @@ package com.cocopay.payment.apicall;
 
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
-import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.usercard.entity.UserCard;
 import lombok.RequiredArgsConstructor;
