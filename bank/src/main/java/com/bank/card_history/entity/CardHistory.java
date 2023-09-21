@@ -33,9 +33,6 @@ public class CardHistory {
     @Column(name = "amount", nullable = false)
     private Long amount;
 
-    @Column(name = "category")
-    private String category;
-
     @Column(name = "store", nullable = false, length = 20)
     private String store;
 
