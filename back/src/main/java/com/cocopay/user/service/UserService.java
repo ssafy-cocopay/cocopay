@@ -2,7 +2,9 @@ package com.cocopay.user.service;
 
 import com.cocopay.redis.redishash.key.AuthHash;
 import com.cocopay.redis.redishash.repository.AuthHashRepository;
+import com.cocopay.user.dto.request.CheckPasswordDto;
 import com.cocopay.user.dto.request.LoginRequestDto;
+import com.cocopay.user.dto.request.PasswordUpdateDto;
 import com.cocopay.user.dto.request.UserJoinDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
@@ -61,10 +63,10 @@ public class UserService {
 
     public void login(LoginRequestDto loginRequestDto) {
         User findUser = userRepository.findById(loginRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("잘못된 요청 응애"));
+                .orElseThrow(() -> new RuntimeException("잘못된 요청"));
 
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), findUser.getPassword())) {
-            throw new RuntimeException("비밀번호 틀림 응애");
+            throw new RuntimeException("비밀번호 틀림");
         }
     }
 
@@ -86,6 +88,26 @@ public class UserService {
         User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("잘못된 요청"));
 
         findUser.setRecommendType(recommendType);
+        userRepository.save(findUser);
+    }
+
+    public boolean checkPassword(CheckPasswordDto checkPasswordDto)
+    {
+        User findUser = userRepository.findById(checkPasswordDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("잘못된 요청"));
+
+        if (!passwordEncoder.matches(checkPasswordDto.getPassword(), findUser.getPassword())) {
+            return false;
+        }
+        return true;
+    }
+
+    public void updatePassword(PasswordUpdateDto passwordUpdateDto)
+    {
+        User findUser = userRepository.findById(passwordUpdateDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("잘못된 요청"));
+
+        findUser.setPassword(passwordUpdateDto.getPassword());
         userRepository.save(findUser);
     }
 

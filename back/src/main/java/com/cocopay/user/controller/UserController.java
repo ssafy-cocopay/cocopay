@@ -1,10 +1,7 @@
 package com.cocopay.user.controller;
 
 import com.cocopay.redis.redishash.service.AuthKeyService;
-import com.cocopay.user.dto.request.AuthCheckDto;
-import com.cocopay.user.dto.request.AuthRequestDto;
-import com.cocopay.user.dto.request.LoginRequestDto;
-import com.cocopay.user.dto.request.UserJoinDto;
+import com.cocopay.user.dto.request.*;
 import com.cocopay.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +49,6 @@ public class UserController {
         return ResponseEntity.ok("OK");
     }
 
-    @PutMapping("/password")
-    public ResponseEntity<?> updatePassword(){
-        return null;
-    }
 
     @PostMapping("/login/bio")
     public ResponseEntity<?> loginByBio() {
@@ -84,5 +77,21 @@ public class UserController {
         return ResponseEntity.ok("OK");
     }
 
+    //비밀번호 체크
+    @PostMapping("/check")
+    public ResponseEntity<?> checkPassword(@RequestBody CheckPasswordDto checkPasswordDto)
+    {
+        if(!userService.checkPassword(checkPasswordDto))
+            throw new RuntimeException();
+        return ResponseEntity.ok("OK");
+    }
+
+    //비밀번호 변경
+    @PutMapping("/password")
+    public ResponseEntity<?> updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto)
+    {
+        userService.updatePassword(passwordUpdateDto);
+        return ResponseEntity.ok("OK");
+    }
 
 }
