@@ -27,4 +27,11 @@ public class UserCardController {
     public ResponseEntity<List<UserCard>> FindUserCard(@PathVariable("userId") Integer userid){
         return ResponseEntity.ok(userCardService.findUserCardList(userid));
     }
+
+    //카드 삭제
+    @DeleteMapping("/{cardId}")
+    public ResponseEntity<?> DeleteUserCard(@PathVariable("cardId") Integer cardId){
+        userCardService.deleteUserCard(cardId);
+        return ResponseEntity.ok("사용자 카드 삭제 성공");
+    }
 }
