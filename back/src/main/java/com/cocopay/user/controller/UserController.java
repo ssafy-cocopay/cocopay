@@ -2,6 +2,8 @@ package com.cocopay.user.controller;
 
 import com.cocopay.redis.redishash.service.AuthKeyService;
 import com.cocopay.user.dto.request.*;
+import com.cocopay.user.dto.response.UserCardResponseListDto;
+import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ public class UserController {
 
     private final UserService userService;
     private final AuthKeyService authKeyService;
+    private final UserApiCallService userApiCallService;
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(@RequestBody AuthRequestDto authRequestDto) {
@@ -92,6 +95,16 @@ public class UserController {
     {
         userService.updatePassword(passwordUpdateDto);
         return ResponseEntity.ok("OK");
+    }
+
+    // 사용자 카드 불러오기
+    @GetMapping("/card/{uuid}")
+    public ResponseEntity<?> getUserCardList(@PathVariable Integer uuid)
+    {
+        UserCardResponseListDto result = userApiCallService.getUserCardFromBank(uuid);
+        userService.insertUserCard(result.getUserCardList());
+
+        return ResponseEntity.ok(result.getUserCardList());
     }
 
 }

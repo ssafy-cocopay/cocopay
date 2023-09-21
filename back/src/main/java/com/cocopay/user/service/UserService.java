@@ -8,11 +8,14 @@ import com.cocopay.user.dto.request.PasswordUpdateDto;
 import com.cocopay.user.dto.request.UserJoinDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
+import com.cocopay.usercard.dto.UserCardDto;
+import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.util.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -91,24 +94,27 @@ public class UserService {
         userRepository.save(findUser);
     }
 
-    public boolean checkPassword(CheckPasswordDto checkPasswordDto)
-    {
+    public boolean checkPassword(CheckPasswordDto checkPasswordDto) {
+        System.out.println(checkPasswordDto.getUserId());
         User findUser = userRepository.findById(checkPasswordDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("잘못된 요청"));
 
-        if (!passwordEncoder.matches(checkPasswordDto.getPassword(), findUser.getPassword())) {
-            return false;
-        }
-        return true;
+        return passwordEncoder.matches(checkPasswordDto.getPassword(), findUser.getPassword());
     }
 
-    public void updatePassword(PasswordUpdateDto passwordUpdateDto)
-    {
+    public void updatePassword(PasswordUpdateDto passwordUpdateDto) {
         User findUser = userRepository.findById(passwordUpdateDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("잘못된 요청"));
 
-        findUser.setPassword(passwordUpdateDto.getPassword());
+        findUser.setPassword(passwordEncoder.encode(passwordUpdateDto.getPassword()));
         userRepository.save(findUser);
+    }
+
+    public void insertUserCard(List<UserCardDto> userCardList) {
+        //매퍼
+
+        //save
+
     }
 
 }
