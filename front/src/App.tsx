@@ -4,13 +4,15 @@ import { Background } from "@/components/atoms/Background/Background.styles";
 import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import coco from "@/assets/images/COCO.png";
+import { Image } from "@/components/atoms/Image/Image";
+import { Container } from "@/components/atoms/Container/Container.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { InputContainer } from "./components/atoms/Input/Input.styles";
 import Input from "./components/atoms/Input/Input";
 
 function App() {
   const navigate = useNavigate();
-
   const navigatePage = (path: string) => {
     navigate(path);
   };
