@@ -4,13 +4,13 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import cardlistCard1 from "@/assets/images/img-card1.png"
 import cardlistKorea from "@/assets/images/img-kor.png"
 import iconHamburgerGrey from "@/assets/images/icon-hamburger-grey.png"
-import { SHr, SLayout, SContainer, SHamburgerContainer } from "./CardItem.styles"
+import * as S from "./CardItem.styles"
 
 
 const CardItem = () => {
     return (
         <div>
-            <SLayout>
+            <S.Layout>
                 <Image
                 src={cardlistCard1}
                 width={90}
@@ -18,8 +18,8 @@ const CardItem = () => {
                 $unit="px"
                 >
                 </Image>
-                <div
-                style={{padding:"8px 0 8px 12px"}}
+                <S.Wrapper
+                padding="8px 0 8px 12px"
                 >
                     <Image
                         src={cardlistKorea}
@@ -28,12 +28,12 @@ const CardItem = () => {
                         $unit="px"
                         margin="0 8px 0 0"
                         >
-                        </Image>
-                </div>
-                <div
-                style={{padding:"8px 12px 8px 0"}}
+                    </Image>
+                </S.Wrapper>
+                <S.Wrapper
+                padding="8px 12px 8px 0"
                 >
-                    <SContainer
+                    <S.Container
                     style={{margin:"0 0 8px 0"}}
                     >
                         <Text
@@ -43,8 +43,8 @@ const CardItem = () => {
                         >
                         위버스 신한카드 체크(BTS)
                         </Text>
-                    </SContainer>
-                    <SContainer>
+                    </S.Container>
+                    <S.Container>
                         <Text
                         size="small3"
                         fontWeight="light"
@@ -60,9 +60,9 @@ const CardItem = () => {
                         >
                             3571-89**-****-4485
                         </Text>
-                    </SContainer>
-                </div>
-                <SHamburgerContainer>
+                    </S.Container>
+                </S.Wrapper>
+                <S.HamburgerContainer>
                     <Image
                     src={iconHamburgerGrey}
                     width={16}
@@ -70,9 +70,9 @@ const CardItem = () => {
                     $unit="px"
                     >
                     </Image>
-                </SHamburgerContainer>
-            </SLayout>
-            <SHr />
+                </S.HamburgerContainer>
+            </S.Layout>
+            <S.Hr />
         </div>
     )
 }

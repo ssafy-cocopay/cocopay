@@ -3,7 +3,7 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { CardListContainer } from "@/components/atoms/Container/Container.styles"
 import React from "react"
 import { Background } from "@/components/atoms/Background/Background.styles";
-import { SHr, SLayout } from "@/pages/CardListPage/CardListPage.styles"
+import { Hr, Layout } from "@/pages/CardListPage/CardListPage.styles"
 import Button from "@/components/atoms/Button/Button"
 import iconPlusGrey from "@/assets/images/icon-plus-grey.png"
 import { Image } from '@/components/atoms/Image/Image';
@@ -41,9 +41,9 @@ const CardListPage = () => {
                 >
                     오른쪽 아이콘을 눌러 카드 순서를 변경할 수 있어요.
                 </Text>
-                <SHr />
+                <Hr />
                 <CardItem />
-                <SLayout>
+                <Layout>
                     <Button
                     option="dashed"
                     size="medium"
@@ -59,7 +59,7 @@ const CardListPage = () => {
                         </Image>
                         카드 등록
                     </Button>
-                </SLayout>
+                </Layout>
             </CardListContainer>
         </Background>
     )

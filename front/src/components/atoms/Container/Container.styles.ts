@@ -14,5 +14,4 @@ export const Container = styled.div`
 export const CardListContainer = styled.div`
   height: 100vh;
   max-width: 390px;
-  
 `;
