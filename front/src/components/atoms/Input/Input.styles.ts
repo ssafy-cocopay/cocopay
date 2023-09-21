@@ -14,14 +14,14 @@ const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
   const style = {
     // 기본 input
     text: css`
-      border: 1.25px solid ${({ theme }) => theme.color.grey2};
+      border: 1.75px solid ${({ theme }) => theme.color.grey3};
       display: flex;
       flex-direction: row;
       justify-content: center;
       color: ${({ theme }) => theme.color.black1};
       background-color: ${({ theme }) => theme.color.white2};
       /* text-align: center; */
-      padding-left: 24px; //TODO : 패딩설정 다시
+      padding-left: 24px; //TODO: 패딩설정 다시
 
       &:focus {
         outline: none;

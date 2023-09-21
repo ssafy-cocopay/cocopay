@@ -22,6 +22,7 @@ const PATH = {
   PAYONLINE: "/pay/online",
   PAYONLINECOMPLETE: "/pay/online/complete",
   MAIN: "/main",
+  QRCAMERA: "/main/qrcamera"
 } as const;
 
 export { PATH };

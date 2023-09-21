@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "user_card")
@@ -48,6 +49,6 @@ public class UserCard {
     @Column(name = "performance_level")
     private Integer performanceLevel;
 
-    @Column(name = "total_price")
+    @Column(name = "total_price", nullable = false)
     private Integer totalPrice;
 }
