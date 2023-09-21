@@ -34,6 +34,7 @@ public class PaymentController {
 
     @PostMapping("/online/pick")
     public ResponseEntity cardPick(@RequestBody PickDto pickDto) {
-        return null;
+        paymentService.cardPick(pickDto);
+        return ResponseEntity.ok("결제 요청 완료!!");
     }
 }
