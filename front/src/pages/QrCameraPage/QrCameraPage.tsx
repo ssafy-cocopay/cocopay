@@ -1,7 +1,7 @@
 import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react"
 
-const HomePage = () => {
+const QrCameraPage = () => {
     return (
         <Background
         colormode="blue"
@@ -9,9 +9,9 @@ const HomePage = () => {
             minHeight: "100vh"
         }}
         >
-            홈페이지
+            QR 카메라 페이지
         </Background>
     )
 }
 
-export default HomePage;
+export default QrCameraPage;

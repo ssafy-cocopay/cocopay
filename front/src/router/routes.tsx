@@ -24,6 +24,7 @@ import MypageWithdrawalPage from "@/pages/MyPageWithdrawalPage/MyPageWithdrawalP
 import PayOnlinePage from "@/pages/PayOnlinePage/PayOnlinePage";
 import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineCompletePage";
 import MainPage from "@/pages/MainPage/MainPage";
+import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: PATH.CARDLIST,
         element: <CardListPage />,
+      },
+      {
+        path: PATH.QRCAMERA,
+        element: <QrCameraPage />,
       },
       {
         path: PATH.SCAN_CARDINFO,
