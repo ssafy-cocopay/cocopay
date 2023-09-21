@@ -58,4 +58,9 @@ public class UserCardService {
         userCardRepository.save(userCard);
         return userCard;
     }
+
+    //사용자 카드 조회
+    public List<UserCard> findUserCardList(Integer userId){
+        return userCardRepository.FindUserCard(userId);
+    }
 }
