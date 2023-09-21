@@ -49,6 +49,6 @@ public class UserCard {
     @Column(name = "performance_level")
     private Integer performanceLevel;
 
-//    @Column(name = "total_price", nullable = false)
-//    private Integer totalPrice;
+    @Column(name = "total_price", nullable = false)
+    private Integer totalPrice;
 }
