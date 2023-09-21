@@ -26,13 +26,14 @@ function App() {
     >
       <Container>
         <Image src={coco} width={10} />
-        <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="medium">
+        
+        <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="large">
           로그인
         </Button>
         <Button
           onClick={() => navigatePage(PATH.SIGNUP)}
           option="activated"
-          size="medium"
+          size="large"
         >
           회원가입
         </Button>
