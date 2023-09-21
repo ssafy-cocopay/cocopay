@@ -12,6 +12,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   option?: "default" | "activated" | "deActivated" | "dashed" | "danger";
   size?: "small" | "medium" | "large";
+  $fontSize?: string;
   $backgroundColor?: string;
   $borderColor?: string;
   $border?: string;

@@ -1,5 +1,5 @@
 import { Background } from "@/components/atoms/Background/Background.styles";
-import NavBar from "@/components/organisms/NavBar/NavBar";
+import NavBar from "@/components/molecules/NavBar/NavBar";
 import React from "react";
 import { Outlet } from "react-router-dom";
 

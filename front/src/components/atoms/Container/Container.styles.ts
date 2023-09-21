@@ -8,5 +8,11 @@ export const Container = styled.div`
   height: 100vh;
   max-width: 390px;
   margin: 0 auto;
-  padding: 36px;
+  padding: 0 36px;
+`;
+
+export const CardListContainer = styled.div`
+  height: 100vh;
+  max-width: 390px;
+  
 `;
