@@ -12,13 +12,7 @@ import java.time.LocalDateTime;
 public class UserResponseDto {
     private Integer uuid;
 
-    private String email;
-
     private String name;
 
     private String tel;
-
-    private LocalDateTime registedDate;
-
-    private LocalDateTime withdrawDate;
 }
