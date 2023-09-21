@@ -1,4 +1,4 @@
-package com.bank.performance.dto;
+package com.cocopay.payment.dto.res;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
