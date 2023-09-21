@@ -4,7 +4,7 @@ import React from "react"
 const HomePage = () => {
     return (
         <Background
-        colormode="gradient"
+        colormode="blue"
         style={{
             minHeight: "100vh"
         }}

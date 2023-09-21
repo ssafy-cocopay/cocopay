@@ -3,16 +3,18 @@ package com.bank.performance.service;
 import com.bank.card.entity.Card;
 import com.bank.card.repository.card.CardRepository;
 import com.bank.performance.dto.PerformanceRegistDto;
-import com.bank.performance.dto.PerformanceResponseListDto;
+import com.bank.performance.dto.PerformanceResponseDto;
 import com.bank.performance.entity.Performance;
 import com.bank.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PerformanceService {
 
@@ -40,8 +42,8 @@ public class PerformanceService {
     }
 
     //실적 전체 조회
-    public List<PerformanceResponseListDto> findPerformanceList(List<Integer> cardUuidList){
-        System.out.println(cardUuidList.get(0));
+    public List<PerformanceResponseDto> findPerformanceList(List<Integer> cardUuidList){
+        log.info("cardUuidList : {}", cardUuidList);
         return performanceRepository.findPerformanceByCardList(cardUuidList);
 
     }

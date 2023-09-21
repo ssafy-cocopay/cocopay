@@ -16,3 +16,13 @@ spring:
         show_sql: true
     hibernate:
       ddl-auto: update
+
+  data:
+    redis:
+      port: 6379
+      host: j9b208.p.ssafy.io
+      password: 'ssafy'
+
+bank:
+  local-url : http://localhost:8081/bank/
+  url : https://j9b208.p.ssafy.io/bank/
