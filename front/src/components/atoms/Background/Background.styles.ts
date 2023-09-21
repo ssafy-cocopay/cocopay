@@ -15,6 +15,9 @@ const Background = styled.div<BackgroundProps>`
         return props.theme.color.white;
     }
   }};
+  background-size: 100% 100%;
+  height: 100vh;
+  width: 100vw;
 `;
 
 export { Background };

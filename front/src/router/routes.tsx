@@ -71,21 +71,22 @@ const router = createBrowserRouter([
       {
         path: PATH.CARDLIST,
         element: <CardListPage />,
-        children: [
-          { index: true, element: <CardDetailPage /> },
-          {
-            path: PATH.SCAN_CARDINFO,
-            element: <ScanCardInfoPage />,
-          },
-          {
-            path: PATH.CARD_DETAIL_PURCHASED,
-            element: <CardDetailPurchasedPage />,
-          },
-        ],
+      },
+      {
+        path: PATH.SCAN_CARDINFO,
+        element: <ScanCardInfoPage />,
       },
       {
         path: PATH.STATISTICS,
         element: <StatisticsPage />,
+      },
+      {
+        path: PATH.CARD_DETAIL,
+        element: <CardDetailPage />,
+      },
+      {
+        path: PATH.CARD_DETAIL_PURCHASED,
+        element: <CardDetailPurchasedPage />,
       },
       {
         path: PATH.MYPAGE,
@@ -93,10 +94,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: PATH.HOME,
-    element: <HomePage />,
-  },
+  // {
+  //   path: PATH.HOME,
+  //   element: <HomePage />,
+  // },
   {
     path: PATH.PAYOFFLINE,
     element: <PayOfflinePage />,
