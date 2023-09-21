@@ -15,6 +15,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,5 +63,12 @@ public class UserCardService {
     //사용자 카드 조회
     public List<UserCard> findUserCardList(Integer userId){
         return userCardRepository.FindUserCard(userId);
+    }
+
+    //사용자 카드 삭제
+    public void deleteUserCard(Integer cardId){
+        Optional<UserCard> userCard = userCardRepository.findById(cardId);
+        userCard.get().setWithdrawDate(LocalDateTime.now());
+        userCardRepository.save(userCard.get());
     }
 }
