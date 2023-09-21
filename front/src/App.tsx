@@ -4,6 +4,7 @@ import { Background } from "@/components/atoms/Background/Background.styles";
 import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import coco from "@/assets/images/COCO.png";
+import { PATH } from "@/constants/path";
 import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
 
@@ -15,40 +16,28 @@ function App() {
 
   return (
     <Background
-      // colormode="white"
+      colormode="blue"
       style={{
-        // minHeight: "100vh",
+        minHeight: "100vh",
         paddingTop: "100px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <div className="App">COCOPAY</div>
-      {/* <InputContainer inputType="text"> */}
-      <Input inputType="text"></Input>
-      <Button
-        onClick={() => navigatePage(PATH.LOGIN_FINGER)}
-        size="medium"
-        $width="200px"
-      >
-        로그인
-      </Button>
-      <Button
-        onClick={() => navigatePage(PATH.SIGNUP)}
-        option="activated"
-        size="medium"
-        $width="200px"
-      >
-        회원가입
-      </Button>
-      <Button option="deActivated" size="medium" $width="200px">
-        확인
-      </Button>
-      <Button option="danger" size="medium" $width="200px">
-        활성화
-      </Button>
-      <button style={{ width: "100px", marginTop: "30px" }}>인증하기</button>
+      <Container>
+        <Image src={coco} width={10} />
+        <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="medium">
+          로그인
+        </Button>
+        <Button
+          onClick={() => navigatePage(PATH.SIGNUP)}
+          option="activated"
+          size="medium"
+        >
+          회원가입
+        </Button>
+      </Container>
     </Background>
   );
 }
