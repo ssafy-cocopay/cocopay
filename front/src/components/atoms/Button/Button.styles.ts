@@ -12,8 +12,8 @@ const getOptionStyling = (
     `,
     activated: css`
       background: ${({ theme }) => theme.color.blue};
-      border: none;
       color: ${({ theme }) => theme.color.white};
+      border-color: ${({ theme }) => theme.color.white};
     `,
     deActivated: css`
       background: ${({ theme }) => theme.color.grey4};
@@ -61,12 +61,12 @@ const Button = styled.button<ButtonProps>`
   width: ${(props) => props.$width || "100%"};
   text-align: ${(props) => props.$textAlign || "center"};
   color: ${(props) => props.color || props.theme.color.black1};
-  border-radius: ${(props) => props.$borderRadius || "23px"};
   border: ${(props) =>
     props.$border ||
     `1.5px solid ${props.$borderColor || props.theme.color.blue}`};
-  ${({ size = "large" }) => getSizeStyling(size)};
-  ${({ option = "default", ...props }) => getOptionStyling(option, props)};
+    ${({ size = "large" }) => getSizeStyling(size)};
+    ${({ option = "default", ...props }) => getOptionStyling(option, props)};
+  border-radius: ${(props) => props.$borderRadius || "23px"};
   background-color: ${(props) => props.$backgroundColor};
   margin-top: 10px; // 임시
 `;
