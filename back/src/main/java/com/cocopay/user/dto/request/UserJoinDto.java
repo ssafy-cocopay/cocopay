@@ -1,4 +1,4 @@
-package com.cocopay.user.dto;
+package com.cocopay.user.dto.request;
 
 import lombok.Data;
 import lombok.Getter;
@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 public class UserJoinDto {
     private String name;
     private String birth;
-    private int sex;
     private String company;
     private String tel;
-
+    private String password;
 }
