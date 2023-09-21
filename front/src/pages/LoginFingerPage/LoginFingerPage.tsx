@@ -2,18 +2,26 @@ import React from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import Back from "@/components/atoms/Back/Back";
-import { createTrue } from "typescript";
+import { Text } from "@/components/atoms/Text/Text.styles";
 
 const LoginFingerPage = () => {
   return (
-    <Background
-      colormode="gradient"
-      style={{
-        minHeight: "100vh",
-      }}
-    >
+    <Background colormode="gradient">
       <Container border={true} left={true} paddingTop="36px">
         <Back>뒤로가기</Back>
+        <Container
+          marginTop="36px"
+          paddingTop="63px"
+          $backgroundColor="white"
+          $borderRadius="38px"
+        >
+          <Text size="subtitle1" fontWeight="bold">
+            지문 등록
+          </Text>
+          <Text size="body1" fontWeight="medium">
+            지문 인증을 완료해주세요
+          </Text>
+        </Container>
       </Container>
     </Background>
   );

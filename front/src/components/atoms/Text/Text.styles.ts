@@ -25,6 +25,7 @@ const getSizeStyling = (size: Required<TextProps>["size"] = "heading1") => {
     `,
     subtitle1: css`
       font-size: ${({ theme }) => theme.fontSize.subtitle1};
+      margin-bottom: 14px;
     `,
     subtitle2: css`
       font-size: ${({ theme }) => theme.fontSize.subtitle2};
@@ -62,10 +63,11 @@ const getFontWeightStyling = (weight?: TextProps["fontWeight"]) => {
 };
 
 const Text = styled.p<TextProps>`
-  ${({ size = "heading1" }) => getSizeStyling(size)};
-  color: ${(props) => props.color ? props.theme.color[props.color] : props.theme.color.black1};
-  font-weight: ${(props) => getFontWeightStyling(props.fontWeight)};
   margin: ${(props) => props.margin || "0"};
+  ${({ size = "heading1" }) => getSizeStyling(size)};
+  color: ${(props) =>
+    props.color ? props.theme.color[props.color] : props.theme.color.black1};
+  font-weight: ${(props) => getFontWeightStyling(props.fontWeight)};
 `;
 
 export { Text };
