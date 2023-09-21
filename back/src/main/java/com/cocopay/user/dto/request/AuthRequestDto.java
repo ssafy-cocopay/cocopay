@@ -1,4 +1,4 @@
-package com.cocopay.user.dto;
+package com.cocopay.user.dto.request;
 
 import lombok.Data;
 import lombok.Getter;

@@ -1,13 +1,10 @@
 package com.cocopay.payment.apicall;
 
-import com.cocopay.payment.dto.req.OnlinePayPostDto;
-import com.cocopay.usercard.entity.UserCard;
+import com.cocopay.payment.dto.req.CardUuidListDto;
+import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -17,26 +14,19 @@ import java.util.List;
 public class ApiCallService {
 
     //해당 카드 실적 관련 정보 조회
-    public OnlinePayPostDto userCardPerformanceInfo(List<UserCard> findUserCardList) {
+    public PerformanceResponseListDto userCardPerformanceInfo(List<Integer> findUserCardList) {
         WebClient webClient = WebClient.create();
-
-        //api call 요청 보낼 body 만들기
-        MultipartBodyBuilder builder = new MultipartBodyBuilder();
-        builder.part("cardList", findUserCardList);
-
-        MultiValueMap<String, HttpEntity<?>> body = builder.build();
+        CardUuidListDto cardUuidList = new CardUuidListDto(findUserCardList);
 
         //api 주소
-        String url = "";
+        String url = "http://localhost:8081/bank/performance/list";
 
-        //임시 동기 요청
         return webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(body)
+                .bodyValue(cardUuidList)
                 .retrieve()
-                .bodyToMono(OnlinePayPostDto.class)
+                .bodyToMono(PerformanceResponseListDto.class)
                 .block();
-
     }
 }
