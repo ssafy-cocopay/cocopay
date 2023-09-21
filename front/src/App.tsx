@@ -4,36 +4,25 @@ import { Background } from "@/components/atoms/Background/Background.styles";
 import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
-import { Text } from "@/components/atoms/Text/Text.styles";
+import coco from "@/assets/images/COCO.png";
+import { Image } from "@/components/atoms/Image/Image";
+import { Container } from "@/components/atoms/Container/Container.styles";
 
 function App() {
   const navigate = useNavigate();
-
   const navigatePage = (path: string) => {
     navigate(path);
   };
 
   return (
-    <Background
-      colormode="blue"
-      style={{
-        // minHeight: "100vh",
-        paddingTop: "100px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Text color="white" size={"heading1"} fontWeight="bold">
-        COCO
-      </Text>
-      <Button size="medium" $width="200px">
-        로그인
-      </Button>
-      <Button size="medium" option="activated" $width="200px">
-        회원가입
-      </Button>
-      <button style={{ width: "100px", marginTop: "30px" }}>인증하기</button>
+    <Background colormode="blue">
+      <Container>
+        <Image src={coco} width={10} style={{}} />
+        <Button size="large">로그인</Button>
+        <Button size="large" option="activated">
+          회원가입
+        </Button>
+      </Container>
     </Background>
   );
 }
