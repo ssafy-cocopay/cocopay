@@ -24,7 +24,7 @@ function App() {
         alignItems: "center",
       }}
     >
-      <Container>
+      <Container margin="50px 0">
         <Wrapper flexGrow={4}>
           <Image src={coco} width={10} />
         </Wrapper>
