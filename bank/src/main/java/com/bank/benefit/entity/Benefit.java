@@ -1,14 +1,15 @@
 package com.bank.benefit.entity;
 
 import com.bank.card.entity.Card;
+import com.bank.card_history.entity.DiscountType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "benefit",indexes = @Index(name = "idx__store_name", columnList = "category"))
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Benefit {
@@ -34,5 +35,5 @@ public class Benefit {
     private Integer limit;
 
     @Column(name = "type")
-    private Boolean type;
+    private DiscountType discountType;
 }
