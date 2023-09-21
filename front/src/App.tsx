@@ -19,24 +19,27 @@ function App() {
     <Background
       colormode="blue"
       style={{
-        paddingTop: "100px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
       <Container>
-        <Image src={coco} width={10} />
-        <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="large">
-          로그인
-        </Button>
-        <Button
-          onClick={() => navigatePage(PATH.SIGNUP)}
-          option="activated"
-          size="large"
-        >
-          회원가입
-        </Button>
+        <Wrapper flexGrow={4}>
+          <Image src={coco} width={10} />
+        </Wrapper>
+        <Wrapper flexGrow={2}>
+          <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="large">
+            로그인
+          </Button>
+          <Button
+            onClick={() => navigatePage(PATH.SIGNUP)}
+            option="activated"
+            size="large"
+          >
+            회원가입
+          </Button>
+        </Wrapper>
       </Container>
     </Background>
   );
