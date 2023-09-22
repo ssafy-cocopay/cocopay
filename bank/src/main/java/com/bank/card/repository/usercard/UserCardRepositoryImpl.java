@@ -21,6 +21,8 @@ import java.util.Optional;
 import static com.bank.card.entity.QUserCard.userCard;
 import static com.bank.card.entity.QCard.card;
 import static com.bank.performance.entity.QPerformance.performance;
+import static com.bank.user.entity.QUser.user;
+import static com.bank.account.entity.QAccount.account;
 
 
 @RequiredArgsConstructor
@@ -61,6 +63,23 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
 //                .where(userCard.id.eq(cardUuid))
 //                .fetchOne());
         return null;
+    }
+
+    @Override
+    public List<UserCardDto> findUserCardListByUuid(Integer uuid){
+        return jpaQueryFactory
+                .select(Projections.fields(UserCardDto.class,
+                        userCard.id.as("userCardId"),
+                        userCard.serialNumber,
+                        card.type.as("cardType"),
+                        card.cardName,
+                        userCard.validDate,
+                        card.visa,card.master,
+                        card.cardDefaultImage))
+                .from(userCard)
+                .join(account).on(account.id.eq(userCard.account.id))
+                .join(user).on(user.uuid.eq(account.user.uuid))
+                .fetch();
     }
 
     @Override
