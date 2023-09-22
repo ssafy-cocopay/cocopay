@@ -20,7 +20,7 @@ type CardListContainerProps = {
 export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
-  align-items: ${(props) => (props.left ? "flex-start" : "center")};
+  align-items: ${(props) => (props.left ? "none" : "center")};
   height: ${(props) => props.height || "100vh"};
   width: 100%;
   max-width: 390px;
