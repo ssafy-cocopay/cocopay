@@ -2,12 +2,13 @@ import theme from "@/styles/theme";
 import { css, styled } from "styled-components";
 
 export interface InputStyleProps {
-  inputType?: "text"; // TODO: password 만들기
+  inputType?: "text" | "dropdown"; //TODO: password 만들기
   height?: number | string;
   $borderRadius?: number;
   $unit?: "rem" | "px" | "em" | "%";
   fontSize?: typeof theme.fontSize;
   paddingLeft?: number | string;
+  textAlign?: string;
 }
 
 const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
@@ -20,7 +21,6 @@ const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
       justify-content: center;
       color: ${({ theme }) => theme.color.black1};
       background-color: ${({ theme }) => theme.color.white2};
-      /* text-align: center; */
       padding-left: 24px; //TODO: 패딩설정 다시
 
       &:focus {
@@ -30,6 +30,18 @@ const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
 
       &:focus::placeholder {
         color: transparent;
+      }
+    `,
+    dropdown: css`
+      border: 1.75px solid ${({ theme }) => theme.color.grey4};
+      display: flex;
+      background-color: ${({ theme }) => theme.color.white};
+      color: ${({ theme }) => theme.color.black1};
+      padding-left: 24px;
+
+      &:focus {
+        outline: none;
+        border: 2px solid ${({ theme }) => theme.color.lightblue};
       }
     `,
     //password 용 input
@@ -48,6 +60,7 @@ const InputContainer = styled.input<InputStyleProps>`
   border-radius: ${(props) => `${props.$borderRadius}px` || "10px"};
   font-size: ${(props) => props.fontSize};
   padding-left: ${(props) => props.paddingLeft};
+  text-align: ${(props) => props.textAlign || "none"};
 `;
 
 export { InputContainer };

@@ -9,11 +9,13 @@ const getOptionStyling = (
     default: css`
       background: ${({ theme }) => theme.color.white};
       color: ${({ theme }) => theme.color.blue};
+      font-weight: bold;
     `,
     activated: css`
       background: ${({ theme }) => theme.color.blue};
       color: ${({ theme }) => theme.color.white};
       border-color: ${({ theme }) => theme.color.white};
+      font-weight: bold;
     `,
     deActivated: css`
       background: ${({ theme }) => theme.color.grey5};
@@ -67,8 +69,8 @@ const Button = styled.button<ButtonProps>`
   border: ${(props) =>
     props.$border ||
     `1.5px solid ${props.$borderColor || props.theme.color.blue}`};
-    ${({ size = "large" }) => getSizeStyling(size)};
-    ${({ option = "default", ...props }) => getOptionStyling(option, props)};
+  ${({ size = "large" }) => getSizeStyling(size)};
+  ${({ option = "default", ...props }) => getOptionStyling(option, props)};
   border-radius: ${(props) => props.$borderRadius || "23px"};
   font-size: ${(props) => props.$fontSize || "20px"};
   background-color: ${(props) => props.$backgroundColor};
