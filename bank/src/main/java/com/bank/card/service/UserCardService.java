@@ -65,14 +65,15 @@ public class UserCardService {
             return new PayResponseDto(userCard.getCard().getCardName(), null);
         }
         //benefit id가 조회가 됐다면 할인 적용해서 결제 프로세스 진행하면 됨.
-        else return paymentWithBenefitId(paymentRequestDto);
+        else return paymentWithBenefitId(result, paymentRequestDto);
     }
 
     // 리팩토링 우선순위 매우 높음
-    public PayResponseDto paymentWithBenefitId(PaymentRequestDto paymentRequestDto) {
-        Integer cardUuid = paymentRequestDto.getCardUuid();
-        Integer benefitId = paymentRequestDto.getBenefitId();
-        Benefit findBenefit = benefitRepository.findById(benefitId).orElseThrow(() -> new RuntimeException("할인 NOT_FOUND"));
+    public PayResponseDto paymentWithBenefitId(List<BenefitInfoResponseDto> test, PaymentRequestDto paymentRequestDto) {
+        BenefitInfoResponseDto testDto = test.get(0);
+        Integer cardUuid = testDto.getCardUuid();
+        //Integer benefitId = paymentRequestDto.getBenefitId();
+        Benefit findBenefit = benefitRepository.findById(testDto.getBenefitId()).orElseThrow(() -> new RuntimeException("할인 NOT_FOUND"));
         Integer discount = (int) (paymentRequestDto.getRequestPrice() * ((findBenefit.getDiscount()) / 100.0)); //할인금액
         Integer discountPrice = paymentRequestDto.getRequestPrice() - discount; //할인되서 실제로 결제되는 금액
 
@@ -81,7 +82,7 @@ public class UserCardService {
         log.info("할인이 적용된 가격 : " + discountPrice);
 
         //할인한도까지의 남은 금액 가져오기
-        UserCardBenefit findUserCardBenefit = userCardBenefitRepository.findUserCardBenefit(cardUuid, benefitId);
+        UserCardBenefit findUserCardBenefit = userCardBenefitRepository.findUserCardBenefit(cardUuid, testDto.getBenefitId());
         Integer discountAmount = findUserCardBenefit.getDiscountAmount();
 
         log.info("할인한도까지 남은 금액 " + discountAmount);
