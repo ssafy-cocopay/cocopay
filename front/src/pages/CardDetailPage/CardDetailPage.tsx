@@ -97,7 +97,7 @@ const CardDetailPage = () => {
             <Performance />
             </WhiteRoundedBox>
             <WhiteRoundedBox
-            height="500px"
+            height="auto"
             margin="0 0 20px 0"
             padding="28px"
             >

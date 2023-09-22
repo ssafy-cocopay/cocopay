@@ -22,6 +22,7 @@ const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
       color: ${({ theme }) => theme.color.black1};
       background-color: ${({ theme }) => theme.color.white2};
       padding-left: 24px; //TODO: 패딩설정 다시
+      width: 100%;
 
       &:focus {
         outline: none;

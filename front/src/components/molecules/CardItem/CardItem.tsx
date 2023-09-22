@@ -22,7 +22,7 @@ const CardItem = () => {
             margin="0 8px 0 0"
             style={{margin: "8px 0 8px 12px"}}
           ></Image>
-        <Wrapper padding="0 0 0 8px" center={false}>
+        <Wrapper padding="0 0 0 8px">
           <CardItemWrapper 
           margin="0 0 8px 0">
             <Text size="small2" fontWeight="regular" color="black1">
