@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CardOfferResponseDto {
+public class CardOfferResDto {
     private int cardUuid;
 
     private String serialNumber;
