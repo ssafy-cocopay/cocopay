@@ -29,7 +29,6 @@ const CardDetailPage = () => {
             minHeight: "100vh"
         }}
         >
-            카드 상세정보 페이지
         <CardListContainer
         padding="36px 24px"
         >

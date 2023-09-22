@@ -14,7 +14,7 @@ const CardDetailPurchasedPage = () => {
         <Background
         colormode="gradient"
         style={{
-            minHeight: "100vh",
+            height: "calc(100vh + 200px)", 
             padding: "40px 24px"
         }}
         >
