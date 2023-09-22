@@ -5,6 +5,7 @@ import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
+import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.OrderKey;
@@ -34,7 +35,7 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
 
     //온라인 결제
-    public List<CardOfferResponseDto> onlinePay(OnlinePayPostDto postDto) {
+    public OnlineResponse<?> onlinePay(OnlinePayPostDto postDto) {
         //사용자 카드 목록 조회
         List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(postDto.getUserId());
 
@@ -60,7 +61,7 @@ public class PaymentService {
             return null;
         } else {
             log.info("실적 우선으로 계산 진행");
-            return performanceFirst(responseDtoList);
+            return new OnlineResponse<>(responseDtoList);
         }
     }
 
