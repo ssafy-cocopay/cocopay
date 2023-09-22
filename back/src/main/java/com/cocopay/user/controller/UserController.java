@@ -5,10 +5,13 @@ import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
+import com.cocopay.usercard.dto.UserCardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -98,13 +101,11 @@ public class UserController {
     }
 
     // 사용자 카드 불러오기
-    @GetMapping("/card/{uuid}")
-    public ResponseEntity<?> getUserCardList(@PathVariable Integer uuid)
-    {
-        UserCardResponseListDto result = userApiCallService.getUserCardFromBank(uuid);
-        userService.insertUserCard(result.getUserCardList());
-
-        return ResponseEntity.ok(result.getUserCardList());
+    @GetMapping("/card/{userId}")
+    public ResponseEntity<?> getUserCardList(@PathVariable Integer userId) {
+        UserCardResponseListDto result = userApiCallService.getUserCardFromBank(userId);
+        userService.insertUserCard(result.getUserCardList(), userId);
+        return ResponseEntity.ok(result);
     }
 
 }

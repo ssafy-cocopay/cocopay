@@ -10,11 +10,13 @@ import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.UserCardDto;
 import com.cocopay.usercard.entity.UserCard;
+import com.cocopay.usercard.repository.UserCardRepository;
 import com.cocopay.util.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,6 +27,7 @@ public class UserService {
     private final AuthHashRepository authHashRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final UserCardRepository userCardRepository;
 
     public String sendRandomMessage(String tel) {
         Naver_Sens_V2 message = new Naver_Sens_V2();
@@ -110,11 +113,32 @@ public class UserService {
         userRepository.save(findUser);
     }
 
-    public void insertUserCard(List<UserCardDto> userCardList) {
+    public void insertUserCard(List<UserCardDto> userCardList, Integer userId) {
+        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저 찾을수없음"));
+        Integer uuid = findUser.getUuid();
+
+        List<UserCard> list = new ArrayList<>();
         //매퍼
+        int cnt = 1;
+        for (UserCardDto u : userCardList) {
+            UserCard userCard = UserCard.builder()
+                    .user(findUser)
+                    .cocoType(false)
+                    .cardUuid(u.getUserCardId())
+                    .serialNumber(u.getSerialNumber())
+                    .cardOrder(cnt)
+                    .cardType(u.getCardType())
+                    .cardName(u.getCardName())
+                    .validDate(u.getValidDate())
+                    .visa(u.isVisa())
+                    .master(u.isMaster())
+                    .cardDefaultImage(u.getCardDefaulImage())
+                    .build();
 
-        //save
-
+            userCardRepository.save(userCard);
+            cnt ++;
+            //batch 사용 여지 있음
+        }
     }
 
 }
