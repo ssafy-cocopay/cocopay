@@ -3,7 +3,7 @@ package com.cocopay.payment.service;
 import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
-import com.cocopay.payment.apicall.dto.req.UserCardBenefitInfoResponseListDto;
+import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
@@ -11,6 +11,7 @@ import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.OrderKey;
+import com.cocopay.redis.service.BenefitKeyService;
 import com.cocopay.redis.service.OrderKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
@@ -34,13 +35,13 @@ public class PaymentService {
     private final ApiCallService apiCallService;
     private final PerformanceKeyService performanceKeyService;
     private final OrderKeyService orderKeyService;
+    private final BenefitKeyService benefitKeyService;
     private final PaymentMapper paymentMapper;
 
     //온라인 결제
     public OnlineResponse<?> onlinePay(OnlinePayPostDto postDto) {
         //사용자 카드 목록 조회
         List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(postDto.getUserId());
-
         log.info("findUserCardList : {}", findUserCardList);
 
         //api call
@@ -49,8 +50,10 @@ public class PaymentService {
         PerformanceResponseListDto performanceInfoList = apiCallService.userCardPerformanceInfo(findUserCardList);
         log.info("사용자 카드 실적 정보 조회 끝");
 
+        //사용자 카드 실적 정보 redis 저장
         performanceKeyService.performanceKeySave(performanceInfoList.getPerformanceList());
 
+        //사용자 카드 우선순위와 실적 정보 매핑 진행
         List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList, postDto.getOrderPrice());
 
         //주문 정보 저장
@@ -61,19 +64,31 @@ public class PaymentService {
         //실적 우선, 할인 우선 분기
         if (findUser.isRecommendType()) {
             log.info("할인 우선으로 계산 진행");
-            //redis에 있는 주문 정보 가져옴 (카테고리, 매장명)ㄴ
+            //redis에 있는 주문 정보 가져옴 (카테고리, 매장명)
             OrderKey orderKey = orderKeyService.findOrderKey(findUser.getId());
+
+            //실적 달성했는 지 확인
 
             UserCardBenefitBodyDto benefitBodyDto = paymentMapper.toBenefitBodyDto(responseDtoList, orderKey.getCategory(), orderKey.getStoreName());
 
             log.info("사용자 카드들의 혜택 조회 api call 진행");
-            UserCardBenefitInfoResponseListDto responseListDto = apiCallService.userCardBenefitApiCall(benefitBodyDto);
+            List<UserCardBenefitInfoResponseDto> benefitResDto = apiCallService.userCardBenefitApiCall(benefitBodyDto);
             log.info("사용자 카드들의 혜택 조회 api call 끝");
+            log.info("혜택 조회 정보 redis 저장");
+            benefitKeyService.benefitSave(benefitResDto);
+
             return null;
         } else {
             log.info("실적 우선으로 계산 진행");
             return new OnlineResponse<>(performanceFirst(responseDtoList));
         }
+    }
+
+    //할인 우선
+    //전월실적 달성 여부 필터링 stream filter 사용
+
+    public void benefitFirst() {
+
     }
 
     //실적 우선
@@ -92,12 +107,6 @@ public class PaymentService {
                 .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
                         .thenComparing(CardOfferResponseDto::getCardOrder))
                 .toList();
-    }
-
-    //할인 우선
-    //전월실적 달성 여부 필터링 stream filter 사용
-    public void benefitFirst(List<UserCard> userCardList, UserCardBenefitInfoResponseListDto responseListDto) {
-
     }
 
     //해당 유저 조회
