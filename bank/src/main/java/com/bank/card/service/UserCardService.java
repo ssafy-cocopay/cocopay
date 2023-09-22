@@ -55,8 +55,9 @@ public class UserCardService {
         if (result.size() == 0) {
             UserCard userCard = userCardRepository.findById(paymentRequestDto.getCardUuid()).get(); // 유저카드 조회
 
-            accountService.minus(userCard.getAccount().getNum(), paymentRequestDto.getRequestPrice()); //계좌 출금
-            CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, userCard, Long.valueOf(paymentRequestDto.getRequestPrice()), 0, null);
+            //계좌 출금
+            CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, userCard, Long.valueOf(paymentRequestDto.getRequestPrice()),
+                    accountService.minus(userCard.getAccount().getNum(), paymentRequestDto.getRequestPrice()), null, null);
             cardHistoryRepository.save(cardHistory);
             userCard.setTotalPrice(userCard.getTotalPrice() + paymentRequestDto.getRequestPrice());
             userCardRepository.save(userCard);
@@ -71,11 +72,11 @@ public class UserCardService {
     public PayResponseDto paymentWithBenefitId(PaymentRequestDto paymentRequestDto) {
         Integer cardUuid = paymentRequestDto.getCardUuid();
         Integer benefitId = paymentRequestDto.getBenefitId();
-        Optional<Benefit> findBenefit = benefitRepository.findById(benefitId);
-        Integer discount = (int) (paymentRequestDto.getRequestPrice() * ((findBenefit.get().getDiscount()) / 100.0)); //할인금액
+        Benefit findBenefit = benefitRepository.findById(benefitId).orElseThrow(() -> new RuntimeException("할인 NOT_FOUND"));
+        Integer discount = (int) (paymentRequestDto.getRequestPrice() * ((findBenefit.getDiscount()) / 100.0)); //할인금액
         Integer discountPrice = paymentRequestDto.getRequestPrice() - discount; //할인되서 실제로 결제되는 금액
 
-        log.info("할인율 : " + findBenefit.get().getDiscount());
+        log.info("할인율 : " + findBenefit.getDiscount());
         log.info("할인 금액 : " + discount);
         log.info("할인이 적용된 가격 : " + discountPrice);
 
@@ -88,12 +89,14 @@ public class UserCardService {
         UserCard userCard = userCardRepository.findById(paymentRequestDto.getCardUuid()).get();
         //accountService.minus(userCard.getAccount().getNum(), paymentRequestDto.getRequestPrice());
 
-        if (discountAmount > discountPrice) {
+        if (discountAmount >= discount) {
             //할인율 적용된 가격으로 결제 때리고, 결제내역 남기기, 할인현황 수정하기
-            accountService.minus(userCard.getAccount().getNum(), discountPrice);
-
             //결제내역 남기기
-            CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, userCard, Long.valueOf(discountPrice), 0, discount);
+            CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto,
+                    userCard,
+                    Long.valueOf(discountPrice),
+                    accountService.minus(userCard.getAccount().getNum(), discountPrice),
+                    discount,findBenefit.getDiscountType());
             cardHistoryRepository.save(cardHistory);
 
             //할인현황 수정하기
@@ -105,16 +108,16 @@ public class UserCardService {
             userCardRepository.save(userCard);
 
             return new PayResponseDto(userCard.getCard().getCardName(), discount);
-        } else { //할인현황으로 결제하고, 할인현황 수정하기
-            accountService.minus(userCard.getAccount().getNum(), discountAmount);
-            CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, userCard, Long.valueOf(discountAmount), 0, discount);
+        } else { //할인 한도가 부족할때,
+            int requestPrince = paymentRequestDto.getRequestPrice() - discountAmount;
+            CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, userCard, (long) requestPrince, accountService.minus(userCard.getAccount().getNum(), requestPrince), discountAmount, findBenefit.getDiscountType());
             cardHistoryRepository.save(cardHistory);
             findUserCardBenefit.setDiscountAmount(0);
             userCardBenefitRepository.save(findUserCardBenefit);
             userCard.setTotalPrice(userCard.getTotalPrice() + discountPrice);
             userCardRepository.save(userCard);
 
-            return new PayResponseDto(userCard.getCard().getCardName(), discount);
+            return new PayResponseDto(userCard.getCard().getCardName(), discountAmount);
         }
     }
 
