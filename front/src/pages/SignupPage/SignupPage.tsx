@@ -1,13 +1,16 @@
 import React from "react";
-
+import { Image } from "@/components/atoms/Image/Image";
 import { useLocation, useNavigate } from "react-router-dom";
-// import {} from "./SignupPage.styles";
-import Button from "@/components/atoms/Button/Button";
+
 import { PATH } from "@/constants/path";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Input from "@/components/atoms/Input/Input";
 import { Text } from "@/components/atoms/Text/Text.styles";
+import Dots from "@/assets/images/img-dots-row-gray.png";
+import Button from "@/components/atoms/Button/Button";
+import Input from "@/components/atoms/Input/Input";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+
 interface FormValue {
   name: string;
   identification_number: number;
@@ -33,15 +36,23 @@ const SignupPage = () => {
   return (
     <Container border={true} paddingTop="70px">
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <div>
+        <Container border={true} padding="none" left={true}>
           <Text size="subtitle1">
             코코페이 이용을 위해
             <br /> <b>본인확인</b>을 진행해주세요.
           </Text>
           <Input placeholder="이름을 작성해주세요"></Input>
-          <Input placeholder="주민등록번호 앞자리"></Input>
-          <Text size="subtitle1">-</Text>
-          <Input width={35} textAlign="center" paddingLeft={0}></Input>
+          <Wrapper
+            flexDirection="row"
+            alignItems="flex-start"
+            justifyContent="space-between"
+          >
+            <Input placeholder="주민등록번호 앞자리" width={122}></Input>
+            <Text size="subtitle1">-</Text>
+            <Input width={35} textAlign="center" paddingLeft={0}></Input>
+            <Image src={Dots} width={30} height={15} $unit="%"></Image>
+          </Wrapper>
+          <br />
 
           {/* <input
             id="name"
@@ -111,7 +122,7 @@ const SignupPage = () => {
           >
             확인
           </Button>
-        </div>
+        </Container>
       </form>
     </Container>
   );
