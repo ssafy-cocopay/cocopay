@@ -1,7 +1,9 @@
 package com.cocopay.user.service;
 
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.user.dto.request.UserFindRequestDto;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
+import com.cocopay.user.dto.response.UserFindResponseDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.entity.UserCard;
@@ -37,6 +39,18 @@ public class UserApiCallService {
                 .uri(localUrl + "card/card-list/" + uuid)
                 .retrieve()
                 .bodyToMono(UserCardResponseListDto.class)
+                .block();
+    }
+
+    public UserFindResponseDto getUserUuid(UserFindRequestDto userFindRequestDto)
+    {
+        WebClient webClient = WebClient.create();
+
+        return webClient.post()
+                .uri(localUrl + "user").contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(userFindRequestDto)
+                .retrieve()
+                .bodyToMono(UserFindResponseDto.class)
                 .block();
     }
 }
