@@ -13,7 +13,7 @@ public class BenefitKey {
     @Id
     String cardUuid;
 
-    //할인금액
+    //할인율 ex) 2% 5% 10%...
     private Integer discount;
 
     //혜택 한도
