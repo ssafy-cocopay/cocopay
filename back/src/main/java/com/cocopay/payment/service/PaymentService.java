@@ -4,7 +4,7 @@ import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
 import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
-import com.cocopay.payment.dto.req.OnlinePayPostDto;
+import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
@@ -41,10 +41,23 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
     private final UserService userService;
 
+    //오토체인징 사용 분기
+    public OnlineResponse<?> autoOrDirect(PayPostDto payPostDto) {
+        if (payPostDto.getCardId() == null) {
+            //다이렉트로 결제 요청 진행
+        }else {
+            return autoChanging(payPostDto.getUserId(),
+                    payPostDto.getCategory(),
+                    payPostDto.getStoreName(),
+                    payPostDto.getOrderPrice());
+        }
+        return null;
+    }
+
     //온라인 결제
-    public OnlineResponse<?> autoChanging(OnlinePayPostDto postDto) {
+    public OnlineResponse<?> autoChanging(int userId, String category, String storeName, int orderPrice) {
         //사용자 카드 목록 조회
-        List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(postDto.getUserId());
+        List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(userId);
         log.info("findUserCardList : {}", findUserCardList);
 
         //api call
@@ -57,12 +70,12 @@ public class PaymentService {
         performanceKeyService.performanceKeySave(performanceInfoList.getPerformanceList());
 
         //사용자 카드 우선순위와 실적 정보 매핑 진행
-        List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList, postDto.getOrderPrice());
+        List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList, orderPrice);
 
         //주문 정보 저장
-        orderKeyService.orderKeySave(postDto);
+        orderKeyService.orderKeySave(userId, category, storeName,orderPrice);
 
-        User findUser = userService.findUserById(postDto.getUserId());
+        User findUser = userService.findUserById(userId);
 
         //실적 우선, 할인 우선 분기
         if (findUser.isRecommendType()) {
@@ -101,7 +114,7 @@ public class PaymentService {
             if (benefitKey.isPresent()) {
                 BenefitKey findBenefitKey = benefitKey.get();
                 //할인 예정 금엑
-                int discounted = (int)(orderPrice * (findBenefitKey.getDiscount() * 0.01));
+                int discounted = (int) (orderPrice * (findBenefitKey.getDiscount() * 0.01));
                 //사용자의 해당 혜택 남은 금액
                 int discountAmount = findBenefitKey.getDiscountAmount();
 
@@ -120,31 +133,41 @@ public class PaymentService {
                 co.setDiscounted(0);
             }
         }
-        //정렬 조건
-        // 1. 최종 금액 내림차순
-        // 2. 같다면 카드 우선 순위 오름차순
+        return benefitSort(responseDtoList);
+    }
+
+    //실적 우선
+    public List<CardOfferResponseDto> performanceFirst(List<CardOfferResponseDto> responseDtoList) {
+        return performanceSort(responseDtoList);
+    }
+
+    //할인 정렬 진행
+    //정렬 조건
+    // 1. 최종 금액 내림차순
+    // 2. 같다면 카드 우선 순위 오름차순
+    public List<CardOfferResponseDto> benefitSort(List<CardOfferResponseDto> responseDtoList) {
         return responseDtoList.stream()
                 .sorted(Comparator.comparing(CardOfferResponseDto::getFinalPrice)
                         .thenComparing(CardOfferResponseDto::getCardOrder))
                 .toList();
     }
 
-    //실적 우선
-    public List<CardOfferResponseDto> performanceFirst(List<CardOfferResponseDto> responseDtoList) {
-        //정렬 조건
-        // 1. 실적 단계가 가장 낮은 거
-        // 2. 같을 경우 사용자 우선 순위 낮은 거
-        //버전2 정렬 조건
+    //실적 정렬 진행
+    //정렬 조건
+    // 1. 실적 단계가 가장 낮은 거
+    // 2. 같을 경우 사용자 우선 순위 낮은 거
+    public List<CardOfferResponseDto> performanceSort(List<CardOfferResponseDto> responseDtoList) {
+        // 반환 정보들 하나로 합 친 방식
+        return responseDtoList.stream()
+                .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
+                        .thenComparing(CardOfferResponseDto::getCardOrder))
+                .toList();
+        //반환 정보들 분할
 //        return responseDtoList.stream()
 //                .sorted(Comparator
 //                        .comparing((CardOfferResponseDto2 dto) -> dto.getPerformance().getLevel()) // 1번 조건
 //                        .thenComparing((CardOfferResponseDto2 dto) -> dto.getCard().getCardOrder())) // 2번 조건
 //                .toList();
-
-        return responseDtoList.stream()
-                .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
-                        .thenComparing(CardOfferResponseDto::getCardOrder))
-                .toList();
     }
 
     //실적 달성 확인
@@ -153,10 +176,6 @@ public class PaymentService {
                 .filter(CardOfferResponseDto::isPastPerformance)
                 .toList();
     }
-
-    //해당 유저 조회
-    //UserService에 생겨야 하는 메서드임
-    //해당 부분 UserService에 생기면 제거 후 di하여 사용
 
 
     public void cardPick(PickDto pickDto) {
