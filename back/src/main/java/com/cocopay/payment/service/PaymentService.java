@@ -8,7 +8,7 @@ import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
-import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.payment.dto.res.PerformanceResListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.BenefitKey;
 import com.cocopay.redis.key.OrderKey;
@@ -58,12 +58,12 @@ public class PaymentService {
     public OnlineResponse<?> autoChanging(int userId, String category, String storeName, int orderPrice) {
         //사용자 카드 목록 조회
         List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(userId);
-        log.info("findUserCardList : {}", findUserCardList);
+        log.info("코코카드 제외한 유저 카드 갯수 : {}", findUserCardList.size());
 
         //api call
         //사용자 카드 실적 정보 조회
         log.info("사용자 카드 실적 정보 조회 진행");
-        PerformanceResponseListDto performanceInfoList = apiCallService.userCardPerformanceInfo(findUserCardList);
+        PerformanceResListDto performanceInfoList = apiCallService.userCardPerformanceInfo(findUserCardList);
         log.info("사용자 카드 실적 정보 조회 끝");
 
         //사용자 카드 실적 정보 redis 저장

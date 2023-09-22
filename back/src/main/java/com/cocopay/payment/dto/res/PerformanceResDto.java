@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PerformanceResponseDto {
+public class PerformanceResDto {
 
     //사용자 카드 id
     private int cardUuid;

@@ -1,7 +1,7 @@
 package com.cocopay.redis.service;
 
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
-import com.cocopay.payment.dto.res.PerformanceResponseDto;
+import com.cocopay.payment.dto.res.PerformanceResDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.redis.mapper.RedisMapper;
@@ -27,7 +27,7 @@ public class PerformanceKeyService {
     private final PaymentMapper paymentMapper;
 
     //사용자 카드 실적 정보 redis 저장
-    public void performanceKeySave(List<PerformanceResponseDto> dtoList) {
+    public void performanceKeySave(List<PerformanceResDto> dtoList) {
 
         List<PerformanceKey> performanceKeyList = redisMapper.toPerformanceKeyList(dtoList);
         log.info("redis에 저장할 개수 : {}", performanceKeyList.size());

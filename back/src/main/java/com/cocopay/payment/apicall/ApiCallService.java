@@ -5,7 +5,7 @@ import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitInfoResponseListDto;
 import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
-import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.payment.dto.res.PerformanceResListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.usercard.entity.UserCard;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class ApiCallService {
 
 
     //해당 카드 실적 관련 정보 조회
-    public PerformanceResponseListDto userCardPerformanceInfo(List<UserCard> findUserCardList) {
+    public PerformanceResListDto userCardPerformanceInfo(List<UserCard> findUserCardList) {
         WebClient webClient = WebClient.create();
 
         List<Integer> list = new ArrayList<>();
@@ -47,7 +47,7 @@ public class ApiCallService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(cardUuidList)
                 .retrieve()
-                .bodyToMono(PerformanceResponseListDto.class)
+                .bodyToMono(PerformanceResListDto.class)
                 .block();
     }
 
