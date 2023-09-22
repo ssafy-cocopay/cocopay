@@ -12,6 +12,11 @@ type ContainerProps = {
   left?: boolean; // left={true}시 왼쪽정렬
 };
 
+type CardListContainerProps = {
+  margin?: string;
+  padding?: string;
+}
+
 export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
@@ -28,7 +33,9 @@ export const Container = styled.div<ContainerProps>`
   border-radius: ${(props) => props.$borderRadius || 0};
 `;
 
-export const CardListContainer = styled.div`
+export const CardListContainer = styled.div<CardListContainerProps>`
   height: 100vh;
   max-width: 390px;
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin|| '0 auto'};
 `;

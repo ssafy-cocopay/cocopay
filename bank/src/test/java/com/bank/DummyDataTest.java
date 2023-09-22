@@ -13,6 +13,7 @@ import com.bank.card.entity.CardType;
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.card.CardRepository;
 import com.bank.card.repository.usercard.UserCardRepository;
+import com.bank.enumlist.CardList;
 import com.bank.performance.entity.Performance;
 import com.bank.performance.repository.PerformanceRepository;
 import com.bank.user.entity.User;
@@ -41,6 +42,7 @@ import static com.bank.card.entity.QCard.card;
 public class DummyDataTest {
 
     Faker faker = new Faker(new Locale("ko"));
+
 
     JPAQueryFactory jpaQueryFactory;
 
@@ -98,18 +100,15 @@ public class DummyDataTest {
     @Test
     public void userDummy() {
 
+
         for (int i = 0; i < 10; i++) {
             User user = new User();
 
             String name = faker.name().fullName().replace(" ", "");
-            String email = faker.bothify("???####@gmail.com");
             String tel = faker.bothify("010-####-####");
-            String password = faker.internet().password(4, 13);
 
             user.setName(name);
             user.setTel(tel);
-            user.setPassword(password);
-            user.setEmail(email);
 
             userService.registUser(user);
         }
@@ -139,6 +138,7 @@ public class DummyDataTest {
 
     @Test
     public void accountDummy() {
+
         List<User> userList = userRepository.findAll();
 
         List<Bank> bankList = bankRepository.findAll();
@@ -207,7 +207,6 @@ public class DummyDataTest {
         benefit.setStoreName("CGV");
         benefit.setDiscount(20);
         benefit.setLimit(3000);
-        benefit.setType(true);
 
         benefitRepository.save(benefit);
     }
