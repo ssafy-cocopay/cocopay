@@ -34,36 +34,46 @@ const ScanCardInfoPage = () => {
 
   return (
     <Container border={true} paddingTop="70px">
-      <Container border={true} padding="none">
-        <Text size="subtitle1">카드정보</Text>
-        <Container border={true} padding="none" left={true}>
+      <Container padding="none">
+        <Text size="subtitle1">카드 정보</Text>
+        <Container padding="none" left={true}>
           <Wrapper flexDirection="row" justifyContent="start">
             <Image src={CardImg} width={13} $unit="%"></Image>
-            <Text size="small1">카드 정보를 입력 해 주세요.</Text>
+            <Text margin="10px" size="body2">
+              카드 정보를 입력 해 주세요.
+            </Text>
           </Wrapper>
+
           <br />
+          {/* TODO: 카드번호 사이에 '-' 넣기, 중간 글씨 '*'로 표시*/}
           <Text size="small1">카드번호</Text>
           <Input></Input>
-          <Wrapper justifyContent="start"></Wrapper>
-          <Wrapper>
-            <Text size="small1">유효 기간</Text>
-            <Input placeholder="MM / YY"></Input>
+          <Wrapper justifyContent="space-between" flexDirection="row">
+            <Wrapper alignItems="left">
+              <Text size="small1">유효 기간</Text>
+              {/* TODO: placeholder안에 글씨 작게하기 */}
+              {/* TODO: 숫자 2개 입력 후 자동으로 / 나오게 하기 */}
+              <Input placeholder="MM / YY"></Input>
+            </Wrapper>
+            <Wrapper alignItems="left">
+              <Text size="small1">CVC</Text>
+              <Input placeholder="카드 뒷면 3자리"></Input>
+            </Wrapper>
           </Wrapper>
-          <Wrapper>
-            <Text size="small1">CVC</Text>
-            <Input placeholder="카드 뒷면 3자리"></Input>
-          </Wrapper>
-          {/* TODO: placeholder만 작게하고 입력값은 크게 */}
+          {/* TODO: 비밀번호 type 패스워드로 해서 **로 보이게 설정 */}
           <Text size="small1">카드 비밀번호</Text>
           <Input placeholder="비밀번호 앞 2자리 숫자"></Input>
-          {/* <Button
-          onClick={() => navigatePage(PATH.CARD_DETAIL)}
-          option="activated"
-          size="medium"
-          $width="200px"
-        >
-          카드 등록
-        </Button> */}
+
+          <br />
+          <Button
+            onClick={() => navigatePage(PATH.CARD_DETAIL)}
+            $borderRadius="10px"
+            option="activated"
+            size="medium"
+          >
+            {/*TODO:카드등록 버튼 end로 바꾸기 */}
+            카드 등록
+          </Button>
         </Container>
       </Container>
     </Container>
