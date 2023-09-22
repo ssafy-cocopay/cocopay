@@ -1,8 +1,11 @@
 package com.cocopay.payment.mapper;
 
+import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto2;
 import com.cocopay.payment.dto.res.CardResponseDto;
+import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.usercard.entity.UserCard;
 import org.mapstruct.Mapper;
@@ -29,4 +32,13 @@ public interface PaymentMapper {
 
     @Mapping(source = "id", target = "cardUuid")
     CardResponseDto toCardResponseDto(UserCard userCard);
+
+    @Mapping(source = "pickDto.cardUuid",target = "cardUuid")
+    @Mapping(source = "pickDto.requestPrice",target = "requestPrice")
+    @Mapping(source = "pickDto.transactionType",target = "transactionType")
+    @Mapping(source = "pickDto.discountType",target = "discountType")
+    @Mapping(source = "pickDto.benefitId",target = "benefitId")
+    @Mapping(source = "key.category",target = "category")
+    @Mapping(source = "key.storeName",target = "store")
+    PaymentRequestDto toPaymentRequestDto(OrderKey key, PickDto pickDto);
 }

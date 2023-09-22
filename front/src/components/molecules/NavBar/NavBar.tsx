@@ -36,8 +36,8 @@ const NavBar = () => {
   const nowPath = location.pathname;
 
   return (
-    <nav>
-      <StyledNavBarBackground>
+    <nav >
+      <StyledNavBarBackground style={{marginTop: '100px'}}>
         <Image src={navbarBackground} width={100} $unit="%"></Image>
       </StyledNavBarBackground>
       <StyledNavBar>
