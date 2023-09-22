@@ -2,10 +2,8 @@ package com.cocopay.user.service;
 
 import com.cocopay.redis.redishash.key.AuthHash;
 import com.cocopay.redis.redishash.repository.AuthHashRepository;
-import com.cocopay.user.dto.request.CheckPasswordDto;
-import com.cocopay.user.dto.request.LoginRequestDto;
-import com.cocopay.user.dto.request.PasswordUpdateDto;
-import com.cocopay.user.dto.request.UserJoinDto;
+import com.cocopay.user.dto.request.*;
+import com.cocopay.user.dto.response.UserFindResponseDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.UserCardDto;
@@ -30,6 +28,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserCardRepository userCardRepository;
+    private final UserApiCallService userApiCallService;
 
     public String sendRandomMessage(String tel) {
         Naver_Sens_V2 message = new Naver_Sens_V2();
@@ -56,15 +55,20 @@ public class UserService {
     public void join(UserJoinDto userJoinDto) {
         // 똑같은 번호 있으면 빠꾸시켜야됨
 
+        // uuid 불러오기
+        UserFindResponseDto result = userApiCallService.getUserUuid(new UserFindRequestDto(userJoinDto.getTel()));
+
         // 저장
         User user = User.builder()
-                .uuid(0)
+                .uuid(result.getUuid())
                 .name(userJoinDto.getName())
                 .age(0)
                 .birth(userJoinDto.getBirth())
                 .tel(userJoinDto.getTel())
                 .password(passwordEncoder.encode(userJoinDto.getPassword()))
                 .build();
+
+        userRepository.save(user);
 
         // 사용자카드 코코페이 저장
         UserCard userCard = UserCard.builder()
@@ -76,7 +80,7 @@ public class UserService {
                 .build();
         userCardRepository.save(userCard);
 
-        userRepository.save(user);
+
     }
 
     public void login(LoginRequestDto loginRequestDto) {
