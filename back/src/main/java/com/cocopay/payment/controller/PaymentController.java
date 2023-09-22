@@ -22,7 +22,7 @@ public class PaymentController {
     @PostMapping("/online")
     public ResponseEntity onlinePay(@RequestBody OnlinePayPostDto onlinePayPostDto) {
 
-        OnlineResponse<?> onlineResponse = paymentService.onlinePay(onlinePayPostDto);
+        OnlineResponse<?> onlineResponse = paymentService.autoChanging(onlinePayPostDto);
 
         return ResponseEntity.ok(onlineResponse);
     }

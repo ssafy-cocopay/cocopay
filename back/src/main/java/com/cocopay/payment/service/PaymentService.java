@@ -17,6 +17,7 @@ import com.cocopay.redis.service.OrderKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
+import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +39,10 @@ public class PaymentService {
     private final OrderKeyService orderKeyService;
     private final BenefitKeyService benefitKeyService;
     private final PaymentMapper paymentMapper;
+    private final UserService userService;
 
     //온라인 결제
-    public OnlineResponse<?> onlinePay(OnlinePayPostDto postDto) {
+    public OnlineResponse<?> autoChanging(OnlinePayPostDto postDto) {
         //사용자 카드 목록 조회
         List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(postDto.getUserId());
         log.info("findUserCardList : {}", findUserCardList);
@@ -60,7 +62,7 @@ public class PaymentService {
         //주문 정보 저장
         orderKeyService.orderKeySave(postDto);
 
-        User findUser = findUser(postDto.getUserId());
+        User findUser = userService.findUserById(postDto.getUserId());
 
         //실적 우선, 할인 우선 분기
         if (findUser.isRecommendType()) {
@@ -155,12 +157,7 @@ public class PaymentService {
     //해당 유저 조회
     //UserService에 생겨야 하는 메서드임
     //해당 부분 UserService에 생기면 제거 후 di하여 사용
-    public User findUser(int userId) {
-        Optional<User> findUser = userRepository.findById(userId);
 
-        return findUser
-                .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
-    }
 
     public void cardPick(PickDto pickDto) {
         //주문 정보(카테고리, 매장명) 조회 후 매핑 진행
