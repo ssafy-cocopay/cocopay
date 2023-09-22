@@ -61,4 +61,12 @@ public class UserCardController {
         UserCardDetailResponseDto userCardDetailResponseDto = userCardService.findUserCardDetail(cardId);
         return ResponseEntity.ok(userCardDetailResponseDto);
     }
+
+    //카드 우선순위 변경
+
+    @PostMapping("/order")
+    public ResponseEntity<?> setCardOrder(@RequestBody UserCardListDto userCardListDto){
+        userCardService.setCardOrder(userCardListDto.getCardUuidList());
+        return ResponseEntity.ok("우선순위 변경 완료");
+    }
 }
