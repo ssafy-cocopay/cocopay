@@ -14,14 +14,10 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
     //사용자 등록
     public void registUser(User user) {
         //이메일, 휴대폰 번호 등 회원가입 중복 체크 일단 안함
-        
-        //비밀번호 암호화
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
     }
@@ -34,14 +30,5 @@ public class UserService {
         //조회 결과 유효한지 판단 후 return
         return findUser
                 .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
-    }
-
-    //사용자 탈퇴
-    public void deleteUser(int uuid) {
-        User findUser = findUser(uuid, null);
-
-        findUser.setWithdrawDate(LocalDateTime.now());
-
-        userRepository.save(findUser);
     }
 }
