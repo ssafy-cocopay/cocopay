@@ -12,15 +12,15 @@ const CardItem = () => {
     <div>
       <S.Layout>
         <Image src={cardImg1} width={90} height={56} $unit="px"></Image>
-          <Image
-            src={korImg}
-            width={24}
-            height={16}
-            $unit="px"
-            margin="0 8px 0 0"
-            style={{margin: "8px 0 8px 12px"}}
-          ></Image>
-        <Wrapper padding="0 0 0 8px" center={false}>
+        <Image
+          src={korImg}
+          width={24}
+          height={16}
+          $unit="px"
+          margin="0 8px 0 0"
+          style={{ margin: "8px 0 8px 12px" }}
+        ></Image>
+        <Wrapper padding="0 0 0 8px" alignItems="flex-start">
           <S.Container style={{ margin: "0 0 8px 0" }}>
             <Text size="small2" fontWeight="regular" color="black1">
               위버스 신한카드 체크(BTS)

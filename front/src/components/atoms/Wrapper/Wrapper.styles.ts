@@ -3,14 +3,17 @@ import styled from "styled-components";
 type WrapperProps = {
   padding?: string;
   flexGrow?: number;
-  center?: boolean;
+  flexDirection?: string;
+  alignItems?: string; // left={true}시 왼쪽정렬
+  justifyContent?: string;
 };
 
 export const Wrapper = styled.div<WrapperProps>`
   display: flex;
-  flex-direction: column;
-  align-items: ${(props) => props.center ? "center" : "none"};
-  justify-content: center; // 세로 중앙 정렬 추가
+  flex-direction: ${(props) => props.flexDirection || "column"};
+  justify-content: ${(props) => props.justifyContent || "center"};
+  /* justify-content: space-between; */
+  align-items: ${(props) => props.alignItems || "center"};
   width: 100%;
   flex-grow: ${(props) => props.flexGrow || "none"};
   padding: ${(props) => props.padding || 0};
