@@ -3,6 +3,7 @@ package com.cocopay.payment.apicall;
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitInfoResponseListDto;
+import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
@@ -67,15 +68,17 @@ public class ApiCallService {
     }
 
     //특정 카드의 혜택을 조회하는 api 콜 진행
-    public UserCardBenefitInfoResponseListDto userCardBenefitApiCall(UserCardBenefitBodyDto bodyDto) {
+    public List<UserCardBenefitInfoResponseDto> userCardBenefitApiCall(UserCardBenefitBodyDto bodyDto) {
         WebClient webClient = WebClient.create();
 
-        return webClient.post()
+        UserCardBenefitInfoResponseListDto response = webClient.post()
                 .uri(localUrl + "benefit/list")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(bodyDto)
                 .retrieve()
                 .bodyToMono(UserCardBenefitInfoResponseListDto.class)
                 .block();
+
+        return response.getBenefitList();
     }
 }
