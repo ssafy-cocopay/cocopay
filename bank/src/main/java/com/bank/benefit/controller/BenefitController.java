@@ -1,6 +1,7 @@
 package com.bank.benefit.controller;
 
 import com.bank.benefit.dto.BenefitInfoResponseDto;
+import com.bank.benefit.dto.BenefitInfoResponseListDto;
 import com.bank.benefit.dto.UserCardBenefitInfoDto;
 import com.bank.benefit.entity.Benefit;
 import com.bank.benefit.mapper.BenefitMapper;
@@ -35,9 +36,10 @@ public class BenefitController {
     @PostMapping("/list")
     public ResponseEntity findBenefitList(@RequestBody UserCardBenefitInfoDto userCardBenefitInfoDto) {
         //카드 uuid -> 카드 id 조회
-        List<BenefitInfoResponseDto> benefitList = benefitService.findBenefitList(userCardBenefitInfoDto.getCardUuidList(),
+        List<BenefitInfoResponseDto> benefit = benefitService.findBenefitList(userCardBenefitInfoDto.getCardUuidList(),
                                                                                     userCardBenefitInfoDto.getCategory(),
                                                                                     userCardBenefitInfoDto.getStoreName());
+        BenefitInfoResponseListDto benefitList = new BenefitInfoResponseListDto(benefit);
 
         return ResponseEntity.ok(benefitList);
     }

@@ -2,6 +2,8 @@ package com.cocopay.payment.service;
 
 import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
+import com.cocopay.payment.apicall.dto.req.UserCardBenefitInfoResponseListDto;
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
@@ -49,19 +51,28 @@ public class PaymentService {
 
         performanceKeyService.performanceKeySave(performanceInfoList.getPerformanceList());
 
-        List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList,postDto.getOrderPrice());
+        List<CardOfferResponseDto> responseDtoList = performanceKeyService.performanceKeyMapping(findUserCardList, postDto.getOrderPrice());
 
         //주문 정보 저장
         orderKeyService.orderKeySave(postDto);
 
+        User findUser = findUser(postDto.getUserId());
+
         //실적 우선, 할인 우선 분기
-        if (findUser(postDto.getUserId()).isRecommendType()) {
+        if (findUser.isRecommendType()) {
             log.info("할인 우선으로 계산 진행");
-            //할인 로직 필요
+            //redis에 있는 주문 정보 가져옴 (카테고리, 매장명)ㄴ
+            OrderKey orderKey = orderKeyService.findOrderKey(findUser.getId());
+
+            UserCardBenefitBodyDto benefitBodyDto = paymentMapper.toBenefitBodyDto(responseDtoList, orderKey.getCategory(), orderKey.getStoreName());
+
+            log.info("사용자 카드들의 혜택 조회 api call 진행");
+            UserCardBenefitInfoResponseListDto responseListDto = apiCallService.userCardBenefitApiCall(benefitBodyDto);
+            log.info("사용자 카드들의 혜택 조회 api call 끝");
             return null;
         } else {
             log.info("실적 우선으로 계산 진행");
-            return new OnlineResponse<>(responseDtoList);
+            return new OnlineResponse<>(performanceFirst(responseDtoList));
         }
     }
 
@@ -85,6 +96,9 @@ public class PaymentService {
 
     //할인 우선
     //전월실적 달성 여부 필터링 stream filter 사용
+    public void benefitFirst(List<UserCard> userCardList, UserCardBenefitInfoResponseListDto responseListDto) {
+
+    }
 
     //해당 유저 조회
     //UserService에 생겨야 하는 메서드임
