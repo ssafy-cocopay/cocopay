@@ -122,14 +122,14 @@ public class UserCardService {
 
         List<Integer> cardList = new ArrayList<>();
         cardList.add(cardId);
-        UserCardPerformanceFindDto userCardPerformanceFindDto = new UserCardPerformanceFindDto();
-        userCardPerformanceFindDto.setCardUuidList(cardList);
+        UserCardListDto userCardListDto = new UserCardListDto();
+        userCardListDto.setCardUuidList(cardList);
 
         //임시 동기 요청
         PerformanceResponseListDto performanceResponseListDto = webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(userCardPerformanceFindDto)
+                .bodyValue(userCardListDto)
                 .retrieve()
                 .bodyToMono(PerformanceResponseListDto.class)
                 .block();
@@ -151,6 +151,17 @@ public class UserCardService {
                 .build();
         return userCardDetailResponseDto;
 
+    }
+
+    //카드 우선순위 변경
+    public void setCardOrder(List<Integer> cardUuidList){
+        int order = 1;
+        for (Integer cardId: cardUuidList) {
+            UserCard userCard = userCardRepository.findById(cardId).get();
+            userCard.setCardOrder(order);
+            userCardRepository.save(userCard);
+            order++;
+        }
     }
 
 }
