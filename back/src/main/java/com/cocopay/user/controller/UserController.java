@@ -1,15 +1,17 @@
 package com.cocopay.user.controller;
 
 import com.cocopay.redis.redishash.service.AuthKeyService;
-import com.cocopay.user.dto.request.AuthCheckDto;
-import com.cocopay.user.dto.request.AuthRequestDto;
-import com.cocopay.user.dto.request.LoginRequestDto;
-import com.cocopay.user.dto.request.UserJoinDto;
+import com.cocopay.user.dto.request.*;
+import com.cocopay.user.dto.response.UserCardResponseListDto;
+import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
+import com.cocopay.usercard.dto.UserCardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ public class UserController {
 
     private final UserService userService;
     private final AuthKeyService authKeyService;
+    private final UserApiCallService userApiCallService;
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(@RequestBody AuthRequestDto authRequestDto) {
@@ -52,10 +55,6 @@ public class UserController {
         return ResponseEntity.ok("OK");
     }
 
-    @PutMapping("/password")
-    public ResponseEntity<?> updatePassword(){
-        return null;
-    }
 
     @PostMapping("/login/bio")
     public ResponseEntity<?> loginByBio() {
@@ -84,5 +83,29 @@ public class UserController {
         return ResponseEntity.ok("OK");
     }
 
+    //비밀번호 체크
+    @PostMapping("/check")
+    public ResponseEntity<?> checkPassword(@RequestBody CheckPasswordDto checkPasswordDto)
+    {
+        if(!userService.checkPassword(checkPasswordDto))
+            throw new RuntimeException();
+        return ResponseEntity.ok("OK");
+    }
+
+    //비밀번호 변경
+    @PutMapping("/password")
+    public ResponseEntity<?> updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto)
+    {
+        userService.updatePassword(passwordUpdateDto);
+        return ResponseEntity.ok("OK");
+    }
+
+    // 사용자 카드 불러오기
+    @GetMapping("/card/{userId}")
+    public ResponseEntity<?> getUserCardList(@PathVariable Integer userId) {
+        UserCardResponseListDto result = userApiCallService.getUserCardFromBank(userId);
+        userService.insertUserCard(result.getUserCardList(), userId);
+        return ResponseEntity.ok(result);
+    }
 
 }
