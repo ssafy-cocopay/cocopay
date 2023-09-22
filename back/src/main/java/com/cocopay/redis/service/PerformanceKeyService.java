@@ -49,7 +49,7 @@ public class PerformanceKeyService {
         List<CardOfferResponseDto> responseDtoList = new ArrayList<>();
 
         for (UserCard userCard : findUserCardList) {
-            String userCardId = String.valueOf(userCard.getId());
+            String userCardId = String.valueOf(userCard.getCardUuid());
             PerformanceKey findPerformanceKey = findPerformanceKey(userCardId);
 
             //조회 후 삭제
@@ -59,7 +59,7 @@ public class PerformanceKeyService {
 //            CardOfferResponseDto2 responseDtoTest = paymentMapper.toResponseDto2(findPerformanceKey, cardResponseDto, orderPrice);
 
             //카드, 실적 합친 반환 버전
-            CardOfferResponseDto responseDto = paymentMapper.toResponseDto(findPerformanceKey, userCard, orderPrice);
+            CardOfferResponseDto responseDto = paymentMapper.toResponseDto(findPerformanceKey, userCard, orderPrice,orderPrice);
             responseDtoList.add(responseDto);
         }
 
