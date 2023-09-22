@@ -63,7 +63,7 @@ public class PaymentService {
         //api call
         //사용자 카드 실적 정보 조회
         log.info("사용자 카드 실적 정보 조회 진행");
-        PerformanceResListDto performanceInfoList = apiCallService.userCardPerformanceInfo(findUserCardList);
+        PerformanceResListDto performanceInfoList = apiCallService.userCardPerformanceReq(findUserCardList);
         log.info("사용자 카드 실적 정보 조회 끝");
 
         //사용자 카드 실적 정보 redis 저장

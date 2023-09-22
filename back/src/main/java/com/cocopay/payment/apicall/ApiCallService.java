@@ -32,7 +32,7 @@ public class ApiCallService {
 
 
     //해당 카드 실적 관련 정보 조회
-    public PerformanceResListDto userCardPerformanceInfo(List<UserCard> findUserCardList) {
+    public PerformanceResListDto userCardPerformanceReq(List<UserCard> findUserCardList) {
         WebClient webClient = WebClient.create();
 
         List<Integer> list = new ArrayList<>();
