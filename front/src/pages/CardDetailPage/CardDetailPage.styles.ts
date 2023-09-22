@@ -5,19 +5,11 @@ export const Wrapper = styled.div`
     justify-content: space-between;
 `;
 
-export const Layout1 = styled.div`
-    width: 340px;
-    height: 144px;
-    background-color: ${(props) => props.theme.color.white};
-    box-shadow: ${(props) => props.theme.shadow.shadow1};
-    border-radius: 20px;
-    margin: 44px 0 16px 0;
+export const CardWrapper = styled.div`
+    padding: 0 28px;
 `
 
-export const Layout2 = styled.div`
-    width: 340px;
-    height: 500px;
-    background-color: ${(props) => props.theme.color.white};
-    box-shadow: ${(props) => props.theme.shadow.shadow1};
-    border-radius: 20px;
-`
+export const Hr = styled.hr`
+  border: none; // 기본 border를 제거합니다.
+  border-top: 2px solid ${(props) => props.theme.color.grey4}; // 두께와 색상을 설정합니다.
+`;
