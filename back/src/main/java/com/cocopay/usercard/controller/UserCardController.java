@@ -33,7 +33,6 @@ public class UserCardController {
         return ResponseEntity.ok(userCardService.findUserCardList(userid));
     }
 
-
     //카드 삭제
     @DeleteMapping("/{cardId}")
     public ResponseEntity<?> DeleteUserCard(@PathVariable("cardId") Integer cardId){
@@ -54,5 +53,12 @@ public class UserCardController {
         List<HistoryResponseDto> result = userCardService.getCardHistory(historyFindDto);
 
         return ResponseEntity.ok(result);
+    }
+
+    //카드 정보 및 실적 조회
+    @GetMapping("/detail/{cardId}")
+    public ResponseEntity<?> getCardDetail(@PathVariable("cardId") Integer cardId){
+        UserCardDetailResponseDto userCardDetailResponseDto = userCardService.findUserCardDetail(cardId);
+        return ResponseEntity.ok(userCardDetailResponseDto);
     }
 }
