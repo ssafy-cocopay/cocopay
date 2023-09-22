@@ -8,5 +8,5 @@ public interface UserCardRepositoryCustom {
 
     public List<UserCard> findUserCardListByCocoType(int userId);
 
-    public List<UserCard> FindUserCard(int userId);
+    public List<UserCard> FindAllUserCard(int userId);
 }

@@ -25,7 +25,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom{
     }
 
     @Override
-    public List<UserCard> FindUserCard(int userId) {
+    public List<UserCard> FindAllUserCard(int userId) {
         return jpaQueryFactory
                 .selectFrom(userCard)
                 .where(userCard.user.id.eq(userId),userCard.withdrawDate.isNull())

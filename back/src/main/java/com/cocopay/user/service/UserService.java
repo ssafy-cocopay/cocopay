@@ -2,10 +2,8 @@ package com.cocopay.user.service;
 
 import com.cocopay.redis.redishash.key.AuthHash;
 import com.cocopay.redis.redishash.repository.AuthHashRepository;
-import com.cocopay.user.dto.request.CheckPasswordDto;
-import com.cocopay.user.dto.request.LoginRequestDto;
-import com.cocopay.user.dto.request.PasswordUpdateDto;
-import com.cocopay.user.dto.request.UserJoinDto;
+import com.cocopay.user.dto.request.*;
+import com.cocopay.user.dto.response.UserFindResponseDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.UserCardDto;
@@ -13,6 +11,7 @@ import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
 import com.cocopay.util.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +21,14 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final AuthHashRepository authHashRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserCardRepository userCardRepository;
+    private final UserApiCallService userApiCallService;
 
     public String sendRandomMessage(String tel) {
         Naver_Sens_V2 message = new Naver_Sens_V2();
@@ -54,9 +55,12 @@ public class UserService {
     public void join(UserJoinDto userJoinDto) {
         // 똑같은 번호 있으면 빠꾸시켜야됨
 
+        // uuid 불러오기
+        UserFindResponseDto result = userApiCallService.getUserUuid(new UserFindRequestDto(userJoinDto.getTel()));
+
         // 저장
         User user = User.builder()
-                .uuid(0)
+                .uuid(result.getUuid())
                 .name(userJoinDto.getName())
                 .age(0)
                 .birth(userJoinDto.getBirth())
@@ -65,6 +69,18 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+
+        // 사용자카드 코코페이 저장
+        UserCard userCard = UserCard.builder()
+                .user(user)
+                .cocoType(true)
+                .cardUuid(null)
+                .serialNumber(null)
+                .cardOrder(1)
+                .build();
+        userCardRepository.save(userCard);
+
+
     }
 
     public void login(LoginRequestDto loginRequestDto) {
@@ -119,7 +135,7 @@ public class UserService {
 
         List<UserCard> list = new ArrayList<>();
         //매퍼
-        int cnt = 1;
+        int cnt = 2;
         for (UserCardDto u : userCardList) {
             UserCard userCard = UserCard.builder()
                     .user(findUser)
