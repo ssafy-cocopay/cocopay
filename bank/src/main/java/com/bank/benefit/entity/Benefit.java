@@ -35,5 +35,6 @@ public class Benefit {
     private Integer limit;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private DiscountType discountType;
 }
