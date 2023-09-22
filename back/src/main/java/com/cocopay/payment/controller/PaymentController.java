@@ -1,6 +1,6 @@
 package com.cocopay.payment.controller;
 
-import com.cocopay.payment.dto.req.OnlinePayPostDto;
+import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.service.PaymentService;
@@ -20,9 +20,9 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/online")
-    public ResponseEntity onlinePay(@RequestBody OnlinePayPostDto onlinePayPostDto) {
+    public ResponseEntity onlinePay(@RequestBody PayPostDto payPostDto) {
 
-        OnlineResponse<?> onlineResponse = paymentService.autoChanging(onlinePayPostDto);
+        OnlineResponse<?> onlineResponse = paymentService.autoOrDirect(payPostDto);
 
         return ResponseEntity.ok(onlineResponse);
     }
