@@ -41,9 +41,9 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
     private final UserService userService;
 
-    //오토체인징 사용 분기
+    //오토체인징 사용 분기점
     public OnlineResponse<?> autoOrDirect(PayPostDto payPostDto) {
-        if (payPostDto.getCardId() == null) {
+        if (payPostDto.getCardId() != null) {
             //다이렉트로 결제 요청 진행
         }else {
             return autoChanging(payPostDto.getUserId(),
