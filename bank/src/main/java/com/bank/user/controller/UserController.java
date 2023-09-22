@@ -29,7 +29,7 @@ public class UserController {
     }
 
     //사용자 조회
-    @GetMapping
+    @PostMapping
     public ResponseEntity findUser(@RequestBody UserFindDto userFindDto) {
         User user = userService.findUser(userFindDto.getUuid(), userFindDto.getTel());
 
