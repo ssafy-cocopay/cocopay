@@ -175,12 +175,10 @@ public class PaymentService {
                 .toList();
     }
 
-
     public void cardPick(PickDto pickDto) {
         //주문 정보(카테고리, 매장명) 조회 후 매핑 진행
         OrderKey findOrder = orderKeyService.findOrderKey(pickDto.getUserId());
         PaymentRequestDto paymentRequestDto = paymentMapper.toPaymentRequestDto(findOrder, pickDto);
         apiCallService.payApiCall(paymentRequestDto);
     }
-
 }
