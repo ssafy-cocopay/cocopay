@@ -26,8 +26,8 @@ public class BenefitKeyService {
     }
 
     //혜택 정보 조회
-    public Optional<BenefitKey> findBenefitKey(String cardUuid) {
-        return benefitKeyRepository.findById(cardUuid);
+    public Optional<BenefitKey> findBenefitKey(int cardUuid) {
+        return benefitKeyRepository.findById(String.valueOf(cardUuid));
     }
 
 }
