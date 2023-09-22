@@ -61,7 +61,7 @@ public class CardController {
         if (paymentRequestDto.getBenefitId() == null) {
             return ResponseEntity.ok(userCardService.paymentWithoutBenefitId(paymentRequestDto));
         } else {
-            return ResponseEntity.ok(userCardService.paymentWithBenefitId(paymentRequestDto));
+            return ResponseEntity.ok(userCardService.paymentWithBenefitId(null,paymentRequestDto));
         }
     }
 
