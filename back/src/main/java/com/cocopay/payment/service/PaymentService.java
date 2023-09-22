@@ -116,7 +116,7 @@ public class PaymentService {
             } else {
                 co.setFinalPrice(orderPrice);
                 co.setDiscounted(0);
-            }현
+            }
         }
         //정렬 조건
         // 1. 최종 금액 내림차순
