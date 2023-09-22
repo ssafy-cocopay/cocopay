@@ -21,11 +21,18 @@ public class UserCardController {
         return ResponseEntity.ok(userCardService.registUserCard(userCardRegisterDto,cocopay));
     }
 
-    //카드 목록 조회
+    //카드 목록 조회(코코페이 포함)
     @GetMapping("/{userId}")
     public ResponseEntity<List<UserCard>> FindUserCard(@PathVariable("userId") Integer userid){
+        return ResponseEntity.ok(userCardService.findAllUserCardList(userid));
+    }
+
+    //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
+    @PostMapping("/list/{userId}")
+    public ResponseEntity<List<UserCard>> UserCardList(@PathVariable("userId") Integer userid){
         return ResponseEntity.ok(userCardService.findUserCardList(userid));
     }
+
 
     //카드 삭제
     @DeleteMapping("/{cardId}")
