@@ -115,6 +115,7 @@ const SignupPage = () => {
             확인
           </Button>
 
+          <br />
           <div>
             {/* <!-- 드롭다운(싱글타입) --> */}
             <select name="telecom" id="telecom">
