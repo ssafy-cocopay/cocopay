@@ -1,5 +1,6 @@
 package com.cocopay.usercard.controller;
 
+import com.cocopay.payment.dto.req.CardUuidListDto;
 import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.service.UserCardService;
@@ -65,8 +66,8 @@ public class UserCardController {
     //카드 우선순위 변경
 
     @PostMapping("/order")
-    public ResponseEntity<?> setCardOrder(@RequestBody UserCardListDto userCardListDto){
-        userCardService.setCardOrder(userCardListDto.getCardUuidList());
+    public ResponseEntity<?> setCardOrder(@RequestBody CardUuidListDto cardUuidListDto){
+        userCardService.setCardOrder(cardUuidListDto.getCardUuidList());
         return ResponseEntity.ok("우선순위 변경 완료");
     }
 }
