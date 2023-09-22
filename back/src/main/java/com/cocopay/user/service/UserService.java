@@ -13,6 +13,7 @@ import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
 import com.cocopay.util.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final AuthHashRepository authHashRepository;
@@ -63,6 +65,16 @@ public class UserService {
                 .tel(userJoinDto.getTel())
                 .password(passwordEncoder.encode(userJoinDto.getPassword()))
                 .build();
+
+        // 사용자카드 코코페이 저장
+        UserCard userCard = UserCard.builder()
+                .user(user)
+                .cocoType(true)
+                .cardUuid(null)
+                .serialNumber(null)
+                .cardOrder(1)
+                .build();
+        userCardRepository.save(userCard);
 
         userRepository.save(user);
     }
@@ -119,7 +131,7 @@ public class UserService {
 
         List<UserCard> list = new ArrayList<>();
         //매퍼
-        int cnt = 1;
+        int cnt = 2;
         for (UserCardDto u : userCardList) {
             UserCard userCard = UserCard.builder()
                     .user(findUser)
