@@ -4,6 +4,7 @@ import com.bank.card.dto.PaymentRequestDto;
 import com.bank.card.entity.UserCard;
 import com.bank.card_history.dto.HistoryResponseDto;
 import com.bank.card_history.entity.CardHistory;
+import com.bank.card_history.entity.DiscountType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -24,9 +25,11 @@ public interface CardHistoryMapper {
     @Mapping(source = "paymentRequestDto.store", target = "store")
     @Mapping(source = "userCard.id", target = "id", ignore = true)
     @Mapping(source = "discountAmount", target = "discountAmount")
+    @Mapping(source = "discountType", target = "discountType")
     CardHistory payRequestDtoToHistory(PaymentRequestDto paymentRequestDto,
                                        UserCard userCard,
                                        Long amount,
                                        Integer accountBalance,
-                                       Integer discountAmount);
+                                       Integer discountAmount,
+                                       DiscountType discountType);
 }

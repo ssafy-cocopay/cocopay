@@ -54,7 +54,7 @@ public class AccountService {
     }
 
     //출금(돈 나감)
-    public void minus(String accountNum, int price){
+    public Integer minus(String accountNum, int price){
         List<Account> findAccount = findAccount(null,null,null,accountNum);
         Account account = findAccount.get(0);
         if (account.getBalance()<price){
@@ -64,6 +64,7 @@ public class AccountService {
         account.setBalance(result);
 
         accountRepository.save(account);
+        return account.getBalance();
     }
 
     //입금(돈 들어옴)

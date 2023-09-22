@@ -1,8 +1,6 @@
 package com.bank.card.controller;
 
-import com.bank.card.dto.FindBySerialNumber;
-import com.bank.card.dto.PaymentRequestDto;
-import com.bank.card.dto.UserCardRegisterDto;
+import com.bank.card.dto.*;
 import com.bank.card.entity.UserCard;
 import com.bank.card.mapper.UserCardMapper;
 import com.bank.card.service.UserCardService;
@@ -37,6 +35,17 @@ public class CardController {
         return ResponseEntity.ok(userCardMapper.toDtoList(result));
     }
 
+    //코코페이를 위한 유저카드 리스트
+    @GetMapping("/card-list/{uuid}")
+    public ResponseEntity<?> getUserCardListForCoCo(@PathVariable Integer uuid)
+    {
+        List<UserCardDto> result = userCardService.findUserCardByUuid(uuid);
+
+        UserCardResponseListDto wrapper = new UserCardResponseListDto(result);
+
+        return ResponseEntity.ok(wrapper);
+    }
+
 
     //사용자 카드 실적 조회
     @GetMapping("/performance/{card_uuid}")
@@ -50,12 +59,10 @@ public class CardController {
 
         //서비스 호출
         if (paymentRequestDto.getBenefitId() == null) {
-            userCardService.paymentWithoutBenefitId(paymentRequestDto);
+            return ResponseEntity.ok(userCardService.paymentWithoutBenefitId(paymentRequestDto));
         } else {
-            userCardService.paymentWithBenefitId(paymentRequestDto);
+            return ResponseEntity.ok(userCardService.paymentWithBenefitId(paymentRequestDto));
         }
-
-        return null;
     }
 
     //시리얼 번호로 카드 조회
