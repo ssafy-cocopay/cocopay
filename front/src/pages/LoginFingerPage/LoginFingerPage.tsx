@@ -28,13 +28,13 @@ const LoginFingerPage = () => {
           height="auto"
         >
           <Text size="subtitle1" fontWeight="bold">
-            지문 등록
+            지문 인증
           </Text>
           <Text size="body1" fontWeight="medium">
             지문 인증을 완료해주세요
           </Text>
           <Image src={fingerPrint} width={9} margin="30px 0 50px 0"></Image>
-          <Button option="activated">지문 인증하기</Button>
+          <Button option="activated">인증하기</Button>
           <Button
             $border="none"
             style={{ marginBottom: "20px" }}
