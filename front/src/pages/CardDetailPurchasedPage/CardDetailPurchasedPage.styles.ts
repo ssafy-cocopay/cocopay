@@ -2,7 +2,20 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
     display: flex;
-    justify-content: space-between
+    justify-content: center;
+    align-items: center;
+    position: relative; // 추가
+    width: 100%;
+    margin-bottom: 20px;
+
+    & > img { 
+        position: absolute;
+        left: 0; // 왼쪽으로 보냅니다.
+    }
+
+    & > div { // 텍스트
+        text-align: center;
+    }
 `;
 
 export const Hr = styled.hr`

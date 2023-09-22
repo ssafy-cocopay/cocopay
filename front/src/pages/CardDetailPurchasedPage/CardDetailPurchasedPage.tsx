@@ -18,9 +18,7 @@ const CardDetailPurchasedPage = () => {
             padding: "40px 24px"
         }}
         >
-            <Wrapper
-            style={{margin:"0 0 12px 0"}}
-            >
+            <Wrapper>
                 <Image
                 src={iconArrowLeftBlack}
                 height={24}
