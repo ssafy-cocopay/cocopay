@@ -84,7 +84,7 @@ public class UserCardService {
         UserCardBenefit findUserCardBenefit = userCardBenefitRepository.findUserCardBenefit(cardUuid, benefitId);
         Integer discountAmount = findUserCardBenefit.getDiscountAmount();
 
-        log.info("할인한도까지 남은 금액 " +  discountAmount);
+        log.info("할인한도까지 남은 금액 " + discountAmount);
 
         UserCard userCard = userCardRepository.findById(paymentRequestDto.getCardUuid()).get();
         //accountService.minus(userCard.getAccount().getNum(), paymentRequestDto.getRequestPrice());
@@ -122,8 +122,12 @@ public class UserCardService {
     }
 
     //카드 고유번호로 카드 조회
-    public UserCardDto getUserCard(String serialNumber, String cvc, String password){
-        UserCardDto userCard = userCardRepository.findUSerCardBySerialNumber(serialNumber,cvc,password);
+    public UserCardDto getUserCard(String serialNumber, String cvc, String password) {
+        UserCardDto userCard = userCardRepository.findUSerCardBySerialNumber(serialNumber, cvc, password);
         return userCard;
+    }
+
+    public List<UserCardDto> findUserCardByUuid(Integer uuid) {
+        return userCardRepository.findUserCardListByUuid(uuid);
     }
 }
