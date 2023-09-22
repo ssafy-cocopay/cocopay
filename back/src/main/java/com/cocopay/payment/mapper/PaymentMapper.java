@@ -27,9 +27,9 @@ public interface PaymentMapper {
     @Mapping(source = "userCard.cardType.name", target = "cardType")
     @Mapping(source = "key.level", target = "level")
     @Mapping(source = "key.nextLevel", target = "nextLevel")
-    @Mapping(source = "key.price", target = "price")
-    @Mapping(source = "key.totalPrice", target = "totalPrice")
-    CardOfferResDto toResponseDto(PerformanceKey key, UserCard userCard, int orderPrice, int finalPrice);
+    @Mapping(source = "key.price", target = "cardPerformanceAmount")
+    @Mapping(source = "key.totalPrice", target = "cardCurrentAmount")
+    CardOfferResDto toResponseDto(PerformanceKey key, UserCard userCard, int orderPrice, int finalPrice,String discountType);
 
     CardOfferResponseDto2 toResponseDto2(PerformanceKey performance, CardResponseDto card, int orderPrice);
 

@@ -59,7 +59,7 @@ public class PerformanceKeyService {
 //            CardOfferResponseDto2 responseDtoTest = paymentMapper.toResponseDto2(findPerformanceKey, cardResponseDto, orderPrice);
 
             //카드, 실적 합친 반환 버전
-            CardOfferResDto responseDto = paymentMapper.toResponseDto(findPerformanceKey, userCard, orderPrice,orderPrice);
+            CardOfferResDto responseDto = paymentMapper.toResponseDto(findPerformanceKey, userCard, orderPrice,orderPrice,null);
             responseDtoList.add(responseDto);
         }
 

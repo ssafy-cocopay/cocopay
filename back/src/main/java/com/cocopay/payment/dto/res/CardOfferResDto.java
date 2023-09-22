@@ -28,11 +28,9 @@ public class CardOfferResDto {
 
     private int nextLevel;
     //실적 현재 금액
-    private int price;
+    private int cardPerformanceAmount;
     //사용자 총 이용금액
-    private int totalPrice;
-
-    private boolean pastPerformance;
+    private int cardCurrentAmount;
 
     //물건 주문 금액
     private int orderPrice;
@@ -42,4 +40,9 @@ public class CardOfferResDto {
 
     //할인 예정 금액
     private int discounted;
+
+    //할인 타입 ex) 페이백, 현장할인, 청구할인
+    private String discountType;
+
+    private boolean pastPerformance;
 }
