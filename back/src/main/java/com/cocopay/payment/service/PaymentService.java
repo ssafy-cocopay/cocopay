@@ -65,8 +65,6 @@ public class PaymentService {
         List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(userId);
         log.info("코코카드 제외한 유저 카드 갯수 : {}", findUserCardList.size());
 
-        //api call
-        //사용자 카드 실적 정보 조회
         log.info("사용자 카드 실적 정보 조회 진행");
         PerformanceResListDto performanceResList = apiCallService.userCardPerformanceReq(findUserCardList);
         log.info("사용자 카드 실적 정보 조회 끝");
