@@ -21,13 +21,14 @@ public class UserCard {
     private Integer id;
 
     //코코페이인지
-    @Column(name = "coco_type")
+    @Column(name = "coco_type",columnDefinition = "TINYINT")
+
     private boolean cocoType;
 
-    @Column(name = "card_uuid", nullable = false)
+    @Column(name = "card_uuid")
     private Integer cardUuid;
 
-    @Column(name = "serial_number", nullable = false, length = 19)
+    @Column(name = "serial_number", length = 19)
     private String serialNumber;
 
     @Column(name = "card_order")

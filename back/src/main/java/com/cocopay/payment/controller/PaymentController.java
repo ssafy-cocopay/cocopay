@@ -2,7 +2,6 @@ package com.cocopay.payment.controller;
 
 import com.cocopay.payment.dto.req.OnlinePayPostDto;
 import com.cocopay.payment.dto.req.PickDto;
-import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +22,7 @@ public class PaymentController {
     @PostMapping("/online")
     public ResponseEntity onlinePay(@RequestBody OnlinePayPostDto onlinePayPostDto) {
 
-        List<CardOfferResponseDto> responseDtoList = paymentService.onlinePay(onlinePayPostDto);
-
-        OnlineResponse<?> onlineResponse = new OnlineResponse<>(responseDtoList);
+        OnlineResponse<?> onlineResponse = paymentService.onlinePay(onlinePayPostDto);
 
         return ResponseEntity.ok(onlineResponse);
     }
