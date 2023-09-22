@@ -1,6 +1,7 @@
 package com.cocopay.payment.mapper;
 
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
 import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto2;
@@ -10,6 +11,8 @@ import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.usercard.entity.UserCard;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PaymentMapper {
@@ -41,4 +44,20 @@ public interface PaymentMapper {
     @Mapping(source = "key.category",target = "category")
     @Mapping(source = "key.storeName",target = "store")
     PaymentRequestDto toPaymentRequestDto(OrderKey key, PickDto pickDto);
+
+    //혜택조회 api call 할 때 사용할 body dto
+    default UserCardBenefitBodyDto toBenefitBodyDto(List<CardOfferResponseDto> list, String category, String storeName) {
+
+        List<Integer> cardUuidList = list.stream()
+                .map(CardOfferResponseDto::getCardUuid)
+                .toList();
+
+        return UserCardBenefitBodyDto.builder()
+                .cardUuidList(cardUuidList)
+                .category(category)
+                .storeName(storeName)
+                .build();
+    }
+
+
 }

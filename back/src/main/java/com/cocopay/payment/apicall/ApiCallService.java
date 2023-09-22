@@ -1,8 +1,11 @@
 package com.cocopay.payment.apicall;
 
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
+import com.cocopay.payment.apicall.dto.req.UserCardBenefitInfoResponseListDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.usercard.entity.UserCard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ApiCallService {
+    private final PaymentMapper paymentMapper;
 
     @Value("${bank.local-url}")
     private String localUrl;
@@ -60,5 +64,18 @@ public class ApiCallService {
                 .block();
         log.info("결제 요청 api call 종료");
         log.info("reponse : {}", reponse);
+    }
+
+    //특정 카드의 혜택을 조회하는 api 콜 진행
+    public UserCardBenefitInfoResponseListDto userCardBenefitApiCall(UserCardBenefitBodyDto bodyDto) {
+        WebClient webClient = WebClient.create();
+
+        return webClient.post()
+                .uri(localUrl + "benefit/list")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(bodyDto)
+                .retrieve()
+                .bodyToMono(UserCardBenefitInfoResponseListDto.class)
+                .block();
     }
 }
