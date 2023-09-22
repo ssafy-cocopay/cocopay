@@ -4,7 +4,7 @@ type WrapperProps = {
   padding?: string;
   flexGrow?: number;
   flexDirection?: string;
-  alignItems?: string; // left={true}시 왼쪽정렬
+  alignItems?: string;
   justifyContent?: string;
 };
 
