@@ -37,7 +37,7 @@ public class ApiCallService {
 
         List<Integer> list = new ArrayList<>();
         for (UserCard userCard : findUserCardList) {
-            list.add(userCard.getId());
+            list.add(userCard.getCardUuid());
         }
 
         CardUuidListDto cardUuidList = new CardUuidListDto(list);
