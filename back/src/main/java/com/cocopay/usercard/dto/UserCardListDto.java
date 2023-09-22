@@ -8,6 +8,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCardPerformanceFindDto {
+public class UserCardListDto {
     private List<Integer> cardUuidList;
 }
