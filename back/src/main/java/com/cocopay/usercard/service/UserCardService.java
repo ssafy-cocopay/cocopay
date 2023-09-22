@@ -37,7 +37,7 @@ public class UserCardService {
 
         Optional<User> user = userRepository.findById(userCardRegisterDto.getUserId());
         System.out.println(userCardDto.getUserCardId());
-        int count = userCardRepository.FindUserCard(userCardRegisterDto.getUserId()).size()+1;
+        int count = userCardRepository.findUserCardListByCocoType(userCardRegisterDto.getUserId()).size()+1;
         UserCard userCard = UserCard.builder()
                 .user(user.get())
                 .cocoType(cocopay)
@@ -55,9 +55,14 @@ public class UserCardService {
         return userCard;
     }
 
-    //사용자 카드 조회
+    //카드 목록 조회(코코페이 포함)
+    public List<UserCard> findAllUserCardList(Integer userId){
+        return userCardRepository.FindAllUserCard(userId);
+    }
+
+    //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
     public List<UserCard> findUserCardList(Integer userId){
-        return userCardRepository.FindUserCard(userId);
+        return userCardRepository.findUserCardListByCocoType(userId);
     }
 
     //사용자 카드 삭제
