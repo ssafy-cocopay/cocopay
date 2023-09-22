@@ -13,5 +13,7 @@ public interface UserCardRepositoryCustom {
 
     Optional<PerformanceResponseDto> findUserCardPerformance(Integer cardUuid);
 
+    List<UserCardDto> findUserCardListByUuid(Integer uuid);
+
     UserCardDto findUSerCardBySerialNumber(String serialNumber, String cvc, String password);
 }
