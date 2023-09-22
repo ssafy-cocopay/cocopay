@@ -1,5 +1,8 @@
 package com.cocopay.usercard.service;
 
+import com.cocopay.payment.dto.req.CardUuidListDto;
+import com.cocopay.payment.dto.res.PerformanceResponseDto;
+import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.*;
@@ -122,14 +125,14 @@ public class UserCardService {
 
         List<Integer> cardList = new ArrayList<>();
         cardList.add(cardId);
-        UserCardListDto userCardListDto = new UserCardListDto();
-        userCardListDto.setCardUuidList(cardList);
+        CardUuidListDto cardUuidListDto = new CardUuidListDto();
+        cardUuidListDto.setCardUuidList(cardList);
 
         //임시 동기 요청
         PerformanceResponseListDto performanceResponseListDto = webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(userCardListDto)
+                .bodyValue(cardUuidListDto)
                 .retrieve()
                 .bodyToMono(PerformanceResponseListDto.class)
                 .block();
