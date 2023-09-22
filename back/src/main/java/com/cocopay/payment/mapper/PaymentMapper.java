@@ -3,7 +3,7 @@ package com.cocopay.payment.mapper;
 import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
 import com.cocopay.payment.dto.req.PickDto;
-import com.cocopay.payment.dto.res.CardOfferResponseDto;
+import com.cocopay.payment.dto.res.CardOfferResDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto2;
 import com.cocopay.payment.dto.res.CardResponseDto;
 import com.cocopay.redis.key.OrderKey;
@@ -29,7 +29,7 @@ public interface PaymentMapper {
     @Mapping(source = "key.nextLevel", target = "nextLevel")
     @Mapping(source = "key.price", target = "price")
     @Mapping(source = "key.totalPrice", target = "totalPrice")
-    CardOfferResponseDto toResponseDto(PerformanceKey key, UserCard userCard, int orderPrice,int finalPrice);
+    CardOfferResDto toResponseDto(PerformanceKey key, UserCard userCard, int orderPrice, int finalPrice);
 
     CardOfferResponseDto2 toResponseDto2(PerformanceKey performance, CardResponseDto card, int orderPrice);
 
@@ -46,10 +46,10 @@ public interface PaymentMapper {
     PaymentRequestDto toPaymentRequestDto(OrderKey key, PickDto pickDto);
 
     //혜택조회 api call 할 때 사용할 body dto
-    default UserCardBenefitBodyDto toBenefitBodyDto(List<CardOfferResponseDto> list, String category, String storeName) {
+    default UserCardBenefitBodyDto toBenefitBodyDto(List<CardOfferResDto> list, String category, String storeName) {
 
         List<Integer> cardUuidList = list.stream()
-                .map(CardOfferResponseDto::getCardUuid)
+                .map(CardOfferResDto::getCardUuid)
                 .toList();
 
         return UserCardBenefitBodyDto.builder()
