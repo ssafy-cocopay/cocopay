@@ -21,7 +21,8 @@ public class UserCard {
     private Integer id;
 
     //코코페이인지
-    @Column(name = "coco_type")
+    @Column(name = "coco_type",columnDefinition = "TINYINT")
+
     private boolean cocoType;
 
     @Column(name = "card_uuid", nullable = false)

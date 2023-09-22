@@ -74,7 +74,6 @@ const Button = styled.button<ButtonProps>`
   border-radius: ${(props) => props.$borderRadius || "23px"};
   font-size: ${(props) => props.$fontSize || "20px"};
   background-color: ${(props) => props.$backgroundColor};
-  margin-top: 10px; // 임시
 `;
 
 export { Button };
