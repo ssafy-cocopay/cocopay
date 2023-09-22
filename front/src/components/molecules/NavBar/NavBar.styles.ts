@@ -11,6 +11,7 @@ export const StyledNavBar = styled.div`
   bottom: 0;
   width: 100%;
   height: 10%;
+
 `;
 
 export const StyledNavBarBackground = styled.div`
