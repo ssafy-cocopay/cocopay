@@ -5,8 +5,10 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class OnlinePayPostDto {
+public class PayPostDto {
     private int userId;
+
+    private Integer cardId;
 
     private String category;
 
