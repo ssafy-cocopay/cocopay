@@ -2,17 +2,12 @@ package com.cocopay.usercard.service;
 
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
-import com.cocopay.usercard.dto.UserCardDto;
-import com.cocopay.usercard.dto.UserCardRegisterDto;
+import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
@@ -71,4 +66,43 @@ public class UserCardService {
         userCard.get().setWithdrawDate(LocalDateTime.now());
         userCardRepository.save(userCard.get());
     }
+
+    //사용자별 통계
+    public CategoryResponseDto getAllamount(FindHistoryByUserId findHistoryByUserId){
+        WebClient webClient = WebClient.create();
+
+        //api 주소
+        String url = "http://localhost:8081/bank/card-history/total";
+
+        //임시 동기 요청
+        CategoryResponseDto categoryResponseDto = webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(findHistoryByUserId)
+                .retrieve()
+                .bodyToMono(CategoryResponseDto.class)
+                .block();
+
+
+        return categoryResponseDto;
+    }
+
+    //카드 한달 이용내역
+    public List<HistoryResponseDto> getCardHistory(HistoryFindDto historyFindDto){
+        WebClient webClient = WebClient.create();
+
+        //api 주소
+        String url = "http://localhost:8081/bank/card-history";
+
+        //임시 동기 요청
+        List<HistoryResponseDto> cardHistoryList =  webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(historyFindDto)
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+        return cardHistoryList;
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.cocopay.usercard.controller;
 
-import com.cocopay.usercard.dto.UserCardDto;
-import com.cocopay.usercard.dto.UserCardRegisterDto;
+import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +32,20 @@ public class UserCardController {
     public ResponseEntity<?> DeleteUserCard(@PathVariable("cardId") Integer cardId){
         userCardService.deleteUserCard(cardId);
         return ResponseEntity.ok("사용자 카드 삭제 성공");
+    }
+
+    //사용자 통계 조회
+    @PostMapping("/total")
+    ResponseEntity<?> getCardHistoryByUserId(@RequestBody FindHistoryByUserId findHistoryByUserId){
+        return ResponseEntity.ok(userCardService.getAllamount(findHistoryByUserId));
+    }
+
+    //월단위 카드 이용 내역 조회
+    @PostMapping("/history")
+    ResponseEntity<?> getCardHistoryByMonth(@RequestBody HistoryFindDto historyFindDto)
+    {
+        List<HistoryResponseDto> result = userCardService.getCardHistory(historyFindDto);
+
+        return ResponseEntity.ok(result);
     }
 }
