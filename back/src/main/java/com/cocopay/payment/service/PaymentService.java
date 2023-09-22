@@ -10,6 +10,7 @@ import com.cocopay.payment.dto.res.CardOfferResponseDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
+import com.cocopay.redis.key.BenefitKey;
 import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.service.BenefitKeyService;
 import com.cocopay.redis.service.OrderKeyService;
@@ -68,16 +69,17 @@ public class PaymentService {
             OrderKey orderKey = orderKeyService.findOrderKey(findUser.getId());
 
             //실적 달성했는 지 확인
+            List<CardOfferResponseDto> newCardOfferResDtoList = isPerformance(responseDtoList);
 
-            UserCardBenefitBodyDto benefitBodyDto = paymentMapper.toBenefitBodyDto(responseDtoList, orderKey.getCategory(), orderKey.getStoreName());
-
+            //api call을 위해 카테고리와 함께 매핑 진행
+            UserCardBenefitBodyDto benefitBodyDto = paymentMapper.toBenefitBodyDto(newCardOfferResDtoList, orderKey.getCategory(), orderKey.getStoreName());
             log.info("사용자 카드들의 혜택 조회 api call 진행");
-            List<UserCardBenefitInfoResponseDto> benefitResDto = apiCallService.userCardBenefitApiCall(benefitBodyDto);
+            List<UserCardBenefitInfoResponseDto> benefitResDtoList = apiCallService.userCardBenefitApiCall(benefitBodyDto);
             log.info("사용자 카드들의 혜택 조회 api call 끝");
             log.info("혜택 조회 정보 redis 저장");
-            benefitKeyService.benefitSave(benefitResDto);
+            benefitKeyService.benefitSave(benefitResDtoList);
+            return new OnlineResponse<>(benefitFirst(responseDtoList, orderKey.getOrderPrice()));
 
-            return null;
         } else {
             log.info("실적 우선으로 계산 진행");
             return new OnlineResponse<>(performanceFirst(responseDtoList));
@@ -86,9 +88,43 @@ public class PaymentService {
 
     //할인 우선
     //전월실적 달성 여부 필터링 stream filter 사용
+    public List<CardOfferResponseDto> benefitFirst(List<CardOfferResponseDto> responseDtoList, int orderPrice) {
+        // 1. 순회하면서 benefitKey를 조회
+        // 2. benefitKey에 있다면 혜택 정보가 있는 것이므로 할인 계산 진행
+        // 3. benefitKEy에 없다면 혜택 정보가 없으므로 계산을 진행하지 않음
+        // 4. 계산 된 정보 정렬 후 매핑 진행
+        for (CardOfferResponseDto co : responseDtoList) {
+            Optional<BenefitKey> benefitKey = benefitKeyService.findBenefitKey(co.getCardUuid());
 
-    public void benefitFirst() {
+            if (benefitKey.isPresent()) {
+                BenefitKey findBenefitKey = benefitKey.get();
+                //할인 예정 금엑
+                int discounted = (int)(orderPrice * (findBenefitKey.getDiscount() * 0.01));
+                //사용자의 해당 혜택 남은 금액
+                int discountAmount = findBenefitKey.getDiscountAmount();
 
+                //남은 금액이 낭낭할 때
+                if (discountAmount > discounted) {
+                    co.setFinalPrice(orderPrice - discounted);
+                    co.setDiscounted(discounted);
+                }
+                //남은 금액이 쪼달릴 때
+                else {
+                    co.setFinalPrice(orderPrice - discountAmount);
+                    co.setDiscounted(discountAmount);
+                }
+            } else {
+                co.setFinalPrice(orderPrice);
+                co.setDiscounted(0);
+            }현
+        }
+        //정렬 조건
+        // 1. 최종 금액 내림차순
+        // 2. 같다면 카드 우선 순위 오름차순
+        return responseDtoList.stream()
+                .sorted(Comparator.comparing(CardOfferResponseDto::getFinalPrice)
+                        .thenComparing(CardOfferResponseDto::getCardOrder))
+                .toList();
     }
 
     //실적 우선
@@ -106,6 +142,13 @@ public class PaymentService {
         return responseDtoList.stream()
                 .sorted(Comparator.comparing(CardOfferResponseDto::getLevel)
                         .thenComparing(CardOfferResponseDto::getCardOrder))
+                .toList();
+    }
+
+    //실적 달성 확인
+    public List<CardOfferResponseDto> isPerformance(List<CardOfferResponseDto> cardOfferResDtoList) {
+        return cardOfferResDtoList.stream()
+                .filter(CardOfferResponseDto::isPastPerformance)
                 .toList();
     }
 
