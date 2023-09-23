@@ -7,8 +7,8 @@ export interface InputStyleProps {
   $borderRadius?: number;
   $unit?: "rem" | "px" | "em" | "%";
   fontSize?: typeof theme.fontSize;
-  paddingLeft?: number | string;
-  textAlign?: string;
+  $paddingLeft?: number | string;
+  $textAlign?: string;
 }
 
 const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
@@ -60,8 +60,8 @@ const InputContainer = styled.input<InputStyleProps>`
   height: ${(props) => `${props.height}${props.$unit}`};
   border-radius: ${(props) => `${props.$borderRadius}px` || "10px"};
   font-size: ${(props) => props.fontSize};
-  padding-left: ${(props) => props.paddingLeft};
-  text-align: ${(props) => props.textAlign || "none"};
+  padding-left: ${(props) => props.$paddingLeft};
+  text-align: ${(props) => props.$textAlign || "none"};
 `;
 
 export { InputContainer };

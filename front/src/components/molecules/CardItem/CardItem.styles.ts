@@ -7,16 +7,14 @@ export const Hr = styled.hr`
 `;
 
 type CardItemWrapperProps = {
-  padding?: string;
-  margin?: string;
+  $padding?: string;
+  $margin?: string;
   alignitems?: string;
 };
 
 export const CardItemWrapper = styled.div<CardItemWrapperProps>`
   display: flex;
-  padding: ${(props) => props.padding};
-  margin: ${(props) => props.margin};
+  padding: ${(props) => props.$padding};
+  margin: ${(props) => props.$margin};
   align-items: ${(props) => props.alignitems};
-`
-
-
+`;

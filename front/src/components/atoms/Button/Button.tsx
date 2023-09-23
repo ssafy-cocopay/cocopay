@@ -38,22 +38,20 @@ const Button = (
   ref: ForwardedRef<HTMLButtonElement>
 ) => {
   return (
-    <>
-      <S.Button
-        ref={ref}
-        option={option}
-        size={size}
-        $border={$border}
-        $backgroundColor={$backgroundColor}
-        $borderColor={$borderColor}
-        $color={$color}
-        $borderRadius={$borderRadius}
-        $width={$width}
-        {...attributes}
-      >
-        {children}
-      </S.Button>
-    </>
+    <S.Button
+      ref={ref}
+      option={option}
+      size={size}
+      $border={$border}
+      $backgroundColor={$backgroundColor}
+      $borderColor={$borderColor}
+      $color={$color}
+      $borderRadius={$borderRadius}
+      $width={$width}
+      {...attributes}
+    >
+      {children}
+    </S.Button>
   );
 };
 

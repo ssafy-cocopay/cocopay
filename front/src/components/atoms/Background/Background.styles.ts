@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 interface BackgroundProps {
-  colormode?: "gradient" | "blue";
+  $colormode?: "gradient" | "blue";
 }
 
 const Background = styled.div<BackgroundProps>`
   background: ${(props) => {
-    switch (props.colormode) {
+    switch (props.$colormode) {
       case "gradient":
         return props.theme.gradient.gradient1;
       case "blue":
@@ -22,4 +22,4 @@ const Background = styled.div<BackgroundProps>`
 
 export { Background };
 
-// 사용예시: <Background colorMode="gradient" /><Background />
+// 사용예시: <Background $colormode="gradient" /><Background />
