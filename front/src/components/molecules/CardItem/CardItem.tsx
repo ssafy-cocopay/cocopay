@@ -10,21 +10,18 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 const CardItem = () => {
   return (
     <div>
-      <CardItemWrapper
-      margin="12px 24px"
-      >
+      <CardItemWrapper $margin="12px 24px">
         <Image src={cardImg1} width={90} height={56} $unit="px"></Image>
-          <Image
-            src={korImg}
-            width={24}
-            height={16}
-            $unit="px"
-            margin="0 8px 0 0"
-            style={{margin: "8px 0 8px 12px"}}
-          ></Image>
-        <Wrapper padding="0 0 0 8px">
-          <CardItemWrapper 
-          margin="0 0 8px 0">
+        <Image
+          src={korImg}
+          width={24}
+          height={16}
+          $unit="px"
+          $margin="0 8px 0 0"
+          style={{ margin: "8px 0 8px 12px" }}
+        ></Image>
+        <Wrapper $padding="0 0 0 8px">
+          <CardItemWrapper $margin="0 0 8px 0">
             <Text size="small2" fontWeight="regular" color="black1">
               위버스 신한카드 체크(BTS)
             </Text>
@@ -34,7 +31,7 @@ const CardItem = () => {
               size="small3"
               fontWeight="light"
               color="grey1"
-              margin="0 4px 0 0"
+              $margin="0 4px 0 0"
             >
               체크
             </Text>
@@ -43,10 +40,7 @@ const CardItem = () => {
             </Text>
           </CardItemWrapper>
         </Wrapper>
-        <CardItemWrapper
-        alignitems="center"
-        padding="0 0 0 8px"
-        >
+        <CardItemWrapper alignitems="center" $padding="0 0 0 8px">
           <Image
             src={iconHamburgerGrey}
             width={16}

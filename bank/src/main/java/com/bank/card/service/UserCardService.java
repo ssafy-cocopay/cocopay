@@ -107,7 +107,7 @@ public class UserCardService {
             cardHistoryRepository.save(cardHistory);
 
             //할인현황 수정하기
-            findUserCardBenefit.setDiscountAmount(discountAmount - discountPrice);
+            findUserCardBenefit.setDiscountAmount(discountAmount - discount);
             userCardBenefitRepository.save(findUserCardBenefit);
 
             //total price 수정하기
