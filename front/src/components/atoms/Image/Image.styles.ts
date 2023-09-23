@@ -6,6 +6,7 @@ export interface ImageProps extends ComponentPropsWithRef<"img"> {
   height?: number;
   margin?: string;
   $unit?: "rem" | "px" | "em" | "%";
+  alignItems?: string;
 }
 
 const ImageConatiner = styled.img<ImageProps>`

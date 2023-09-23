@@ -6,6 +6,7 @@ type WrapperProps = {
   flexDirection?: string;
   alignItems?: string;
   justifyContent?: string;
+  width?: string;
 };
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -14,7 +15,7 @@ export const Wrapper = styled.div<WrapperProps>`
   justify-content: ${(props) => props.justifyContent || "center"};
   /* justify-content: space-between; */
   align-items: ${(props) => props.alignItems || "center"};
-  width: 100%;
+  width: ${(props) => props.width || "100%"};
   flex-grow: ${(props) => props.flexGrow || "none"};
   padding: ${(props) => props.padding || 0};
 `;
