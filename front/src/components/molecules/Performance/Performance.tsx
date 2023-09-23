@@ -6,15 +6,15 @@ const Performance = () => {
     return (
         <PerformanceWrapper>
             <BarWrapper
-            position="relative"
+            $position="relative"
             >
                 <Level 
-                bgc="lightblue"
+                $bgc="lightblue"
                 width="28px"
                 height="28px"
-                position="absolute"
-                left="0"
-                zIndex="2" // 이 요소를 앞으로 가져옵니다.
+                $position="absolute"
+                $left="0"
+                $zIndex="2" // 이 요소를 앞으로 가져옵니다.
                 >
                     <Text
                     size="small2"
@@ -26,12 +26,12 @@ const Performance = () => {
                     </Text>
                 </Level>
                 <Level 
-                bgc="blue"
+                $bgc="blue"
                 width="150px"
                 height="28px"
-                position="absolute"
-                left="0"
-                zIndex="1" // 이 요소를 뒤로 보냅니다.
+                $position="absolute"
+                $left="0"
+                $zIndex="1" // 이 요소를 뒤로 보냅니다.
                 >
                     <Text
                     size="small2"
@@ -44,7 +44,7 @@ const Performance = () => {
                 </Level>
             </BarWrapper>
             <Level 
-            bgc="grey2"
+            $bgc="grey2"
             width="28px"
             height="28px"
             >
