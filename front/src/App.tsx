@@ -9,6 +9,8 @@ import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
+//TODO: 랜딩페이지로 따로 빼기
+
 function App() {
   const navigate = useNavigate();
   const navigatePage = (path: string) => {
@@ -17,18 +19,18 @@ function App() {
 
   return (
     <Background
-      colormode="blue"
+      $colormode="blue"
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <Container>
-        <Wrapper flexGrow={4}>
-          <Image src={coco} width={10} />
+      <Container $margin="50px 0">
+        <Wrapper $flexGrow={4}>
+          <Image src={coco} width={12} />
         </Wrapper>
-        <Wrapper flexGrow={2}>
+        <Wrapper $flexGrow={2} style={{ gap: "15px" }}>
           <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="large">
             로그인
           </Button>

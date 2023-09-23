@@ -8,11 +8,15 @@ import com.bank.benefit.entity.UserCardBenefit;
 import com.bank.benefit.repository.BenefitRepository;
 import com.bank.benefit.repository.UserCardBenefitRepository;
 import com.bank.card.dto.*;
+import com.bank.card.entity.Card;
 import com.bank.card.entity.UserCard;
+import com.bank.card.repository.card.CardRepository;
 import com.bank.card.repository.usercard.UserCardRepository;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.mapper.CardHistoryMapper;
 import com.bank.card_history.repository.CardHistoryRepository;
+import com.bank.performance.entity.Performance;
+import com.bank.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,9 +32,11 @@ public class UserCardService {
 
     private final UserCardRepository userCardRepository;
     private final UserCardBenefitRepository userCardBenefitRepository;
+    private final CardRepository cardRepository;
     private final BenefitRepository benefitRepository;
     private final AccountService accountService;
     private final CardHistoryRepository cardHistoryRepository;
+    private final PerformanceRepository performanceRepository;
     private final CardHistoryMapper cardHistoryMapper;
 
     public void save(UserCard userCard) {
@@ -130,5 +136,16 @@ public class UserCardService {
 
     public List<UserCardDto> findUserCardByUuid(Integer uuid) {
         return userCardRepository.findUserCardListByUuid(uuid);
+    }
+
+    //결제 후 실적 확인
+    public void PerformanceCheck(Integer UserCardId){
+        UserCard userCard = userCardRepository.findById(UserCardId).get();
+        Card card = cardRepository.findById(userCard.getCard().getId()).get();
+        Performance performance = performanceRepository.findPerformance(null,card.getId(),userCard.getPerformanceLevel()).get(0);
+        if (performance.getLevelPrice()>=userCard.getTotalPrice()){
+            userCard.setPerformanceLevel(userCard.getPerformanceLevel()+1);
+            userCardRepository.save(userCard);
+        }
     }
 }

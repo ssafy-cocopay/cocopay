@@ -13,4 +13,6 @@ public class OrderKey {
     private String category;
 
     private String storeName;
+
+    private int OrderPrice;
 }
