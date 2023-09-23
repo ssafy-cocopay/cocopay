@@ -167,4 +167,11 @@ public class UserCardService {
         }
     }
 
+    public UserCard findUserCardById(int cardId) {
+        Optional<UserCard> findUserCard = userCardRepository.findById(cardId);
+
+        return findUserCard
+                .orElseThrow(() -> new RuntimeException("해당 카드 없음"));
+    }
+
 }
