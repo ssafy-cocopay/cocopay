@@ -4,6 +4,7 @@ import Button from "@/components/atoms/Button/Button";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 import { Image } from "@/components/atoms/Image/Image";
+import { useEffect } from "react";
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
 const BUTTON_STYLES = {
@@ -13,7 +14,6 @@ const BUTTON_STYLES = {
 
 const PwCheckButtons = () => {
   const [pressedCount, setPressedCount] = useState(0);
-
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
   const [isPressed, setIsPressed] = useState(Array(keypad.length).fill(false));
 
@@ -21,6 +21,7 @@ const PwCheckButtons = () => {
     if (pressedCount < 6) {
       setPressedCount((prevCount) => prevCount + 1);
     }
+    // handleMouseDown(index);
     //TODO: 만약 pressedCount가 6이면 비밀번호 맞나 검증
   };
 
@@ -34,16 +35,20 @@ const PwCheckButtons = () => {
     const updatedState = [...isPressed];
     updatedState[index] = true;
     setIsPressed(updatedState);
-    console.log(1);
   };
+
+  useEffect(() => {
+    console.log("isPressed changed:", isPressed);
+  }, [isPressed]);
 
   const handleMouseUpOrLeave = (index: number) => {
     const updatedState = [...isPressed];
     updatedState[index] = false;
     setIsPressed(updatedState);
+    console.log("mouseUp", isPressed, index);
   };
 
-  const renderStarButton = (_: unknown, index: number) => (
+  const starButton = (_: unknown, index: number) => (
     <Button
       key={index}
       size="small"
@@ -62,26 +67,24 @@ const PwCheckButtons = () => {
     </Button>
   );
 
-  const renderNumberButton = (number: number | "", index: number) => (
+  const numberButton = (number: number | "", index: number) => (
     <Button
       key={index}
-      onMouseDown={() => handleMouseDown(index)}
-      onMouseUp={() => handleMouseUpOrLeave(index)}
-      onMouseLeave={() => handleMouseUpOrLeave(index)}
+      onMouseDown={() => handleMouseDown(index + 1)}
+      onMouseUp={() => handleMouseUpOrLeave(index + 1)}
+      onMouseLeave={() => handleMouseUpOrLeave(index + 1)}
       onClick={handleNumberPress}
-      $backgroundColor="grey4"
-      option={isPressed ? "activated" : "deActivated"}
       size="small"
+      option="keypad"
       $border="none"
+      $fontSize="24px"
       style={BUTTON_STYLES}
     >
-      <Text size="subtitle2" color="grey1" fontWeight="bold">
-        {number}
-      </Text>
+      {number}
     </Button>
   );
 
-  const renderEmptyButton = (index: number) => (
+  const emptyButton = (index: number) => (
     <Button
       key={index}
       option="deActivated"
@@ -92,7 +95,7 @@ const PwCheckButtons = () => {
     />
   );
 
-  const renderBackButton = (index: number) => (
+  const backButton = (index: number) => (
     <Button
       key={index}
       onClick={handleDeletePress}
@@ -114,7 +117,7 @@ const PwCheckButtons = () => {
         $justifyContent="space-between"
         style={{ margin: "36px 0 28px 0" }}
       >
-        {Array.from({ length: 6 }).map(renderStarButton)}
+        {Array.from({ length: 6 }).map(starButton)}
       </Wrapper>
       <Wrapper
         $flexDirection="row"
@@ -123,10 +126,10 @@ const PwCheckButtons = () => {
       >
         {keypad.map((btn, index) => {
           if (typeof btn === "string") {
-            if (btn === "") return renderEmptyButton(index);
-            if (btn === "back") return renderBackButton(index);
+            if (btn === "") return emptyButton(index);
+            if (btn === "back") return backButton(index);
           } else {
-            return renderNumberButton(btn, index);
+            return numberButton(btn, index);
           }
         })}
       </Wrapper>
