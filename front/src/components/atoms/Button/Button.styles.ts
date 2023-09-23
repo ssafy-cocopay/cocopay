@@ -66,13 +66,14 @@ const getSizeStyling = (size: Required<ButtonProps>["size"]) => {
 const Button = styled.button<ButtonProps>`
   width: ${(props) => props.$width || "100%"};
   text-align: ${(props) => props.$textAlign || "center"};
-  color: ${(props) => props.color ? props.theme.color[props.color] : theme.color.black1};
+  color: ${(props) =>
+    props.color ? props.theme.color[props.color] : theme.color.black1};
   border: ${(props) =>
     props.$border ||
     `1.5px solid ${props.$borderColor || props.theme.color.blue}`};
+  border-radius: ${(props) => props.$borderRadius || "23px"};
   ${({ size = "large" }) => getSizeStyling(size)};
   ${({ option = "default", ...props }) => getOptionStyling(option, props)};
-  border-radius: ${(props) => props.$borderRadius || "23px"};
   font-size: ${(props) => props.$fontSize || "20px"};
   background-color: ${(props) => props.$backgroundColor};
 `;
