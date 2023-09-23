@@ -1,11 +1,11 @@
 package com.cocopay.payment.service;
 
 import com.cocopay.payment.apicall.ApiCallService;
-import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
 import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
+import com.cocopay.payment.dto.req.FinalPayReqDto;
 import com.cocopay.payment.dto.req.PayPostDto;
-import com.cocopay.payment.dto.req.PickDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.dto.res.PerformanceResListDto;
@@ -16,10 +16,10 @@ import com.cocopay.redis.service.BenefitKeyService;
 import com.cocopay.redis.service.OrderKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
-import com.cocopay.user.repository.UserRepository;
 import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
+import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,33 +33,41 @@ import java.util.Optional;
 @Slf4j
 public class PaymentService {
     private final UserCardRepository userCardRepository;
-    private final UserRepository userRepository;
     private final ApiCallService apiCallService;
     private final PerformanceKeyService performanceKeyService;
     private final OrderKeyService orderKeyService;
     private final BenefitKeyService benefitKeyService;
     private final PaymentMapper paymentMapper;
     private final UserService userService;
+    private final UserCardService userCardService;
 
-    //오토체인징 사용 분기점
-    public OnlineResponse<?> autoOrDirect(PayPostDto payPostDto) {
-        if (payPostDto.getCardId() != null) {
-            //다이렉트로 결제 요청 진행
-        } else {
-            return autoChanging(payPostDto.getUserId(),
+    //오프라인의 경우 오토체인징 사용 분기점
+    public void autoOrDirect(PayPostDto payPostDto) {
+        UserCard findUserCard = userCardService.findUserCardById(payPostDto.getCardId());
+        log.info("오프라인 결제 분기 진입");
+        //코코카드라면?
+        if (findUserCard.isCocoType()) {
+            log.info("코코카드로 요청 들어옴");
+            CardOfferResDto offerResDto = autoChanging(payPostDto.getUserId(),
                     payPostDto.getCategory(),
                     payPostDto.getStoreName(),
-                    payPostDto.getOrderPrice());
+                    payPostDto.getOrderPrice()).get(0);
+
+            payPostDto.setOrderPrice(offerResDto.getFinalPrice());
+
+            reqPay(null, payPostDto, offerResDto.getCardUuid());
         }
-        return null;
+        //코코카드가 아니라면 바로 결제 진행
+        else {
+            log.info("일반카드로 결제 요청 들어옴");
+            reqPay(null, payPostDto, findUserCard.getCardUuid());
+        }
     }
 
     //오토체인징 시스템 진행
-    public OnlineResponse<?> autoChanging(int userId, String category, String storeName, int orderPrice) {
+    //온 오프, 둘 다 카테고리와 매장명은 들어옴
+    public List<CardOfferResDto> autoChanging(int userId, String category, String storeName, int orderPrice) {
         User findUser = userService.findUserById(userId);
-
-        //주문 정보 저장
-        orderKeyService.orderKeySave(userId, category, storeName, orderPrice);
 
         //사용자 카드 목록 조회
         List<UserCard> findUserCardList = userCardRepository.findUserCardListByCocoType(userId);
@@ -71,7 +79,7 @@ public class PaymentService {
 
         //사용자 카드 실적 정보 redis 저장
         performanceKeyService.performanceKeySave(performanceResList.getPerformanceList());
-        
+
         //사용자 카드 우선순위와 실적 정보 매핑 진행
         List<CardOfferResDto> cardOfferResList = performanceKeyService.performanceKeyMapping(findUserCardList, orderPrice);
 
@@ -91,11 +99,11 @@ public class PaymentService {
             log.info("사용자 카드들의 혜택 조회 api call 끝");
             log.info("혜택 조회 정보 redis 저장");
             benefitKeyService.benefitSave(benefitResDtoList);
-            return new OnlineResponse<>(benefitFirst(cardOfferResList, orderKey.getOrderPrice()));
+            return benefitFirst(cardOfferResList, orderKey.getOrderPrice());
 
         } else {
             log.info("실적 우선으로 계산 진행");
-            return new OnlineResponse<>(performanceFirst(cardOfferResList));
+            return performanceFirst(cardOfferResList);
         }
     }
 
@@ -175,10 +183,27 @@ public class PaymentService {
                 .toList();
     }
 
-    public void cardPick(PickDto pickDto) {
+    public void cardPick(FinalPayReqDto finalPayReqDto) {
         //주문 정보(카테고리, 매장명) 조회 후 매핑 진행
-        OrderKey findOrder = orderKeyService.findOrderKey(pickDto.getUserId());
-        PaymentRequestDto paymentRequestDto = paymentMapper.toPaymentRequestDto(findOrder, pickDto);
-        apiCallService.payApiCall(paymentRequestDto);
+//        OrderKey findOrder = orderKeyService.findOrderKey(FinalPayReqDto.getUserId());
+//        PaymentReqDto paymentReqDto = paymentMapper.toPaymentRequestDto(findOrder, FinalPayReqDto);
+//        apiCallService.payApiCall(paymentReqDto);
+
+    }
+
+    //결제 요청 메서드
+    public void reqPay(FinalPayReqDto finalPayReqDto, PayPostDto payPostDto,int cardUuid) {
+        PaymentReqDto paymentReqDto;
+
+        if (payPostDto == null) {
+            OrderKey findOrderKey = orderKeyService.findOrderKey(finalPayReqDto.getUserId());
+
+            paymentReqDto = paymentMapper.toPaymentReqDto(findOrderKey, finalPayReqDto, cardUuid);
+
+        } else {
+            paymentReqDto = paymentMapper.toPaymentReqDto2(payPostDto, cardUuid);
+        }
+
+        apiCallService.payApiCall(paymentReqDto);
     }
 }
