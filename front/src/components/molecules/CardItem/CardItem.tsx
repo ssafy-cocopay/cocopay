@@ -40,7 +40,7 @@ const CardItem = () => {
             </Text>
           </CardItemWrapper>
         </Wrapper>
-        <CardItemWrapper alignitems="center" $padding="0 0 0 8px">
+        <CardItemWrapper $alignItems="center" $padding="0 0 0 8px">
           <Image
             src={iconHamburgerGrey}
             width={16}
