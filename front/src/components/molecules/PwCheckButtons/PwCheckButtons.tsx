@@ -13,10 +13,9 @@ const BUTTON_STYLES = {
 
 const PwCheckButtons = () => {
   const [pressedCount, setPressedCount] = useState(0);
-//   const [isPressed, setIsPressed] = useState(Array(keypad.length).fill(false));
-
 
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
+  const [isPressed, setIsPressed] = useState(Array(keypad.length).fill(false));
 
   const handleNumberPress = () => {
     if (pressedCount < 6) {
@@ -29,6 +28,19 @@ const PwCheckButtons = () => {
     if (pressedCount > 0) {
       setPressedCount((prevCount) => prevCount - 1);
     }
+  };
+
+  const handleMouseDown = (index: number) => {
+    const updatedState = [...isPressed];
+    updatedState[index] = true;
+    setIsPressed(updatedState);
+    console.log(1);
+  };
+
+  const handleMouseUpOrLeave = (index: number) => {
+    const updatedState = [...isPressed];
+    updatedState[index] = false;
+    setIsPressed(updatedState);
   };
 
   const renderStarButton = (_: unknown, index: number) => (
@@ -50,14 +62,15 @@ const PwCheckButtons = () => {
     </Button>
   );
 
-  const renderNumberButton = (number: number) => (
+  const renderNumberButton = (number: number | "", index: number) => (
     <Button
-    //   onMouseDown={() => setIsPressed(true)}
-    //   onMouseUp={() => setIsPressed(false)}
-    //   onMouseLeave={() => setIsPressed(false)}
-    //   onClick={handleNumberPress}
-    //   //   $backgroundColor="grey4"
-    //   option={isPressed ? "activated" : "deActivated"}
+      key={index}
+      onMouseDown={() => handleMouseDown(index)}
+      onMouseUp={() => handleMouseUpOrLeave(index)}
+      onMouseLeave={() => handleMouseUpOrLeave(index)}
+      onClick={handleNumberPress}
+      $backgroundColor="grey4"
+      option={isPressed ? "activated" : "deActivated"}
       size="small"
       $border="none"
       style={BUTTON_STYLES}
@@ -68,8 +81,9 @@ const PwCheckButtons = () => {
     </Button>
   );
 
-  const renderEmptyButton = () => (
+  const renderEmptyButton = (index: number) => (
     <Button
+      key={index}
       option="deActivated"
       size="small"
       $backgroundColor="white"
@@ -78,8 +92,9 @@ const PwCheckButtons = () => {
     />
   );
 
-  const renderBackButton = () => (
+  const renderBackButton = (index: number) => (
     <Button
+      key={index}
       onClick={handleDeletePress}
       option="deActivated"
       $backgroundColor="grey4"
@@ -92,26 +107,30 @@ const PwCheckButtons = () => {
   );
 
   return (
-    <>
+    <div>
+      {/* <Text>{isPressed}</Text> */}
       <Wrapper
-        flexDirection="row"
-        justifyContent="space-between"
+        $flexDirection="row"
+        $justifyContent="space-between"
         style={{ margin: "36px 0 28px 0" }}
       >
         {Array.from({ length: 6 }).map(renderStarButton)}
       </Wrapper>
       <Wrapper
-        flexDirection="row"
-        justifyContent="space-between"
+        $flexDirection="row"
+        $justifyContent="space-between"
         style={{ marginBottom: "28px", gap: "10px", flexWrap: "wrap" }}
       >
-        {keypad.map((btn: number | string) => {
-          if (btn === "") return renderEmptyButton();
-          if (btn === "back") return renderBackButton();
-          return renderNumberButton(btn as number);
+        {keypad.map((btn, index) => {
+          if (typeof btn === "string") {
+            if (btn === "") return renderEmptyButton(index);
+            if (btn === "back") return renderBackButton(index);
+          } else {
+            return renderNumberButton(btn, index);
+          }
         })}
       </Wrapper>
-    </>
+    </div>
   );
 };
 

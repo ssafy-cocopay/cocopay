@@ -15,7 +15,7 @@ export interface TextProps {
   //width 단위는 픽셀
   width?: number;
   fontWeight?: "bold" | "medium" | "regular" | "light";
-  margin?: string;
+  $margin?: string;
 }
 
 const getSizeStyling = (size: Required<TextProps>["size"] = "heading1") => {
@@ -63,7 +63,7 @@ const getFontWeightStyling = (weight?: TextProps["fontWeight"]) => {
 };
 
 const Text = styled.p<TextProps>`
-  margin: ${(props) => props.margin || "0"};
+  margin: ${(props) => props.$margin || "0"};
   ${({ size = "heading1" }) => getSizeStyling(size)};
   color: ${(props) =>
     props.color ? props.theme.color[props.color] : props.theme.color.black1};

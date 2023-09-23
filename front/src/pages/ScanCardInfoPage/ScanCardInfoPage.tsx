@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "@/components/atoms/Button/Button";
-import theme from "@/styles/theme";
 import Input from "@/components/atoms/Input/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
