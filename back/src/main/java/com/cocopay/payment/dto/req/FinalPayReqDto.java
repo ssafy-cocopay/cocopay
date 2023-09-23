@@ -9,16 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PickDto {
+public class FinalPayReqDto {
     private int userId;
-    private Integer cardUuid;
-    private Integer requestPrice;
+    private int cardId;
+    private int finalPrice;
     //일시불, 할부
     private String transactionType;
-    
-    //여기부터는 필수는 요청 값은 아님
-    //할인 타입 (페이백, 청구할인, 현장할인)
-    private String discountType;
-    
-    private Integer benefitId;
+
+    private Integer installmentMonth;
 }
