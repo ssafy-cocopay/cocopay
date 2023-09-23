@@ -1,5 +1,8 @@
 package com.cocopay.usercard.service;
 
+import com.cocopay.payment.dto.req.CardUuidListDto;
+import com.cocopay.payment.dto.res.PerformanceResponseDto;
+import com.cocopay.payment.dto.res.PerformanceResponseListDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.*;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,6 +112,59 @@ public class UserCardService {
                 .bodyToMono(List.class)
                 .block();
         return cardHistoryList;
+    }
+
+    //카드 정보 보내주기(카드 상세페이지 부분)
+    public UserCardDetailResponseDto findUserCardDetail(Integer cardId){
+
+        UserCard userCard = userCardRepository.findById(cardId).get();
+        WebClient webClient = WebClient.create();
+
+        //api 주소
+        String url = "http://localhost:8081/bank/performance/list";
+
+        List<Integer> cardList = new ArrayList<>();
+        cardList.add(cardId);
+        CardUuidListDto cardUuidListDto = new CardUuidListDto();
+        cardUuidListDto.setCardUuidList(cardList);
+
+        //임시 동기 요청
+        PerformanceResponseListDto performanceResponseListDto = webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cardUuidListDto)
+                .retrieve()
+                .bodyToMono(PerformanceResponseListDto.class)
+                .block();
+
+        PerformanceResponseDto performanceResponseDto = performanceResponseListDto.getPerformanceList().get(0);
+        //남은 금액
+        int price = performanceResponseDto.getPrice()-performanceResponseDto.getTotalPrice();
+        //퍼센트
+        int percent = performanceResponseDto.getTotalPrice()/performanceResponseDto.getPrice()*100;
+
+        UserCardDetailResponseDto userCardDetailResponseDto = UserCardDetailResponseDto.builder()
+                .userCardId(cardId)
+                .cardName(userCard.getCardName())
+                .level(performanceResponseDto.getLevel())
+                .nextLevel(performanceResponseDto.getNextLevel())
+                .price(price)
+                .percent(percent)
+                .totalPrice(performanceResponseDto.getTotalPrice())
+                .build();
+        return userCardDetailResponseDto;
+
+    }
+
+    //카드 우선순위 변경
+    public void setCardOrder(List<Integer> cardUuidList){
+        int order = 1;
+        for (Integer cardId: cardUuidList) {
+            UserCard userCard = userCardRepository.findById(cardId).get();
+            userCard.setCardOrder(order);
+            userCardRepository.save(userCard);
+            order++;
+        }
     }
 
 }

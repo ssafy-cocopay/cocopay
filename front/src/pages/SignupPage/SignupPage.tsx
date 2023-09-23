@@ -35,9 +35,9 @@ const SignupPage = () => {
   };
 
   return (
-    <Container paddingTop="70px">
+    <Container $paddingTop="70px">
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <Container padding="none" left={true}>
+        <Container $padding="none" $left={true}>
           <Text size="subtitle1">
             코코페이 이용을 위해
             <br /> <b>본인확인</b>을 진행해주세요
@@ -67,12 +67,12 @@ const SignupPage = () => {
             </small>
           )}
           <br />
-          <Wrapper flexDirection="row" justifyContent="space-between">
+          <Wrapper $flexDirection="row" $justifyContent="space-between">
             <Input width={122}></Input>
             <Text size="subtitle1" color="grey3">
               -
             </Text>
-            <Input width={35} textAlign="center" paddingLeft={0}></Input>
+            <Input width={35} $textAlign="center" $paddingLeft={0}></Input>
             <Image src={Dots} width={40} $unit="%"></Image>
           </Wrapper>
           <br />
@@ -93,7 +93,7 @@ const SignupPage = () => {
             </small>
           )}
           <br />
-          <Wrapper flexDirection="raw" justifyContent="space-between">
+          <Wrapper $flexDirection="row" $justifyContent="space-between">
             <Input width={150}></Input>
             <Button
               onClick={() => console.log("인증번호전송")}
@@ -115,6 +115,7 @@ const SignupPage = () => {
             확인
           </Button>
 
+          <br />
           <div>
             {/* <!-- 드롭다운(싱글타입) --> */}
             <select name="telecom" id="telecom">

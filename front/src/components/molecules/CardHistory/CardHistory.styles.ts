@@ -1,14 +1,11 @@
 import styled from "styled-components";
 
-type CardHistoryWrapperProps = {
-    margin?: string;
-    justifyContent?: string;
-    alignItems?: string;
-  };
+type WrapperProps = {
+  $margin?: string;
+};
 
-export const CardHistoryWrapper = styled.div<CardHistoryWrapperProps>`
-    display: flex;
-    justify-content: ${(props) => props.justifyContent};
-    align-items: ${(props) => props.alignItems};
-    margin: ${(props) => props.margin};
+export const Wrapper = styled.div<WrapperProps>`
+  display: flex;
+  justify-content: space-between;
+  margin: ${(props) => props.$margin};
 `;

@@ -6,15 +6,15 @@ import { Outlet } from "react-router-dom";
 const MainPage = () => {
   return (
     <Background
-    colormode="gradient"
-    style={{
-        minHeight: "100vh"
-    }}
+      $colormode="gradient"
+      style={{
+        minHeight: "100vh",
+      }}
     >
       <Outlet />
       <NavBar />
-      </Background>
-  )
+    </Background>
+  );
 };
 
 export default MainPage;
