@@ -1,6 +1,6 @@
 package com.cocopay.payment.apicall;
 
-import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitInfoResponseListDto;
 import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
@@ -52,7 +52,7 @@ public class ApiCallService {
     }
 
     //결제요청 api 콜 진행
-    public void payApiCall(PaymentRequestDto requestDto) {
+    public void payApiCall(PaymentReqDto requestDto) {
         WebClient webClient = WebClient.create();
         
         log.info("결제 요청 api call 진행");
