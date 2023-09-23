@@ -16,19 +16,23 @@ const PayOnlineCompletePage = () => {
   };
   return (
     <Background
-      colormode="gradient"
+      $colormode="gradient"
       style={{
         minHeight: "100vh",
       }}
     >
-      온라인 결제완료 페이지
-      <Container border={true} left={true} paddingTop="36px">
+      <Container
+        $border={true}
+        $left={true}
+        $paddingTop="36px"
+        style={{ position: "relative" }}
+      >
         <Container
-          paddingTop="63px"
+          $paddingTop="63px"
           $backgroundColor="white"
           $borderRadius="38px"
           //   height="auto"
-          padding="36px"
+          $padding="36px"
         >
           <Text size="subtitle1" fontWeight="bold">
             결제 완료!
@@ -40,16 +44,20 @@ const PayOnlineCompletePage = () => {
             결제가 완료돼요
           </Text>
           <br />
-
-          <Image src={Penguin} width={70} $unit="%"></Image>
-          <Button
-            onClick={() => navigatePage(PATH.FIGNER_SETTING)}
-            option="activated"
-            size="medium"
-            $width="200px"
-          >
-            홈으로
-          </Button>
+          {/* <Image src={Penguin} width={70} $unit="%"></Image> */}
+        </Container>
+        <Container
+          // $backgroundColor="#00000050"
+          style={{ position: "absolute", left: "0px" }}
+          $padding="0"
+        >
+          {/* TODO: 이미지 누르면 홈으로 이동하기 onClick */}
+          <Image
+            src={Penguin}
+            width={88}
+            $unit="%"
+            style={{ marginLeft: "auto", marginTop: "70%" }}
+          ></Image>
         </Container>
       </Container>
     </Background>
