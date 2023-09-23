@@ -9,12 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentRequestDto {
+public class PaymentReqDto {
     private Integer cardUuid;
-    private Integer benefitId;
     private Integer requestPrice;
     private String category;
     private String store;
-    private String discountType;
     private String transactionType;
+    private Integer installmentMonth;
 }
