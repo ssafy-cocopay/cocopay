@@ -4,6 +4,7 @@ import * as S from "@/components/atoms/Image/Image.styles";
 const Image = ({
   width,
   height,
+  // $justifyContent,   TODO: 이미지 위치 조정하는 값 기본 설정(하단으로)
 
   $unit = "rem",
   ...attributes
@@ -13,6 +14,7 @@ const Image = ({
       width={width}
       height={height}
       $unit={$unit}
+      // $justifyContent={$justifyContent}
       {...attributes}
     />
   );
