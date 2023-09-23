@@ -1,9 +1,11 @@
 package com.bank.card.repository.usercard;
 
 import com.bank.benefit.dto.BenefitInfoResponseDto;
+import com.bank.card.dto.CardFindDto;
 import com.bank.card.dto.PerformanceResponseDto;
 import com.bank.card.dto.UserCardDto;
 import com.bank.card.dto.UserCardResponseDto;
+import com.bank.card.entity.CardType;
 import com.bank.card.entity.UserCard;
 
 import com.bank.performance.dto.PerformanceResponseListDto;
@@ -66,7 +68,22 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
     }
 
     @Override
-    public List<UserCardDto> findUserCardListByUuid(Integer uuid){
+    public CardFindDto findCardType(Integer cardUuid) {
+        return jpaQueryFactory.select(Projections.fields(CardFindDto.class,
+                        userCard.id.as("cardUuid"),
+                        card.id.as("cardId"),
+                        card.type.as("cardType"),
+                        card.cardName.as("cardName"),
+                        account.balance.as("balance")))
+                .from(userCard)
+                .join(card).on(card.id.eq(userCard.card.id))
+                .join(account).on(account.id.eq(userCard.account.id))
+                .where(userCard.id.eq(cardUuid))
+                .fetchOne();
+    }
+
+    @Override
+    public List<UserCardDto> findUserCardListByUuid(Integer uuid) {
         return jpaQueryFactory
                 .select(Projections.fields(UserCardDto.class,
                         userCard.id.as("userCardId"),
@@ -74,7 +91,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                         card.type.as("cardType"),
                         card.cardName,
                         userCard.validDate,
-                        card.visa,card.master,
+                        card.visa, card.master,
                         card.cardDefaultImage))
                 .from(userCard)
                 .join(account).on(account.id.eq(userCard.account.id))
@@ -86,17 +103,17 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
     public UserCardDto findUSerCardBySerialNumber(String serialNumber, String cvc, String password) {
         return jpaQueryFactory
                 .select(Projections.fields(UserCardDto.class,
-                userCard.id.as("userCardId"),
-                userCard.serialNumber,
-                card.type.as("cardType"),
-                card.cardName,
-                userCard.validDate,
-                card.visa,card.master,
+                        userCard.id.as("userCardId"),
+                        userCard.serialNumber,
+                        card.type.as("cardType"),
+                        card.cardName,
+                        userCard.validDate,
+                        card.visa, card.master,
                         card.cardDefaultImage))
                 .from(userCard)
                 .join(card).on(card.id.eq(userCard.card.id))
                 .where(userCard.serialNumber.eq(serialNumber),
                         userCard.cvc.eq(cvc),
-                        userCard.password.like(password+'%')).fetchOne();
+                        userCard.password.like(password + '%')).fetchOne();
     }
 }
