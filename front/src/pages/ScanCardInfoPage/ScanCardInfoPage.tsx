@@ -35,13 +35,13 @@ const ScanCardInfoPage = () => {
 
   return (
     <Background>
-      <Container border={true} paddingTop="70px">
-        <Container padding="none">
+      <Container $border={true} $paddingTop="70px">
+        <Container $padding="none">
           <Text size="subtitle1">카드 정보</Text>
-          <Container padding="none" left={true}>
-            <Wrapper flexDirection="row" justifyContent="start">
+          <Container $padding="none" $left={true}>
+            <Wrapper $flexDirection="row" $justifyContent="start">
               <Image src={CardImg} width={13} $unit="%"></Image>
-              <Text margin="10px" size="body2">
+              <Text $margin="10px" size="body2">
                 카드 정보를 입력 해 주세요.
               </Text>
             </Wrapper>
@@ -50,14 +50,14 @@ const ScanCardInfoPage = () => {
             {/* TODO: 카드번호 사이에 '-' 넣기, 중간 글씨 '*'로 표시*/}
             <Text size="small1">카드번호</Text>
             <Input></Input>
-            <Wrapper justifyContent="space-between" flexDirection="row">
-              <Wrapper alignItems="left">
+            <Wrapper $justifyContent="space-between" $flexDirection="row">
+              <Wrapper $alignItems="left">
                 <Text size="small1">유효 기간</Text>
                 {/* TODO: placeholder안에 글씨 작게하기 */}
                 {/* TODO: 숫자 2개 입력 후 자동으로 / 나오게 하기 */}
                 <Input placeholder="MM / YY"></Input>
               </Wrapper>
-              <Wrapper alignItems="left">
+              <Wrapper $alignItems="left">
                 <Text size="small1">CVC</Text>
                 <Input placeholder="카드 뒷면 3자리"></Input>
               </Wrapper>
