@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
 type WrapperProps = {
-    margin?: string;
-  };
+  $margin?: string;
+};
 
 export const Box = styled.div`
   padding: 8px 0;
 `;
 
 export const Wrapper = styled.div<WrapperProps>`
-    display: flex;
-    justify-content: space-between;
-    margin: ${(props) => props.margin};
-`
+  display: flex;
+  justify-content: space-between;
+  margin: ${(props) => props.$margin};
+`;
 
 export const Hr = styled.hr`
   border: none; // 기본 border를 제거합니다.

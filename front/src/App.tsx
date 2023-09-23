@@ -19,18 +19,18 @@ function App() {
 
   return (
     <Background
-      colormode="blue"
+      $colormode="blue"
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <Container margin="50px 0">
-        <Wrapper flexGrow={4}>
+      <Container $margin="50px 0">
+        <Wrapper $flexGrow={4}>
           <Image src={coco} width={12} />
         </Wrapper>
-        <Wrapper flexGrow={2} style={{ gap: "15px" }}>
+        <Wrapper $flexGrow={2} style={{ gap: "15px" }}>
           <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="large">
             로그인
           </Button>

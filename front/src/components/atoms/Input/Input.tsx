@@ -17,7 +17,7 @@ const Input = (
     $borderRadius,
     $unit,
     fontSize,
-    paddingLeft,
+    $paddingLeft,
     onChange,
     ...attributes
   }: InputProps,
@@ -29,7 +29,7 @@ const Input = (
       ref={ref}
       inputType={inputType}
       height={height ?? 64}
-      paddingLeft={paddingLeft}
+      $paddingLeft={$paddingLeft}
       $borderRadius={$borderRadius ?? 10}
       $unit={$unit ?? "px"}
       fontSize={fontSize ?? theme.fontSize.body1}
