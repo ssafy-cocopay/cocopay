@@ -1,8 +1,9 @@
 package com.cocopay.payment.mapper;
 
-import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
-import com.cocopay.payment.dto.req.PickDto;
+import com.cocopay.payment.dto.req.FinalPayReqDto;
+import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
 import com.cocopay.payment.dto.res.CardOfferResponseDto2;
 import com.cocopay.payment.dto.res.CardResponseDto;
@@ -29,21 +30,20 @@ public interface PaymentMapper {
     @Mapping(source = "key.nextLevel", target = "nextLevel")
     @Mapping(source = "key.price", target = "cardPerformanceAmount")
     @Mapping(source = "key.totalPrice", target = "cardCurrentAmount")
-    CardOfferResDto toResponseDto(PerformanceKey key, UserCard userCard, int orderPrice, int finalPrice,String discountType);
+    CardOfferResDto toResponseDto(PerformanceKey key, UserCard userCard, int orderPrice, int finalPrice, String discountType);
 
     CardOfferResponseDto2 toResponseDto2(PerformanceKey performance, CardResponseDto card, int orderPrice);
 
     @Mapping(source = "id", target = "cardUuid")
     CardResponseDto toCardResponseDto(UserCard userCard);
 
-    @Mapping(source = "pickDto.cardUuid",target = "cardUuid")
-    @Mapping(source = "pickDto.requestPrice",target = "requestPrice")
-    @Mapping(source = "pickDto.transactionType",target = "transactionType")
-    @Mapping(source = "pickDto.discountType",target = "discountType")
-    @Mapping(source = "pickDto.benefitId",target = "benefitId")
-    @Mapping(source = "key.category",target = "category")
-    @Mapping(source = "key.storeName",target = "store")
-    PaymentRequestDto toPaymentRequestDto(OrderKey key, PickDto pickDto);
+    @Mapping(source = "dto.finalPrice", target = "requestPrice")
+    @Mapping(source = "key.storeName", target = "store")
+    PaymentReqDto toPaymentReqDto(OrderKey key, FinalPayReqDto dto, int cardUuid);
+
+    @Mapping(source = "dto.storeName", target = "store")
+    @Mapping(source = "dto.orderPrice", target = "requestPrice")
+    PaymentReqDto toPaymentReqDto2(PayPostDto dto, int cardUuid);
 
     //혜택조회 api call 할 때 사용할 body dto
     default UserCardBenefitBodyDto toBenefitBodyDto(List<CardOfferResDto> list, String category, String storeName) {
