@@ -15,7 +15,7 @@ type ContainerProps = {
 type CardListContainerProps = {
   margin?: string;
   padding?: string;
-}
+};
 
 export const Container = styled.div<ContainerProps>`
   display: flex;
@@ -26,7 +26,7 @@ export const Container = styled.div<ContainerProps>`
   max-width: 390px;
   margin: ${(props) => props.margin || "0 auto"};
   margin-top: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding || "0 36px"};
+  padding: ${(props) => props.padding || "0 26px"};
   padding-top: ${(props) => props.paddingTop};
   background-color: ${(props) => props.$backgroundColor};
   border: ${(props) => (props.border ? "1px solid black" : "none")};
@@ -37,5 +37,5 @@ export const CardListContainer = styled.div<CardListContainerProps>`
   height: 100vh;
   max-width: 390px;
   padding: ${(props) => props.padding};
-  margin: ${(props) => props.margin|| '0 auto'};
+  margin: ${(props) => props.margin || "0 auto"};
 `;
