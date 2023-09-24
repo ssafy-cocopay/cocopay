@@ -8,41 +8,44 @@ import lombok.Setter;
 @Setter
 @Builder
 public class CardOfferResDto {
-    private int cardUuid;
-
-    private String serialNumber;
+    //carduuid 아님
+    private int cardId;
 
     private String cardName;
 
-    private Boolean visa;
-
-    private Boolean master;
-
-    private String cardDefaultImage;
+    private String cardImage;
 
     private String cardType;
 
+    private String serialNumber;
+
+    private boolean visa;
+
+    private boolean master;
+
+    //사용자 카드 우선 순위
     private int cardOrder;
-
-    private int level;
-
-    private int nextLevel;
-    //실적 현재 금액
-    private int cardPerformanceAmount;
-    //사용자 총 이용금액
-    private int cardCurrentAmount;
-
-    //물건 주문 금액
-    private int orderPrice;
-
-    //할인이 적용된 최종 금액
-    private int finalPrice;
 
     //할인 예정 금액
     private int discounted;
 
-    //할인 타입 ex) 페이백, 현장할인, 청구할인
+    //할인율
+    private int discountRate;
+
+    //할인 타입 (페이백, 현장할인, 청구할인)
     private String discountType;
 
+    //최종 결제 금액
+    private int finalPrice;
+
+    //다음 실적까지 남은 금액
+    private int remainingAmt;
+
+    //실적 그래프 퍼센트
+    private int graphRate;
+
+    //전월실적 달성 여부 -> 내가 이번 달 혜택을 받을 수 있는지
     private boolean pastPerformance;
+
+    private int curPerLevel;
 }
