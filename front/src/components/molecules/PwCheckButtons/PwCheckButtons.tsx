@@ -20,13 +20,11 @@ const BUTTON_STYLES = {
 const PwCheckButtons = (props: PwCheckButtonsProps) => {
   const { step, setStep } = props;
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
-  // const [isPressed] = useState(Array(keypad.length).fill(false));
 
   const [pressedCount, setPressedCount] = useState(0);
   const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
-  const [setPassword, setSetPassword] = useState<string>(""); // 유저가 처음 설정하는 비밀번호 6자
-  const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비밀번호 확인을 위한 값
-  // const [step, setStep] = useState(1); // 1단계: 비밀번호 설정, 2단계: 비밀번호 확인
+  const [setPassword, setSetPassword] = useState<string>(""); // 비번등록시 - 유저가 처음 설정하는 비밀번호 6자
+  const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비번등록시 - 비밀번호 확인을 위한 값
 
   const handleNumberPress = (num: number) => {
     if (pressedCount < 6) {
@@ -61,12 +59,11 @@ const PwCheckButtons = (props: PwCheckButtonsProps) => {
     if (step === 2 && confirmPassword) {
       if (setPassword === confirmPassword) {
         console.log("비밀번호 왕왕 일치");
-        // TODO: 성공 시 메인 페이지로 이동
+        // TODO: 성공 시 메인 페이지로 이동, DB에 비밀번호 설정 포함 유저값 송신
       } else {
         console.log("비밀번호 일치하지 않음");
         setEnteredPassword("");
         setPressedCount(0);
-        // setStep(1); // 첫 번째 단계로 다시...가면 안 되지!
       }
     }
   }, [confirmPassword, setPassword, step]);
