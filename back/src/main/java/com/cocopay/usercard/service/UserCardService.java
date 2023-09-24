@@ -42,11 +42,12 @@ public class UserCardService {
         Optional<User> user = userRepository.findById(userCardRegisterDto.getUserId());
         System.out.println(userCardDto.getUserCardId());
         int count = userCardRepository.findUserCardListByCocoType(userCardRegisterDto.getUserId()).size()+1;
+        String SerialNumber = userCardDto.getSerialNumber().substring(0,4)+"-****-****-"+userCardDto.getSerialNumber().substring(15,19);
         UserCard userCard = UserCard.builder()
                 .user(user.get())
                 .cocoType(cocopay)
                 .cardUuid(userCardDto.getUserCardId())
-                .serialNumber(userCardDto.getSerialNumber())
+                .serialNumber(SerialNumber)
                 .cardOrder(count)
                 .cardType(userCardDto.getCardType())
                 .cardName(userCardDto.getCardName())
@@ -165,6 +166,28 @@ public class UserCardService {
             userCardRepository.save(userCard);
             order++;
         }
+    }
+
+    public MainAmountDto getAmount(FindHistoryByUserId findHistoryByUserId){
+        WebClient webClient = WebClient.create();
+
+        //api 주소
+        String url = "http://localhost:8081/bank/card-history/total";
+
+        //임시 동기 요청
+        CategoryResponseDto categoryResponseDto = webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(findHistoryByUserId)
+                .retrieve()
+                .bodyToMono(CategoryResponseDto.class)
+                .block();
+        MainAmountDto mainAmountDto = MainAmountDto.builder()
+                .allPrice(categoryResponseDto.getAllPrice())
+                .allDiscountAmount(categoryResponseDto.getAllDiscountAmount())
+                .build();
+
+        return mainAmountDto;
     }
 
 }
