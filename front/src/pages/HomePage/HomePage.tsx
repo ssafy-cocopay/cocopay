@@ -5,8 +5,11 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import search from "@/assets/images/icon-search-blue.png";
-
+import { Line } from "@/components/atoms/Line/Line.style";
+import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
 const HomePage = () => {
+
+
   return (
     <Background
       $colormode="gradient"
@@ -41,8 +44,14 @@ const HomePage = () => {
             height="230px"
             $boxShadow="shadow1"
             width="85%"
+            $paddingTop="36px"
+            $left={true}
             style={{ position: "absolute", top: "-80px" }}
-          ></Container>
+          >
+            <BodyAndHeading amountType="할인받은" amount={6750} />
+            <Line margin="18px 0" />
+            <BodyAndHeading amountType="소비한" amount={273350} />
+          </Container>
           {/* White Circle */}
           <Container
             $backgroundColor="white"
