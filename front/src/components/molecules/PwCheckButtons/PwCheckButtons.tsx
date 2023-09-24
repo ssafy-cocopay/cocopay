@@ -132,7 +132,7 @@ const PwCheckButtons = () => {
   );
 
   return (
-    <div>
+    <>
       <Wrapper
         $flexDirection="row"
         $justifyContent="space-between"
@@ -154,7 +154,7 @@ const PwCheckButtons = () => {
           }
         })}
       </Wrapper>
-    </div>
+    </>
   );
 };
 
