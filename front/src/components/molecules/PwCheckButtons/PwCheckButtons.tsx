@@ -7,20 +7,26 @@ import { Image } from "@/components/atoms/Image/Image";
 import { useEffect } from "react";
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
+type PwCheckButtonsProps = {
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+};
+
 const BUTTON_STYLES = {
   width: "30.5%",
   height: "48px",
 };
 
-const PwCheckButtons = () => {
+const PwCheckButtons = (props: PwCheckButtonsProps) => {
+  const { step, setStep } = props;
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
-  const [isPressed] = useState(Array(keypad.length).fill(false));
+  // const [isPressed] = useState(Array(keypad.length).fill(false));
 
   const [pressedCount, setPressedCount] = useState(0);
   const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
   const [setPassword, setSetPassword] = useState<string>(""); // 유저가 처음 설정하는 비밀번호 6자
   const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비밀번호 확인을 위한 값
-  const [step, setStep] = useState(1); // 1단계: 비밀번호 설정, 2단계: 비밀번호 확인
+  // const [step, setStep] = useState(1); // 1단계: 비밀번호 설정, 2단계: 비밀번호 확인
 
   const handleNumberPress = (num: number) => {
     if (pressedCount < 6) {

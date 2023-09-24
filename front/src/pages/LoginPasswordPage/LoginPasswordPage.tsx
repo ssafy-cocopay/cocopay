@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import Back from "@/components/atoms/Back/Back";
@@ -6,6 +6,7 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import PwCheckButtons from "@/components/molecules/PwCheckButtons/PwCheckButtons";
 
 const LoginPasswordPage = () => {
+  const [step, setStep] = useState(3);
   return (
     <Background $colormode="gradient">
       <Container $left={true} $paddingTop="36px">
@@ -24,7 +25,7 @@ const LoginPasswordPage = () => {
           <Text size="body1" fontWeight="medium">
             비밀번호 6자리를 입력해주세요
           </Text>
-          <PwCheckButtons></PwCheckButtons>
+          <PwCheckButtons step={step} setStep={setStep}></PwCheckButtons>
         </Container>
       </Container>
     </Background>
