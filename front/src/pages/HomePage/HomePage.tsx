@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import { Text } from "@/components/atoms/Text/Text.styles";
-import { Container } from "@/components/atoms/Container/Container.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import search from "@/assets/images/icon-search-blue.png";
 import { Line } from "@/components/atoms/Line/Line.style";
 
 import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
 import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
+
+import {
+  HeaderContainer,
+  BarcodeWhiteContainer,
+  DiscountAndAmountContainer,
+  CircleIconContainer,
+} from "@/components/atoms/Container/Containers.styles";
 
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
@@ -27,64 +33,22 @@ const HomePage = () => {
       <div style={{ position: "absolute", top: 0, width: "100%" }}>
         <BlueContainer></BlueContainer>
       </div>
-      <Container
-        $marginTop="12px"
-        $padding="30px"
-        $left={true}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
+      <HeaderContainer $left={true}>
         <Text size="subtitle2" fontWeight="bold" color="white" $margin="0 4px">
           현장 결제
         </Text>
-        {/* 바코드 있는 white 컨테이너 */}
-        <Container
-          $marginTop="36px"
-          $backgroundColor="white"
-          $borderRadius="38px"
-          height="388px"
-          $left={true}
-          style={{ position: "relative", top: "80px" }}
-        >
-          {/* 할인받은 & 소비한 금액, */}
-          <Container
-            $backgroundColor="white"
-            $borderRadius="38px"
-            height="230px"
-            $boxShadow="shadow1"
-            width="85%"
-            $paddingTop="36px"
-            $left={true}
-            style={{ position: "absolute", top: "-80px" }}
-          >
+        <BarcodeWhiteContainer>
+          <DiscountAndAmountContainer $left={true}>
             <BodyAndHeading amountType="할인받은" amount={6750} />
             <Line margin="18px 0" />
             <BodyAndHeading amountType="소비한" amount={273350} />
-          </Container>
-
-          {/* 바코드 */}
+          </DiscountAndAmountContainer>
           <BarcodeContainer code={barcodeValue} />
-
-          {/* White Circle */}
-          <Container
-            $backgroundColor="white"
-            $borderRadius="100%"
-            height="76px"
-            width="76px"
-            $boxShadow="shadow1"
-            $padding="0"
-            style={{ position: "absolute", top: "-115px", right: "0" }}
-          >
+          <CircleIconContainer>
             <Image src={search} width={2.5} $margin="auto"></Image>
-          </Container>
-        </Container>
-        {/* 여기에도 바코드 컴포넌트 넣어봄.. */}
-      </Container>
-      {/* </div> */}
+          </CircleIconContainer>
+        </BarcodeWhiteContainer>
+      </HeaderContainer>
     </Background>
   );
 };
