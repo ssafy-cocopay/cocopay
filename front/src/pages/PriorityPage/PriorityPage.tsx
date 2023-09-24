@@ -58,6 +58,7 @@ const PriorityPage = () => {
             $margin="56px 0 0 0"
             $src={imgPrioritySale}
             $borderRadius="38px"
+            $boxShadow="shadow1"
             onClick={() => handleBoxClick("sale")}
             $isGrayscale={selectedBox === "sale"}
             >
@@ -68,6 +69,7 @@ const PriorityPage = () => {
             $margin="24px 0 44px 0"
             $src={imgPriorityPerformance}
             $borderRadius="38px"
+            $boxShadow="shadow1"
             onClick={() => handleBoxClick("performance")}
             $isGrayscale={selectedBox === "performance"}
             >
