@@ -70,6 +70,7 @@ const CardDetailPage = () => {
           $margin="44px 0 16px 0"
           $padding="20px 28px"
           $borderRadius="20px"
+          $boxShadow="shadow1"
         >
           <Text size="body2" fontWeight="regular" color="black1">
             다음 실적까지 남은 금액
@@ -84,7 +85,7 @@ const CardDetailPage = () => {
           </Text>
           <Performance />
         </WhiteRoundedBox>
-        <WhiteRoundedBox height="auto" $margin="0 0 20px 0" $padding="28px" $borderRadius="20px">
+        <WhiteRoundedBox height="auto" $margin="0 0 20px 0" $padding="28px" $borderRadius="20px" $boxShadow="shadow1">
           <Calendar />
           <CardHistory />
           <Text
