@@ -25,6 +25,7 @@ import PayOnlinePage from "@/pages/PayOnlinePage/PayOnlinePage";
 import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineCompletePage";
 import MainPage from "@/pages/MainPage/MainPage";
 import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
+import PayOfflineCompletePage from "@/pages/PayOfflineCompletePage/PayOfflineCompletePage";
 
 const router = createBrowserRouter([
   {
@@ -104,8 +105,10 @@ const router = createBrowserRouter([
   //   element: <HomePage />,
   // },
   {
+    //TODO: 둘이 한 페이지로 묶어서 3초뒤에 페이지만 넘어갈 수 있도록 만들기
     path: PATH.PAYOFFLINE,
-    element: <PayOfflinePage />,
+    // element: <PayOfflinePage />,
+    element: <PayOfflineCompletePage />,
   },
   // {
   //   path: PATH.CARDLIST,
