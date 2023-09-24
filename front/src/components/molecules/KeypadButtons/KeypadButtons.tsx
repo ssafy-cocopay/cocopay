@@ -11,7 +11,7 @@ import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 type KeypadButtonsProps = {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  onPasswordMatch?: () => void; // LoginPasswordPage에서 UserPW 넘겨줄 것임
+  onPasswordMatch?: () => void; // LoginPasswordPage에서 넘겨줄 것임
 };
 
 const BUTTON_STYLES = {
@@ -20,21 +20,23 @@ const BUTTON_STYLES = {
 };
 
 const KeypadButtons = (props: KeypadButtonsProps) => {
+  // 상태 관리
+  const [pressedCount, setPressedCount] = useState(0);
+  const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
+  const [setPassword, setSetPassword] = useState<string>(""); // 비번등록시 - 유저가 처음 설정하는 비밀번호 6자
+  const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비번등록시 - 비밀번호 확인을 위한 값
+
+  // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
+  const userPassword = "123456";
+  const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
+
+  // 네비게이팅
   const navigate = useNavigate();
   const navigatePage = (path: string) => {
     navigate(path);
   };
 
   const { step, setStep, onPasswordMatch } = props;
-  const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
-
-  // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
-  const userPassword = "123456";
-
-  const [pressedCount, setPressedCount] = useState(0);
-  const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
-  const [setPassword, setSetPassword] = useState<string>(""); // 비번등록시 - 유저가 처음 설정하는 비밀번호 6자
-  const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비번등록시 - 비밀번호 확인을 위한 값
 
   const handleNumberPress = (num: number) => {
     if (pressedCount < 6) {
@@ -67,7 +69,6 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
       if (enteredPassword === userPassword) {
         onPasswordMatch?.(); // 비밀번호가 일치하면 callback 호출
       } else {
-        // TODO: 비밀번호가 틀렸을 때의 처리
         console.log("틀렸어!");
         setEnteredPassword(""); // 입력 상태 초기화
         setPressedCount(0);
