@@ -4,7 +4,6 @@ import * as S from "@/components/atoms/Image/Image.styles";
 const Image = ({
   width,
   height,
-
   $unit = "rem",
   ...attributes
 }: S.ImageProps) => {

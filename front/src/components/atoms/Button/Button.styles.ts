@@ -43,6 +43,10 @@ const getOptionStyling = (
       &:active {
         background: ${({ theme }) => theme.color.blue};
         color: ${({ theme }) => theme.color.white};
+
+        .invert {
+          filter: invert(1);
+        }
       }
     `,
   };
