@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-import Button from "@/components/atoms/Button/Button";
 import { Text } from "@/components/atoms/Text/Text.styles";
-import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 import { Image } from "@/components/atoms/Image/Image";
-import { useEffect } from "react";
+import { PATH } from "@/constants/path";
+import Button from "@/components/atoms/Button/Button";
+import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
 type KeypadButtonsProps = {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  onPasswordMatch?: () => void; // LoginPasswordPage에서 UserPW 넘겨줄 것임
 };
 
 const BUTTON_STYLES = {
@@ -18,8 +20,16 @@ const BUTTON_STYLES = {
 };
 
 const KeypadButtons = (props: KeypadButtonsProps) => {
-  const { step, setStep } = props;
+  const navigate = useNavigate();
+  const navigatePage = (path: string) => {
+    navigate(path);
+  };
+
+  const { step, setStep, onPasswordMatch } = props;
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
+
+  // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
+  const userPassword = "123456";
 
   const [pressedCount, setPressedCount] = useState(0);
   const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
@@ -52,6 +62,16 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
         // 두 번째 단계: 비밀번호 확인
         setConfirmPassword(enteredPassword);
       }
+
+      // 유저가 입력한 비밀번호와 userPassword가 동일한지 검사
+      if (enteredPassword === userPassword) {
+        onPasswordMatch?.(); // 비밀번호가 일치하면 callback 호출
+      } else {
+        // TODO: 비밀번호가 틀렸을 때의 처리
+        console.log("틀렸어!");
+        setEnteredPassword(""); // 입력 상태 초기화
+        setPressedCount(0);
+      }
     }
   }, [pressedCount, enteredPassword, step]);
 
@@ -60,6 +80,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
       if (setPassword === confirmPassword) {
         console.log("비밀번호 왕왕 일치");
         // TODO: 성공 시 메인 페이지로 이동, DB에 비밀번호 설정 포함 유저값 송신
+        navigatePage(PATH.MAIN);
       } else {
         console.log("비밀번호 일치하지 않음");
         setEnteredPassword("");
