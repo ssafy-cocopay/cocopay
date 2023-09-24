@@ -8,20 +8,14 @@ import com.cocopay.user.dto.response.UserCardResponseListDto;
 import com.cocopay.user.mapper.UserMapper;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
-import com.cocopay.usercard.dto.CategoryResponseDto;
-import com.cocopay.usercard.dto.FindHistoryByUserId;
-import com.cocopay.usercard.dto.MainResDto;
-import com.cocopay.usercard.dto.UserCardDto;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
-import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 @RestController
