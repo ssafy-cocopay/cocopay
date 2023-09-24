@@ -1,12 +1,23 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Back from "@/components/atoms/Back/Back";
+import { PATH } from "@/constants/path";
 import { Text } from "@/components/atoms/Text/Text.styles";
-import PwCheckButtons from "@/components/molecules/PwCheckButtons/PwCheckButtons";
+import Back from "@/components/atoms/Back/Back";
+import KeypadButtons from "@/components/molecules/KeypadButtons/KeypadButtons";
 
 const LoginPasswordPage = () => {
+  const navigate = useNavigate();
+  const navigatePage = (path: string) => {
+    navigate(path);
+  };
   const [step, setStep] = useState(3);
+  const handlePasswordMatch = () => {
+    // TODO: PATH.MAIN으로 navigating하는 코드
+    navigatePage(PATH.MAIN);
+  };
+
   return (
     <Background $colormode="gradient">
       <Container $left={true} $paddingTop="36px">
@@ -25,7 +36,11 @@ const LoginPasswordPage = () => {
           <Text size="body1" fontWeight="medium">
             비밀번호 6자리를 입력해주세요
           </Text>
-          <PwCheckButtons step={step} setStep={setStep}></PwCheckButtons>
+          <KeypadButtons
+            step={step}
+            setStep={setStep}
+            onPasswordMatch={handlePasswordMatch}
+          ></KeypadButtons>
         </Container>
       </Container>
     </Background>
