@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "@/styles/theme";
 
 type ContainerProps = {
   height?: string;
@@ -6,7 +7,7 @@ type ContainerProps = {
   $marginTop?: string;
   $padding?: string;
   $paddingTop?: string;
-  $backgroundColor?: string;
+  $backgroundColor?: keyof typeof theme.color;
   $borderRadius?: string;
   $border?: boolean; // border={true}시 확인용 border 생성
   $left?: boolean; // left={true}시 왼쪽정렬
@@ -28,7 +29,10 @@ export const Container = styled.div<ContainerProps>`
   margin-top: ${(props) => props.$marginTop};
   padding: ${(props) => props.$padding || "0 26px"};
   padding-top: ${(props) => props.$paddingTop};
-  background-color: ${(props) => props.$backgroundColor};
+  background-color: ${(props) =>
+    props.$backgroundColor
+      ? props.theme.color[props.$backgroundColor]
+      : undefined};
   border: ${(props) => (props.$border ? "1px solid black" : "none")};
   border-radius: ${(props) => props.$borderRadius || 0};
 `;
