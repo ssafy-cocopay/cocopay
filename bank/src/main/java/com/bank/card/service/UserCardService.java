@@ -52,6 +52,8 @@ public class UserCardService {
                 .orElseThrow(() -> new RuntimeException("일치하는 카드 아이디 없음"));
     }
 
+    /*
+
     public PayResponseDto paymentWithoutBenefitId(PaymentRequestDto paymentRequestDto) {
         List<BenefitInfoResponseDto> result = benefitRepository.findBenefitByCardList(Collections.singletonList(paymentRequestDto.getCardUuid()),
                 paymentRequestDto.getCategory(),
@@ -73,7 +75,9 @@ public class UserCardService {
         //benefit id가 조회가 됐다면 할인 적용해서 결제 프로세스 진행하면 됨.
         else return paymentWithBenefitId(result, paymentRequestDto);
     }
+     */
 
+    /*
     // 리팩토링 우선순위 매우 높음
     public PayResponseDto paymentWithBenefitId(List<BenefitInfoResponseDto> test, PaymentRequestDto paymentRequestDto) {
         BenefitInfoResponseDto testDto = test.get(0);
@@ -127,6 +131,7 @@ public class UserCardService {
             return new PayResponseDto(userCard.getCard().getCardName(), discountAmount);
         }
     }
+     */
 
     //카드 고유번호로 카드 조회
     public UserCardDto getUserCard(String serialNumber, String cvc, String password) {

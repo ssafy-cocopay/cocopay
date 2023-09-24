@@ -16,6 +16,8 @@ import com.bank.card_history.entity.DiscountType;
 import com.bank.card_history.entity.TransactionType;
 import com.bank.card_history.mapper.CardHistoryMapper;
 import com.bank.card_history.repository.CardHistoryRepository;
+import com.bank.installment.entity.Installment;
+import com.bank.installment.repository.InstallmentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class PaymentService {
     private final AccountService accountService;
     private final CardHistoryRepository cardHistoryRepository;
     private final CardHistoryMapper cardHistoryMapper;
+    private final InstallmentRepository installmentRepository;
 
     public Integer calculateDiscountPrice(Integer requestPrice, Integer discount) {
         return (int) (requestPrice * (double) (discount * 0.01));
@@ -62,9 +65,9 @@ public class PaymentService {
 
         //혜택 체킹
         if (result.size() != 0 && findUserCard.getIsPerformanced()) { //혜택이 있고, 전월실적이 달성되었다면
+            log.info("할인 O --------------------");
             //혜택율 계산
             Integer discountPrice = calculateDiscountPrice(paymentRequestDto.getRequestPrice(), result.get(0).getDiscount());
-            log.info("할인 O --------------------");
             //혜택 현황 조회 -> 할인한도 남은 금액 조회
             UserCardBenefit findUserCardBenefit = userCardBenefitRepository.findUserCardBenefit(paymentRequestDto.getCardUuid(), result.get(0).getBenefitId());
             Integer discountAmount = findUserCardBenefit.getDiscountAmount(); // 사용자 한도 남은 금액
@@ -103,33 +106,54 @@ public class PaymentService {
         TransactionType transactionType = paymentRequestDto.getTransactionType();
         CardFindDto card = userCardRepository.findCardType(paymentRequestDto.getCardUuid());
         CardType cardType = card.getCardType();
-
+        Boolean isPayback = false;
 
         if (transactionType.equals(TransactionType.할부)) {
             if (cardType.equals(CardType.체크카드)) throw new RuntimeException("잘못된 접근");
             else { //신용카드
-                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance());
+                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(), false);
                 cardHistoryRepository.save(cardHistory);
 
                 // 할부 테이블 업로드
+                Installment installment = Installment.builder()
+                        .divisionPrice(paymentRequestDto.getDiscountedPrice() / paymentRequestDto.getInstallmentMonth())
+                        .paymentCount(0)
+                        .total(paymentRequestDto.getDiscountedPrice())
+                        .period(paymentRequestDto.getInstallmentMonth())
+                        .userCard(paymentRequestDto.getUserCard())
+                        .build();
+                installmentRepository.save(installment);
             }
         } else { // 일시불
             if (cardType.equals(CardType.체크카드)) {
+                if (paymentRequestDto.getDiscountType().equals(DiscountType.페이백)) isPayback = true;
                 Integer accountBalance = accountService.minus(paymentRequestDto.getUserCard().getAccount().getNum(), paymentRequestDto.getDiscountedPrice());
-                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, accountBalance);
+                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, accountBalance, isPayback);
                 cardHistoryRepository.save(cardHistory);
 
-                // 페이백이라면 이용내역 업로드 한번 더
             } else { //신용카드
-                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance());
+                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(),isPayback);
                 cardHistoryRepository.save(cardHistory);
 
                 // 할부 테이블 업로드
+                Installment installment = Installment.builder()
+                        .divisionPrice(paymentRequestDto.getDiscountedPrice() / paymentRequestDto.getInstallmentMonth())
+                        .paymentCount(0)
+                        .total(paymentRequestDto.getDiscountedPrice())
+                        .period(paymentRequestDto.getInstallmentMonth())
+                        .userCard(paymentRequestDto.getUserCard())
+                        .build();
+                installmentRepository.save(installment);
             }
         }
 
         //totalprice 업로드
-        int totalPrice = paymentRequestDto.getUserCard().getTotalPrice();
-        //totalPrice + paymentRequestDto.getDiscountedPrice();
+        int updatedTotalPrice = paymentRequestDto.getUserCard().getTotalPrice() + paymentRequestDto.getDiscountedPrice();
+        UserCard userCard = paymentRequestDto.getUserCard();
+        userCard.setTotalPrice(updatedTotalPrice);
+        userCardRepository.save(userCard);
+
+        //할인 현황 업데이트
+
     }
 }
