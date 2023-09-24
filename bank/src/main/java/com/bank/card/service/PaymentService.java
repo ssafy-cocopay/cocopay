@@ -16,6 +16,8 @@ import com.bank.card_history.entity.DiscountType;
 import com.bank.card_history.entity.TransactionType;
 import com.bank.card_history.mapper.CardHistoryMapper;
 import com.bank.card_history.repository.CardHistoryRepository;
+import com.bank.installment.entity.Installment;
+import com.bank.installment.repository.InstallmentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class PaymentService {
     private final AccountService accountService;
     private final CardHistoryRepository cardHistoryRepository;
     private final CardHistoryMapper cardHistoryMapper;
+    private final InstallmentRepository installmentRepository;
 
     public Integer calculateDiscountPrice(Integer requestPrice, Integer discount) {
         return (int) (requestPrice * (double) (discount * 0.01));
@@ -104,7 +107,6 @@ public class PaymentService {
         CardFindDto card = userCardRepository.findCardType(paymentRequestDto.getCardUuid());
         CardType cardType = card.getCardType();
 
-
         if (transactionType.equals(TransactionType.할부)) {
             if (cardType.equals(CardType.체크카드)) throw new RuntimeException("잘못된 접근");
             else { //신용카드
@@ -112,6 +114,14 @@ public class PaymentService {
                 cardHistoryRepository.save(cardHistory);
 
                 // 할부 테이블 업로드
+                Installment installment = Installment.builder()
+                        .divisionPrice(paymentRequestDto.getDiscountedPrice() / paymentRequestDto.getInstallmentMonth())
+                        .paymentCount(0)
+                        .total(paymentRequestDto.getDiscountedPrice())
+                        .period(paymentRequestDto.getInstallmentMonth())
+                        .userCard(paymentRequestDto.getUserCard())
+                        .build();
+                installmentRepository.save(installment);
             }
         } else { // 일시불
             if (cardType.equals(CardType.체크카드)) {
@@ -125,6 +135,14 @@ public class PaymentService {
                 cardHistoryRepository.save(cardHistory);
 
                 // 할부 테이블 업로드
+                Installment installment = Installment.builder()
+                        .divisionPrice(paymentRequestDto.getDiscountedPrice() / paymentRequestDto.getInstallmentMonth())
+                        .paymentCount(0)
+                        .total(paymentRequestDto.getDiscountedPrice())
+                        .period(paymentRequestDto.getInstallmentMonth())
+                        .userCard(paymentRequestDto.getUserCard())
+                        .build();
+                installmentRepository.save(installment);
             }
         }
 
@@ -133,6 +151,8 @@ public class PaymentService {
         UserCard userCard = paymentRequestDto.getUserCard();
         userCard.setTotalPrice(updatedTotalPrice);
         userCardRepository.save(userCard);
+
+        //할인 현황 업데이트
 
     }
 }
