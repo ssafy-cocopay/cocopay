@@ -34,6 +34,21 @@ const getOptionStyling = (
       border: none;
       color: ${({ theme }) => theme.color.white};
     `,
+    keypad: css`
+      background: ${({ theme }) => theme.color.grey5};
+      color: ${({ theme }) => theme.color.grey2};
+      font-weight: bold;
+      font-size: ${({ theme }) => theme.fontSize.body1};
+
+      &:active {
+        background: ${({ theme }) => theme.color.blue};
+        color: ${({ theme }) => theme.color.white};
+
+        .invert {
+          filter: invert(1);
+        }
+      }
+    `,
   };
   return props.$backgroundColor
     ? css`
