@@ -62,9 +62,9 @@ public class PaymentService {
 
         //혜택 체킹
         if (result.size() != 0 && findUserCard.getIsPerformanced()) { //혜택이 있고, 전월실적이 달성되었다면
+            log.info("할인 O --------------------");
             //혜택율 계산
             Integer discountPrice = calculateDiscountPrice(paymentRequestDto.getRequestPrice(), result.get(0).getDiscount());
-            log.info("할인 O --------------------");
             //혜택 현황 조회 -> 할인한도 남은 금액 조회
             UserCardBenefit findUserCardBenefit = userCardBenefitRepository.findUserCardBenefit(paymentRequestDto.getCardUuid(), result.get(0).getBenefitId());
             Integer discountAmount = findUserCardBenefit.getDiscountAmount(); // 사용자 한도 남은 금액
@@ -129,7 +129,10 @@ public class PaymentService {
         }
 
         //totalprice 업로드
-        int totalPrice = paymentRequestDto.getUserCard().getTotalPrice();
-        //totalPrice + paymentRequestDto.getDiscountedPrice();
+        int updatedTotalPrice = paymentRequestDto.getUserCard().getTotalPrice() + paymentRequestDto.getDiscountedPrice();
+        UserCard userCard = paymentRequestDto.getUserCard();
+        userCard.setTotalPrice(updatedTotalPrice);
+        userCardRepository.save(userCard);
+
     }
 }

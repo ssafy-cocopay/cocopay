@@ -23,7 +23,7 @@ public interface CardHistoryMapper {
     @Mapping(source = "paymentRequestDto.discountedPrice", target = "amount")
     @Mapping(source = "accountBalance", target = "accountBalance")
     @Mapping(source = "paymentRequestDto.store", target = "store")
-    @Mapping(source = "userCard.id", target = "id", ignore = true)
+   // @Mapping(source = "userCard.id", target = "id", ignore = true)
     @Mapping(source = "paymentRequestDto.discountPrice", target = "discountAmount")
     @Mapping(source = "paymentRequestDto.discountType", target = "discountType")
     CardHistory payRequestDtoToHistory(PaymentRequestDto paymentRequestDto,
