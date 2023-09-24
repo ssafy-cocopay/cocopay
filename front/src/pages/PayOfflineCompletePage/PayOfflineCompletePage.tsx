@@ -11,6 +11,14 @@ import Penguin from "@/assets/images/img-penguin-thinking.png";
 import Dot from "@/assets/images/icon-dot-gray.png";
 import CardImg from "@/assets/images/img-cardimg.png";
 import { Container } from "@/components/atoms/Container/Container.styles";
+
+const CardInfo = {
+  cardImg: CardImg,
+  cardName: "신한카드 Deep Dream 체크카드",
+  헤택: "330원",
+  남은실적: "55300원",
+};
+
 const PayOfflinePage = () => {
   const navigate = useNavigate();
 
@@ -43,17 +51,18 @@ const PayOfflinePage = () => {
             <Text size="subtitle2" fontWeight="light">
               코코가 추천해 준
             </Text>
+            {/* TODO: 글씨 크기 커졌을 때 어떻게 할지 의논 후 수정 */}
+            {/* <Wrapper $flexDirection="row" $justifyContent="start"> */}
+            <Text size="subtitle2" fontWeight="bold" color="blue">
+              {CardInfo.cardName}
+            </Text>
+            <Text size="body1" fontWeight="light">
+              로
+            </Text>
+            {/* </Wrapper> */}
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Text size="subtitle2" fontWeight="bold" color="blue">
-                Deep Dream 카드
-              </Text>
-              <Text size="body1" fontWeight="light">
-                로
-              </Text>
-            </Wrapper>
-            <Wrapper $flexDirection="row" $justifyContent="start">
-              <Text size="subtitle2" fontWeight="bold" color="blue">
-                330원
+                {CardInfo.헤택}
               </Text>
               <Text size="subtitle2" fontWeight="light">
                 할인 받았어요!
@@ -65,7 +74,7 @@ const PayOfflinePage = () => {
             </Text>
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Text size="subtitle2" fontWeight="bold" color="blue">
-                87,258원
+                {CardInfo.남은실적}
               </Text>
               <Text size="subtitle2" fontWeight="light">
                 남았어요
