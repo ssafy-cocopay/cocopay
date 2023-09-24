@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import search from "@/assets/images/icon-search-blue.png";
+import { Line } from "@/components/atoms/Line/Line.style";
+
+import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
+import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
 
 const HomePage = () => {
+  // TODO: API 요청 -> amount BodyAndHeading에 전달
+
+  // TODO: 바코드값 지금은 임시 하드코딩 - API 요청해야하는지? 여기서 제너레이팅 해야하는지?
+  const [barcodeValue] = useState("3873827336732931");
+
   return (
     <Background
       $colormode="gradient"
@@ -41,8 +50,18 @@ const HomePage = () => {
             height="230px"
             $boxShadow="shadow1"
             width="85%"
+            $paddingTop="36px"
+            $left={true}
             style={{ position: "absolute", top: "-80px" }}
-          ></Container>
+          >
+            <BodyAndHeading amountType="할인받은" amount={6750} />
+            <Line margin="18px 0" />
+            <BodyAndHeading amountType="소비한" amount={273350} />
+          </Container>
+
+          {/* 바코드 */}
+          <BarcodeContainer code={barcodeValue} />
+
           {/* White Circle */}
           <Container
             $backgroundColor="white"
@@ -56,6 +75,7 @@ const HomePage = () => {
             <Image src={search} width={2.5} $margin="auto"></Image>
           </Container>
         </Container>
+        {/* 여기에도 바코드 컴포넌트 넣어봄.. */}
       </Container>
     </Background>
   );
