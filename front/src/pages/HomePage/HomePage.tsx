@@ -14,7 +14,7 @@ const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
 
   // TODO: 바코드값 지금은 임시 하드코딩 - API 요청해야하는지? 여기서 제너레이팅 해야하는지?
-  const [barcodeValue] = useState("3873827336732931");
+  const [barcodeValue] = useState("3873827336732991");
 
   return (
     <Background
@@ -24,12 +24,19 @@ const HomePage = () => {
         position: "relative",
       }}
     >
-      <BlueContainer></BlueContainer>
+      <div style={{ position: "absolute", top: 0, width: "100%" }}>
+        <BlueContainer></BlueContainer>
+      </div>
       <Container
         $marginTop="12px"
         $padding="30px"
         $left={true}
-        style={{ position: "absolute", top: 0, left: 0 }}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
       >
         <Text size="subtitle2" fontWeight="bold" color="white" $margin="0 4px">
           현장 결제
@@ -77,6 +84,7 @@ const HomePage = () => {
         </Container>
         {/* 여기에도 바코드 컴포넌트 넣어봄.. */}
       </Container>
+      {/* </div> */}
     </Background>
   );
 };
