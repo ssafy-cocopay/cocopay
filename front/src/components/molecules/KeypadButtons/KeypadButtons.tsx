@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-import Button from "@/components/atoms/Button/Button";
 import { Text } from "@/components/atoms/Text/Text.styles";
-import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 import { Image } from "@/components/atoms/Image/Image";
-import { useEffect } from "react";
+import { PATH } from "@/constants/path";
+import Button from "@/components/atoms/Button/Button";
+import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
-type PwCheckButtonsProps = {
+type KeypadButtonsProps = {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  onPasswordMatch?: () => void; // LoginPasswordPage에서 넘겨줄 것임
 };
 
 const BUTTON_STYLES = {
@@ -17,16 +19,24 @@ const BUTTON_STYLES = {
   height: "48px",
 };
 
-const PwCheckButtons = (props: PwCheckButtonsProps) => {
-  const { step, setStep } = props;
-  const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
-  // const [isPressed] = useState(Array(keypad.length).fill(false));
-
+const KeypadButtons = (props: KeypadButtonsProps) => {
+  // 상태 관리
   const [pressedCount, setPressedCount] = useState(0);
   const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
-  const [setPassword, setSetPassword] = useState<string>(""); // 유저가 처음 설정하는 비밀번호 6자
-  const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비밀번호 확인을 위한 값
-  // const [step, setStep] = useState(1); // 1단계: 비밀번호 설정, 2단계: 비밀번호 확인
+  const [setPassword, setSetPassword] = useState<string>(""); // 비번등록시 - 유저가 처음 설정하는 비밀번호 6자
+  const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비번등록시 - 비밀번호 확인을 위한 값
+
+  // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
+  const userPassword = "123456";
+  const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
+
+  // 네비게이팅
+  const navigate = useNavigate();
+  const navigatePage = (path: string) => {
+    navigate(path);
+  };
+
+  const { step, setStep, onPasswordMatch } = props;
 
   const handleNumberPress = (num: number) => {
     if (pressedCount < 6) {
@@ -54,6 +64,15 @@ const PwCheckButtons = (props: PwCheckButtonsProps) => {
         // 두 번째 단계: 비밀번호 확인
         setConfirmPassword(enteredPassword);
       }
+
+      // 유저가 입력한 비밀번호와 userPassword가 동일한지 검사
+      if (enteredPassword === userPassword) {
+        onPasswordMatch?.(); // 비밀번호가 일치하면 callback 호출
+      } else {
+        console.log("틀렸어!");
+        setEnteredPassword(""); // 입력 상태 초기화
+        setPressedCount(0);
+      }
     }
   }, [pressedCount, enteredPassword, step]);
 
@@ -61,12 +80,12 @@ const PwCheckButtons = (props: PwCheckButtonsProps) => {
     if (step === 2 && confirmPassword) {
       if (setPassword === confirmPassword) {
         console.log("비밀번호 왕왕 일치");
-        // TODO: 성공 시 메인 페이지로 이동
+        // TODO: 성공 시 메인 페이지로 이동, DB에 비밀번호 설정 포함 유저값 송신
+        navigatePage(PATH.MAIN);
       } else {
         console.log("비밀번호 일치하지 않음");
         setEnteredPassword("");
         setPressedCount(0);
-        // setStep(1); // 첫 번째 단계로 다시...가면 안 되지!
       }
     }
   }, [confirmPassword, setPassword, step]);
@@ -164,4 +183,4 @@ const PwCheckButtons = (props: PwCheckButtonsProps) => {
   );
 };
 
-export default PwCheckButtons;
+export default KeypadButtons;
