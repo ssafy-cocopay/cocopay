@@ -95,7 +95,7 @@ public class PaymentService {
             }
 
         } else { // 혜택이 없거나, 혜택을 적용할수 없을 때
-            ;
+            paymentRequestDto.updatePrice(100,100,DiscountType.현장할인, findUserCard); // 임시 ㅈㅅ;
         }
 
         return paymentRequestDto;
@@ -134,16 +134,6 @@ public class PaymentService {
             } else { //신용카드
                 CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(),isPayback);
                 cardHistoryRepository.save(cardHistory);
-
-                // 할부 테이블 업로드
-                Installment installment = Installment.builder()
-                        .divisionPrice(paymentRequestDto.getDiscountedPrice() / paymentRequestDto.getInstallmentMonth())
-                        .paymentCount(0)
-                        .total(paymentRequestDto.getDiscountedPrice())
-                        .period(paymentRequestDto.getInstallmentMonth())
-                        .userCard(paymentRequestDto.getUserCard())
-                        .build();
-                installmentRepository.save(installment);
             }
         }
 
