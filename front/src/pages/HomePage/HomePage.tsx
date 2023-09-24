@@ -6,22 +6,15 @@ import { Container } from "@/components/atoms/Container/Container.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import search from "@/assets/images/icon-search-blue.png";
 import { Line } from "@/components/atoms/Line/Line.style";
-import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
-import Barcode from "react-barcode";
 
-// 바코드 4글자마다 하이픈 끼워넣기
-export const formatBarcode = (input: string): string => {
-  return input.replace(/(\d{4})(?=\d)/g, "$1-");
-};
+import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
+import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
 
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
 
   // TODO: 바코드값 지금은 임시 하드코딩 - API 요청해야하는지? 여기서 제너레이팅 해야하는지?
-  const [barcodeValue, setBarcodeValue] = useState("3873827336732991");
-
-  // TODO: 이거 QR에도 적용 가능?
-  const formattedBarcode = formatBarcode(barcodeValue);
+  const [barcodeValue] = useState("3873827336732931");
 
   return (
     <Background
@@ -67,34 +60,7 @@ const HomePage = () => {
           </Container>
 
           {/* 바코드 */}
-          <Container
-            $marginTop="180px"
-            $padding="0 10px"
-          >
-            <Text size="small1" color="grey1">
-              {formattedBarcode}
-            </Text>
-            <div
-              style={{
-                borderRadius: "15px",
-                overflow: "hidden",
-                width: "100%",
-                marginTop: "10px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Barcode
-                value={barcodeValue}
-                format="CODE128"
-                width={2.2}
-                displayValue={false}
-                margin={0}
-                height={113}
-                lineColor="#303030"
-              />
-            </div>
-          </Container>
+          <BarcodeContainer code={barcodeValue} />
 
           {/* White Circle */}
           <Container
