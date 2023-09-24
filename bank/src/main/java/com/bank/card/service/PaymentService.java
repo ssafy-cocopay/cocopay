@@ -106,11 +106,12 @@ public class PaymentService {
         TransactionType transactionType = paymentRequestDto.getTransactionType();
         CardFindDto card = userCardRepository.findCardType(paymentRequestDto.getCardUuid());
         CardType cardType = card.getCardType();
+        Boolean isPayback = false;
 
         if (transactionType.equals(TransactionType.할부)) {
             if (cardType.equals(CardType.체크카드)) throw new RuntimeException("잘못된 접근");
             else { //신용카드
-                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance());
+                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(), false);
                 cardHistoryRepository.save(cardHistory);
 
                 // 할부 테이블 업로드
@@ -125,13 +126,13 @@ public class PaymentService {
             }
         } else { // 일시불
             if (cardType.equals(CardType.체크카드)) {
+                if (paymentRequestDto.getDiscountType().equals(DiscountType.페이백)) isPayback = true;
                 Integer accountBalance = accountService.minus(paymentRequestDto.getUserCard().getAccount().getNum(), paymentRequestDto.getDiscountedPrice());
-                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, accountBalance);
+                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, accountBalance, isPayback);
                 cardHistoryRepository.save(cardHistory);
 
-                // 페이백이라면 이용내역 업로드 한번 더
             } else { //신용카드
-                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance());
+                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(),isPayback);
                 cardHistoryRepository.save(cardHistory);
 
                 // 할부 테이블 업로드
