@@ -1,8 +1,12 @@
 import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react";
 import Button from "@/components/atoms/Button/Button";
+import { Container } from "@/components/atoms/Container/Container.styles";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { Text } from "@/components/atoms/Text/Text.styles";
+import { Image } from "@/components/atoms/Image/Image";
+import Penguin from "@/assets/images/img-penguin-congraturation.png";
 
 const PayOnlineCompletePage = () => {
   const navigate = useNavigate();
@@ -17,15 +21,45 @@ const PayOnlineCompletePage = () => {
         minHeight: "100vh",
       }}
     >
-      온라인 결제 완료 페이지
-      <Button
-        onClick={() => navigatePage(PATH.FIGNER_SETTING)}
-        option="activated"
-        size="medium"
-        $width="200px"
+      <Container
+        $border={true}
+        $left={true}
+        $paddingTop="36px"
+        style={{ position: "relative" }}
       >
-        결제하기
-      </Button>
+        <Container
+          $paddingTop="63px"
+          $backgroundColor="white"
+          $borderRadius="38px"
+          //   height="auto"
+          $padding="36px"
+        >
+          <Text size="subtitle1" fontWeight="bold">
+            결제 완료!
+          </Text>
+          <Text size="body1" fontWeight="medium">
+            웹페이지로 이동하면
+          </Text>
+          <Text size="body1" fontWeight="medium">
+            결제가 완료돼요
+          </Text>
+          <br />
+          {/* <Image src={Penguin} width={70} $unit="%"></Image> */}
+        </Container>
+        <Container
+          // $backgroundColor="#00000050"
+          style={{ position: "absolute", left: "0px" }}
+          $padding="0"
+        >
+          {/* TODO: 이미지 누르면 홈으로 이동하기 onClick */}
+          <Image
+            src={Penguin}
+            width={88}
+            $unit="%"
+            style={{ marginLeft: "auto", marginTop: "70%" }}
+          ></Image>
+        </Container>
+      </Container>
     </Background>
   );
 };

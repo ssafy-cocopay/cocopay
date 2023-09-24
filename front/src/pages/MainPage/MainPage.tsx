@@ -11,7 +11,6 @@ const MainPage = () => {
         minHeight: "100vh",
       }}
     >
-      메인 페이지
       <Outlet />
       <NavBar />
     </Background>
