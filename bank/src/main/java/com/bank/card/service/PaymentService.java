@@ -95,7 +95,7 @@ public class PaymentService {
             }
 
         } else { // 혜택이 없거나, 혜택을 적용할수 없을 때
-            paymentRequestDto.updatePrice(100,100,DiscountType.현장할인, findUserCard); // 임시 ㅈㅅ;
+            paymentRequestDto.updatePrice(paymentRequestDto.getRequestPrice(), 0,null, findUserCard); // 임시 ㅈㅅ;
         }
 
         return paymentRequestDto;
