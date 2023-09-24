@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import theme from "@/styles/theme";
 
 export const HeaderContainer = styled(Container)`
   position: absolute;
