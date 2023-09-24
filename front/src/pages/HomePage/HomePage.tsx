@@ -3,6 +3,8 @@ import { Background } from "@/components/atoms/Background/Background.styles";
 import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
+import { Image } from "@/components/atoms/Image/Image";
+import search from "@/assets/images/icon-search-blue.png";
 
 const HomePage = () => {
   return (
@@ -29,7 +31,8 @@ const HomePage = () => {
           $backgroundColor="white"
           $borderRadius="38px"
           height="388px"
-          style={{ position: "relative", top: "100px" }}
+          $left={true}
+          style={{ position: "relative", top: "80px" }}
         >
           <Container
             $backgroundColor="white"
@@ -37,8 +40,20 @@ const HomePage = () => {
             height="230px"
             $boxShadow="shadow1"
             width="85%"
-            style={{ position: "absolute", top: "-100px" }}
+            style={{ position: "absolute", top: "-80px" }}
           ></Container>
+          {/* White Circle */}
+          <Container
+            $backgroundColor="white"
+            $borderRadius="100%"
+            height="76px"
+            width="76px"
+            $boxShadow="shadow1"
+            $padding="0"
+            style={{ position: "absolute", top: "-115px", right: "0" }}
+          >
+            <Image src={search} width={2.5} $margin="auto"></Image>
+          </Container>
         </Container>
       </Container>
     </Background>
