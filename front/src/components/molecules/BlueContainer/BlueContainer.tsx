@@ -1,7 +1,6 @@
 import React from "react";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Image } from "@/components/atoms/Image/Image";
-import { Text } from "@/components/atoms/Text/Text.styles";
 import helix from "@/assets/images/img-helix-lightblue.png";
 import pyramid from "@/assets/images/img-pyramid-yellow.png";
 import cone from "@/assets/images/img-cone-yellow.png";
