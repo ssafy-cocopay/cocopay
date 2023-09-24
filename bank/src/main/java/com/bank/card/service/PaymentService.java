@@ -126,7 +126,7 @@ public class PaymentService {
             }
         } else { // 일시불
             if (cardType.equals(CardType.체크카드)) {
-                if (paymentRequestDto.getDiscountType().equals(DiscountType.페이백)) isPayback = true;
+                if (paymentRequestDto.getDiscountType() != null && paymentRequestDto.getDiscountType().equals(DiscountType.페이백)) isPayback = true;
                 Integer accountBalance = accountService.minus(paymentRequestDto.getUserCard().getAccount().getNum(), paymentRequestDto.getDiscountedPrice());
                 CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, accountBalance, isPayback);
                 cardHistoryRepository.save(cardHistory);
