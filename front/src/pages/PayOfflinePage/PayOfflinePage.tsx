@@ -1,5 +1,5 @@
 import { Background } from "@/components/atoms/Background/Background.styles";
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@/components/atoms/Button/Button";
 import { Image } from "@/components/atoms/Image/Image";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,14 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Penguin from "@/assets/images/img-penguin-thinking.png";
 import Dot from "@/assets/images/icon-dot-gray.png";
+import CardImg1 from "@/assets/images/img-cardimg1.png";
+import CardImg2 from "@/assets/images/img-cardimg2.png";
+import CardImg3 from "@/assets/images/img-cardimg3.png";
 
 const PayOfflinePage = () => {
+  //TODO:api요청으로 수정
+  const CardImgList = [CardImg1, CardImg2, CardImg3];
+
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
@@ -39,8 +45,12 @@ const PayOfflinePage = () => {
             최적의 결제 카드 파악 중...
           </Text> */}
           <br />
-          {/* TODO: 카드리스트업 만들어서 맵으로 뿌려주기 */}
-          <Wrapper>카드리스트의 이미지만 추출</Wrapper>
+
+          <Wrapper $flexDirection="row">
+            {CardImgList.map((card, idx) => {
+              return <Image src={card} key={idx} width={7} />;
+            })}
+          </Wrapper>
           <br />
           <Container style={{ justifyContent: "flex-end" }} height="auto">
             <Wrapper
