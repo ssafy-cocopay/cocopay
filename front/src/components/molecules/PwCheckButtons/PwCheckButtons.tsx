@@ -4,46 +4,74 @@ import Button from "@/components/atoms/Button/Button";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 import { Image } from "@/components/atoms/Image/Image";
+import { useEffect } from "react";
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
+type PwCheckButtonsProps = {
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+};
+
 const BUTTON_STYLES = {
-  width: "80px",
+  width: "30.5%",
   height: "48px",
 };
 
-const PwCheckButtons = () => {
-  const [pressedCount, setPressedCount] = useState(0);
-
+const PwCheckButtons = (props: PwCheckButtonsProps) => {
+  const { step, setStep } = props;
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
-  const [isPressed, setIsPressed] = useState(Array(keypad.length).fill(false));
+  // const [isPressed] = useState(Array(keypad.length).fill(false));
 
-  const handleNumberPress = () => {
+  const [pressedCount, setPressedCount] = useState(0);
+  const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
+  const [setPassword, setSetPassword] = useState<string>(""); // 유저가 처음 설정하는 비밀번호 6자
+  const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비밀번호 확인을 위한 값
+  // const [step, setStep] = useState(1); // 1단계: 비밀번호 설정, 2단계: 비밀번호 확인
+
+  const handleNumberPress = (num: number) => {
     if (pressedCount < 6) {
       setPressedCount((prevCount) => prevCount + 1);
+      setEnteredPassword((prevPass) => prevPass + num.toString()); // 숫자를 문자열로 변환하여 추가
     }
-    //TODO: 만약 pressedCount가 6이면 비밀번호 맞나 검증
   };
 
   const handleDeletePress = () => {
     if (pressedCount > 0) {
       setPressedCount((prevCount) => prevCount - 1);
+      setEnteredPassword((prevPass) => prevPass.slice(0, -1));
     }
   };
 
-  const handleMouseDown = (index: number) => {
-    const updatedState = [...isPressed];
-    updatedState[index] = true;
-    setIsPressed(updatedState);
-    console.log(1);
-  };
+  useEffect(() => {
+    if (pressedCount === 6) {
+      if (step === 1) {
+        // 첫 번째 단계: 비밀번호 설정
+        setSetPassword(enteredPassword);
+        setEnteredPassword(""); // 입력 상태 초기화
+        setPressedCount(0);
+        setStep(2); // 다음 단계로 전환
+      } else if (step === 2) {
+        // 두 번째 단계: 비밀번호 확인
+        setConfirmPassword(enteredPassword);
+      }
+    }
+  }, [pressedCount, enteredPassword, step]);
 
-  const handleMouseUpOrLeave = (index: number) => {
-    const updatedState = [...isPressed];
-    updatedState[index] = false;
-    setIsPressed(updatedState);
-  };
+  useEffect(() => {
+    if (step === 2 && confirmPassword) {
+      if (setPassword === confirmPassword) {
+        console.log("비밀번호 왕왕 일치");
+        // TODO: 성공 시 메인 페이지로 이동
+      } else {
+        console.log("비밀번호 일치하지 않음");
+        setEnteredPassword("");
+        setPressedCount(0);
+        // setStep(1); // 첫 번째 단계로 다시...가면 안 되지!
+      }
+    }
+  }, [confirmPassword, setPassword, step]);
 
-  const renderStarButton = (_: unknown, index: number) => (
+  const starButton = (_: unknown, index: number) => (
     <Button
       key={index}
       size="small"
@@ -62,26 +90,25 @@ const PwCheckButtons = () => {
     </Button>
   );
 
-  const renderNumberButton = (number: number | "", index: number) => (
+  const numberButton = (number: number | "", index: number) => (
     <Button
       key={index}
-      onMouseDown={() => handleMouseDown(index)}
-      onMouseUp={() => handleMouseUpOrLeave(index)}
-      onMouseLeave={() => handleMouseUpOrLeave(index)}
-      onClick={handleNumberPress}
-      $backgroundColor="grey4"
-      option={isPressed ? "activated" : "deActivated"}
+      onClick={() => {
+        if (typeof number === "number") {
+          handleNumberPress(number);
+        }
+      }}
       size="small"
+      option="keypad"
       $border="none"
+      $fontSize="24px"
       style={BUTTON_STYLES}
     >
-      <Text size="subtitle2" color="grey1" fontWeight="bold">
-        {number}
-      </Text>
+      {number}
     </Button>
   );
 
-  const renderEmptyButton = (index: number) => (
+  const emptyButton = (index: number) => (
     <Button
       key={index}
       option="deActivated"
@@ -92,29 +119,32 @@ const PwCheckButtons = () => {
     />
   );
 
-  const renderBackButton = (index: number) => (
+  const backButton = (index: number) => (
     <Button
       key={index}
       onClick={handleDeletePress}
-      option="deActivated"
-      $backgroundColor="grey4"
+      option="keypad"
       size="small"
       $border="none"
       style={BUTTON_STYLES}
     >
-      <Image src={backArrow} width={1.4} style={{ paddingTop: "4px" }} />
+      <Image
+        className="invert"
+        src={backArrow}
+        width={1.4}
+        style={{ paddingTop: "4px", filter: "invert(1)" }}
+      />
     </Button>
   );
 
   return (
-    <div>
-      {/* <Text>{isPressed}</Text> */}
+    <>
       <Wrapper
         $flexDirection="row"
         $justifyContent="space-between"
         style={{ margin: "36px 0 28px 0" }}
       >
-        {Array.from({ length: 6 }).map(renderStarButton)}
+        {Array.from({ length: 6 }).map(starButton)}
       </Wrapper>
       <Wrapper
         $flexDirection="row"
@@ -123,14 +153,14 @@ const PwCheckButtons = () => {
       >
         {keypad.map((btn, index) => {
           if (typeof btn === "string") {
-            if (btn === "") return renderEmptyButton(index);
-            if (btn === "back") return renderBackButton(index);
+            if (btn === "") return emptyButton(index);
+            if (btn === "back") return backButton(index);
           } else {
-            return renderNumberButton(btn, index);
+            return numberButton(btn, index);
           }
         })}
       </Wrapper>
-    </div>
+    </>
   );
 };
 

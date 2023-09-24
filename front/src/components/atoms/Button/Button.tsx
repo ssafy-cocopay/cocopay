@@ -10,7 +10,13 @@ import * as S from "./Button.styles";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  option?: "default" | "activated" | "deActivated" | "dashed" | "danger";
+  option?:
+    | "default"
+    | "activated"
+    | "deActivated"
+    | "dashed"
+    | "danger"
+    | "keypad";
   size?: "small" | "medium" | "large";
   $fontSize?: string;
   $backgroundColor?: string;
@@ -40,8 +46,8 @@ const Button = (
   return (
     <S.Button
       ref={ref}
-      option={option}
       size={size}
+      option={option}
       $border={$border}
       $backgroundColor={$backgroundColor}
       $borderColor={$borderColor}
