@@ -38,6 +38,7 @@ const CardDetailPurchasedPage = () => {
             style={{minHeight:"680px"}}
             $padding="24px 36px"
             $borderRadius="20px"
+            $boxShadow="shadow1"
             >
                 <Calendar />
                 <CardHistory />
