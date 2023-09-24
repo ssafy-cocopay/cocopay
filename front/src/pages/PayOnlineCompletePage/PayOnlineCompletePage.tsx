@@ -34,13 +34,13 @@ const PayOnlineCompletePage = () => {
           //   height="auto"
           $padding="36px"
         >
-          <Text size="subtitle1" fontWeight="bold">
+          <Text size="body1" fontWeight="bold">
             결제 완료!
           </Text>
-          <Text size="body1" fontWeight="medium">
+          <Text size="body2" fontWeight="medium">
             웹페이지로 이동하면
           </Text>
-          <Text size="body1" fontWeight="medium">
+          <Text size="body2" fontWeight="medium">
             결제가 완료돼요
           </Text>
           <br />

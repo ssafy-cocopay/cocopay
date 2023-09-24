@@ -9,6 +9,7 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Penguin from "@/assets/images/img-penguin-thinking.png";
 import Dot from "@/assets/images/icon-dot-gray.png";
+
 const PayOfflinePage = () => {
   const navigate = useNavigate();
 
@@ -31,9 +32,12 @@ const PayOfflinePage = () => {
           $padding="36px"
           // $border={true}
         >
-          <Text size="body1" fontWeight="medium">
+          <Text size="body1" fontWeight="bold">
             최적의 결제 카드 파악 중...
           </Text>
+          {/* <Text size="body1" fontWeight="bold">
+            최적의 결제 카드 파악 중...
+          </Text> */}
           <br />
           {/* TODO: 카드리스트업 만들어서 맵으로 뿌려주기 */}
           <Wrapper>카드리스트의 이미지만 추출</Wrapper>
@@ -42,7 +46,7 @@ const PayOfflinePage = () => {
             <Wrapper
               $flexDirection="row"
               // width="20%"
-              $justifyContent="space-between"
+              // $justifyContent="space-between"
               style={{ gap: "10px" }}
             >
               <Image src={Dot} width={13} $unit="px"></Image>
