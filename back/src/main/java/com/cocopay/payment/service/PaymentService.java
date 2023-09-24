@@ -3,11 +3,10 @@ package com.cocopay.payment.service;
 import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
-import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
+import com.cocopay.payment.apicall.dto.res.BenefitResDto;
 import com.cocopay.payment.dto.req.FinalPayReqDto;
 import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
-import com.cocopay.payment.dto.res.OnlineResponse;
 import com.cocopay.payment.dto.res.PerformanceResListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.BenefitKey;
@@ -74,7 +73,7 @@ public class PaymentService {
         log.info("코코카드 제외한 유저 카드 갯수 : {}", findUserCardList.size());
 
         log.info("사용자 카드 실적 정보 조회 진행");
-        PerformanceResListDto performanceResList = apiCallService.userCardPerformanceReq(findUserCardList);
+        PerformanceResListDto performanceResList = apiCallService.userCardPerformanceApiCall(findUserCardList);
         log.info("사용자 카드 실적 정보 조회 끝");
 
         //사용자 카드 실적 정보 redis 저장
@@ -95,7 +94,7 @@ public class PaymentService {
             //api call을 위해 카테고리와 함께 매핑 진행
             UserCardBenefitBodyDto benefitBodyDto = paymentMapper.toBenefitBodyDto(newCardOfferResDtoList, orderKey.getCategory(), orderKey.getStoreName());
             log.info("사용자 카드들의 혜택 조회 api call 진행");
-            List<UserCardBenefitInfoResponseDto> benefitResDtoList = apiCallService.userCardBenefitApiCall(benefitBodyDto);
+            List<BenefitResDto> benefitResDtoList = apiCallService.userCardBenefitApiCall(benefitBodyDto);
             log.info("사용자 카드들의 혜택 조회 api call 끝");
             log.info("혜택 조회 정보 redis 저장");
             benefitKeyService.benefitSave(benefitResDtoList);
@@ -181,14 +180,6 @@ public class PaymentService {
         return cardOfferResDtoList.stream()
                 .filter(CardOfferResDto::isPastPerformance)
                 .toList();
-    }
-
-    public void cardPick(FinalPayReqDto finalPayReqDto) {
-        //주문 정보(카테고리, 매장명) 조회 후 매핑 진행
-//        OrderKey findOrder = orderKeyService.findOrderKey(FinalPayReqDto.getUserId());
-//        PaymentReqDto paymentReqDto = paymentMapper.toPaymentRequestDto(findOrder, FinalPayReqDto);
-//        apiCallService.payApiCall(paymentReqDto);
-
     }
 
     //결제 요청 메서드

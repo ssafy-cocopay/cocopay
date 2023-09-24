@@ -3,9 +3,11 @@ package com.cocopay.payment.dto.req;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Builder
 public class PayPostDto {
     private int userId;

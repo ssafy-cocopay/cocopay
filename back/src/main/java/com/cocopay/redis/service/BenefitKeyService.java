@@ -1,6 +1,6 @@
 package com.cocopay.redis.service;
 
-import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
+import com.cocopay.payment.apicall.dto.res.BenefitResDto;
 import com.cocopay.redis.key.BenefitKey;
 import com.cocopay.redis.mapper.RedisMapper;
 import com.cocopay.redis.repository.BenefitKeyRepository;
@@ -19,7 +19,7 @@ public class BenefitKeyService {
     private final BenefitKeyRepository benefitKeyRepository;
 
     //혜택 정보 저장
-    public void benefitSave(List<UserCardBenefitInfoResponseDto> dtoList) {
+    public void benefitSave(List<BenefitResDto> dtoList) {
         List<BenefitKey> benefitKeyList = redisMapper.toBenefitKeyList(dtoList);
 
         benefitKeyRepository.saveAll(benefitKeyList);

@@ -35,8 +35,8 @@ public class PerformanceKeyService {
     }
 
     //사용자 카드 실적 정보 redis 조회
-    public PerformanceKey findPerformanceKey(String cardId) {
-        Optional<PerformanceKey> findPerformance = performanceKeyRepository.findById(cardId);
+    public PerformanceKey findPerformanceKey(int cardUuid) {
+        Optional<PerformanceKey> findPerformance = performanceKeyRepository.findById(String.valueOf(cardUuid));
 
         return findPerformance
                 .orElseThrow(() -> new RuntimeException("해당 카드와 매칭되는 실적 정보 없음"));
@@ -50,7 +50,7 @@ public class PerformanceKeyService {
 
         for (UserCard userCard : findUserCardList) {
             String userCardId = String.valueOf(userCard.getCardUuid());
-            PerformanceKey findPerformanceKey = findPerformanceKey(userCardId);
+            PerformanceKey findPerformanceKey = findPerformanceKey(Integer.parseInt(userCardId));
 
             //조회 후 삭제
             performanceKeyRepository.deleteById(userCardId);
