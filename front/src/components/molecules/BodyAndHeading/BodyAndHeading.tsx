@@ -1,5 +1,6 @@
 import React from "react";
 import { Text } from "@/components/atoms/Text/Text.styles";
+import numberToAmount from "@/utils/NumToAmount";
 
 interface BodyAndHeadingProps {
   amountType?: string;
@@ -9,6 +10,12 @@ interface BodyAndHeadingProps {
 const BodyAndHeading = (props: BodyAndHeadingProps) => {
   // TODO: currentMonth 리코일로?
   const currentMonth = 9;
+  let korAmount: string;
+  if (props.amount) {
+    korAmount = numberToAmount(props.amount);
+  } else {
+    korAmount = "0";
+  }
 
   return (
     <>
@@ -17,7 +24,7 @@ const BodyAndHeading = (props: BodyAndHeadingProps) => {
       </Text>
       <div style={{ display: "flex" }}>
         <Text size="heading1" $marginLeft="7px" fontWeight="bold" color="blue">
-          {props.amount}
+          {korAmount}
         </Text>
         <Text size="body1" $marginTop="14px">
           원
