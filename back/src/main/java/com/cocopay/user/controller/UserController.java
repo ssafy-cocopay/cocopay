@@ -114,8 +114,9 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/{user-id}")
-    public ResponseEntity test(@PathVariable("user-id") int userId) {
+    @GetMapping()
+    public ResponseEntity getTotalByMonth(@RequestHeader ("userId") int userId) {
+        log.info("userId : {}", userId);
         log.info("메인페이지 한 달 사용내역 및 할인 받은 금액 조회");
         int month = LocalDateTime.now().getMonth().getValue();
         log.info("month : {}", month);
