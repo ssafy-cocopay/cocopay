@@ -3,7 +3,7 @@ import { Background } from "@/components/atoms/Background/Background.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import Back from "@/components/atoms/Back/Back";
 import { Text } from "@/components/atoms/Text/Text.styles";
-import PwCheckButtons from "@/components/molecules/PwCheckButtons/PwCheckButtons";
+import KeypadButtons from "@/components/molecules/KeypadButtons/KeypadButtons";
 
 const LoginPasswordPage = () => {
   const [step, setStep] = useState(3);
@@ -25,7 +25,7 @@ const LoginPasswordPage = () => {
           <Text size="body1" fontWeight="medium">
             비밀번호 6자리를 입력해주세요
           </Text>
-          <PwCheckButtons step={step} setStep={setStep}></PwCheckButtons>
+          <KeypadButtons step={step} setStep={setStep}></KeypadButtons>
         </Container>
       </Container>
     </Background>

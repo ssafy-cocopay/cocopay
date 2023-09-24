@@ -7,7 +7,7 @@ import { Image } from "@/components/atoms/Image/Image";
 import { useEffect } from "react";
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
-type PwCheckButtonsProps = {
+type KeypadButtonsProps = {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -17,7 +17,7 @@ const BUTTON_STYLES = {
   height: "48px",
 };
 
-const PwCheckButtons = (props: PwCheckButtonsProps) => {
+const KeypadButtons = (props: KeypadButtonsProps) => {
   const { step, setStep } = props;
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
 
@@ -161,4 +161,4 @@ const PwCheckButtons = (props: PwCheckButtonsProps) => {
   );
 };
 
-export default PwCheckButtons;
+export default KeypadButtons;
