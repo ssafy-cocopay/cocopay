@@ -34,6 +34,7 @@ const HomePage = () => {
           $left={true}
           style={{ position: "relative", top: "80px" }}
         >
+          {/* 할인받은 & 소비한 금액, */}
           <Container
             $backgroundColor="white"
             $borderRadius="38px"
