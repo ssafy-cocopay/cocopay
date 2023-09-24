@@ -3,6 +3,7 @@ import theme from "@/styles/theme";
 
 type ContainerProps = {
   height?: string;
+  width?: string;
   $margin?: string;
   $marginTop?: string;
   $padding?: string;
@@ -11,6 +12,7 @@ type ContainerProps = {
   $borderRadius?: string;
   $border?: boolean; // border={true}시 확인용 border 생성
   $left?: boolean; // left={true}시 왼쪽정렬
+  $boxShadow?: string;
 };
 
 type CardListContainerProps = {
@@ -23,7 +25,7 @@ export const Container = styled.div<ContainerProps>`
   flex-direction: column;
   align-items: ${(props) => (props.$left ? "none" : "center")};
   height: ${(props) => props.height || "100vh"};
-  width: 100%;
+  width: ${(props) => props.width || "100%"};
   max-width: 390px;
   margin: ${(props) => props.$margin || "0 auto"};
   margin-top: ${(props) => props.$marginTop};
@@ -35,6 +37,8 @@ export const Container = styled.div<ContainerProps>`
       : undefined};
   border: ${(props) => (props.$border ? "1px solid black" : "none")};
   border-radius: ${(props) => props.$borderRadius || 0};
+  box-shadow: ${(props) =>
+    props.$boxShadow ? props.theme.shadow[props.$boxShadow] : "none"};
 `;
 
 export const CardListContainer = styled.div<CardListContainerProps>`
