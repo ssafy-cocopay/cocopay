@@ -6,6 +6,6 @@ type LineProps = {
 
 export const Line = styled.hr<LineProps>`
   margin: ${(props) => props.margin};
-  border: none;
-  border-top: 0.1rem solid ${(props) => props.theme.color.grey4};
+  width: 100%;
+  border-top: 0.05rem solid ${(props) => props.theme.color.grey4};
 `;
