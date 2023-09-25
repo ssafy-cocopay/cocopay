@@ -19,17 +19,15 @@ public interface CardHistoryMapper {
 
     List<HistoryResponseDto> toDtoList(List<CardHistory> cardHistories);
 
-    @Mapping(source = "userCard", target = "userCard")
-    @Mapping(source = "amount", target = "amount")
+    @Mapping(source = "paymentRequestDto.userCard", target = "userCard")
+    @Mapping(source = "paymentRequestDto.discountedPrice", target = "amount")
     @Mapping(source = "accountBalance", target = "accountBalance")
     @Mapping(source = "paymentRequestDto.store", target = "store")
-    @Mapping(source = "userCard.id", target = "id", ignore = true)
-    @Mapping(source = "discountAmount", target = "discountAmount")
-    @Mapping(source = "discountType", target = "discountType")
+   // @Mapping(source = "userCard.id", target = "id", ignore = true)
+    @Mapping(source = "paymentRequestDto.discountPrice", target = "discountAmount")
+    @Mapping(source = "paymentRequestDto.discountType", target = "discountType")
+    @Mapping(source = "isPayback", target = "isPayback")
     CardHistory payRequestDtoToHistory(PaymentRequestDto paymentRequestDto,
-                                       UserCard userCard,
-                                       Long amount,
-                                       Integer accountBalance,
-                                       Integer discountAmount,
-                                       DiscountType discountType);
+                                       Integer accountBalance, Boolean isPayback);
+
 }

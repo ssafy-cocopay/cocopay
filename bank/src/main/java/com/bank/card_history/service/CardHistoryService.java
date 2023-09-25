@@ -2,10 +2,7 @@ package com.bank.card_history.service;
 
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.usercard.UserCardRepository;
-import com.bank.card_history.dto.CategoryDto;
-import com.bank.card_history.dto.CategoryResponseDto;
-import com.bank.card_history.dto.FindHistoryByUserId;
-import com.bank.card_history.dto.HistoryFindDto;
+import com.bank.card_history.dto.*;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.repository.CardHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +45,9 @@ public class CardHistoryService {
 
         return categoryResponseDto;
 
+    }
+
+    public TotalByMonth getTotalByMonth(List<Integer> cardUuidList, int month) {
+        return cardHistoryRepository.getTotalByMonth(cardUuidList, month);
     }
 }

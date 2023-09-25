@@ -14,7 +14,7 @@ import { Container } from "@/components/atoms/Container/Container.styles";
 
 const CardInfo = {
   cardImg: CardImg,
-  cardName: "신한카드 Deep Dream 체크카드",
+  cardName: "Deep Dream 체크카드",
   헤택: "330원",
   남은실적: "55300원",
 };
@@ -34,32 +34,33 @@ const PayOfflinePage = () => {
     >
       <Container $left={true} $paddingTop="36px" height="auto">
         <Container
-          $paddingTop="63px"
+          $padding="10px"
+          $paddingTop="42px"
           $backgroundColor="white"
           $borderRadius="38px"
           height="auto"
-          $padding="36px"
+          // $padding="36px"
           // $border={true}
         >
           <Text size="body1" fontWeight="bold">
             결제 완료!
           </Text>
           <br />
-          <Image src={CardImg} width={88} $unit="%"></Image>
+          <Image src={CardImg} width={68} $unit="%"></Image>
           <br />
           <Container $left={true}>
             <Text size="subtitle2" fontWeight="light">
               코코가 추천해 준
             </Text>
             {/* TODO: 글씨 크기 커졌을 때 어떻게 할지 의논 후 수정 */}
-            {/* <Wrapper $flexDirection="row" $justifyContent="start"> */}
-            <Text size="subtitle2" fontWeight="bold" color="blue">
-              {CardInfo.cardName}
-            </Text>
-            <Text size="body1" fontWeight="light">
-              로
-            </Text>
-            {/* </Wrapper> */}
+            <Wrapper $flexDirection="row" $justifyContent="start">
+              <Text size="subtitle2" fontWeight="bold" color="blue">
+                {CardInfo.cardName}
+              </Text>
+              <Text size="body1" fontWeight="light">
+                로
+              </Text>
+            </Wrapper>
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Text size="subtitle2" fontWeight="bold" color="blue">
                 {CardInfo.헤택}

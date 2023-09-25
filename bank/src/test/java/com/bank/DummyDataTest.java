@@ -13,6 +13,7 @@ import com.bank.card.entity.CardType;
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.card.CardRepository;
 import com.bank.card.repository.usercard.UserCardRepository;
+import com.bank.card_history.entity.Category;
 import com.bank.enumlist.CardList;
 import com.bank.performance.entity.Performance;
 import com.bank.performance.repository.PerformanceRepository;
@@ -203,7 +204,7 @@ public class DummyDataTest {
         Benefit benefit = new Benefit();
 
         benefit.setCard(card);
-        benefit.setCategory("영화관");
+        benefit.setCategory(Category.영화);
         benefit.setStoreName("CGV");
         benefit.setDiscount(20);
         benefit.setLimit(3000);

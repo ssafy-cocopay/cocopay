@@ -2,6 +2,7 @@ package com.bank.benefit.repository;
 
 import com.bank.benefit.dto.BenefitInfoResponseDto;
 import com.bank.benefit.entity.Benefit;
+import com.bank.card_history.entity.Category;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class BenefitRepositoryImpl implements BenefitRepositoryCustom {
     }
 
     @Override
-    public List<BenefitInfoResponseDto> findBenefitByCardList(List<Integer> cardUuidList, String category, String storeName) {
+    public List<BenefitInfoResponseDto> findBenefitByCardList(List<Integer> cardUuidList, Category category, String storeName) {
 
         return jpaQueryFactory
                 .select(Projections.fields(BenefitInfoResponseDto.class,
@@ -40,7 +41,8 @@ public class BenefitRepositoryImpl implements BenefitRepositoryCustom {
                         benefit.storeName,
                         benefit.limit,
                         benefit.discount,
-                        userCardBenefit.discountAmount))
+                        userCardBenefit.discountAmount,
+                        benefit.discountType))
                 .from(userCardBenefit)
                 .join(userCardBenefit.benefit, benefit)
                 .on(benefit.category.eq(category),
