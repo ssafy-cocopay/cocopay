@@ -6,10 +6,16 @@ import cardImg2 from "@/assets/images/img-card2.png";
 import cardImg3 from "@/assets/images/img-card3.png";
 import korImg from "@/assets/images/img-kor.png";
 import iconHamburgerGrey from "@/assets/images/icon-hamburger-grey.png";
-import { CardItemWrapper, Hr, CardListBar } from "./CardItem.styles";
+import { CardItemWrapper, CardListBar, BenefitBtn } from "./ModalCardItem.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
-const CardItem = () => {
+type ModalCardItemProps = {
+  onClick?: () => void;
+  style?: React.CSSProperties;
+  // ...기존에 있던 다른 props들...
+};
+
+const ModalCardItem = ({ onClick, style, ...otherProps }: ModalCardItemProps) => {
   const CardInfo = [
     {
       cardImg: cardImg1,
@@ -38,21 +44,30 @@ const CardItem = () => {
   ];
 
   return (
-    <div>
+    <div onClick={onClick} style={style}>
       {/* TODO: 서영이가 위에 만들어놓은 더미로 맵 뿌리기 ! */}
       {/* {CardInfo.map((card,idx) => {
         return
       })} */}
-      <CardItemWrapper $margin="12px 24px">
-        <Image src={cardImg1} width={90} height={56} $unit="px"></Image>
+      <CardItemWrapper $margin="36px 0">
+        <Image 
+        src={cardImg1} 
+        width={64} 
+        height={40} 
+        $unit="px"
+        $margin="12px 0 0 0"
+        style={{
+            transform: 'rotate(-90deg)'
+        }}
+        >
+        </Image>
         {/* TODO: 이부분 asset에 이미지 저장해놓고 api값이랑 맞춰서 국내인지 master 인지 뿌리는건가요? 확인부탁 */}
         <Image
           src={korImg}
           width={24}
           height={16}
           $unit="px"
-          $margin="0 8px 0 0"
-          style={{ margin: "4px 0 8px 12px" }}
+          $margin="4px 4px 0 0"
         ></Image>
         <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around">
           <CardItemWrapper>
@@ -75,7 +90,7 @@ const CardItem = () => {
           </CardItemWrapper>
           <div style={{position: 'relative', width: '90%'}}>
             <CardListBar
-            width="90%"
+            width="80%"
             $bgc="grey4"
             >
             </CardListBar>
@@ -88,17 +103,26 @@ const CardItem = () => {
           </div>
         </Wrapper>
         <CardItemWrapper $alignItems="center">
-          <Image
-            src={iconHamburgerGrey}
-            width={16}
-            height={12}
-            $unit="px"
-          ></Image>
+          <BenefitBtn>
+            <Text
+            size="small3"
+            fontWeight="bold"
+            color="blue"
+            >
+                200원
+            </Text>
+            <Text
+            size="small3"
+            fontWeight="light"
+            color="blue"
+            >
+                페이백
+            </Text>
+          </BenefitBtn>
         </CardItemWrapper>
       </CardItemWrapper>
-      <Hr />
     </div>
   );
 };
 
-export default CardItem;
+export default ModalCardItem;
