@@ -1,6 +1,6 @@
 package com.cocopay.payment.apicall.dto.req;
 
-import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
+import com.cocopay.payment.apicall.dto.res.BenefitResDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCardBenefitInfoResponseListDto {
-    private List<UserCardBenefitInfoResponseDto> benefitList;
+public class BenefitResDtoList {
+    private List<BenefitResDto> benefitList;
 }

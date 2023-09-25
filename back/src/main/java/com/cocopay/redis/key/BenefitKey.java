@@ -24,4 +24,6 @@ public class BenefitKey {
 
     //혜택pk
     private Integer benefitId;
+
+    private String discountType;
 }

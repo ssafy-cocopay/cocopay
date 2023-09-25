@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCardBenefitInfoResponseDto {
+public class BenefitResDto {
     private Integer benefitId;
 
     private Integer cardUuid;
@@ -23,4 +23,6 @@ public class UserCardBenefitInfoResponseDto {
     private Integer limit;
 
     private int discountAmount;
+
+    private String discountType;
 }

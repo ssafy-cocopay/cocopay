@@ -1,8 +1,8 @@
 package com.cocopay.usercard.service;
 
 import com.cocopay.payment.dto.req.CardUuidListDto;
-import com.cocopay.payment.dto.res.PerformanceResponseDto;
-import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.payment.dto.res.PerformanceResDto;
+import com.cocopay.payment.dto.res.PerformanceResListDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.*;
@@ -130,28 +130,28 @@ public class UserCardService {
         cardUuidListDto.setCardUuidList(cardList);
 
         //임시 동기 요청
-        PerformanceResponseListDto performanceResponseListDto = webClient.post()
+        PerformanceResListDto performanceResListDto = webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(cardUuidListDto)
                 .retrieve()
-                .bodyToMono(PerformanceResponseListDto.class)
+                .bodyToMono(PerformanceResListDto.class)
                 .block();
 
-        PerformanceResponseDto performanceResponseDto = performanceResponseListDto.getPerformanceList().get(0);
+        PerformanceResDto performanceResDto = performanceResListDto.getPerformanceList().get(0);
         //남은 금액
-        int price = performanceResponseDto.getPrice()-performanceResponseDto.getTotalPrice();
+        int price = performanceResDto.getPrice()- performanceResDto.getTotalPrice();
         //퍼센트
-        int percent = performanceResponseDto.getTotalPrice()/performanceResponseDto.getPrice()*100;
+        int percent = performanceResDto.getTotalPrice()/ performanceResDto.getPrice()*100;
 
         UserCardDetailResponseDto userCardDetailResponseDto = UserCardDetailResponseDto.builder()
                 .userCardId(cardId)
                 .cardName(userCard.getCardName())
-                .level(performanceResponseDto.getLevel())
-                .nextLevel(performanceResponseDto.getNextLevel())
+                .level(performanceResDto.getLevel())
+                .nextLevel(performanceResDto.getNextLevel())
                 .price(price)
                 .percent(percent)
-                .totalPrice(performanceResponseDto.getTotalPrice())
+                .totalPrice(performanceResDto.getTotalPrice())
                 .build();
         return userCardDetailResponseDto;
 
@@ -166,6 +166,13 @@ public class UserCardService {
             userCardRepository.save(userCard);
             order++;
         }
+    }
+
+    public UserCard findUserCardById(int cardId) {
+        Optional<UserCard> findUserCard = userCardRepository.findById(cardId);
+
+        return findUserCard
+                .orElseThrow(() -> new RuntimeException("해당 카드 없음"));
     }
 
     public MainAmountDto getAmount(FindHistoryByUserId findHistoryByUserId){
