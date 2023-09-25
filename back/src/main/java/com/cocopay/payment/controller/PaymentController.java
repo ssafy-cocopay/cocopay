@@ -31,6 +31,7 @@ public class PaymentController {
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader ("userId") int userId,
                                          @RequestBody PayPostDto payPostDto) {
+        log.info("payPostDto : {}", payPostDto);
         payPostDto.setUserId(userId);
         UserCard findUserCard = userCardService.findUserCardById(payPostDto.getCardId());
 
@@ -49,6 +50,7 @@ public class PaymentController {
     @PostMapping("/online")
     public ResponseEntity onlinePayTest(@RequestBody PayPostDto payPostDto,
                                         @RequestHeader ("userId") int userId) {
+        log.info("payPostDto : {}",payPostDto);
         payPostDto.setUserId(userId);
         orderKeyService.orderKeySave(payPostDto);
         List<CardOfferResDto> cardOffer = paymentService.autoChanging(payPostDto);
