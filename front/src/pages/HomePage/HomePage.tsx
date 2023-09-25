@@ -7,10 +7,13 @@ import { Line } from "@/components/atoms/Line/Line.style";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import search from "@/assets/images/icon-search-blue.png";
 import cocoCard from "@/assets/images/img-card-coco.png";
+import refresh from "@/assets/images/icon-refresh-grey.png";
 
+import { Checkbox } from "@/pages/Mypage/Mypage.styles";
 import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
 import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
+import TimerComponent from "@/utils/Timer";
 
 import {
   HeaderContainer,
@@ -36,8 +39,11 @@ const HomePage = () => {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    margin-left: 45px;
-    white-space: nowrap; // 가로로 펼쳐진 콘텐츠를 유지하기 위해서 필요에 따라 추가
+    padding-left: 80px;
+    margin-top: 210px;
+    width: auto;
+    position: absolute;
+    left: -10px;
   `;
 
   return (
@@ -63,15 +69,50 @@ const HomePage = () => {
             <BodyAndHeading amountType="소비한" amount={273350} />
           </DiscountAndAmountContainer>
           <BarcodeContainer code={barcodeValue} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              margin: "0 auto 20px 15px",
+              width: "92%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              <Text size="small1" color="grey2">
+                <TimerComponent />
+              </Text>
+              <Image
+                src={refresh}
+                width={1}
+                height={1}
+                style={{ margin: "2px 0 0 8px" }}
+              ></Image>
+            </div>
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              <Text size="small1" color="grey2" style={{ marginRight: "10px" }}>
+                QR
+              </Text>
+              <Checkbox type="checkbox" id="toggle" />
+            </div>
+          </div>
           <CircleIconContainer>
             <Image src={search} width={2.5} $margin="auto"></Image>
           </CircleIconContainer>
         </BarcodeWhiteContainer>
+
+        <ScrollableContainer>
+          <Image src={cocoCard} width={15} style={{ zIndex: 10 }}></Image>
+          <Image src={cocoCard} width={15}></Image>
+        </ScrollableContainer>
       </HeaderContainer>
-      <ScrollableContainer $marginTop="240px" style={{ flexDirection: "row" }}>
-        <Image src={cocoCard} width={15}></Image>
-        <Image src={cocoCard} width={15}></Image>
-      </ScrollableContainer>
     </Background>
   );
 };
