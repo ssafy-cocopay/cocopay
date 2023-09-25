@@ -6,6 +6,7 @@ import com.bank.card.mapper.UserCardMapper;
 import com.bank.card.service.PaymentService;
 import com.bank.card.service.UserCardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/bank/card")
 public class CardController {
 
@@ -57,6 +59,7 @@ public class CardController {
 
     @PostMapping("/pay")
     ResponseEntity<?> payment(@RequestBody PaymentRequestDto paymentRequestDto) {
+        log.info("paymentRequestDto : {}", paymentRequestDto);
         //입력값 검증
 
         //서비스 호출
