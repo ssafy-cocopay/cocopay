@@ -65,6 +65,7 @@ public class ApiCallService {
 
     //결제요청 api 콜 진행
     public void payApiCall(PaymentReqDto requestDto) {
+        log.info("requestDto : {}", requestDto);
         WebClient webClient = WebClient.create();
         
         log.info("결제 요청 api call 진행");
