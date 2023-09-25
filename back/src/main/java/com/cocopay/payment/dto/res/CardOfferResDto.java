@@ -42,7 +42,7 @@ public class CardOfferResDto {
     private int remainingAmt;
 
     //실적 그래프 퍼센트
-    private int graphRate;
+    private double graphRate;
 
     //전월실적 달성 여부 -> 내가 이번 달 혜택을 받을 수 있는지
     private boolean pastPerformance;
