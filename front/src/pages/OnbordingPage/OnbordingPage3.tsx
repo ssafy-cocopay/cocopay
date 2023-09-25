@@ -4,9 +4,9 @@ import { Container } from "@/components/atoms/Container/Container.styles";
 import Back from "@/components/atoms/Back/Back";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
-import cards from "@/assets/images/img-cardsAnimation.png";
+import cards from "@/assets/images/img-cardline.png";
 
-const OnbordnigPage2 = () => {
+const OnbordnigPage3 = () => {
   return (
     <Container
       // $left={true}
@@ -24,19 +24,22 @@ const OnbordnigPage2 = () => {
         $paddingTop="63px"
         height="auto"
         $padding="0px"
-        // $border={true}
+        $border={true}
       >
         <Text size="body2" fontWeight="bold">
-          지갑속의
+          실적과 혜택을 고려하면서
         </Text>
         <Text size="body2" fontWeight="bold">
-          수많은 카드들..
+          매번 적절한 카드를 선택해
+        </Text>
+        <Text size="body2" fontWeight="bold">
+          결제하기 어려우셨죠?
         </Text>
       </Container>
       {/* TODO:크기 조절해서 맞추기 */}
-      <Image src={cards} width={24.5} height={34}></Image>
+      <Image style={{ marginTop: "20%" }} src={cards} width={24.2}></Image>
     </Container>
   );
 };
 
-export default OnbordnigPage2;
+export default OnbordnigPage3;

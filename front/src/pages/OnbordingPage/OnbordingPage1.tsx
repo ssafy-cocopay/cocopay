@@ -7,6 +7,7 @@ import { Image } from "@/components/atoms/Image/Image";
 import Penguins from "@/assets/images/img-penguins.png";
 import Background1 from "@/assets/images/bg-onboarding-1.png";
 import Hello from "@/assets/images/text-안녕하세요.png";
+
 const OnbordingPage1 = () => {
   return (
     <Background
@@ -44,11 +45,11 @@ const OnbordingPage1 = () => {
           <Text size="subtitle1" fontWeight="bold" color="white">
             이용해 볼까요?
           </Text>
-
+          {/* TODO: 이미지 크기 변하지 않게 설정하기 */}
           <Image
             src={Hello}
             width={15}
-            style={{ marginLeft: "50px", marginTop: "90%" }}
+            style={{ marginLeft: "50px", marginTop: "50%" }}
           ></Image>
 
           <Image style={{ marginTop: "10%" }} src={Penguins} width={20}></Image>

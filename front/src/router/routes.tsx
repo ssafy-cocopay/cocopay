@@ -26,8 +26,13 @@ import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineComple
 import MainPage from "@/pages/MainPage/MainPage";
 import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
 import PayOfflineCompletePage from "@/pages/PayOfflineCompletePage/PayOfflineCompletePage";
-import OnbordingPage1 from "@/pages/OnbordingPage/OnbordingPage1";
 import OnbordingPage from "@/pages/OnbordingPage/OnbordingPage";
+import OnbordingPage1 from "@/pages/OnbordingPage/OnbordingPage1";
+import OnbordingPage2 from "@/pages/OnbordingPage/OnbordingPage2";
+import OnbordingPage3 from "@/pages/OnbordingPage/OnbordingPage3";
+// import OnbordingPage4 from "@/pages/OnbordingPage/OnbordingPage4";
+// import OnbordingPage5 from "@/pages/OnbordingPage/OnbordingPage5";
+
 const router = createBrowserRouter([
   {
     path: PATH.ROOT,
@@ -48,7 +53,11 @@ const router = createBrowserRouter([
   {
     path: PATH.Onbording,
     // element: <OnbordingPage />,
-    element: <OnbordingPage1 />,
+    // element: <OnbordingPage1 />,
+    // element: <OnbordingPage2 />,
+    element: <OnbordingPage3 />,
+    // element: <OnbordingPage4 />,
+    // element: <OnbordingPage5 />,
   },
   {
     path: PATH.CARDUPLOAD,
