@@ -31,7 +31,7 @@ public class PaymentController {
     private final BarcodeKeyService barcodeKeyService;
 
     @PostMapping()
-    public ResponseEntity onlineFinalPay(@RequestHeader ("userId") int userId,
+    public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
                                          @RequestBody PayPostDto payPostDto) {
         log.info("payPostDto : {}", payPostDto);
         payPostDto.setUserId(userId);
@@ -52,8 +52,8 @@ public class PaymentController {
 
     @PostMapping("/online")
     public ResponseEntity onlinePayTest(@RequestBody PayPostDto payPostDto,
-                                        @RequestHeader ("userId") int userId) {
-        log.info("payPostDto : {}",payPostDto);
+                                        @RequestHeader("userId") int userId) {
+        log.info("payPostDto : {}", payPostDto);
         payPostDto.setUserId(userId);
         orderKeyService.orderKeySave(payPostDto);
         List<CardOfferResDto> cardOffer = paymentService.autoChanging(payPostDto);
@@ -65,7 +65,9 @@ public class PaymentController {
     @PostMapping("/offline/{barcode-num}")
     public ResponseEntity offlinePayTest(@RequestBody PayPostDto payPostDto,
                                          @PathVariable("barcode-num") String barcodeNum,
-                                         @RequestHeader ("userId") int userId) {
+                                         @RequestHeader("userId") int userId) {
+        CardOfferResDto cardOfferResDto = new CardOfferResDto();
+        int cardUuid;
         payPostDto.setUserId(userId);
         orderKeyService.orderKeySave(payPostDto);
         log.info("요청 값 : {}", payPostDto);
@@ -78,20 +80,27 @@ public class PaymentController {
         if (findUserCard.isCocoType()) {
             log.info("코코카드임");
             log.info("오토체인징 시스템 시작");
-            CardOfferResDto cardOfferResDto = paymentService.autoChanging(payPostDto).get(0);
+            cardOfferResDto = paymentService.autoChanging(payPostDto).get(0);
             log.info("코코페이가 추천한 카드 이름 : {}", cardOfferResDto.getCardName());
-            int cardUuid = userCardService.findUserCardById(cardOfferResDto.getCardId()).getCardUuid();
+            cardUuid = userCardService.findUserCardById(cardOfferResDto.getCardId()).getCardUuid();
             paymentReqDto = paymentMapperTest.toPaymentReqDto(cardUuid, payPostDto, payPostDto.getOrderPrice());
         }
         //코코카드가 아님
         else {
             log.info("코코카드 아님");
-            int cardUuid = userCardService.findUserCardById(cardId).getCardUuid();
+            cardUuid = userCardService.findUserCardById(cardId).getCardUuid();
             paymentReqDto = paymentMapperTest.toPaymentReqDto(cardUuid, payPostDto);
         }
 
-
         paymentService.finalPayCall(paymentReqDto);
+
+        //생색 내기 구현
+        //코코카드로 결제하였을 경우
+        //필요한거 -> 사용자의 이번 달 총 이용금액
+        //실적 정보 -> 해당 카드의 실적 정보
+        //할인 된 금액은 이미 내가 들고 있음 cardOfferResDto
+        int discounted = cardOfferResDto.getDiscounted();
+
         return ResponseEntity.ok("끝");
     }
 }
