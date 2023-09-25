@@ -39,11 +39,11 @@ const HomePage = () => {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    padding-left: 80px;
-    margin-top: 210px;
+    padding-left: 70px;
+    margin-top: 200px;
     width: auto;
     position: absolute;
-    left: -10px;
+    left: 0px;
   `;
 
   return (
@@ -73,13 +73,14 @@ const HomePage = () => {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              margin: "0 auto 20px 15px",
+              margin: "10px auto 20px 15px",
               width: "92%",
             }}
           >
             <div
               style={{
                 display: "flex",
+                // margin: "10px 0",
               }}
             >
               <Text size="small1" color="grey2">
@@ -109,7 +110,7 @@ const HomePage = () => {
         </BarcodeWhiteContainer>
 
         <ScrollableContainer>
-          <Image src={cocoCard} width={15} style={{ zIndex: 10 }}></Image>
+          <Image src={cocoCard} width={15}></Image>
           <Image src={cocoCard} width={15}></Image>
         </ScrollableContainer>
       </HeaderContainer>
