@@ -33,11 +33,10 @@ public class CardHistoryService {
         TotalByMonth totalByMonth = cardHistoryRepository.getTotalByMonth(userCardIdList, findHistoryByUserId.getMonth());
 
         List<CategoryDto> categoryDtoList = cardHistoryRepository.getCardHistoryByCategory(userCardIdList,totalByMonth.getTotalPayByMonth(), totalByMonth.getTotalDiscountByMonth(), findHistoryByUserId.getMonth());
-
         for (CategoryDto categoryDto:categoryDtoList) {
 
-            categoryDto.setPricePercent(String.format("%.1f",categoryDto.getPrice()/totalByMonth.getTotalPayByMonth()*100));
-            categoryDto.setDiscountPercent(String.format("%.1f",categoryDto.getDiscountAmount()/totalByMonth.getTotalDiscountByMonth()*100));
+            categoryDto.setPricePercent(String.format("%.1f",(double)categoryDto.getPrice()/totalByMonth.getTotalPayByMonth()*100));
+            categoryDto.setDiscountPercent(String.format("%.1f",(double)categoryDto.getDiscountAmount()/totalByMonth.getTotalDiscountByMonth()*100));
         }
 
 
