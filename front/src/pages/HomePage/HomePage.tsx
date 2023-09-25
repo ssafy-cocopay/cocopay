@@ -33,11 +33,19 @@ const HomePage = () => {
   // TODO: 3분 만료랑 새로고침, 서명, 큐알.... 으악 우선순위 좀 정하기
   const ScrollableContainer = styled(Container)`
     overflow-x: auto;
+    /* overflow-y: visible; */
     display: flex;
     flex-direction: row;
     gap: 20px;
-    margin-left: 45px;
-    white-space: nowrap; // 가로로 펼쳐진 콘텐츠를 유지하기 위해서 필요에 따라 추가
+    padding-left: 80px;
+    margin-top: 210px;
+    width: 200%;
+    z-index: 10;
+    position: absolute;
+    left: -10px;
+    /* flexdirection: "row"; */
+    /* margin-left: 45px; */
+    /* white-space: nowrap; // 가로로 펼쳐진 콘텐츠를 유지하기 위해서 필요에 따라 추가 */
   `;
 
   return (
@@ -62,16 +70,18 @@ const HomePage = () => {
             <Line margin="18px 0" />
             <BodyAndHeading amountType="소비한" amount={273350} />
           </DiscountAndAmountContainer>
+          123
           <BarcodeContainer code={barcodeValue} />
           <CircleIconContainer>
             <Image src={search} width={2.5} $margin="auto"></Image>
           </CircleIconContainer>
         </BarcodeWhiteContainer>
+
+        <ScrollableContainer>
+          <Image src={cocoCard} width={15} style={{ zIndex: 10 }}></Image>
+          <Image src={cocoCard} width={15}></Image>
+        </ScrollableContainer>
       </HeaderContainer>
-      <ScrollableContainer $marginTop="240px" style={{ flexDirection: "row" }}>
-        <Image src={cocoCard} width={15}></Image>
-        <Image src={cocoCard} width={15}></Image>
-      </ScrollableContainer>
     </Background>
   );
 };

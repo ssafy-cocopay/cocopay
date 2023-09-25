@@ -8,6 +8,7 @@ export const HeaderContainer = styled(Container)`
   right: 0;
   margin-top: 12px;
   padding: 30px;
+  overflow: visible;
 `;
 
 export const BarcodeWhiteContainer = styled(Container)`
