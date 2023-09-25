@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 type WrapperProps = {
+  width?: string;
+  // height?: string;
   $padding?: string;
   $flexGrow?: number;
   $flexDirection?: string;
   $alignItems?: string;
   $justifyContent?: string;
+  $border?: boolean;
 };
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -14,7 +17,8 @@ export const Wrapper = styled.div<WrapperProps>`
   justify-content: ${(props) => props.$justifyContent || "center"};
   /* justify-content: space-between; */
   align-items: ${(props) => props.$alignItems || "center"};
-  width: 100%;
+  width: ${(props) => props.width || "100%"};
   flex-grow: ${(props) => props.$flexGrow || "none"};
   padding: ${(props) => props.$padding || 0};
-`;
+  border: ${(props) => (props.$border ? "1px solid black" : "none")};
+`

@@ -10,7 +10,7 @@ export const StyledNavBar = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 10%;
+  height: 70px;
 
 `;
 
@@ -21,5 +21,5 @@ export const StyledNavBarBackground = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 10%;
+  height: 70px;
 `;

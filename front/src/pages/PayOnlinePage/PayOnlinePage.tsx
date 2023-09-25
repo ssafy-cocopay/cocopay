@@ -3,6 +3,7 @@ import React from "react";
 import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { PayOnlineWrapper } from "./PayOnlinePage.styles"
 
 const PayOnlinePage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,13 @@ const PayOnlinePage = () => {
         minHeight: "100vh",
       }}
     >
-      온라인 결제 페이지
+      <PayOnlineWrapper
+      height="180px"
+      $bgc="blue"
+      $borderRadius="0 0 54px 54px"
+      >
+
+      </PayOnlineWrapper>
       <Button
         onClick={() => navigatePage(PATH.PAYONLINECOMPLETE)}
         option="activated"
