@@ -3,6 +3,7 @@ package com.bank.card.controller;
 import com.bank.card.dto.*;
 import com.bank.card.entity.UserCard;
 import com.bank.card.mapper.UserCardMapper;
+import com.bank.card.service.PaymentService;
 import com.bank.card.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public class CardController {
 
     private final UserCardService userCardService;
     private final UserCardMapper userCardMapper;
+    private final PaymentService paymentService;
 
     //사용자 카드 등록
     @PostMapping("")
@@ -58,11 +60,10 @@ public class CardController {
         //입력값 검증
 
         //서비스 호출
-        if (paymentRequestDto.getBenefitId() == null) {
-            return ResponseEntity.ok(userCardService.paymentWithoutBenefitId(paymentRequestDto));
-        } else {
-            return ResponseEntity.ok(userCardService.paymentWithBenefitId(null,paymentRequestDto));
-        }
+        paymentRequestDto = paymentService.checkBenefit(paymentRequestDto);
+        paymentService.payment(paymentRequestDto);
+//
+        return ResponseEntity.ok().build();
     }
 
     //시리얼 번호로 카드 조회

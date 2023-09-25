@@ -1,5 +1,7 @@
 package com.bank.benefit.dto;
 
+import com.bank.card_history.entity.Category;
+import com.bank.card_history.entity.DiscountType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +12,7 @@ public class BenefitInfoResponseDto {
 
     private Integer cardUuid;
 
-    private String category;
+    private Category category;
 
     private String storeName;
 
@@ -19,4 +21,6 @@ public class BenefitInfoResponseDto {
     private Integer limit;
 
     private int discountAmount;
+
+    private DiscountType discountType;
 }

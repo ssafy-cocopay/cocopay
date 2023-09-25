@@ -1,5 +1,6 @@
 package com.bank.benefit.dto;
 
+import com.bank.card_history.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 public class UserCardBenefitInfoDto {
     private List<Integer> cardUuidList;
 
-    private String category;
+    private Category category;
 
     private String storeName;
 }
