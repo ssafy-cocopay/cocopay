@@ -13,6 +13,7 @@ import { Checkbox } from "@/pages/Mypage/Mypage.styles";
 import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
 import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
+import TimerComponent from "@/utils/Timer";
 
 import {
   HeaderContainer,
@@ -81,12 +82,8 @@ const HomePage = () => {
                 display: "flex",
               }}
             >
-              <Text
-                size="small1"
-                color="grey2"
-                // $paddingLeft="0px"
-              >
-                03:00
+              <Text size="small1" color="grey2">
+                <TimerComponent />
               </Text>
               <Image
                 src={refresh}
