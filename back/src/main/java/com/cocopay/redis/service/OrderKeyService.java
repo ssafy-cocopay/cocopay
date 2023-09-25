@@ -1,6 +1,6 @@
 package com.cocopay.redis.service;
 
-import com.cocopay.payment.dto.req.OnlinePayPostDto;
+import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.mapper.RedisMapper;
 import com.cocopay.redis.repository.OrderKeyRepository;
@@ -19,7 +19,7 @@ public class OrderKeyService {
     private final RedisMapper redisMapper;
 
     //주문 정보 저장
-    public void orderKeySave(OnlinePayPostDto dto) {
+    public void orderKeySave(PayPostDto dto) {
         OrderKey orderKey = redisMapper.toOrderKey(dto);
         orderKeyRepository.save(orderKey);
     }

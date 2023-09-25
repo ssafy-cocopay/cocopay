@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PerformanceResponseListDto {
-    List<PerformanceResponseDto> performanceList;
+public class PerformanceResListDto {
+    List<PerformanceResDto> performanceList;
 }
