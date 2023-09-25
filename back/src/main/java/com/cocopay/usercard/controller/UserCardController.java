@@ -72,10 +72,4 @@ public class UserCardController {
         userCardService.setCardOrder(cardUuidListDto.getCardUuidList());
         return ResponseEntity.ok("우선순위 변경 완료");
     }
-
-    //메인페이지 금액부분
-    @PostMapping("main")
-    ResponseEntity<?> getTotalAmount(@RequestBody FindHistoryByUserId findHistoryByUserId){
-        return ResponseEntity.ok(userCardService.getAmount(findHistoryByUserId));
-    }
 }
