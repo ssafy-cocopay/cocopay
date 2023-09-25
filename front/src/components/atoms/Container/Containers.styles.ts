@@ -15,7 +15,7 @@ export const BarcodeWhiteContainer = styled(Container)`
   margin-top: 36px;
   background-color: white;
   border-radius: 38px;
-  height: 350px;
+  height: 370px;
   position: relative;
   top: 80px;
 `;
