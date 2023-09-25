@@ -1,40 +1,34 @@
-import { Background } from "@/components/atoms/Background/Background.styles";
-import React from "react";
-import Button from "@/components/atoms/Button/Button";
-import { useNavigate } from "react-router-dom";
-import { PATH } from "@/constants/path";
-import { PayOnlineWrapper } from "./PayOnlinePage.styles"
+import React, { useState } from "react";
+import PayOnlinePage1 from "./PayOnlinePage1"
+import PayOnlinePage2 from "./PayOnlinePage2"
+import PayOnlinePage3 from "./PayOnlinePage3"
 
-const PayOnlinePage = () => {
-  const navigate = useNavigate();
+function PayOnlinePage() {
+  
+  const [activatedNum, setActivatedNum] = useState<keyof typeof PayOnlinePages>(1);
 
-  const navigatePage = (path: string) => {
-    navigate(path);
+
+  const handleNextPage = () => {
+    if (activatedNum < 3) {
+      setActivatedNum((prevNum) => prevNum + 1 as keyof typeof PayOnlinePages);
+    } else if (activatedNum === 3) {
+      console.log(activatedNum)
+      setActivatedNum(3 as keyof typeof PayOnlinePages);
+    }
+  };
+  
+
+
+  const PayOnlinePages = {
+    1: <PayOnlinePage1 onNextPage={handleNextPage} />,
+    2: <PayOnlinePage2 onNextPage={handleNextPage} />,
+    3: <PayOnlinePage3 onNextPage={handleNextPage} />,
   };
   return (
-    <Background
-      $colormode="gradient"
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <PayOnlineWrapper
-      height="180px"
-      $bgc="blue"
-      $borderRadius="0 0 54px 54px"
-      >
-
-      </PayOnlineWrapper>
-      <Button
-        onClick={() => navigatePage(PATH.PAYONLINECOMPLETE)}
-        option="activated"
-        size="medium"
-        $width="200px"
-      >
-        결제하기
-      </Button>
-    </Background>
+    <div>
+      {PayOnlinePages[activatedNum]}
+    </div>
   );
-};
+}
 
 export default PayOnlinePage;
