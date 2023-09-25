@@ -22,18 +22,14 @@ import {
   CircleIconContainer,
 } from "@/components/atoms/Container/Containers.styles";
 
-// const CardImage = styled(Image)`
-//   margin-top: 70px;
-// `;
-
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
 
-  // TODO: 바코드값 지금은 임시 하드코딩 - API 요청해야하는지? 여기서 제너레이팅 해야하는지?
+  // TODO: 바코드값 지금은 임시 하드코딩 
   const [barcodeValue] = useState("3873827336732991");
 
-  // TODO: position 지옥에서 벗어나기 ㅠ 밑에 스크롤할 수 있는 카드 컴포넌트 만들기, 캐로셀 사용
-  // TODO: 3분 만료랑 새로고침, 서명, 큐알.... 으악 우선순위 좀 정하기
+  // TODO: 밑에 스크롤할 수 있는 카드 컴포넌트 만들기, 캐로셀 사용
+  // TODO: 3분 만료랑 새로고침, 큐알....
   const ScrollableContainer = styled(Container)`
     overflow-x: auto;
     display: flex;
