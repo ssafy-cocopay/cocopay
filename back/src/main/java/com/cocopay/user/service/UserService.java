@@ -100,21 +100,21 @@ public class UserService {
     }
 
     public void updateFingerPrint(Integer userId, Boolean fingerprint) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("잘못된 요청"));
+        User findUser = findUserById(userId);
 
         findUser.setFingerprint(fingerprint);
         userRepository.save(findUser);
     }
 
     public void updateBarcode(Integer userId, Boolean barcode) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("잘못된 요청"));
+        User findUser = findUserById(userId);
 
         findUser.setBarcode(barcode);
         userRepository.save(findUser);
     }
 
     public void updateRecommendType(Integer userId, Boolean recommendType) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("잘못된 요청"));
+        User findUser = findUserById(userId);
 
         findUser.setRecommendType(recommendType);
         userRepository.save(findUser);
@@ -137,7 +137,7 @@ public class UserService {
     }
 
     public void insertUserCard(List<UserCardDto> userCardList, Integer userId) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저 찾을수없음"));
+        User findUser = findUserById(userId);
         Integer uuid = findUser.getUuid();
 
         List<UserCard> list = new ArrayList<>();
@@ -162,6 +162,14 @@ public class UserService {
             cnt++;
             //batch 사용 여지 있음
         }
+    }
+
+    //유저 찾는 메서드 추가
+    public User findUserById(int userId) {
+        Optional<User> findUser = userRepository.findById(userId);
+
+        return findUser
+                .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
     }
 
 }

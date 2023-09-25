@@ -1,18 +1,26 @@
 package com.cocopay.user.controller;
 
+<<<<<<< HEAD
 import com.cocopay.exception.dto.CustomException;
 import com.cocopay.exception.dto.ErrorCode;
+=======
+import com.cocopay.payment.service.PaymentServiceTest;
+>>>>>>> 6f5cb9fc11238636b3c23c5ca4ca95772858618a
 import com.cocopay.redis.redishash.service.AuthKeyService;
 import com.cocopay.user.dto.request.*;
+import com.cocopay.user.dto.response.TotalByMonth;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
+import com.cocopay.user.mapper.UserMapper;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
-import com.cocopay.usercard.dto.UserCardDto;
+import com.cocopay.usercard.entity.UserCard;
+import com.cocopay.usercard.repository.UserCardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,6 +32,9 @@ public class UserController {
     private final UserService userService;
     private final AuthKeyService authKeyService;
     private final UserApiCallService userApiCallService;
+    private final UserCardRepository userCardRepository;
+    //private final PaymentServiceTest paymentServiceTest;
+    private final UserMapper userMapper;
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(
@@ -94,17 +105,15 @@ public class UserController {
 
     //비밀번호 체크
     @PostMapping("/check")
-    public ResponseEntity<?> checkPassword(@RequestBody CheckPasswordDto checkPasswordDto)
-    {
-        if(!userService.checkPassword(checkPasswordDto))
+    public ResponseEntity<?> checkPassword(@RequestBody CheckPasswordDto checkPasswordDto) {
+        if (!userService.checkPassword(checkPasswordDto))
             throw new RuntimeException();
         return ResponseEntity.ok("OK");
     }
 
     //비밀번호 변경
     @PutMapping("/password")
-    public ResponseEntity<?> updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto)
-    {
+    public ResponseEntity<?> updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
         userService.updatePassword(passwordUpdateDto);
         return ResponseEntity.ok("OK");
     }
@@ -115,6 +124,23 @@ public class UserController {
         UserCardResponseListDto result = userApiCallService.getUserCardFromBank(userId);
         userService.insertUserCard(result.getUserCardList(), userId);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping()
+    public ResponseEntity getTotalByMonth(@RequestHeader ("userId") int userId) {
+        log.info("userId : {}", userId);
+        log.info("메인페이지 한 달 사용내역 및 할인 받은 금액 조회");
+        int month = LocalDateTime.now().getMonth().getValue();
+        log.info("month : {}", month);
+
+        List<UserCard> userCardList = userCardRepository.findUserCardListByCocoType(userId);
+
+        List<Integer> cardUuidList = paymentServiceTest.getCardUuidList(userCardList);
+
+        TotalByMonthReqDto totalByMonthReqDto = userMapper.toTotalByMonthReqDto(cardUuidList, month);
+
+        TotalByMonth resDto = userApiCallService.getTotalByMonth(totalByMonthReqDto);
+        return ResponseEntity.ok(resDto);
     }
 
 }

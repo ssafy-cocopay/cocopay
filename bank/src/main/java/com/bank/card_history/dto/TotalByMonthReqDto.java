@@ -1,6 +1,5 @@
-package com.bank.benefit.dto;
+package com.bank.card_history.dto;
 
-import com.bank.card_history.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCardBenefitInfoDto {
+public class TotalByMonthReqDto {
     private List<Integer> cardUuidList;
 
-    private Category category;
-
-    private String storeName;
+    private int month;
 }

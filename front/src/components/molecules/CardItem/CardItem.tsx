@@ -3,7 +3,7 @@ import { Image } from "@/components/atoms/Image/Image";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import cardImg1 from "@/assets/images/img-card1.png";
 import cardImg2 from "@/assets/images/img-card2.png";
-import cardImg3 from "@/assets/images/img-card.png";
+import cardImg3 from "@/assets/images/img-card3.png";
 import korImg from "@/assets/images/img-kor.png";
 import iconHamburgerGrey from "@/assets/images/icon-hamburger-grey.png";
 import { CardItemWrapper, Hr } from "./CardItem.styles";

@@ -1,11 +1,11 @@
 package com.cocopay.payment.apicall;
 
-import com.cocopay.payment.apicall.dto.req.PaymentRequestDto;
+import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
-import com.cocopay.payment.apicall.dto.req.UserCardBenefitInfoResponseListDto;
-import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
+import com.cocopay.payment.apicall.dto.req.BenefitResDtoList;
+import com.cocopay.payment.apicall.dto.res.BenefitResDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
-import com.cocopay.payment.dto.res.PerformanceResponseListDto;
+import com.cocopay.payment.dto.res.PerformanceResListDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.usercard.entity.UserCard;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,8 @@ public class ApiCallService {
 
 
     //해당 카드 실적 관련 정보 조회
-    public PerformanceResponseListDto userCardPerformanceInfo(List<UserCard> findUserCardList) {
+    //테스트 이 후 제거 예정
+    public PerformanceResListDto userCardPerformanceApiCall(List<UserCard> findUserCardList) {
         WebClient webClient = WebClient.create();
 
         List<Integer> list = new ArrayList<>();
@@ -47,12 +48,24 @@ public class ApiCallService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(cardUuidList)
                 .retrieve()
-                .bodyToMono(PerformanceResponseListDto.class)
+                .bodyToMono(PerformanceResListDto.class)
+                .block();
+    }
+    public PerformanceResListDto userCardPerformanceApiCall(CardUuidListDto cardUuidList) {
+        WebClient webClient = WebClient.create();
+
+        return webClient.post()
+                .uri(localUrl + "performance/list")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cardUuidList)
+                .retrieve()
+                .bodyToMono(PerformanceResListDto.class)
                 .block();
     }
 
     //결제요청 api 콜 진행
-    public void payApiCall(PaymentRequestDto requestDto) {
+    public void payApiCall(PaymentReqDto requestDto) {
+        log.info("requestDto : {}", requestDto);
         WebClient webClient = WebClient.create();
         
         log.info("결제 요청 api call 진행");
@@ -68,15 +81,15 @@ public class ApiCallService {
     }
 
     //특정 카드의 혜택을 조회하는 api 콜 진행
-    public List<UserCardBenefitInfoResponseDto> userCardBenefitApiCall(UserCardBenefitBodyDto bodyDto) {
+    public List<BenefitResDto> userCardBenefitApiCall(UserCardBenefitBodyDto bodyDto) {
         WebClient webClient = WebClient.create();
 
-        UserCardBenefitInfoResponseListDto response = webClient.post()
+        BenefitResDtoList response = webClient.post()
                 .uri(localUrl + "benefit/list")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(bodyDto)
                 .retrieve()
-                .bodyToMono(UserCardBenefitInfoResponseListDto.class)
+                .bodyToMono(BenefitResDtoList.class)
                 .block();
 
         return response.getBenefitList();
