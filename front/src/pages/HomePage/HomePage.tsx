@@ -25,7 +25,7 @@ import {
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
 
-  // TODO: 바코드값 지금은 임시 하드코딩 
+  // TODO: 바코드값 지금은 임시 하드코딩
   const [barcodeValue] = useState("3873827336732991");
 
   // TODO: 밑에 스크롤할 수 있는 카드 컴포넌트 만들기, 캐로셀 사용
@@ -46,15 +46,14 @@ const HomePage = () => {
     <Background
       $colormode="gradient"
       style={{
-        minHeight: "100vh",
-        position: "fixed",
+        position: "fixed"
       }}
     >
       <div style={{ position: "absolute", top: 0, width: "100%" }}>
-        <BlueContainer></BlueContainer>
+        <BlueContainer/>
       </div>
       {/* <div style={{ position: "relative" }}> */}
-      <HeaderContainer $left={true}>
+      <HeaderContainer $border={true} $left={true}>
         <Text size="subtitle2" fontWeight="bold" color="white" $margin="0 4px">
           현장 결제
         </Text>
