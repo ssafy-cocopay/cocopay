@@ -1,7 +1,8 @@
 package com.cocopay.exception.controller;
 
-import com.bank.exception.dto.CustomException;
-import com.bank.exception.dto.ErrorResponseEntity;
+
+import com.cocopay.exception.dto.CustomException;
+import com.cocopay.exception.dto.ErrorResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;

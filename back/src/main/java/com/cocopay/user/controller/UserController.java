@@ -1,5 +1,7 @@
 package com.cocopay.user.controller;
 
+import com.cocopay.exception.dto.CustomException;
+import com.cocopay.exception.dto.ErrorCode;
 import com.cocopay.redis.redishash.service.AuthKeyService;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
@@ -25,19 +27,25 @@ public class UserController {
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(@RequestBody AuthRequestDto authRequestDto) {
+        if(authRequestDto.getTel().length() != 11)
+            throw  new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
+
         String code = userService.sendRandomMessage(authRequestDto.getTel());
 
         //redis에 code 저장
         authKeyService.saveAuthMessage(authRequestDto.getTel(), code);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("OK");
     }
 
     @PostMapping("/auth-check")
     public ResponseEntity<?> checkAuthMessage(@RequestBody AuthCheckDto authCheckDto) {
         log.info("문자 인증 확인 요청");
+        if(authCheckDto.getTel().length() != 11)
+            throw  new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
         if (!userService.checkAuthMessage(authCheckDto.getTel(), authCheckDto.getCode()))
-            throw new RuntimeException();
+            throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
+
         return ResponseEntity.ok("OK");
     }
 

@@ -1,5 +1,7 @@
 package com.cocopay.user.service;
 
+import com.cocopay.exception.dto.CustomException;
+import com.cocopay.exception.dto.ErrorCode;
 import com.cocopay.redis.redishash.key.AuthHash;
 import com.cocopay.redis.redishash.repository.AuthHashRepository;
 import com.cocopay.user.dto.request.*;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -54,6 +57,10 @@ public class UserService {
 
     public void join(UserJoinDto userJoinDto) {
         // 똑같은 번호 있으면 빠꾸시켜야됨
+        userRepository.findByTel(userJoinDto.getTel())
+                .ifPresent(user -> {
+                    throw new CustomException(ErrorCode.DUPLICATE_USER);
+                });
 
         // uuid 불러오기
         UserFindResponseDto result = userApiCallService.getUserUuid(new UserFindRequestDto(userJoinDto.getTel()));
@@ -152,7 +159,7 @@ public class UserService {
                     .build();
 
             userCardRepository.save(userCard);
-            cnt ++;
+            cnt++;
             //batch 사용 여지 있음
         }
     }
