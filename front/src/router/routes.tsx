@@ -6,7 +6,7 @@ import SignupPage from "@/pages/SignupPage/SignupPage";
 import NotFoundPage from "@/pages/NotFoundPage/NotFoundPage";
 import PasswordSettingPage from "@/pages/PasswordSettingPage/PasswordSettingPage";
 import FingerSettingPage from "@/pages/FingerSettingPage/FingerSettingPage";
-import SplashPage from "@/pages/SpalshPage/SplashPage";
+
 import CardUploadPage from "@/pages/CardUploadPage/CardUploadPage";
 import PriorityPage from "@/pages/PriorityPage/PriorityPage";
 import LoginFingerPage from "@/pages/LoginFingerPage/LoginFingerPage";
@@ -26,7 +26,8 @@ import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineComple
 import MainPage from "@/pages/MainPage/MainPage";
 import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
 import PayOfflineCompletePage from "@/pages/PayOfflineCompletePage/PayOfflineCompletePage";
-
+import OnbordingPage1 from "@/pages/OnbordingPage/OnbordingPage1";
+import OnbordingPage from "@/pages/OnbordingPage/OnbordingPage";
 const router = createBrowserRouter([
   {
     path: PATH.ROOT,
@@ -35,7 +36,6 @@ const router = createBrowserRouter([
   },
   {
     path: PATH.SIGNUP,
-    element: <SignupPage />,
   },
   {
     path: PATH.PASSWORD_SETTING,
@@ -46,8 +46,9 @@ const router = createBrowserRouter([
     element: <FingerSettingPage />,
   },
   {
-    path: PATH.SPLASH,
-    element: <SplashPage />,
+    path: PATH.Onbording,
+    // element: <OnbordingPage />,
+    element: <OnbordingPage1 />,
   },
   {
     path: PATH.CARDUPLOAD,

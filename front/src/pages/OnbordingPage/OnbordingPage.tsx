@@ -3,7 +3,7 @@ import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from '@/constants/path'
 
-const SplashPage = () => {
+const OnbordnigPage = () => {
     const navigate = useNavigate()
 
     const navigatePage = (path: string) => {
@@ -19,4 +19,4 @@ const SplashPage = () => {
     )
 }
 
-export default SplashPage;
+export default OnbordnigPage;
