@@ -1,6 +1,6 @@
 package com.cocopay.user.controller;
 
-import com.cocopay.payment.service.PaymentServiceTest;
+import com.cocopay.payment.service.PaymentService;
 import com.cocopay.redis.redishash.service.AuthKeyService;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.TotalByMonth;
@@ -28,7 +28,7 @@ public class UserController {
     private final AuthKeyService authKeyService;
     private final UserApiCallService userApiCallService;
     private final UserCardRepository userCardRepository;
-    private final PaymentServiceTest paymentServiceTest;
+    private final PaymentService paymentService;
     private final UserMapper userMapper;
 
     @PostMapping("/message-auth")
@@ -115,7 +115,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity getTotalByMonth(@RequestHeader ("userId") int userId) {
+    public ResponseEntity getTotalByMonth(@RequestHeader("userId") int userId) {
         log.info("userId : {}", userId);
         log.info("메인페이지 한 달 사용내역 및 할인 받은 금액 조회");
         int month = LocalDateTime.now().getMonth().getValue();
@@ -123,7 +123,7 @@ public class UserController {
 
         List<UserCard> userCardList = userCardRepository.findUserCardListByCocoType(userId);
 
-        List<Integer> cardUuidList = paymentServiceTest.getCardUuidList(userCardList);
+        List<Integer> cardUuidList = paymentService.getCardUuidList(userCardList);
 
         TotalByMonthReqDto totalByMonthReqDto = userMapper.toTotalByMonthReqDto(cardUuidList, month);
 
