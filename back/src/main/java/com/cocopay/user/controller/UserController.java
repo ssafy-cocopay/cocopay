@@ -26,7 +26,8 @@ public class UserController {
     private final UserApiCallService userApiCallService;
 
     @PostMapping("/message-auth")
-    public ResponseEntity<?> sendAuthMessage(@RequestBody AuthRequestDto authRequestDto) {
+    public ResponseEntity<?> sendAuthMessage(
+            @RequestBody AuthRequestDto authRequestDto) {
         if(authRequestDto.getTel().length() != 11)
             throw  new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
 
