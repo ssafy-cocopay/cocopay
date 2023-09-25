@@ -26,7 +26,7 @@ public class CardHistoryRepositoryImpl implements CardHistoryRepositoryCustom {
     }
 
     @Override
-    public List<CategoryDto> getCardHistoryByCategory(List<Integer> userCardList, double totalPayByMonth, double totalDiscountByMonth, int month) {
+    public List<CategoryDto> getCardHistoryByCategory(List<Integer> userCardList, long totalPayByMonth, int totalDiscountByMonth, int month) {
         System.out.println(totalPayByMonth);
         System.out.println(totalDiscountByMonth);
         return jpaQueryFactory.select(Projections.fields(CategoryDto.class,
@@ -40,8 +40,8 @@ public class CardHistoryRepositoryImpl implements CardHistoryRepositoryCustom {
     public TotalByMonth getTotalByMonth(List<Integer> cardUuidList, int month) {
         return jpaQueryFactory
                 .select(Projections.fields(TotalByMonth.class,
-                        cardHistory.amount.sum().doubleValue().as("totalPayByMonth"),
-                        cardHistory.discountAmount.sum().doubleValue().as("totalDiscountByMonth")))
+                        cardHistory.amount.sum().as("totalPayByMonth"),
+                        cardHistory.discountAmount.sum().as("totalDiscountByMonth")))
                 .from(cardHistory)
                 .where(cardHistory.userCard.id.in(cardUuidList),
                         cardHistory.transactionDate.month().eq(month))
