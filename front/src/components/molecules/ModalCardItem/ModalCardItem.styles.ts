@@ -1,11 +1,5 @@
 import styled from "styled-components";
-import HomePage from '../../../pages/HomePage/HomePage';
 
-export const Hr = styled.hr`
-  margin: 0 24px;
-  border: none; // 기본 border를 제거합니다.
-  border-top: 2px solid ${(props) => props.theme.color.grey4}; // 두께와 색상을 설정합니다.
-`;
 
 type CardItemWrapperProps = {
   $padding?: string;
@@ -34,4 +28,15 @@ export const CardListBar = styled.div<CardListBarProps>`
   position: ${(props) => (props.$isAbsolute ? 'absolute' : 'relative')};
   top: 0;
   left: 0;
+`
+
+export const BenefitBtn = styled.div`
+    display: flex;
+    justify-content: space-around;
+    border-radius: 16px;
+    padding: 8px;
+    background-color: ${(props) => props.theme.color.grey4};
+    margin: 0 8px 0 0;
+    height: 32px;
+    width: 92px;
 `

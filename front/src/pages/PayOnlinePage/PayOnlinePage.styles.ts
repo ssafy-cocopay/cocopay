@@ -18,5 +18,7 @@ export const PayOnlineWrapper = styled.div<PayOnlineWrapperProps>`
 `
 
 export const DisplayWrapper = styled.div`
-  display: flex;
+  display:flex;
+  justify-content: center;
+  margin-bottom: 60px;
 `

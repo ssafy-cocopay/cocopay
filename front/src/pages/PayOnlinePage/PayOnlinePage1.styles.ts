@@ -17,6 +17,8 @@ export const PayOnlineWrapper = styled.div<PayOnlineWrapperProps>`
     margin: ${(props) => props.$margin};
 `
 
-export const displayWrapper = styled.div`
-  display: flex;
+export const DisplayWrapper = styled.div`
+  display:flex;
+  justify-content: center;
+  margin-bottom: 60px;
 `
