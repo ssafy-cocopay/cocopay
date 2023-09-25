@@ -14,5 +14,5 @@ import java.util.List;
 public class CategoryResponseDto {
     private Long allPrice;
     private int allDiscountAmount;
-    private List<CategoryDto> categoryDtoList;
+    private List<CategoryDto> categoryList;
 }
