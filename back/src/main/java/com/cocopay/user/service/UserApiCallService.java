@@ -1,6 +1,8 @@
 package com.cocopay.user.service;
 
+import com.cocopay.user.dto.request.TotalByMonthReqDto;
 import com.cocopay.user.dto.request.UserFindRequestDto;
+import com.cocopay.user.dto.response.TotalByMonth;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
 import com.cocopay.user.dto.response.UserFindResponseDto;
 import com.cocopay.user.entity.User;
@@ -46,6 +48,18 @@ public class UserApiCallService {
                 .bodyValue(userFindRequestDto)
                 .retrieve()
                 .bodyToMono(UserFindResponseDto.class)
+                .block();
+    }
+
+    public TotalByMonth getTotalByMonth(TotalByMonthReqDto totalByMonthReqDto) {
+        WebClient webClient = WebClient.create();
+
+        return webClient.post()
+                .uri(localUrl + "card-history/total/amount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(totalByMonthReqDto)
+                .retrieve()
+                .bodyToMono(TotalByMonth.class)
                 .block();
     }
 }

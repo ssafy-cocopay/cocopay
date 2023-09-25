@@ -2,6 +2,8 @@ package com.bank.card_history.controller;
 
 import com.bank.card_history.dto.FindHistoryByUserId;
 import com.bank.card_history.dto.HistoryFindDto;
+import com.bank.card_history.dto.TotalByMonth;
+import com.bank.card_history.dto.TotalByMonthReqDto;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.mapper.CardHistoryMapper;
 import com.bank.card_history.service.CardHistoryService;
@@ -22,8 +24,7 @@ public class CardHistoryController {
 
     //카드 결제 내역 조회
     @PostMapping("")
-    ResponseEntity<?> getCardHistoryByMonth(@RequestBody HistoryFindDto historyFindDto)
-    {
+    ResponseEntity<?> getCardHistoryByMonth(@RequestBody HistoryFindDto historyFindDto) {
         List<CardHistory> result = cardHistoryService.getCardHistory(historyFindDto);
 
         return ResponseEntity.ok(cardHistoryMapper.toDtoList(result));
@@ -31,7 +32,14 @@ public class CardHistoryController {
 
     //사용자 아이디로 사용한 금액 조회
     @PostMapping("/total")
-    ResponseEntity<?> getCardHistoryByUserId(@RequestBody FindHistoryByUserId findHistoryByUserId){
+    ResponseEntity<?> getCardHistoryByUserId(@RequestBody FindHistoryByUserId findHistoryByUserId) {
         return ResponseEntity.ok(cardHistoryService.getAllamount(findHistoryByUserId));
+    }
+
+    @PostMapping("/total/amount")
+    ResponseEntity getTotalAmount(@RequestBody TotalByMonthReqDto totalByMonth) {
+        TotalByMonth res = cardHistoryService.getTotalByMonth(totalByMonth.getCardUuidList(), totalByMonth.getMonth());
+
+        return ResponseEntity.ok(res);
     }
 }
