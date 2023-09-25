@@ -42,12 +42,13 @@ public class PaymentService {
         return (int) (requestPrice * (double) (discount * 0.01));
     }
 
-    public void print(Integer requestPrice) {
+    public Integer checkDiscount(DiscountType discountType, Integer discountedPrice, Integer discountPrice) {
+        if (discountType.equals(DiscountType.페이백) || discountType.equals(DiscountType.청구할인)) {
+            ;
+        } else if (discountType.equals(DiscountType.현장할인)) discountedPrice -= discountPrice;
+        else throw new RuntimeException("discountType not found");
 
-    }
-
-    public Integer checkDiscount() {
-        return null;
+        return discountedPrice;
     }
 
     public PaymentRequestDto checkBenefit(PaymentRequestDto paymentRequestDto) {
@@ -68,6 +69,7 @@ public class PaymentService {
             log.info("할인 O --------------------");
             //혜택율 계산
             Integer discountPrice = calculateDiscountPrice(paymentRequestDto.getRequestPrice(), result.get(0).getDiscount());
+
             //혜택 현황 조회 -> 할인한도 남은 금액 조회
             UserCardBenefit findUserCardBenefit = userCardBenefitRepository.findUserCardBenefit(paymentRequestDto.getCardUuid(), result.get(0).getBenefitId());
             Integer discountAmount = findUserCardBenefit.getDiscountAmount(); // 사용자 한도 남은 금액
@@ -75,28 +77,19 @@ public class PaymentService {
 
             //리팩토링
             if (discountAmount >= discountPrice) { //혜택 한도 체킹
-                if (discountType.equals(DiscountType.페이백) || discountType.equals(DiscountType.청구할인)) {
-                } else if (discountType.equals(DiscountType.현장할인)) discountedPrice -= discountPrice;
-                else throw new RuntimeException("discountType not found");
-
+                checkDiscount(discountType, discountedPrice, discountPrice);
                 paymentRequestDto.updatePrice(discountedPrice, discountPrice, discountType, findUserCard);
                 paymentRequestDto.print();
                 return paymentRequestDto;
 
             } else { //할인한도가 부족할 때
-                discountPrice = discountAmount;
-                if (discountType.equals(DiscountType.페이백) || discountType.equals(DiscountType.청구할인)) {
-                } else if (discountType.equals(DiscountType.현장할인)) discountedPrice -= discountPrice;
-                else throw new RuntimeException("discountType not found");
-
+                checkDiscount(discountType, discountedPrice, discountAmount);
                 paymentRequestDto.updatePrice(discountedPrice, discountPrice, discountType, findUserCard);
                 paymentRequestDto.print();
                 return paymentRequestDto;
             }
 
-        } else { // 혜택이 없거나, 혜택을 적용할수 없을 때
-            paymentRequestDto.updatePrice(paymentRequestDto.getRequestPrice(), 0,null, findUserCard); // 임시 ㅈㅅ;
-        }
+        } else paymentRequestDto.updatePrice(paymentRequestDto.getRequestPrice(), 0, null, findUserCard);
 
         return paymentRequestDto;
     }
@@ -126,24 +119,27 @@ public class PaymentService {
             }
         } else { // 일시불
             if (cardType.equals(CardType.체크카드)) {
-                if (paymentRequestDto.getDiscountType().equals(DiscountType.페이백)) isPayback = true;
+                if (paymentRequestDto.getDiscountType() != null && paymentRequestDto.getDiscountType().equals(DiscountType.페이백))
+                    isPayback = true;
                 Integer accountBalance = accountService.minus(paymentRequestDto.getUserCard().getAccount().getNum(), paymentRequestDto.getDiscountedPrice());
                 CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, accountBalance, isPayback);
                 cardHistoryRepository.save(cardHistory);
 
             } else { //신용카드
-                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(),isPayback);
+                CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(), isPayback);
                 cardHistoryRepository.save(cardHistory);
             }
         }
 
         //totalprice 업로드
-        int updatedTotalPrice = paymentRequestDto.getUserCard().getTotalPrice() + paymentRequestDto.getDiscountedPrice();
         UserCard userCard = paymentRequestDto.getUserCard();
-        userCard.setTotalPrice(updatedTotalPrice);
+
+        userCard.addTotalPrice(userCard.getTotalPrice(), paymentRequestDto.getDiscountedPrice());
         userCardRepository.save(userCard);
 
         //할인 현황 업데이트
+
+        //실적 업데이트
 
     }
 }
