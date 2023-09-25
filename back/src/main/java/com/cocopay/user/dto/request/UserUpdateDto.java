@@ -10,11 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserUpdateDto {
-    private boolean fingerprint;
+    private Boolean fingerprint;
 
-    private boolean barcode;
+    private Boolean barcode;
 
-    private boolean recommendType;
+    private Boolean recommendType;
 
     private String password;
 }
