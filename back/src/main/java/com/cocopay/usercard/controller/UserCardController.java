@@ -20,7 +20,8 @@ public class UserCardController {
 
     //카드 등록
     @PostMapping("")
-    public ResponseEntity<?> registerCard(@RequestBody UserCardRegisterDto userCardRegisterDto) {
+    public ResponseEntity<?> registerCard(@RequestHeader("userId") int userId, @RequestBody UserCardRegisterDto userCardRegisterDto){
+        userCardRegisterDto.setUserId(userId);
         boolean cocopay = false;
         return ResponseEntity.ok(userCardService.registUserCard(userCardRegisterDto, cocopay));
     }
@@ -33,9 +34,9 @@ public class UserCardController {
     }
 
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
-    @PostMapping("/list/{userId}")
-    public ResponseEntity<List<UserCard>> UserCardList(@PathVariable("userId") Integer userid) {
-        return ResponseEntity.ok(userCardService.findUserCardList(userid));
+    @PostMapping("/list/")
+    public ResponseEntity<List<UserCard>> UserCardList(@RequestHeader("userId") int userId){
+        return ResponseEntity.ok(userCardService.findUserCardList(userId));
     }
 
     //카드 삭제
@@ -47,13 +48,16 @@ public class UserCardController {
 
     //사용자 통계 조회
     @PostMapping("/total")
-    ResponseEntity<?> getCardHistoryByUserId(@RequestBody FindHistoryByUserId findHistoryByUserId) {
+    ResponseEntity<?> getCardHistoryByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+        findHistoryByUserId.setUserId(userId);
         return ResponseEntity.ok(userCardService.getAllamount(findHistoryByUserId));
     }
 
     //월단위 카드 이용 내역 조회
     @PostMapping("/history")
-    ResponseEntity<?> getCardHistoryByMonth(@RequestBody HistoryFindDto historyFindDto) {
+    ResponseEntity<?> getCardHistoryByMonth(@RequestHeader("userId") int userId,@RequestBody HistoryFindDto historyFindDto)
+    {
+        historyFindDto.setCardUuid(userId);
         List<HistoryResponseDto> result = userCardService.getCardHistory(historyFindDto);
 
         return ResponseEntity.ok(result);
@@ -71,21 +75,5 @@ public class UserCardController {
     public ResponseEntity<?> setCardOrder(@RequestBody CardUuidListDto cardUuidListDto) {
         userCardService.setCardOrder(cardUuidListDto.getCardUuidList());
         return ResponseEntity.ok("우선순위 변경 완료");
-    }
-
-    //메인페이지 금액부분
-    @PostMapping("main")
-    ResponseEntity<?> getTotalAmount(@RequestBody FindHistoryByUserId findHistoryByUserId) {
-        return ResponseEntity.ok(userCardService.getAmount(findHistoryByUserId));
-    }
-
-    @GetMapping("/barcode/{card-id}")
-    public ResponseEntity makeBarcodeNum(@RequestHeader("userId") int userId,
-                                         @PathVariable("card-id") int cardId) {
-
-        String barcodeNum = userCardService.makeBarcode(userId, cardId);
-        BarcodeNumResDto barcodeNumResDto = new BarcodeNumResDto(barcodeNum);
-
-        return ResponseEntity.ok(barcodeNumResDto);
     }
 }
