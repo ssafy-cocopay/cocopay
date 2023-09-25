@@ -3,6 +3,7 @@ package com.cocopay.redis.mapper;
 import com.cocopay.payment.apicall.dto.res.BenefitResDto;
 import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.PerformanceResDto;
+import com.cocopay.redis.key.BarcodeKey;
 import com.cocopay.redis.key.BenefitKey;
 import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.key.PerformanceKey;
@@ -22,4 +23,6 @@ public interface RedisMapper {
     BenefitKey toBenefitKey(BenefitResDto dto);
 
     List<BenefitKey> toBenefitKeyList(List<BenefitResDto> dtoList);
+
+    BarcodeKey toBarcodeKey(int userId, int cardId, String barcodeNum);
 }

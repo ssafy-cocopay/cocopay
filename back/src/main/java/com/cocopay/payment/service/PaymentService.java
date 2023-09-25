@@ -148,7 +148,10 @@ public class PaymentService {
             int remainingAmt = getRemainingAmt(performanceKey);
             String cardImage = getImage(userCard);
 
-            offerResDtoList.add(paymentMapperTest.tocCardOfferDto(userCard, cardImage, discountRate, discountType, discounted, finalPrice, remainingAmt, graphRate, performanceKey));
+            String format = String.format("%.1f", graphRate);
+            log.info("format : {}", format);
+
+            offerResDtoList.add(paymentMapperTest.tocCardOfferDto(userCard, cardImage, discountRate, discountType, discounted, finalPrice, remainingAmt, format, performanceKey));
         }
         return offerResDtoList;
     }

@@ -8,7 +8,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.bank.card_history.entity.QCardHistory.cardHistory;
@@ -27,13 +26,13 @@ public class CardHistoryRepositoryImpl implements CardHistoryRepositoryCustom {
     }
 
     @Override
-    public List<CategoryDto> getCardHistoryByCategory(List<Integer> userCardList, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<CategoryDto> getCardHistoryByCategory(List<Integer> userCardList, long totalPayByMonth, int totalDiscountByMonth, int month) {
+        System.out.println(totalPayByMonth);
+        System.out.println(totalDiscountByMonth);
         return jpaQueryFactory.select(Projections.fields(CategoryDto.class,
-                        cardHistory.category,
-                        cardHistory.amount.sum().as("price"),
-                        cardHistory.discountAmount.sum().as("discountAmount")))
+                cardHistory.category, cardHistory.amount.sum().as("price"), cardHistory.discountAmount.sum().as("discountAmount")))
                 .from(cardHistory)
-                .where(cardHistory.userCard.id.in(userCardList), cardHistory.transactionDate.between(startDate, endDate))
+                .where(cardHistory.userCard.id.in(userCardList), cardHistory.transactionDate.month().eq(month))
                 .groupBy(cardHistory.category)
                 .fetch();
     }
