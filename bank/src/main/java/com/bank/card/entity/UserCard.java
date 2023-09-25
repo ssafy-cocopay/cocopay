@@ -50,4 +50,8 @@ public class UserCard {
 
     @Column(name = "total_price", nullable = false)
     private Integer totalPrice;
+
+    public void addTotalPrice(int totalPrice, int paymentPrice) {
+        this.totalPrice = totalPrice + paymentPrice;
+    }
 }

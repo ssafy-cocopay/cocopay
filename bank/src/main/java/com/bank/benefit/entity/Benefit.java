@@ -1,6 +1,7 @@
 package com.bank.benefit.entity;
 
 import com.bank.card.entity.Card;
+import com.bank.card_history.entity.Category;
 import com.bank.card_history.entity.DiscountType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +24,8 @@ public class Benefit {
     private Card card;
 
     @Column(name = "category")
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @Column(name = "store_name")
     private String storeName;
