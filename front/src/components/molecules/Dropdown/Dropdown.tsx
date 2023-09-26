@@ -17,7 +17,7 @@ const CategoryDropDown = () => {
   return (
     <>
       <CategoryMenuBox onClick={onToggle}>
-        <p>아직미완성🤮</p>
+        아직미완성🤮
         {/* <con width="10" height="17" /> */}
       </CategoryMenuBox>
       <DropDownBoxWrap>

@@ -9,5 +9,7 @@ public class CategoryDto {
     private Category category;
     private Long price;
     private int discountAmount;
+    private double pricePercent;
+    private double discountPercent;
 
 }

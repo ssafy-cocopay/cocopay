@@ -66,7 +66,7 @@ public class CardController {
         paymentRequestDto = paymentService.checkBenefit(paymentRequestDto);
         paymentService.payment(paymentRequestDto);
 //
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(paymentRequestDto.getCardHistoryId());
     }
 
     //시리얼 번호로 카드 조회
