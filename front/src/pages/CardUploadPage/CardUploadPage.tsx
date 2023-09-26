@@ -1,20 +1,24 @@
-import React from "react"
-import Button from "@/components/atoms/Button/Button";
-import { useNavigate } from "react-router-dom";
-import { PATH } from '@/constants/path'
+import React, { useState } from "react"
+import CardUploadLoadingPage from "./CardUploadLoadingPage"
+import CardUploadCompletePage from "./CardUploadCompletePage"
 
 const CardUploadPage = () => {
-    const navigate = useNavigate()
+    const [activatedNum, setActivatedNum] = useState<keyof typeof CardUploadPages>(1);
 
-    const navigatePage = (path: string) => {
-        navigate(path)
-    }
+
+    const handleNextPage = () => {
+        if (activatedNum < 2) {
+        setActivatedNum((prevNum) => prevNum + 1 as keyof typeof CardUploadPages);
+        }
+    };
+
+    const CardUploadPages = {
+        1: <CardUploadLoadingPage onNextPage={handleNextPage}/>,
+        2: <CardUploadCompletePage />,
+      };
     return (
         <div>
-            카드 자동 등록 페이지
-            <Button onClick={() => navigatePage(PATH.CARDUPLOADLIST)} option="activated" size="medium" $width="200px">
-                확인
-            </Button>
+            {CardUploadPages[activatedNum]}
         </div>
     )
 }
