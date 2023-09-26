@@ -105,7 +105,7 @@ public class PaymentService {
             if (cardType.equals(CardType.체크카드)) throw new RuntimeException("잘못된 접근");
             else { //신용카드
                 CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(), false);
-                cardHistoryRepository.save(cardHistory);
+                paymentRequestDto.updateHistory(cardHistoryRepository.save(cardHistory).getId());
 
                 // 할부 테이블 업로드
                 Installment installment = Installment.builder()
@@ -123,11 +123,11 @@ public class PaymentService {
                     isPayback = true;
                 Integer accountBalance = accountService.minus(paymentRequestDto.getUserCard().getAccount().getNum(), paymentRequestDto.getDiscountedPrice());
                 CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, accountBalance, isPayback);
-                cardHistoryRepository.save(cardHistory);
+                paymentRequestDto.updateHistory(cardHistoryRepository.save(cardHistory).getId());
 
             } else { //신용카드
                 CardHistory cardHistory = cardHistoryMapper.payRequestDtoToHistory(paymentRequestDto, card.getBalance(), isPayback);
-                cardHistoryRepository.save(cardHistory);
+                paymentRequestDto.updateHistory(cardHistoryRepository.save(cardHistory).getId());
             }
         }
 
