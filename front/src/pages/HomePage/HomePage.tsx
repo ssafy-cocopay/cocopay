@@ -14,6 +14,7 @@ import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading
 import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
 import TimerComponent from "@/utils/Timer";
+import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 
 import {
   HeaderContainer,
@@ -34,14 +35,17 @@ const ScrollableContainer = styled(Container)`
   left: 0px;
 `;
 
-const FlexDiv = styled.div`
-  display: flex;
-`;
-
-const BlueContainerWrapper = styled.div`
+export const BlueContainerWrapper = styled.div`
   position: absolute;
   top: 0;
   width: 100%;
+`;
+
+const BarcodeUnderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto 20px 15px;
+  width: 92%;
 `;
 
 const HomePage = () => {
@@ -74,14 +78,7 @@ const HomePage = () => {
             <BodyAndHeading amountType="소비한" amount={273350} />
           </DiscountAndAmountContainer>
           <BarcodeContainer code={barcodeValue} />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "10px auto 20px 15px",
-              width: "92%",
-            }}
-          >
+          <BarcodeUnderWrapper>
             <FlexDiv>
               <TimerComponent />
               <Image
@@ -97,12 +94,11 @@ const HomePage = () => {
               </Text>
               <Checkbox type="checkbox" id="toggle" />
             </FlexDiv>
-          </div>
+          </BarcodeUnderWrapper>
           <CircleIconContainer>
             <Image src={search} width={2.5} $margin="auto"></Image>
           </CircleIconContainer>
         </BarcodeWhiteContainer>
-
         <ScrollableContainer>
           <Image src={cocoCard} width={15}></Image>
           <Image src={cocoCard} width={15}></Image>
