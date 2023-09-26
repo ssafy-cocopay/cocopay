@@ -1,7 +1,7 @@
-package com.cocopay.redis.redishash.service;
+package com.cocopay.redis.service;
 
 import com.cocopay.redis.redishash.key.AuthHash;
-import com.cocopay.redis.redishash.repository.AuthHashRepository;
+import com.cocopay.redis.repository.AuthHashRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

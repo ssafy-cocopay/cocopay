@@ -1,17 +1,14 @@
 package com.cocopay.user.controller;
 
-import com.cocopay.redis.redishash.service.AuthKeyService;
+import com.cocopay.redis.service.AuthKeyService;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
-import com.cocopay.usercard.dto.UserCardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

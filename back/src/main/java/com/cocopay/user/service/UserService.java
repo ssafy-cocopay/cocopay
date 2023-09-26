@@ -1,7 +1,7 @@
 package com.cocopay.user.service;
 
 import com.cocopay.redis.redishash.key.AuthHash;
-import com.cocopay.redis.redishash.repository.AuthHashRepository;
+import com.cocopay.redis.repository.AuthHashRepository;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.UserFindResponseDto;
 import com.cocopay.user.entity.User;
