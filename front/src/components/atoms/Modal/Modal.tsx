@@ -12,7 +12,6 @@ const Modal = ({ toggleModal, children }: ModalProps) => {
     <>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         {children}  {/* children을 렌더링합니다 */}
-        <button onClick={toggleModal}>닫기</button>
       </ModalContent>
     </>
   );

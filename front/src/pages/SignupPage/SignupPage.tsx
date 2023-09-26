@@ -13,6 +13,8 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Dropdown from "@/components/molecules/Dropdown/Dropdown";
 import Modal from "@/components/atoms/Modal/Modal";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
+import { ModalWrapper } from "./SignupPage.styles";
+
 interface FormValue {
   name: string;
   identification_number: number;
@@ -133,15 +135,39 @@ const SignupPage = () => {
           </Button>
           {isModalOpen && (
             <ModalBg onClick={toggleModal}>
-              <Modal toggleModal={toggleModal}
-
-              >
+              <Modal toggleModal={toggleModal}>
+                <ModalWrapper>
                 <Text
                 size="body1"
                 fontWeight="bold"
+                style={{
+                  marginBottom: "12px"
+                }}
                 >
                   인증번호 오류
                 </Text>
+                <Text
+                size="body2"
+                fontWeight="regular"
+                >
+                  번호가 맞지 않습니다.
+                </Text>
+                <Text
+                size="body2"
+                fontWeight="regular"
+                style={{
+                  marginBottom: "36px"
+                }}
+                >
+                  정보 확인 후 재시도해주세요.
+                </Text>
+                <Button
+                option="activated"
+                onClick={toggleModal}
+                >
+                  확인
+                </Button>
+                </ModalWrapper>
               </Modal>
             </ModalBg>
           )}
