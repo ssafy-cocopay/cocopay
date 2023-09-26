@@ -1,4 +1,4 @@
-package com.cocopay.util;
+package com.cocopay.util.sens;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,7 +17,7 @@ import java.util.Base64;
 
 public class Naver_Sens_V2 {
     @SuppressWarnings("unchecked")
-    public void send_msg(String tel, String rand) {
+    public void     send_msg(String tel, String rand) {
         // 호스트 URL
         String hostNameUrl = "https://sens.apigw.ntruss.com";
         // 요청 URL
