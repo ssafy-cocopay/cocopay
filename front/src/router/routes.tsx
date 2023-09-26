@@ -6,7 +6,7 @@ import SignupPage from "@/pages/SignupPage/SignupPage";
 import NotFoundPage from "@/pages/NotFoundPage/NotFoundPage";
 import PasswordSettingPage from "@/pages/PasswordSettingPage/PasswordSettingPage";
 import FingerSettingPage from "@/pages/FingerSettingPage/FingerSettingPage";
-import SplashPage from "@/pages/SpalshPage/SplashPage";
+
 import CardUploadPage from "@/pages/CardUploadPage/CardUploadPage";
 import PriorityPage from "@/pages/PriorityPage/PriorityPage";
 import LoginFingerPage from "@/pages/LoginFingerPage/LoginFingerPage";
@@ -26,9 +26,17 @@ import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineComple
 import MainPage from "@/pages/MainPage/MainPage";
 import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
 import PayOfflineCompletePage from "@/pages/PayOfflineCompletePage/PayOfflineCompletePage";
+
+import OnboardnigPage from "@/pages/OnboardingPage/OnboardingPage";
+import OnboardingPage1 from "@/pages/OnboardingPage/OnboardingPage1";
+import OnboardnigPage2 from "@/pages/OnboardingPage/OnboardingPage2";
+import OnboardnigPage3 from "@/pages/OnboardingPage/OnboardingPage3";
+import OnboardnigPage4 from "@/pages/OnboardingPage/OnboardingPage4";
+
 import ShoppingPage from "@/pages/ShoppingPage/ShoppingPage"
 import OnlineQrPage from "@/pages/OnlineQrPage/OnlineQrPage";
 import ShoppingCompletePage from "@/pages/ShoppingCompletePage/ShoppingCompletePage";
+
 
 const router = createBrowserRouter([
   {
@@ -49,8 +57,14 @@ const router = createBrowserRouter([
     element: <FingerSettingPage />,
   },
   {
-    path: PATH.SPLASH,
-    element: <SplashPage />,
+    path: PATH.Onboarding,
+    element: <OnboardnigPage />,
+
+    // element: <OnboardnigPage2 />,
+    // element: <OnboardnigPage3 />,
+    //  element:<OnboardnigPage4/>,
+
+    // element: <OnboardingPage1 />,
   },
   {
     path: PATH.CARDUPLOAD,
