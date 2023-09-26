@@ -21,12 +21,17 @@ public class PaymentRequestDto {
     private Integer discountPrice;
     private DiscountType discountType;
     private UserCard userCard;
+    private Integer cardHistoryId;
 
     public void updatePrice(Integer discountedPrice, Integer discountPrice, DiscountType discountType, UserCard userCard) {
         this.discountedPrice = discountedPrice;
         this.discountPrice = discountPrice;
         this.discountType = discountType;
         this.userCard = userCard;
+    }
+
+    public void updateHistory(Integer cardHistoryId) {
+        this.cardHistoryId = cardHistoryId;
     }
 
     public void print() {
