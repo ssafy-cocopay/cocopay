@@ -29,7 +29,7 @@ public interface PaymentMapper {
                                     int remainingAmt, String graphRate,
                                     PerformanceKey key);
 
-    PayAfterResDto toPayAfterResDto(String cardImage, String cardName, int remainingAmt, String graphRate, int nextPerLevel);
+    PayAfterResDto toPayAfterResDto(String cardImage, String cardName, int remainingAmt, String graphRate, int nextPerLevel,int discounted);
 
 
 }
