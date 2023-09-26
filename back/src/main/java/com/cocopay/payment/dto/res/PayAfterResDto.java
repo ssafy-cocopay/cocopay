@@ -12,6 +12,7 @@ import lombok.Setter;
 public class PayAfterResDto {
     private String cardImage;
     private String cardName;
+    private int discounted;
     private int remainingAmt;
     private String graphRate;
     private int nextPerLevel;
