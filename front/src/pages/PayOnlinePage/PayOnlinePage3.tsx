@@ -8,10 +8,12 @@ import { WhiteRoundedBox } from "@/components/atoms/WhiteRoundedBox/WhiteRounded
 import { Text } from "@/components/atoms/Text/Text.styles"
 import { Image } from "@/components/atoms/Image/Image"
 import ImgCard1 from "@/assets/images/img-card1.png"
-import imgAnotherCard from "@/assets/images/img-another-card.png"
 import imgOnlinePenguin from "@/assets/images/img-online-penguin.png"
 import imgOnlinePenguinArm from "@/assets/images/img-online-penguin-arm.png"
 import ModalCardItem from "@/components/molecules/ModalCardItem/ModalCardItem"
+import { useRecoilState } from 'recoil';
+import { IsPurchasedAtom } from '@/states/OnlineQrPageAtoms';
+
 
 type PayOnlinePageProps = {
   onNextPage: () => void;
@@ -22,11 +24,17 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
-    navigate(path);
+    setIsPurchased(true); // 먼저 상태를 업데이트
+  
+    setTimeout(() => { // 딜레이 후 페이지 이동
+      navigate(path);
+    }, 500); // 500ms 딜레이
   };
 
   const [IsOpen, setIsOpen] = useState<boolean>(false);
   const [selectedModalCardIndex, setSelectedModalCardIndex] = useState<number | null>(null);
+  const [isPurchased, setIsPurchased] = useRecoilState<boolean>(IsPurchasedAtom);
+  console.log(isPurchased)
 
   const handleModalCardClick = (index: number) => {
     setSelectedModalCardIndex(index);

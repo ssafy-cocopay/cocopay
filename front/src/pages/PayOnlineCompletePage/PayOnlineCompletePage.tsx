@@ -7,7 +7,6 @@ import { PATH } from "@/constants/path";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import Penguin from "@/assets/images/img-penguin-congraturation.png";
-import CardImg from "@/assets/images/img-cardimg1.png";
 
 const PayOnlineCompletePage = () => {
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ const PayOnlineCompletePage = () => {
           $paddingTop="63px"
           $backgroundColor="white"
           $borderRadius="38px"
-          //   height="auto"
           $padding="36px"
         >
           <Text size="body1" fontWeight="bold">
@@ -48,7 +46,6 @@ const PayOnlineCompletePage = () => {
           {/* <Image src={Penguin} width={70} $unit="%"></Image> */}
         </Container>
         <Container
-          // $backgroundColor="#00000050"
           style={{ position: "absolute", left: "0px" }}
           $padding="0"
         >

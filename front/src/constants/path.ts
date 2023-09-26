@@ -5,7 +5,6 @@ const PATH = {
   FIGNER_SETTING: "/finger-setting",
   Onboarding: "/onboarding",
   CARDUPLOAD: "/signup/card-upload",
-  CARDUPLOADLIST: "/signup/card-upload/list",
   PRIORITY: "/priority",
   LOGIN_FINGER: "/login/finger-password",
   LOGIN_PASSWORD: "/login/password",
@@ -23,6 +22,9 @@ const PATH = {
   PAYONLINECOMPLETE: "/pay/online/complete",
   MAIN: "/main",
   QRCAMERA: "/main/qrcamera",
+  SHOPPING: "/shopping",
+  SHOPPING_COMPLETE: "/shopping/complete",
+  ONLINEQR: "/pay/online/qrcode"
 } as const;
 
 export { PATH };

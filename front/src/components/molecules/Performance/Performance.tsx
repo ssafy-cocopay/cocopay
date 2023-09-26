@@ -12,7 +12,7 @@ const Performance = () => {
           height="28px"
           $position="absolute"
           $left="0"
-          $zIndex="2" // 이 요소를 앞으로 가져옵니다.
+          $zIndex="2"
         >
           <Text
             size="small2"
@@ -29,7 +29,7 @@ const Performance = () => {
           height="28px"
           $position="absolute"
           $left="0"
-          $zIndex="1" // 이 요소를 뒤로 보냅니다.
+          $zIndex="1"
         >
           <Text
             size="small2"

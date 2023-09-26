@@ -1,5 +1,4 @@
 //NavBar.styles.ts
-//NavBar.styles.ts
 import styled from 'styled-components';
 
 export const StyledNavBar = styled.div`
