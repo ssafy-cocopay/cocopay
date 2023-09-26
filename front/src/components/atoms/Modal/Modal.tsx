@@ -5,15 +5,14 @@ import { ModalContent } from "@/components/atoms/Modal/Modal.styles"; // 이 부
 
 interface ModalProps {
   toggleModal: () => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 const Modal = ({ toggleModal, children }: ModalProps) => {
   return (
     <>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        {children}
-        <button onClick={toggleModal}>닫기</button>
+        {children}  {/* children을 렌더링합니다 */}
       </ModalContent>
     </>
   );
