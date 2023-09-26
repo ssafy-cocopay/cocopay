@@ -1,4 +1,3 @@
-import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react"
 import iconChevronLeftGrey from "@/assets/images/icon-chevron-left-grey.png"
 import iconChevronRightGrey from "@/assets/images/icon-chevron-right-grey.png"
