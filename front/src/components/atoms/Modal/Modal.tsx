@@ -5,8 +5,7 @@ const ModalComponent = () => {
   return (
     <>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        임시모달~
-        <p>이것은 모달의 내용입니다.</p>
+        임시모달~ 이것은 모달의 내용입니다.
         {/* <button onClick={toggleModal}>닫기</button> */}
       </ModalContent>
     </>
