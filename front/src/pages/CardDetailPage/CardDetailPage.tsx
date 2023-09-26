@@ -33,7 +33,7 @@ const CardDetailPage = () => {
     <Background
       $colormode="gradient"
       style={{
-        minHeight: "100vh",
+        position: "fixed",
       }}
     >
       <CardListContainer $padding="36px 24px">

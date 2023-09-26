@@ -31,7 +31,7 @@ const CardListPage = () => {
   return (
     <Background
       style={{
-        minHeight: "100vh",
+        position: "fixed",
       }}
     >
       <CardListContainer>

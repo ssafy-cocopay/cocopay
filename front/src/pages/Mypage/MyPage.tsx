@@ -29,7 +29,7 @@ const MyPage = () => {
     <Background
       $colormode="gradient"
       style={{
-        minHeight: "100vh",
+        position:"fixed",
         padding: "36px 28px",
       }}
     >
