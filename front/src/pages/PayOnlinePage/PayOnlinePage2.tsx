@@ -12,6 +12,8 @@ import imgOnlinePenguinArm from "@/assets/images/img-online-penguin-arm.png"
 import ModalCardItem from "@/components/molecules/ModalCardItem/ModalCardItem"
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { useRecoilState } from 'recoil';
+import { IsPurchasedAtom } from '@/states/OnlineQrPageAtoms';
 
 type PayOnlinePageProps = {
   onNextPage: () => void;
@@ -20,13 +22,19 @@ type PayOnlinePageProps = {
 function PayOnlinePage2(props: PayOnlinePageProps) {
   const { onNextPage } = props;
   const navigate = useNavigate();
+  const [isPurchased, setIsPurchased] = useRecoilState<boolean>(IsPurchasedAtom);
 
   const navigatePage = (path: string) => {
-    navigate(path);
+    setIsPurchased(!isPurchased); // 먼저 상태를 업데이트
+  
+    setTimeout(() => { // 딜레이 후 페이지 이동
+      navigate(path);
+    }, 500); // 500ms 딜레이
   };
 
   const [IsOpen, setIsOpen] = useState<boolean>(false);
   const [selectedModalCardIndex, setSelectedModalCardIndex] = useState<number | null>(null);
+  console.log(isPurchased)
 
   const handleModalCardClick = (index: number) => {
     setSelectedModalCardIndex(index);
