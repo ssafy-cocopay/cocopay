@@ -34,6 +34,16 @@ const ScrollableContainer = styled(Container)`
   left: 0px;
 `;
 
+const FlexDiv = styled.div`
+  display: flex;
+`;
+
+const BlueContainerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+`;
+
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
 
@@ -50,9 +60,9 @@ const HomePage = () => {
         position: "fixed",
       }}
     >
-      <div style={{ position: "absolute", top: 0, width: "100%" }}>
+      <BlueContainerWrapper>
         <BlueContainer />
-      </div>
+      </BlueContainerWrapper>
       <HeaderContainer $left={true}>
         <Text size="subtitle2" fontWeight="bold" color="white" $margin="0 4px">
           현장 결제
@@ -72,11 +82,7 @@ const HomePage = () => {
               width: "92%",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
+            <FlexDiv>
               <TimerComponent />
               <Image
                 src={refresh}
@@ -84,17 +90,13 @@ const HomePage = () => {
                 height={1}
                 style={{ margin: "2px 0 0 8px" }}
               ></Image>
-            </div>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
+            </FlexDiv>
+            <FlexDiv>
               <Text size="small1" color="grey2" style={{ marginRight: "10px" }}>
                 QR
               </Text>
               <Checkbox type="checkbox" id="toggle" />
-            </div>
+            </FlexDiv>
           </div>
           <CircleIconContainer>
             <Image src={search} width={2.5} $margin="auto"></Image>

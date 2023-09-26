@@ -53,9 +53,9 @@ const StatisticsPage = () => {
       </HeaderContainer>
       <Container style={{ position: "relative", top: "0" }}>
         <WhiteContainer>
-          <Calendar />
+          <Calendar onClick={toggleModal} />
           <Line />
-          <button onClick={toggleModal}>모달 열기</button>
+          {/* <button onClick={toggleModal}>모달 열기</button> */}
         </WhiteContainer>
       </Container>
       {isModalOpen && (
