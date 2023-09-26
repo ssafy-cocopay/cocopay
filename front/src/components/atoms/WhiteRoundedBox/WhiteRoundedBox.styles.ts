@@ -19,7 +19,7 @@ export const WhiteRoundedBox = styled.div<WhiteRoundedBoxProps>`
   margin: ${(props) => props.$margin};
   padding: ${(props) => props.$padding};
   background-image: url(${(props) => props.$src});
-  background-size: cover;  // 이미지가 박스에 딱 맞게 조정됨
-  background-position: center;  // 이미지가 박스 중앙에 위치함
+  background-size: cover; 
+  background-position: center; 
   filter: ${(props) => (props.$isGrayscale ? "grayscale(100%)" : "none")};
 `;

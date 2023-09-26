@@ -9,6 +9,6 @@ export const LoadingWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     position: relative;
-    width: 100%; // 이를 통해 부모 컴포넌트의 너비를 전체로 채웁니다.
-    overflow: hidden; // 이 속성을 사용하여 자식 요소가 이 컴포넌트의 경계를 넘어가면 잘라냅니다.
+    width: 100%;
+    overflow: hidden;
 `

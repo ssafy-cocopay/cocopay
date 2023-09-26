@@ -15,6 +15,6 @@ export const Wrapper = styled.div<WrapperProps>`
 `;
 
 export const Hr = styled.hr`
-  border: none; // 기본 border를 제거합니다.
-  border-top: 1px solid ${(props) => props.theme.color.grey4}; // 두께와 색상을 설정합니다.
+  border: none; 
+  border-top: 1px solid ${(props) => props.theme.color.grey4};
 `;

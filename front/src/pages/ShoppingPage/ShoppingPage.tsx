@@ -14,7 +14,7 @@ const ShoppingPage = () => {
           setCurrentImage(imgShopping3);
         } else if (currentImage === imgShopping3) {
           window.open(
-            '/pay/online/qrcode',  // <-- 경로를 `/popup`으로 변경
+            '/pay/online/qrcode',
             '_blank', 
             'width=450,height=600,left=100,top=100'
           );
