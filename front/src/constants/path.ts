@@ -5,7 +5,6 @@ const PATH = {
   FIGNER_SETTING: "/finger-setting",
   SPLASH: "/splash",
   CARDUPLOAD: "/signup/card-upload",
-  CARDUPLOADLIST: "/signup/card-upload/list",
   PRIORITY: "/priority",
   LOGIN_FINGER: "/login/finger-password",
   LOGIN_PASSWORD: "/login/password",
