@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "@/components/atoms/Image/Image";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 import { PATH } from "@/constants/path";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Container } from "@/components/atoms/Container/Container.styles";
@@ -11,6 +11,8 @@ import Button from "@/components/atoms/Button/Button";
 import Input from "@/components/atoms/Input/Input";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Dropdown from "@/components/molecules/Dropdown/Dropdown";
+import Modal from "@/components/atoms/Modal/Modal";
+import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 interface FormValue {
   name: string;
   identification_number: number;
@@ -22,6 +24,13 @@ const SignupPage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setModalOpen((prev) => !prev);
+  };
+
 
   const {
     register,
@@ -114,7 +123,28 @@ const SignupPage = () => {
           >
             확인
           </Button>
+          <Button
+              option="deActivated"
+              $borderRadius="10px"
+              size="medium"
+              onClick={toggleModal}
+          >
+              유효하지 않을 때
+          </Button>
+          {isModalOpen && (
+            <ModalBg onClick={toggleModal}>
+              <Modal toggleModal={toggleModal}
 
+              >
+                <Text
+                size="body1"
+                fontWeight="bold"
+                >
+                  인증번호 오류
+                </Text>
+              </Modal>
+            </ModalBg>
+          )}
           <br />
           <div>
             {/* <!-- 드롭다운(싱글타입) --> */}
