@@ -7,6 +7,7 @@ import com.bank.card_history.dto.TotalByMonthReqDto;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.mapper.CardHistoryMapper;
 import com.bank.card_history.service.CardHistoryService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,5 +42,14 @@ public class CardHistoryController {
         TotalByMonth res = cardHistoryService.getTotalByMonth(totalByMonth.getCardUuidList(), totalByMonth.getMonth());
 
         return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/{card-history-id}")
+    public ResponseEntity getDiscountAmount(@PathVariable ("card-history-id") int cardHistoryId) {
+        CardHistory findHistory = cardHistoryService.findCardHistoryById(cardHistoryId);
+        int discounted = cardHistoryService.findDiscounted(findHistory);
+
+
+        return ResponseEntity.ok(discounted);
     }
 }

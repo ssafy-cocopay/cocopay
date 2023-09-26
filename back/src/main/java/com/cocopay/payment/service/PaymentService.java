@@ -7,6 +7,7 @@ import com.cocopay.payment.apicall.dto.res.BenefitResDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
 import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
+import com.cocopay.payment.dto.res.PayAfterResDto;
 import com.cocopay.payment.dto.res.PerformanceResDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.BenefitKey;
@@ -17,6 +18,7 @@ import com.cocopay.user.entity.User;
 import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
+import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,8 @@ public class PaymentService {
     private final BenefitKeyService benefitKeyService;
     private final UserService userService;
     private final UserCardRepository userCardRepository;
-    private final PaymentMapper paymentMapperTest;
+    private final PaymentMapper paymentMapper;
+    private final UserCardService userCardService;
 
     //오토체인징
     //카드 리스트 업만 진행하고 바로 반환 진행
@@ -54,7 +57,7 @@ public class PaymentService {
 
         //실적 + 할인이 적용된 dto
         List<CardOfferResDto> offerResDtoList = makeCardOfferList(userCardList, dto);
-        
+
         User findUser = userService.findUserById(dto.getUserId());
         if (findUser.isRecommendType()) {
             log.info("할인 기준 카드 정렬 진행");
@@ -69,9 +72,30 @@ public class PaymentService {
 
 
     //최종 결제요청 진행 (결제 요청 api call 진행)
-    public void finalPayCall(PaymentReqDto paymentReqDto) {
-        apiCallService.payApiCall(paymentReqDto);
+    public Integer finalPayCall(PaymentReqDto paymentReqDto) {
+        return apiCallService.payApiCall(paymentReqDto);
     }
+
+    public PaymentReqDto isCocoCard(UserCard findUserCard, PayPostDto payPostDto) {
+        int cardUuid;
+        //코코카드임
+        if (findUserCard.isCocoType()) {
+            log.info("코코카드임");
+            log.info("오토체인징 시스템 시작");
+
+            CardOfferResDto cardOfferResDto = autoChanging(payPostDto).get(0);
+            log.info("코코페이가 추천한 카드 이름 : {}", cardOfferResDto.getCardName());
+            cardUuid = userCardService.findUserCardById(cardOfferResDto.getCardId()).getCardUuid();
+            return paymentMapper.toPaymentReqDto(cardUuid, payPostDto, payPostDto.getOrderPrice());
+        }
+        //코코카드가 아님
+        else {
+            log.info("코코카드 아님");
+            cardUuid = userCardService.findUserCardById(payPostDto.getCardId()).getCardUuid();
+            return paymentMapper.toPaymentReqDto(cardUuid, payPostDto);
+        }
+    }
+
 
     //추천 타입이 할인인 경우 정렬 진행
     public List<CardOfferResDto> benefitOrder(List<CardOfferResDto> list) {
@@ -151,7 +175,7 @@ public class PaymentService {
             String format = String.format("%.1f", graphRate);
             log.info("format : {}", format);
 
-            offerResDtoList.add(paymentMapperTest.tocCardOfferDto(userCard, cardImage, discountRate, discountType, discounted, finalPrice, remainingAmt, format, performanceKey));
+            offerResDtoList.add(paymentMapper.tocCardOfferDto(userCard, cardImage, discountRate, discountType, discounted, finalPrice, remainingAmt, format, performanceKey));
         }
         return offerResDtoList;
     }
@@ -208,6 +232,7 @@ public class PaymentService {
         return apiCallService.userCardBenefitApiCall(build);
     }
 
+
     public void getBenefitAndSave(PayPostDto dto, List<Integer> list) {
         //혜택 조회
         List<BenefitResDto> benefitList = benefitApiCall(list, dto.getCategory(), dto.getStoreName());
@@ -230,4 +255,30 @@ public class PaymentService {
                 .map(UserCard::getCardUuid)
                 .toList();
     }
+
+    //결제 이후 생색내기
+    public PayAfterResDto payAfter(int cardHistoryId, int cardUuid) {
+        Integer discounted = apiCallService.findDiscounted(cardHistoryId);
+
+        //요청 보낼 list 만들기
+        List<Integer> cardUuidList = new ArrayList<>();
+        cardUuidList.add(cardUuid);
+        //실적 찾고 저장
+        getPerformanceAndSave(cardUuidList);
+
+        PerformanceKey performanceKey = performanceKeyService.findPerformanceKey(cardUuid);
+        //그래프비율 및 다음 실적까지 남은 금액
+        String graphRate = String.format("%.1f", getGraphRate(performanceKey.getTotalPrice(), performanceKey.getPrice()));
+        int remainingAmt = getRemainingAmt(performanceKey);
+
+        UserCard findUserCard = userCardService.findUserCardByUuid(cardUuid);
+        String cardImage = findUserCard.getCardDefaultImage();
+
+        if (findUserCard.getCardCustomImage() != null) {
+            cardImage = findUserCard.getCardCustomImage();
+        }
+
+        return paymentMapper.toPayAfterResDto(cardImage, findUserCard.getCardName(), remainingAmt, graphRate, performanceKey.getNextLevel());
+    }
+
 }

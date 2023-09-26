@@ -1,5 +1,7 @@
 package com.cocopay.usercard.service;
 
+import com.cocopay.exception.dto.CustomException;
+import com.cocopay.exception.dto.ErrorCode;
 import com.cocopay.payment.dto.req.CardUuidListDto;
 import com.cocopay.payment.dto.res.PerformanceResDto;
 import com.cocopay.payment.dto.res.PerformanceResListDto;
@@ -213,5 +215,13 @@ public class UserCardService {
 
         return barcodeNum;
     }
+
+    public UserCard findUserCardByUuid(int cardUuid) {
+        Optional<UserCard> findUserCard = userCardRepository.findUserCardByUuid(cardUuid);
+
+        return findUserCard
+                .orElseThrow(() -> new CustomException(ErrorCode.DATA_NOT_FOUND));
+    }
+
 
 }

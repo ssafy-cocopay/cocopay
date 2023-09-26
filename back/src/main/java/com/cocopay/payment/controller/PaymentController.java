@@ -1,14 +1,17 @@
 package com.cocopay.payment.controller;
 
+import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
+import com.cocopay.payment.dto.res.PayAfterResDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.payment.service.PaymentService;
 import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.service.BarcodeKeyService;
 import com.cocopay.redis.service.OrderKeyService;
+import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,8 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final PaymentMapper paymentMapperTest;
     private final BarcodeKeyService barcodeKeyService;
+    private final ApiCallService apiCallService;
+    private final PerformanceKeyService performanceKeyService;
 
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
@@ -67,40 +72,24 @@ public class PaymentController {
                                          @PathVariable("barcode-num") String barcodeNum,
                                          @RequestHeader("userId") int userId) {
         CardOfferResDto cardOfferResDto = new CardOfferResDto();
-        int cardUuid;
         payPostDto.setUserId(userId);
         orderKeyService.orderKeySave(payPostDto);
         log.info("요청 값 : {}", payPostDto);
         int cardId = barcodeKeyService.findCardId(userId, barcodeNum);
         log.info("바코드에서 추출한 카드id : {}", cardId);
+        payPostDto.setCardId(cardId);
 
         UserCard findUserCard = userCardService.findUserCardById(cardId);
-        PaymentReqDto paymentReqDto;
-        //코코카드임
-        if (findUserCard.isCocoType()) {
-            log.info("코코카드임");
-            log.info("오토체인징 시스템 시작");
-            cardOfferResDto = paymentService.autoChanging(payPostDto).get(0);
-            log.info("코코페이가 추천한 카드 이름 : {}", cardOfferResDto.getCardName());
-            cardUuid = userCardService.findUserCardById(cardOfferResDto.getCardId()).getCardUuid();
-            paymentReqDto = paymentMapperTest.toPaymentReqDto(cardUuid, payPostDto, payPostDto.getOrderPrice());
-        }
-        //코코카드가 아님
-        else {
-            log.info("코코카드 아님");
-            cardUuid = userCardService.findUserCardById(cardId).getCardUuid();
-            paymentReqDto = paymentMapperTest.toPaymentReqDto(cardUuid, payPostDto);
-        }
+        PaymentReqDto paymentReqDto = paymentService.isCocoCard(findUserCard, payPostDto);
 
-        paymentService.finalPayCall(paymentReqDto);
+        //최종 결제 진행
+        //card-history id 받아야 할 듯?
+        Integer cardHistoryId = paymentService.finalPayCall(paymentReqDto);
 
-        //생색 내기 구현
-        //코코카드로 결제하였을 경우
         //필요한거 -> 사용자의 이번 달 총 이용금액
         //실적 정보 -> 해당 카드의 실적 정보
-        //할인 된 금액은 이미 내가 들고 있음 cardOfferResDto
-        int discounted = cardOfferResDto.getDiscounted();
-
-        return ResponseEntity.ok("끝");
+        //카드 이용내역 pk로 할인된 금액 받아오기
+        PayAfterResDto payAfterResDto = paymentService.payAfter(cardHistoryId, paymentReqDto.getCardUuid());
+        return ResponseEntity.ok(payAfterResDto);
     }
 }
