@@ -22,6 +22,18 @@ import {
   CircleIconContainer,
 } from "@/components/atoms/Container/Containers.styles";
 
+const ScrollableContainer = styled(Container)`
+  overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-left: 70px;
+  margin-top: 200px;
+  width: auto;
+  position: absolute;
+  left: 0px;
+`;
+
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
 
@@ -30,37 +42,25 @@ const HomePage = () => {
 
   // TODO: 밑에 스크롤할 수 있는 카드 컴포넌트 만들기, 캐로셀 사용
   // TODO: 3분 만료랑 새로고침, 큐알....
-  const ScrollableContainer = styled(Container)`
-    overflow-x: auto;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    padding-left: 70px;
-    margin-top: 200px;
-    width: auto;
-    position: absolute;
-    left: 0px;
-  `;
 
   return (
     <Background
       $colormode="gradient"
       style={{
-        position: "fixed"
+        position: "fixed",
       }}
     >
       <div style={{ position: "absolute", top: 0, width: "100%" }}>
-        <BlueContainer/>
+        <BlueContainer />
       </div>
-      {/* <div style={{ position: "relative" }}> */}
-      <HeaderContainer $border={true} $left={true}>
+      <HeaderContainer $left={true}>
         <Text size="subtitle2" fontWeight="bold" color="white" $margin="0 4px">
           현장 결제
         </Text>
         <BarcodeWhiteContainer>
           <DiscountAndAmountContainer $left={true}>
             <BodyAndHeading amountType="할인받은" amount={6750} />
-            <Line margin="18px 0" />
+            <Line $margin="18px 0" />
             <BodyAndHeading amountType="소비한" amount={273350} />
           </DiscountAndAmountContainer>
           <BarcodeContainer code={barcodeValue} />
@@ -75,12 +75,9 @@ const HomePage = () => {
             <div
               style={{
                 display: "flex",
-                // margin: "10px 0",
               }}
             >
-              <Text size="small1" color="grey2">
-                <TimerComponent />
-              </Text>
+              <TimerComponent />
               <Image
                 src={refresh}
                 width={1}

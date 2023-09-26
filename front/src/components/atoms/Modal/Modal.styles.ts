@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Modal = styled.div`
+export const ModalBg = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -16,5 +16,5 @@ export const ModalContent = styled.div`
   width: 300px;
   padding: 20px;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 14px;
 `;

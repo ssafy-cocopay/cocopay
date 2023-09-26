@@ -8,7 +8,8 @@ import pigImg from "@/assets/images/img-pig.png";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import Calendar from "@/components/molecules/Calendar/Calendar";
 import { Line } from "@/components/atoms/Line/Line.style";
-import { Modal } from "@/components/atoms/Modal/Modal.styles";
+import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
+import Modal from "@/components/atoms/Modal/Modal";
 
 const HeaderContainer = styled(Container)`
   position: absolute;
@@ -31,9 +32,11 @@ export const WhiteContainer = styled(Container)`
 
 const StatisticsPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
   };
+
   return (
     <Background $colormode="gradient" style={{ position: "fixed" }}>
       <div style={{ position: "absolute", top: 0, width: "100%" }}>
@@ -55,7 +58,11 @@ const StatisticsPage = () => {
           <button onClick={toggleModal}>모달 열기</button>
         </WhiteContainer>
       </Container>
-      {isModalOpen && <Modal onClick={toggleModal}></Modal>}
+      {isModalOpen && (
+        <ModalBg onClick={toggleModal}>
+          <Modal toggleModal={toggleModal} />
+        </ModalBg>
+      )}
     </Background>
   );
 };
