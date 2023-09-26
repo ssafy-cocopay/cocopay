@@ -13,6 +13,8 @@ type ContainerProps = {
   $border?: boolean; // border={true}시 확인용 border 생성
   $left?: boolean; // left={true}시 왼쪽정렬
   $boxShadow?: string;
+  $overflow?: string;
+  $alignItems?: string;
 };
 
 type CardListContainerProps = {
@@ -23,7 +25,7 @@ type CardListContainerProps = {
 export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
-  align-items: ${(props) => (props.$left ? "flex-start" : "center")};
+  align-items: ${(props) => (props.$alignItems ? "flex-start" : "center")};
   height: ${(props) => props.height || "100vh"};
   width: ${(props) => props.width || "100%"};
   max-width: 390px;
@@ -39,6 +41,7 @@ export const Container = styled.div<ContainerProps>`
   border-radius: ${(props) => props.$borderRadius || 0};
   box-shadow: ${(props) =>
     props.$boxShadow ? props.theme.shadow[props.$boxShadow] : "none"};
+  overflow: ${(props) => props.$overflow || "visiable"};
 `;
 
 export const CardListContainer = styled.div<CardListContainerProps>`

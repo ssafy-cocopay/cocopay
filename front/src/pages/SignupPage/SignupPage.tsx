@@ -44,9 +44,9 @@ const SignupPage = () => {
   };
 
   return (
-    <Container $paddingTop="70px">
+    <Container $paddingTop="70px" $border={true}>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <Container $padding="none" $left={true}>
+        <Container $padding="none" $border={true} $left={true}>
           <Text size="subtitle1">
             코코페이 이용을 위해
             <br /> <b>본인확인</b>을 진행해주세요

@@ -3,7 +3,7 @@ const PATH = {
   SIGNUP: "/signup",
   PASSWORD_SETTING: "/password-setting",
   FIGNER_SETTING: "/finger-setting",
-  SPLASH: "/splash",
+  Onboarding: "/onboarding",
   CARDUPLOAD: "/signup/card-upload",
   PRIORITY: "/priority",
   LOGIN_FINGER: "/login/finger-password",

@@ -5,11 +5,14 @@ import com.bank.card.repository.usercard.UserCardRepository;
 import com.bank.card_history.dto.*;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.repository.CardHistoryRepository;
+import com.bank.exception.dto.CustomException;
+import com.bank.exception.dto.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +55,16 @@ public class CardHistoryService {
 
     public TotalByMonth getTotalByMonth(List<Integer> cardUuidList, int month) {
         return cardHistoryRepository.getTotalByMonth(cardUuidList, month);
+    }
+
+    public CardHistory findCardHistoryById(int cardHistoryId) {
+        Optional<CardHistory> findCardHistory = cardHistoryRepository.findById(cardHistoryId);
+
+        return findCardHistory
+                .orElseThrow(() -> new CustomException(ErrorCode.DATA_NOT_FOUND));
+    }
+
+    public int findDiscounted(CardHistory cardHistory) {
+        return cardHistory.getDiscountAmount();
     }
 }
