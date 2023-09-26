@@ -278,7 +278,7 @@ public class PaymentService {
             cardImage = findUserCard.getCardCustomImage();
         }
 
-        return paymentMapper.toPayAfterResDto(cardImage, findUserCard.getCardName(), remainingAmt, graphRate, performanceKey.getNextLevel());
+        return paymentMapper.toPayAfterResDto(cardImage, findUserCard.getCardName(), remainingAmt, graphRate, performanceKey.getNextLevel(),discounted);
     }
 
 }
