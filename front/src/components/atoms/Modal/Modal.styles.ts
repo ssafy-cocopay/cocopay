@@ -10,11 +10,12 @@ export const ModalBg = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 28px;
 `;
 
 export const ModalContent = styled.div`
-  width: 300px;
+  width: auto;
   padding: 20px;
   background-color: white;
-  border-radius: 14px;
+  border-radius: 30px;
 `;

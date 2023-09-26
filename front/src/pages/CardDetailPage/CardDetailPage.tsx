@@ -26,10 +26,9 @@ const CardDetailPage = () => {
     <Background
       $colormode="gradient"
       style={{
-        minHeight: "100vh",
+        position: "fixed",
       }}
     >
-      카드 상세정보 페이지
       <CardListContainer $padding="36px 24px">
         <Wrapper>
           <Image
