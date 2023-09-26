@@ -1,6 +1,7 @@
-import React, { ReactNode } from "react";
-import { ModalContent } from "@/components/atoms/Modal/Modal.styles";
+import React from "react";
+import { ReactNode } from "react";
 import { Text } from "@/components/atoms/Text/Text.styles";
+import { ModalContent } from "@/components/atoms/Modal/Modal.styles"; // 이 부분을 수정
 
 interface ModalProps {
   toggleModal: () => void;
