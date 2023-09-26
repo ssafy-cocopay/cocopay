@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const PurchasedWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,3 +22,9 @@ export const Hr = styled.hr`
   border: none;
   border-top: 2px solid ${(props) => props.theme.color.grey4};
 `;
+
+export const ModalWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
