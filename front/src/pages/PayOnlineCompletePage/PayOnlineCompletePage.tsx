@@ -31,7 +31,6 @@ const PayOnlineCompletePage = () => {
           $paddingTop="63px"
           $backgroundColor="white"
           $borderRadius="38px"
-          //   height="auto"
           $padding="36px"
         >
           <Text size="body1" fontWeight="bold">
@@ -47,7 +46,6 @@ const PayOnlineCompletePage = () => {
           {/* <Image src={Penguin} width={70} $unit="%"></Image> */}
         </Container>
         <Container
-          // $backgroundColor="#00000050"
           style={{ position: "absolute", left: "0px" }}
           $padding="0"
         >

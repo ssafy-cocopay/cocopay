@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 type WrapperProps = {
   width?: string;
-  // height?: string;
   $padding?: string;
   $flexGrow?: number;
   $flexDirection?: string;
