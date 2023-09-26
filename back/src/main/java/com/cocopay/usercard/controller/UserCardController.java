@@ -76,4 +76,21 @@ public class UserCardController {
         userCardService.setCardOrder(cardUuidListDto.getCardUuidList());
         return ResponseEntity.ok("우선순위 변경 완료");
     }
+
+
+    //메인페이지 금액부분
+    @PostMapping("main")
+    ResponseEntity<?> getTotalAmount(@RequestBody FindHistoryByUserId findHistoryByUserId) {
+        return ResponseEntity.ok(userCardService.getAmount(findHistoryByUserId));
+    }
+
+    @GetMapping("/barcode/{card-id}")
+    public ResponseEntity makeBarcodeNum(@RequestHeader("userId") int userId,
+                                         @PathVariable("card-id") int cardId) {
+
+        String barcodeNum = userCardService.makeBarcode(userId, cardId);
+        BarcodeNumResDto barcodeNumResDto = new BarcodeNumResDto(barcodeNum);
+
+        return ResponseEntity.ok(barcodeNumResDto);
+    }
 }
