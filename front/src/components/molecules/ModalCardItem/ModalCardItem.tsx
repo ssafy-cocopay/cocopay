@@ -12,7 +12,6 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 type ModalCardItemProps = {
   onClick?: () => void;
   style?: React.CSSProperties;
-  // ...기존에 있던 다른 props들...
 };
 
 const ModalCardItem = ({ onClick, style, ...otherProps }: ModalCardItemProps) => {
