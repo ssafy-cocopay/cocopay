@@ -5,8 +5,9 @@ import Back from "@/components/atoms/Back/Back";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import cards from "@/assets/images/img-cardsAnimation.png";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
-const OnbordnigPage2 = () => {
+const OnboardnigPage2 = () => {
   return (
     <Container
       // $left={true}
@@ -15,28 +16,34 @@ const OnbordnigPage2 = () => {
       //   backgroundSize: "cover",
       //   backgroundRepeat: "no-repeat",
       //   backgroundPosition: "center center",
-      // }}
+      // }}\
+      $overflow="visible"
       $border={true}
     >
-      <Container
-        $left={true}
-        // align-items="left"
-        $paddingTop="63px"
-        height="auto"
-        $padding="0px"
-        // $border={true}
-      >
-        <Text size="body2" fontWeight="bold">
-          지갑속의
-        </Text>
-        <Text size="body2" fontWeight="bold">
-          수많은 카드들..
-        </Text>
+      <Container $border={true} $padding="0px">
+        <Wrapper $alignItems="start" style={{ paddingTop: "100px" }}>
+          <Text size="subtitle2" fontWeight="bold">
+            지갑속의
+          </Text>
+          <Text size="subtitle2" fontWeight="bold">
+            수많은 카드들..
+          </Text>
+        </Wrapper>
       </Container>
+      <br />
       {/* TODO:크기 조절해서 맞추기 */}
-      <Image src={cards} width={24.5} height={34}></Image>
+      <Image
+        src={cards}
+        width={30}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      ></Image>
     </Container>
   );
 };
 
-export default OnbordnigPage2;
+export default OnboardnigPage2;

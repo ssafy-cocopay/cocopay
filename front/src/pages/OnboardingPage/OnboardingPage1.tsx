@@ -7,34 +7,29 @@ import { Image } from "@/components/atoms/Image/Image";
 import Penguins from "@/assets/images/img-penguins.png";
 import Background1 from "@/assets/images/bg-onboarding-1.png";
 import Hello from "@/assets/images/text-안녕하세요.png";
-
-const OnbordingPage1 = () => {
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+const OnboardingPage1 = () => {
   return (
-    <Background
-      $colormode="gradient"
+    <Container
+      // $left={true}
       style={{
-        minHeight: "100vh",
-        padding: "36px 28px",
+        backgroundImage: `url(${Background1})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
       }}
+      $border={true}
     >
       <Container
-        // $left={true}
-        style={{
-          backgroundImage: `url(${Background1})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center center",
-        }}
+        $left={true}
+        // align-items="left"
+        $paddingTop="63px"
+        height="auto"
+        $padding="0px"
         $border={true}
       >
-        <Container
-          $left={true}
-          // align-items="left"
-          $paddingTop="63px"
-          height="auto"
-          $padding="0px"
-          $border={true}
-        >
+        {" "}
+        <Wrapper $alignItems="start">
           <Text size="subtitle1" fontWeight="bold" color="white">
             본인확인이 완료되었어요
           </Text>
@@ -45,18 +40,21 @@ const OnbordingPage1 = () => {
           <Text size="subtitle1" fontWeight="bold" color="white">
             이용해 볼까요?
           </Text>
-          {/* TODO: 이미지 크기 변하지 않게 설정하기 */}
-          <Image
-            src={Hello}
-            width={15}
-            style={{ marginLeft: "50px", marginTop: "50%" }}
-          ></Image>
-
-          <Image style={{ marginTop: "10%" }} src={Penguins} width={20}></Image>
-        </Container>
+        </Wrapper>
+        {/* TODO: 이미지 크기 변하지 않게 설정하기 */}
+        <Image
+          src={Hello}
+          width={15}
+          style={{ marginLeft: "50px", marginTop: "70%" }}
+        ></Image>
+        <Image
+          style={{ position: "fixed", bottom: 50 }}
+          src={Penguins}
+          width={20}
+        ></Image>
       </Container>
-    </Background>
+    </Container>
   );
 };
 
-export default OnbordingPage1;
+export default OnboardingPage1;
