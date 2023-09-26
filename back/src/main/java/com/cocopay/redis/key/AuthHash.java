@@ -1,4 +1,4 @@
-package com.cocopay.redis.redishash.key;
+package com.cocopay.redis.key;
 
 import lombok.Data;
 import org.springframework.data.redis.core.RedisHash;
