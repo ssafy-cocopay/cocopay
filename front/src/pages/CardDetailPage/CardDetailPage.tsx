@@ -85,7 +85,12 @@ const CardDetailPage = () => {
           </Text>
           <Performance />
         </WhiteRoundedBox>
-        <WhiteRoundedBox height="auto" $margin="0 0 20px 0" $padding="28px" $borderRadius="20px" $boxShadow="shadow1">
+        <WhiteRoundedBox
+          height="auto"
+          $padding="28px"
+          $borderRadius="20px"
+          $boxShadow="shadow1"
+        >
           <Calendar />
           <CardHistory />
           <Text

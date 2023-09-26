@@ -17,7 +17,7 @@ const BarcodeContainer = (props: BarcodeContainerProps) => {
   const formattedBarcode = formatBarcode(props.code);
 
   return (
-    <Container $marginTop="180px" $padding="0 10px">
+    <Container $marginTop="170px" $padding="10 10px">
       <Text size="small1" color="grey1">
         {formattedBarcode}
       </Text>

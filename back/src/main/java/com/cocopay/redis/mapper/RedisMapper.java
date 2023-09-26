@@ -1,8 +1,9 @@
 package com.cocopay.redis.mapper;
 
-import com.cocopay.payment.apicall.dto.res.UserCardBenefitInfoResponseDto;
-import com.cocopay.payment.dto.req.OnlinePayPostDto;
-import com.cocopay.payment.dto.res.PerformanceResponseDto;
+import com.cocopay.payment.apicall.dto.res.BenefitResDto;
+import com.cocopay.payment.dto.req.PayPostDto;
+import com.cocopay.payment.dto.res.PerformanceResDto;
+import com.cocopay.redis.key.BarcodeKey;
 import com.cocopay.redis.key.BenefitKey;
 import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.key.PerformanceKey;
@@ -13,13 +14,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface RedisMapper {
 
-    PerformanceKey toPerformanceKey(PerformanceResponseDto dto);
+    PerformanceKey toPerformanceKey(PerformanceResDto dto);
 
-    List<PerformanceKey> toPerformanceKeyList(List<PerformanceResponseDto> dtoList);
+    List<PerformanceKey> toPerformanceKeyList(List<PerformanceResDto> dtoList);
 
-    OrderKey toOrderKey(OnlinePayPostDto dto);
+    OrderKey toOrderKey(PayPostDto dto);
 
-    BenefitKey toBenefitKey(UserCardBenefitInfoResponseDto dto);
+    BenefitKey toBenefitKey(BenefitResDto dto);
 
-    List<BenefitKey> toBenefitKeyList(List<UserCardBenefitInfoResponseDto> dtoList);
+    List<BenefitKey> toBenefitKeyList(List<BenefitResDto> dtoList);
+
+    BarcodeKey toBarcodeKey(int userId, int cardId, String barcodeNum);
 }

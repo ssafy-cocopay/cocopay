@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -53,4 +54,8 @@ public class CardHistory {
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @Column(name = "is_payback", columnDefinition = "tinyint")
+    @ColumnDefault("0")
+    private Boolean isPayback;
 }

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 type LineProps = {
-  margin?: string;
+ $margin?: string;
 };
 
 export const Line = styled.hr<LineProps>`
-  margin: ${(props) => props.margin};
-  border: none;
-  border-top: 0.1rem solid ${(props) => props.theme.color.grey4};
+  margin: ${(props) => props.$margin};
+  width: 100%;
+  border-top: 0.05rem solid ${(props) => props.theme.color.grey4};
 `;

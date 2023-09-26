@@ -26,6 +26,9 @@ import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineComple
 import MainPage from "@/pages/MainPage/MainPage";
 import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
 import PayOfflineCompletePage from "@/pages/PayOfflineCompletePage/PayOfflineCompletePage";
+import ShoppingPage from "@/pages/ShoppingPage/ShoppingPage"
+import OnlineQrPage from "@/pages/OnlineQrPage/OnlineQrPage";
+import ShoppingCompletePage from "@/pages/ShoppingCompletePage/ShoppingCompletePage";
 
 const router = createBrowserRouter([
   {
@@ -149,6 +152,18 @@ const router = createBrowserRouter([
   {
     path: PATH.PAYONLINECOMPLETE,
     element: <PayOnlineCompletePage />,
+  },
+  {
+    path: PATH.SHOPPING,
+    element: <ShoppingPage />,
+  },
+  {
+    path: PATH.ONLINEQR,
+    element: <OnlineQrPage />,
+  },
+  {
+    path: PATH.SHOPPING_COMPLETE,
+    element: <ShoppingCompletePage />,
   },
 ]);
 

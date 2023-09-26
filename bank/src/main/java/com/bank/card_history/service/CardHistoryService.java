@@ -2,10 +2,7 @@ package com.bank.card_history.service;
 
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.usercard.UserCardRepository;
-import com.bank.card_history.dto.CategoryDto;
-import com.bank.card_history.dto.CategoryResponseDto;
-import com.bank.card_history.dto.FindHistoryByUserId;
-import com.bank.card_history.dto.HistoryFindDto;
+import com.bank.card_history.dto.*;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.repository.CardHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,20 +30,27 @@ public class CardHistoryService {
             userCardIdList.add(userCard.getId());
         }
         //2.조회한 모든 카드들을 카테고리별로 조회
-        List<CategoryDto> categoryDtoList = cardHistoryRepository.getCardHistoryByCategory(userCardIdList,findHistoryByUserId.getStartDate(),findHistoryByUserId.getEndDate());
-        int allDiscountAmount = 0;
-        Long allPrice = 0L;
+        TotalByMonth totalByMonth = cardHistoryRepository.getTotalByMonth(userCardIdList, findHistoryByUserId.getMonth());
+
+        List<CategoryDto> categoryDtoList = cardHistoryRepository.getCardHistoryByCategory(userCardIdList,totalByMonth.getTotalPayByMonth(), totalByMonth.getTotalDiscountByMonth(), findHistoryByUserId.getMonth());
         for (CategoryDto categoryDto:categoryDtoList) {
-            allPrice += categoryDto.getPrice();
-            allDiscountAmount += categoryDto.getDiscountAmount();
+
+            categoryDto.setPricePercent(String.format("%.1f",(double)categoryDto.getPrice()/totalByMonth.getTotalPayByMonth()*100));
+            categoryDto.setDiscountPercent(String.format("%.1f",(double)categoryDto.getDiscountAmount()/totalByMonth.getTotalDiscountByMonth()*100));
         }
+
+
         CategoryResponseDto categoryResponseDto = CategoryResponseDto.builder()
-                .categoryDtoList(categoryDtoList)
-                .allPrice(allPrice)
-                .allDiscountAmount(allDiscountAmount)
+                .categoryList(categoryDtoList)
+                .allPrice(totalByMonth.getTotalPayByMonth())
+                .allDiscountAmount(totalByMonth.getTotalDiscountByMonth())
                 .build();
 
         return categoryResponseDto;
 
+    }
+
+    public TotalByMonth getTotalByMonth(List<Integer> cardUuidList, int month) {
+        return cardHistoryRepository.getTotalByMonth(cardUuidList, month);
     }
 }

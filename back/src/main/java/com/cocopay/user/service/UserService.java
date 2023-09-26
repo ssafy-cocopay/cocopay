@@ -1,6 +1,9 @@
 package com.cocopay.user.service;
 
-import com.cocopay.redis.redishash.key.AuthHash;
+import com.cocopay.exception.dto.CustomException;
+import com.cocopay.exception.dto.ErrorCode;
+
+import com.cocopay.redis.key.AuthHash;
 import com.cocopay.redis.repository.AuthHashRepository;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.UserFindResponseDto;
@@ -14,9 +17,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -52,8 +58,12 @@ public class UserService {
     }
 
 
-    public void join(UserJoinDto userJoinDto) {
+    public Integer join(UserJoinDto userJoinDto) {
         // 똑같은 번호 있으면 빠꾸시켜야됨
+        userRepository.findByTel(userJoinDto.getTel())
+                .ifPresent(user -> {
+                    throw new CustomException(ErrorCode.DUPLICATE_USER);
+                });
 
         // uuid 불러오기
         UserFindResponseDto result = userApiCallService.getUserUuid(new UserFindRequestDto(userJoinDto.getTel()));
@@ -76,64 +86,72 @@ public class UserService {
                 .cocoType(true)
                 .cardUuid(null)
                 .serialNumber(null)
-                .cardOrder(1)
+                .cardOrder(0)
                 .build();
         userCardRepository.save(userCard);
+        return userRepository.findByTel(userJoinDto.getTel()).get().getId();
+    }
 
-
+    public User checkUser(int userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
 
     public void login(LoginRequestDto loginRequestDto) {
-        User findUser = userRepository.findById(loginRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("잘못된 요청"));
+        User findUser = checkUser(loginRequestDto.getUserId());
 
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), findUser.getPassword())) {
-            throw new RuntimeException("비밀번호 틀림");
+            throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
     }
 
-    public void updateFingerPrint(Integer userId, Boolean fingerprint) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("잘못된 요청"));
+    public void updateFingerPrint(User user, Boolean fingerprint) {
+        user.setFingerprint(fingerprint);
+        userRepository.save(user);
+    }
 
-        findUser.setFingerprint(fingerprint);
+    public void updateBarcode(User user, Boolean barcode) {
+        user.setBarcode(barcode);
+        userRepository.save(user);
+    }
+
+    public void updateRecommendType(User user, Boolean recommendType) {
+        user.setRecommendType(recommendType);
+        userRepository.save(user);
+    }
+
+    public void updateUserInfo(int userId, UserUpdateDto userUpdateDto) {
+        User findUser = checkUser(userId);
+
+        Optional.ofNullable(userUpdateDto.getBarcode())
+                .ifPresent(findUser::setBarcode);
+
+        Optional.ofNullable(userUpdateDto.getFingerprint())
+                .ifPresent(findUser::setFingerprint);
+
+        Optional.ofNullable(userUpdateDto.getRecommendType())
+                .ifPresent(findUser::setRecommendType);
+
         userRepository.save(findUser);
     }
 
-    public void updateBarcode(Integer userId, Boolean barcode) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("잘못된 요청"));
-
-        findUser.setBarcode(barcode);
-        userRepository.save(findUser);
-    }
-
-    public void updateRecommendType(Integer userId, Boolean recommendType) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("잘못된 요청"));
-
-        findUser.setRecommendType(recommendType);
-        userRepository.save(findUser);
-    }
 
     public boolean checkPassword(CheckPasswordDto checkPasswordDto) {
-        System.out.println(checkPasswordDto.getUserId());
-        User findUser = userRepository.findById(checkPasswordDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("잘못된 요청"));
+        User findUser = checkUser(checkPasswordDto.getUserId());
 
         return passwordEncoder.matches(checkPasswordDto.getPassword(), findUser.getPassword());
     }
 
     public void updatePassword(PasswordUpdateDto passwordUpdateDto) {
-        User findUser = userRepository.findById(passwordUpdateDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("잘못된 요청"));
+        User findUser = checkUser(passwordUpdateDto.getUserId());
 
         findUser.setPassword(passwordEncoder.encode(passwordUpdateDto.getPassword()));
         userRepository.save(findUser);
     }
 
     public void insertUserCard(List<UserCardDto> userCardList, Integer userId) {
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저 찾을수없음"));
-        Integer uuid = findUser.getUuid();
+        User findUser = findUserById(userId);
 
-        List<UserCard> list = new ArrayList<>();
         //매퍼
         int cnt = 2;
         for (UserCardDto u : userCardList) {
@@ -152,9 +170,17 @@ public class UserService {
                     .build();
 
             userCardRepository.save(userCard);
-            cnt ++;
+            cnt++;
             //batch 사용 여지 있음
         }
+    }
+
+    //유저 찾는 메서드 추가
+    public User findUserById(int userId) {
+        Optional<User> findUser = userRepository.findById(userId);
+
+        return findUser
+                .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
     }
 
 }
