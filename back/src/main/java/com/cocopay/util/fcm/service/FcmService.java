@@ -1,9 +1,13 @@
 package com.cocopay.util.fcm.service;
 
+import com.cocopay.exception.dto.CustomException;
+import com.cocopay.exception.dto.ErrorCode;
+import com.cocopay.redis.repository.FcmKeyRepository;
 import com.cocopay.util.fcm.dto.FCMMessageDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +20,15 @@ import java.util.Arrays;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FcmService {
-
-    private static final String FIREBASE_CONFIG_PATH = "resources/google-services.json";
-    private static final String FIREBASE_ALARM_SEND_API_URI = "https://fcm.googleapis.com/v1/projects/ssuk-ssuk-push-server/messages:send";
     private final ObjectMapper objectMapper;
+    private final FcmKeyRepository fcmKeyRepository;
 
-    @Autowired
-    public FcmService(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
     private String getAccessToken() throws IOException {
         // firebase로 부터 access token을 가져온다.
+        String FIREBASE_CONFIG_PATH = "ssuk-ssuk-push-server-firebase-adminsdk-cue54-4b189a9f26.json";
 
         GoogleCredentials googleCredentials = GoogleCredentials
                 .fromStream(new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream())
@@ -74,14 +74,19 @@ public class FcmService {
     }
 
     //targetToken : 푸쉬 알림을 받을 클라이언트 앱의 식별 토큰
-    public void sendMessageTo(
-            String targetToken, String title, String body, String id, String isEnd
-    ) throws IOException {
+    public void sendMessageTo(int userId, String title, String body, String name, String desc) throws IOException {
 
-        String message = makeMessage(targetToken, title, body, id, isEnd);
+        String targetToken = fcmKeyRepository.findById(String.valueOf(userId))
+                .orElseThrow(() -> new CustomException(ErrorCode.FCMTOKEN_NOT_FOUND))
+                .getFcmToken();
+        log.info("FCM TOKEN : " + targetToken);
+
+        String message = makeMessage(targetToken, title, body, name, desc);
 
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
+
+        String FIREBASE_ALARM_SEND_API_URI = "https://fcm.googleapis.com/v1/projects/ssuk-ssuk-push-server/messages:send";
 
         Request request = new Request.Builder()
                 .url(FIREBASE_ALARM_SEND_API_URI)

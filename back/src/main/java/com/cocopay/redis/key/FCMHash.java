@@ -1,6 +1,6 @@
 package com.cocopay.redis.key;
 
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 import lombok.Data;
 import org.springframework.data.redis.core.RedisHash;
 

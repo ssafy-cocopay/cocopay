@@ -5,6 +5,7 @@ import com.cocopay.exception.dto.ErrorCode;
 
 import com.cocopay.redis.key.AuthHash;
 import com.cocopay.redis.repository.AuthHashRepository;
+import com.cocopay.redis.service.FcmKeyService;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.UserFindResponseDto;
 import com.cocopay.user.entity.User;
@@ -12,6 +13,7 @@ import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.UserCardDto;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
+import com.cocopay.util.fcm.service.FcmService;
 import com.cocopay.util.sens.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserCardRepository userCardRepository;
     private final UserApiCallService userApiCallService;
+    private final FcmKeyService fcmKeyService;
 
     public String sendRandomMessage(String tel) {
         Naver_Sens_V2 message = new Naver_Sens_V2();
@@ -103,21 +106,9 @@ public class UserService {
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), findUser.getPassword())) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
-    }
 
-    public void updateFingerPrint(User user, Boolean fingerprint) {
-        user.setFingerprint(fingerprint);
-        userRepository.save(user);
-    }
-
-    public void updateBarcode(User user, Boolean barcode) {
-        user.setBarcode(barcode);
-        userRepository.save(user);
-    }
-
-    public void updateRecommendType(User user, Boolean recommendType) {
-        user.setRecommendType(recommendType);
-        userRepository.save(user);
+        //fcm token redis에 저장
+        fcmKeyService.saveFcmKey(String.valueOf(loginRequestDto.getUserId()), loginRequestDto.getFcmToken());
     }
 
     public void updateUserInfo(int userId, UserUpdateDto userUpdateDto) {
