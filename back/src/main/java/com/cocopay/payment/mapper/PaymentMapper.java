@@ -25,7 +25,7 @@ public interface PaymentMapper {
                                     String cardImage,
                                     Integer discountRate, String discountType,
                                     int discounted, int finalPrice,
-                                    int remainingAmt, double graphRate,
+                                    int remainingAmt, String graphRate,
                                     PerformanceKey key);
 
 }

@@ -7,7 +7,6 @@ import { PATH } from "@/constants/path";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import Penguin from "@/assets/images/img-penguin-congraturation.png";
-import CardImg from "@/assets/images/img-cardimg1.png";
 
 const PayOnlineCompletePage = () => {
   const navigate = useNavigate();
