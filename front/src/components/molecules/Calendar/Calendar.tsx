@@ -15,11 +15,11 @@ interface CalendarProps {
         <Wrapper>
             <Image src={iconChevronLeftGrey} width={24} height={24} $unit="px" />
             {/* 여기에서 onMonthClick을 Text의 onClick으로 연결 */}
-            <div style={{display:"flex"}}>
+            <div style={{display:"flex", alignItems:"center"}}>
                 <Text size="body1" fontWeight="bold" color="black1" >
                     9월
                 </Text>
-                <Image onClick={onMonthClick} src={iconCalender} width={24} height={24} $unit="px" $margin="0 0 0 8px" />
+                <Image onClick={onMonthClick} src={iconCalender} width={20} height={20} $unit="px" $margin="0 0 0 8px" />
             </div>
             <Image src={iconChevronRightGrey} width={24} height={24} $unit="px" />
         </Wrapper>
