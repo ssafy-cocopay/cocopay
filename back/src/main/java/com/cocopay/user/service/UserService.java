@@ -9,7 +9,7 @@ import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.UserCardDto;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
-import com.cocopay.util.Naver_Sens_V2;
+import com.cocopay.util.sens.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
