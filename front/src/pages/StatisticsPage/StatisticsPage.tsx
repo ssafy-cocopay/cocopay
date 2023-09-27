@@ -24,6 +24,7 @@ import theme from "@/styles/theme";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 import numberToAmount from "@/utils/NumToAmount";
 import StatisticsBar from "@/components/organisms/StatisticsBar/StatisticsBar";
+import StatisticsContents from "@/components/organisms/StatisticsContents/StatisticsContents";
 
 const StatisticsPage = () => {
   // Tab 선택 여부
@@ -71,7 +72,9 @@ const StatisticsPage = () => {
         </Text>
         <Text size="body2" color="white" style={{ marginTop: "4px" }}>
           이번 달에 받은 할인 혜택이에요!
+          {/* {pigImg} */}
         </Text>
+        <Image src={pigImg} width={2} style={{ marginBottom: "400px" }}></Image>
       </HeaderContainer>
       <Container style={{ position: "relative", top: "-14px" }}>
         <WhiteContainer $left={true}>
@@ -139,7 +142,8 @@ const StatisticsPage = () => {
             </FlexDiv>
           </TotalAmountWrapper>
           {/* bar */}
-          <StatisticsBar></StatisticsBar>
+          <StatisticsBar />
+          <StatisticsContents />
         </StatisticsContainer>
       </Container>
 

@@ -1,26 +1,17 @@
 import React from "react";
-import { StatisticsBarWrapper } from "../StatisticsBar/StatisticsBar.styles";
-import styled from "styled-components";
-import theme from "@/styles/theme";
-import { CATEGORY_COLORS, Category } from "@/types/category";
+import {
+  StatisticsBarWrapper,
+  BarRateWrapper,
+  BarRate,
+  StatisticsContentsWrapper,
+} from "../StatisticsBar/StatisticsBar.styles";
+import { CATEGORY_COLORS, Category, CATEGORY_ICONS, CategoryData } from "@/types/category";
+import { Image } from "@/components/atoms/Image/Image";
 
-const BarRateWrapper = styled.div`
-  display: flex;
-  height: 100%;
-  width: 100%;
-`;
 
-const BarRate = styled.div`
-  background-color: ${theme.color.black1};
-`;
-
-type CategoryData = {
-    category: Category;
-    price: number;
-    rate: number;
-}
 
 // TODO: API 에서 따오기
+// TODO: 얘는 상위에서 주기
 const tempAmounts: CategoryData[] = [
   { category: "편의점", price: 94970, rate: 44.7 },
   { category: "영화", price: 82820, rate: 22.8 },
@@ -52,9 +43,9 @@ const StatisticsBar = () => {
               ></BarRate>
             );
           })}
-          
         </BarRateWrapper>
       </StatisticsBarWrapper>
+
     </>
   );
 };

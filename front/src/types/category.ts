@@ -1,3 +1,9 @@
+export type CategoryData = {
+  category: Category;
+  price: number;
+  rate: number;
+};
+
 export type Category =
   | "편의점"
   | "영화"
