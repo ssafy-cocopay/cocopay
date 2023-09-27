@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "@/components/atoms/Text/Text.styles";
-import theme from "@/styles/theme";
 
-interface TimerComponentProps {
-  timerColor: string;
-  initialSeconds?: number;
-}
-
-const TimerComponent = (props: TimerComponentProps) => {
+const TimerComponent = () => {
   const [seconds, setSeconds] = useState(180);
   const [isActive, setIsActive] = useState(true); // 타이머가 끝났는지
-  const [initialSeconds, setInitialSeconds] = useState(180);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
@@ -26,7 +19,7 @@ const TimerComponent = (props: TimerComponentProps) => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, seconds, initialSeconds]);
+  }, [isActive, seconds]);
 
   const formatTime = () => {
     const minutes = Math.floor(seconds / 60);
@@ -36,12 +29,8 @@ const TimerComponent = (props: TimerComponentProps) => {
     ).padStart(2, "0")}`;
   };
 
-  useEffect(() => {
-    setSeconds(props.initialSeconds!); // 버튼 클릭 시에 초기화
-  }, [props.initialSeconds]);
-
   return (
-    <Text size="small1" color={props.timerColor} style={{ width: "40px" }}>
+    <Text size="small1" color="grey2" style={{ width: "40px" }}>
       {formatTime()}
     </Text>
   );

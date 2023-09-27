@@ -135,8 +135,8 @@ const SignupPage = () => {
         </Wrapper>
 
         <TimerComponent
-          timerColor="danger"
-          // initialSeconds={initialSeconds}
+        // timerColor="danger"
+        // initialSeconds={initialSeconds}
         ></TimerComponent>
 
         <br />

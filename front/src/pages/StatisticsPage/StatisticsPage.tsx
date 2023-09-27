@@ -23,6 +23,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import theme from "@/styles/theme";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 import numberToAmount from "@/utils/NumToAmount";
+import StatisticsBar from "@/components/organisms/StatisticsBar/StatisticsBar";
 
 const StatisticsPage = () => {
   // Tab 선택 여부
@@ -137,16 +138,8 @@ const StatisticsPage = () => {
               </Text>
             </FlexDiv>
           </TotalAmountWrapper>
-          <Wrapper
-            $border={true}
-            style={{
-              marginTop: "10px",
-              height: "35px",
-              borderRadius: "12px",
-              width: "95%",
-              marginBottom: "100px",
-            }}
-          ></Wrapper>
+          {/* bar */}
+          <StatisticsBar></StatisticsBar>
         </StatisticsContainer>
       </Container>
 
