@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,9 +43,13 @@ public class CardHistoryService {
             categoryDto.setDiscountPercent(String.format("%.1f",(double)categoryDto.getDiscountAmount()/totalByMonth.getTotalDiscountByMonth()*100));
         }
 
+        List<CategoryDto> sorted = categoryDtoList.stream()
+                .sorted(Comparator.comparing(CategoryDto::getPrice).reversed())
+                .toList();
+
 
         CategoryResponseDto categoryResponseDto = CategoryResponseDto.builder()
-                .categoryList(categoryDtoList)
+                .categoryList(sorted)
                 .allPrice(totalByMonth.getTotalPayByMonth())
                 .allDiscountAmount(totalByMonth.getTotalDiscountByMonth())
                 .build();
