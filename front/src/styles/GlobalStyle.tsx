@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
         color: ${({ theme }) =>
           theme.color.black1}; // 모든 text의 기본 색상은 black1
         font-family: 'Pretendard';
+        /* overflow-y: scroll; */
     }
 `;
 

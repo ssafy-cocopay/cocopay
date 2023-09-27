@@ -14,6 +14,7 @@ import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading
 import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
 import TimerComponent from "@/utils/Timer";
+import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 
 import {
   HeaderContainer,
@@ -34,6 +35,19 @@ const ScrollableContainer = styled(Container)`
   left: 0px;
 `;
 
+export const BlueContainerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+`;
+
+const BarcodeUnderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto 20px 15px;
+  width: 92%;
+`;
+
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
 
@@ -50,9 +64,9 @@ const HomePage = () => {
         position: "fixed",
       }}
     >
-      <div style={{ position: "absolute", top: 0, width: "100%" }}>
+      <BlueContainerWrapper>
         <BlueContainer />
-      </div>
+      </BlueContainerWrapper>
       <HeaderContainer $left={true}>
         <Text size="subtitle2" fontWeight="bold" color="white" $margin="0 4px">
           현장 결제
@@ -64,19 +78,8 @@ const HomePage = () => {
             <BodyAndHeading amountType="소비한" amount={273350} />
           </DiscountAndAmountContainer>
           <BarcodeContainer code={barcodeValue} />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "10px auto 20px 15px",
-              width: "92%",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
+          <BarcodeUnderWrapper>
+            <FlexDiv>
               <TimerComponent />
               <Image
                 src={refresh}
@@ -84,23 +87,18 @@ const HomePage = () => {
                 height={1}
                 style={{ margin: "2px 0 0 8px" }}
               ></Image>
-            </div>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
+            </FlexDiv>
+            <FlexDiv>
               <Text size="small1" color="grey2" style={{ marginRight: "10px" }}>
                 QR
               </Text>
               <Checkbox type="checkbox" id="toggle" />
-            </div>
-          </div>
+            </FlexDiv>
+          </BarcodeUnderWrapper>
           <CircleIconContainer>
             <Image src={search} width={2.5} $margin="auto"></Image>
           </CircleIconContainer>
         </BarcodeWhiteContainer>
-
         <ScrollableContainer>
           <Image src={cocoCard} width={15}></Image>
           <Image src={cocoCard} width={15}></Image>

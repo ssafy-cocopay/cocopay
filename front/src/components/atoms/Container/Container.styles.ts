@@ -24,8 +24,9 @@ type CardListContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
   display: flex;
+
   flex-direction: column;
-  align-items: ${(props) => (props.$alignItems ? "flex-start" : "center")};
+  align-items: ${(props) => (props.$left ? "flex-start" : "center")};
   height: ${(props) => props.height || "100vh"};
   width: ${(props) => props.width || "100%"};
   max-width: 390px;

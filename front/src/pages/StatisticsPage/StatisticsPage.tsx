@@ -10,27 +10,14 @@ import Calendar from "@/components/molecules/Calendar/Calendar";
 import { Line } from "@/components/atoms/Line/Line.style";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
-
-const HeaderContainer = styled(Container)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin-top: 28px;
-  padding: 30px;
-`;
-
-export const WhiteContainer = styled(Container)`
-  margin-top: 36px;
-  background-color: white;
-  border-radius: 38px;
-  height: 370px;
-  position: relative;
-  top: 220px;
-  padding-top: 30px;
-`;
+import { BlueContainerWrapper } from "../HomePage/HomePage";
+import { HeaderContainer, WhiteContainer } from "./StatisticsPage.styles";
+import { CategoryContainer } from "@/components/organisms/CategoryWhiteBox/CategoryContainer";
 
 const StatisticsPage = () => {
+  //TODO: currentMonth는 리코일에서
+  const currentMonth = 9;
+  const category = "주유";
   const [isModalOpen, setModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -38,31 +25,50 @@ const StatisticsPage = () => {
   };
 
   return (
-    <Background $colormode="gradient" style={{ position: "fixed" }}>
-      <div style={{ position: "absolute", top: 0, width: "100%" }}>
+    <Background
+      $colormode="gradient"
+      style={{ overflowY: "scroll", position: "fixed", height: "auto", border: "true" }}
+    >
+      <BlueContainerWrapper>
         <BlueStatisticsContainer />
-      </div>
+      </BlueContainerWrapper>
       <HeaderContainer>
-        <Image src={pigImg} width={5} $margin="10px 0" />
+        <Image src={pigImg} width={5} $margin="0 0 14px 0" />
         <Text size="heading1" fontWeight="bold" color="white">
           3,400원
         </Text>
-        <Text size="body2" color="white" style={{ marginTop: "12px" }}>
+        <Text size="body2" color="white" style={{ marginTop: "4px" }}>
           이번 달에 받은 할인 혜택이에요!
         </Text>
       </HeaderContainer>
-      <Container style={{ position: "relative", top: "0" }}>
-        <WhiteContainer>
-          <Calendar />
-          <Line />
-          <button onClick={toggleModal}>모달 열기</button>
+      <Container style={{ position: "relative", top: "-14px" }}>
+        <WhiteContainer $left={true}>
+          <Calendar onMonthClick={toggleModal} />
+          <Line $margin=" 0 0 20px 0" />
+          <Text size="body2" $marginLeft="8px">
+            <b>{currentMonth}월</b>엔 <b>{category}</b> 카테고리에서
+          </Text>
+          <Text size="body2" $marginLeft="8px" $marginTop="4px">
+            <b>제일 많은 혜택</b>을 받았어요 !
+          </Text>
+          <CategoryContainer></CategoryContainer>
         </WhiteContainer>
+
+        <Container
+          $border={true}
+          style={{ zIndex: 110, position: "relative", overflowY: "scroll" }}
+        >
+          <Text size="heading1" style={{ zIndex: 100, position: "relative" }}>123123123</Text>
+          
+        </Container>
       </Container>
+
       {isModalOpen && (
         <ModalBg onClick={toggleModal}>
           <Modal toggleModal={toggleModal} />
         </ModalBg>
       )}
+      {/* <BlueStatisticsContainer /> */}
     </Background>
   );
 };
