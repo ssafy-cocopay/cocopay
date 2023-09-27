@@ -12,11 +12,13 @@ import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
 import { BlueContainerWrapper } from "../HomePage/HomePage";
 import { HeaderContainer, WhiteContainer } from "./StatisticsPage.styles";
-import { CategoryContainer } from "@/components/organisms/CategoryWhiteBox/CategoryContainer";
+import { FourCategory } from "@/components/organisms/FourCategory/FourCategory";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import theme from "@/styles/theme";
+import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
+import numberToAmount from "@/utils/NumToAmount";
 
-export const StatisticsContainer = styled(Container)`
+const StatisticsContainer = styled(Container)`
   overflow-y: scroll;
   position: relative;
   top: 240px;
@@ -25,9 +27,8 @@ export const StatisticsContainer = styled(Container)`
 
 const TabWrapper = styled(Wrapper)`
   padding: 27px 0 15px 0;
-  border: 3px solid white;
-  border-width: 0px 0px 2px 0px;
-
+  border: 3px solid black;
+  border-width: 0px 0px 3px 0px;
   /* border-bottom: 3px; */
 `;
 
@@ -38,13 +39,18 @@ const StatisticsPage = () => {
     setSelectedTab(tabName);
   };
 
-  const InactiveTextColor = "grey1";
-  const ActiveTextColor = "black1";
+  const TABS = [
+    { name: "내 소비", key: "내 소비" },
+    { name: "혜택", key: "혜택" },
+  ];
 
   //TODO: currentMonth는 리코일에서
   const currentMonth = 9;
   const category = "주유";
   const [isModalOpen, setModalOpen] = useState(false);
+
+  // TODO: API로 get해야 함
+  const thisMonthAmount = numberToAmount(128762);
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
@@ -55,6 +61,7 @@ const StatisticsPage = () => {
       $colormode="gradient"
       style={{
         overflowY: "scroll",
+        overflowX: "hidden",
         position: "fixed",
         height: "auto",
         border: "true",
@@ -82,7 +89,7 @@ const StatisticsPage = () => {
           <Text size="body2" $marginLeft="8px" $marginTop="4px">
             <b>제일 많은 혜택</b>을 받았어요 !
           </Text>
-          <CategoryContainer></CategoryContainer>
+          <FourCategory></FourCategory>
         </WhiteContainer>
 
         <StatisticsContainer
@@ -91,36 +98,50 @@ const StatisticsPage = () => {
           width="100vw"
         >
           <Wrapper $flexDirection="row">
-            <TabWrapper
-              onClick={() => handleTabClick("내 소비")}
-              style={{
-                borderColor:
-                  selectedTab === "내 소비" ? theme.color.blue : "white",
-              }}
-            >
+            {TABS.map((tab) => (
+              <>
+                <TabWrapper
+                  key={tab.key}
+                  onClick={() => handleTabClick(tab.key)}
+                  style={{
+                    borderColor:
+                      selectedTab === tab.key ? theme.color.blue : "white",
+                  }}
+                >
+                  <Text
+                    size="body2"
+                    fontWeight="bold"
+                    color={selectedTab === tab.key ? "black1" : "grey2"}
+                  >
+                    {tab.name}
+                  </Text>
+                </TabWrapper>
+              </>
+            ))}
+          </Wrapper>
+          {/* <Statisti */}
+          <Wrapper $alignItems="start" style={{ marginTop: "30px" }}>
+            <Text size="subtitle2" fontWeight="bold">
+              이번 달에는
+            </Text>
+            <FlexDiv>
               <Text
-                size="body2"
+                size="subtitle1"
                 fontWeight="bold"
-                color={selectedTab === "내 소비" ? "black1" : "grey2"}
+                color="blue"
+                $marginTop="3px"
               >
-                내 소비
+                {thisMonthAmount}원
               </Text>
-            </TabWrapper>
-            <TabWrapper
-              onClick={() => handleTabClick("혜택")}
-              style={{
-                borderColor:
-                  selectedTab === "혜택" ? theme.color.blue : "white",
-              }}
-            >
               <Text
-                size="body2"
-                fontWeight="bold"
-                color={selectedTab === "혜택" ? "black1" : "grey2"}
+                size="subtitle2"
+                fontWeight="light"
+                $marginLeft="6px"
+                $marginTop="6px"
               >
-                혜택
+                썼어요
               </Text>
-            </TabWrapper>
+            </FlexDiv>
           </Wrapper>
         </StatisticsContainer>
       </Container>
