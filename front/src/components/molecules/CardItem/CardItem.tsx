@@ -22,9 +22,10 @@ interface CardItemProps {
   resetSwipe: boolean;
   swipedIndex: number | null;  // 추가
   index: number;               // 추가
+  deletemodal: () => void;
 }
 
-function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index }: CardItemProps) {
+function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, deletemodal }: CardItemProps) {
   // 카드의 현재 위치 (픽셀 기준)를 나타냄, 초기값 0
   const [x, setX] = useState<number>(0);
   // 현재 드래그 중인지의 여부, 초기값 false
@@ -152,6 +153,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index }: CardIt
       <Hr />
     </div>
       <button
+      onClick={deletemodal}
       style={{
         width: "15%",
         border: "none",
