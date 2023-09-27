@@ -134,6 +134,7 @@ const CardListPage = () => {
             resetSwipe={swipedIndex !== null && swipedIndex !== idx}
             swipedIndex={swipedIndex}   // 추가
             index={idx}                 // 추가
+            deletemodal={() => toggleModal()}
           />
         ))}
         <Layout>
@@ -145,17 +146,6 @@ const CardListPage = () => {
           >
             <Image src={iconPlusGrey} width={12} height={12} $unit="px"></Image>
             카드 등록
-          </Button>
-          <br />
-          <br />
-          <Button
-            onClick={toggleModal}
-            option="danger"
-            size="medium"
-            $borderRadius="16px"
-            $fontSize="16px"
-          >
-            카드 삭제
           </Button>
         </Layout>
       </CardListContainer>
