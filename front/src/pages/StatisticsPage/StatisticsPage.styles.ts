@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { Container } from "@/components/atoms/Container/Container.styles";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
+
+export const StatisticsContainer = styled(Container)`
+  overflow-y: scroll;
+  position: relative;
+  top: 240px;
+  left: -26px;
+`;
 
 export const CategoryWhiteBox = styled(Container)`
   background-color: white;
@@ -35,3 +43,16 @@ export const WhiteCategoryWrapper = styled(FlexDiv)`
   width: "100%";
   gap: 17px;
 `;
+
+export const TabWrapper = styled(Wrapper)`
+  padding: 27px 0 15px 0;
+  border: 3px solid black;
+  border-width: 0px 0px 3px 0px;
+  /* border-bottom: 3px; */
+`;
+
+export const TotalAmountWrapper = styled(Wrapper)`
+  align-items: start;
+  margin-top: 30px;
+  padding-left: 10px;
+`
