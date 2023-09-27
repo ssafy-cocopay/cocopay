@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Image } from "@/components/atoms/Image/Image";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import cardImg1 from "@/assets/images/img-card1.png";
@@ -10,6 +10,31 @@ import { CardItemWrapper, Hr, CardListBar } from "./CardItem.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
 const CardItem = () => {
+  const [x, setX] = useState<number>(0);
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [startX, setStartX] = useState<number>(0);
+
+    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        setIsDragging(true);
+        setStartX(e.clientX - x);  // 시작 위치 저장
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!isDragging) return;
+        const newX = e.clientX - startX;
+        if (newX < 0 && newX > -window.innerWidth / 16) {  // 4분의 1 제한
+            setX(newX);
+        }
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+        if (x < -window.innerWidth / 32) {  // 8분의 1 지점에서 놓으면 완전히 이동
+            setX(-window.innerWidth / 16);
+        } else {
+            setX(0);  // 원래 위치로 복귀
+        }
+    };
   const CardInfo = [
     {
       cardImg: cardImg1,
@@ -38,7 +63,16 @@ const CardItem = () => {
   ];
 
   return (
-    <div>
+    <div
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            style={{
+                transform: `translateX(${x}px)`,
+                transition: isDragging ? 'none' : 'transform 0.3s ease',
+            }}
+        >
       {/* TODO: 서영이가 위에 만들어놓은 더미로 맵 뿌리기 ! */}
       {/* {CardInfo.map((card,idx) => {
         return

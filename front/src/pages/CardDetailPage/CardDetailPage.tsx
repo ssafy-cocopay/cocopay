@@ -102,6 +102,8 @@ const CardDetailPage = () => {
           </Text>
           <Hr />
           <PaymentList />
+          <PaymentList />
+          <PaymentList />
           <Button
             onClick={() => navigatePage(PATH.CARD_DETAIL_PURCHASED)}
             option="activated"

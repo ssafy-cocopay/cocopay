@@ -10,7 +10,7 @@ import { Image } from "@/components/atoms/Image/Image";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 
-const CardListPage = () => {
+const CardUploadCompletePage = () => {
 
   const navigate = useNavigate();
 
@@ -77,4 +77,4 @@ const CardListPage = () => {
   );
 };
 
-export default CardListPage;
+export default CardUploadCompletePage;
