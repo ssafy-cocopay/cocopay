@@ -8,6 +8,7 @@ import com.cocopay.payment.service.PaymentService;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.TotalByMonth;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
+import com.cocopay.user.dto.response.UserJoinResDto;
 import com.cocopay.user.mapper.UserMapper;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
@@ -61,9 +62,9 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody UserJoinDto userJoinDto) {
-        userService.join(userJoinDto);
+        UserJoinResDto userJoinResDto = userService.join(userJoinDto);
 
-        return ResponseEntity.ok("OK");
+        return ResponseEntity.ok(userJoinResDto);
     }
 
     @PostMapping("/login/password")

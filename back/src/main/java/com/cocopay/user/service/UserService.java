@@ -8,6 +8,7 @@ import com.cocopay.redis.repository.AuthHashRepository;
 import com.cocopay.redis.service.FcmKeyService;
 import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.UserFindResponseDto;
+import com.cocopay.user.dto.response.UserJoinResDto;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.UserCardDto;
@@ -61,7 +62,7 @@ public class UserService {
     }
 
 
-    public Integer join(UserJoinDto userJoinDto) {
+    public UserJoinResDto join(UserJoinDto userJoinDto) {
         // 똑같은 번호 있으면 빠꾸시켜야됨
         userRepository.findByTel(userJoinDto.getTel())
                 .ifPresent(user -> {
@@ -81,7 +82,7 @@ public class UserService {
                 .password(passwordEncoder.encode(userJoinDto.getPassword()))
                 .build();
 
-        userRepository.save(user);
+        int userId = userRepository.save(user).getId();
 
         // 사용자카드 코코페이 저장
         UserCard userCard = UserCard.builder()
@@ -90,9 +91,10 @@ public class UserService {
                 .cardUuid(null)
                 .serialNumber(null)
                 .cardOrder(0)
+                .cardDefaultImage("https://storage.googleapis.com/cocopay/cocopay.png")
                 .build();
         userCardRepository.save(userCard);
-        return userRepository.findByTel(userJoinDto.getTel()).get().getId();
+        return new UserJoinResDto(userId);
     }
 
     public User checkUser(int userId) {

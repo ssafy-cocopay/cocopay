@@ -11,8 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.security.cert.CRLReason;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 @SpringBootTest
 public class DummyTest {
@@ -27,55 +29,30 @@ public class DummyTest {
 
     //회원가입
     @Test
-    public void UserDummy() {
-        User user = new User();
-        user.setUuid(1);
-        user.setPassword("1234");
-        user.setName("한성현");
-        user.setTel("010-5136-5349");
-        user.setBirth("960205");
-        user.setAge(28);
-        user.setRegistedDate(LocalDateTime.now());
-        user.setSignImage("url");
-        user.setRecommendType(false);
-        user.setAppPassword("123456");
+    public void test() {
+        List<UserCard> bankCardList = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            UserCard build = UserCard.builder()
+                    .cardUuid(i)
+                    .build();
+            bankCardList.add(build);
+        }
+        List<UserCard> cocoCardList = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            UserCard build = UserCard.builder()
+                    .cardUuid(i)
+                    .build();
+            cocoCardList.add(build);
+        }
+        List<UserCard> list = bankCardList.stream()
+                .filter(bankCard -> cocoCardList.stream()
+                        .noneMatch(cocoCard -> Objects.equals(cocoCard.getCardUuid(), bankCard.getCardUuid())))
+                .toList();
 
-        User save = userRepository.save(user);
-        
-        //회원가입 이후 코코카드까지 만들어버림
-        UserCard userCard = makeUserCard(save, true);
-        userCard.setCardUuid(1);
-        userCardRepository.save(userCard);
-    }
 
-    @Test
-    public void cardDummy() {
-        int userId = 1;
+        for (UserCard re : list) {
+            System.out.println("필터링한 결과 : " + re.getCardUuid());
+        }
 
-        User fingUser = userRepository.findById(userId).get();
-
-        UserCard userCard = makeUserCard(fingUser, false);
-
-        int size = userCardRepository.findAll().size();
-
-        userCard.setCardOrder(size + 1);
-        userCard.setCardUuid(size + 1);
-
-        userCardRepository.save(userCard);
-    }
-
-    public UserCard makeUserCard(User user, boolean cocoType) {
-        UserCard userCard = new UserCard();
-
-        userCard.setUser(user);
-        userCard.setCocoType(cocoType);
-        userCard.setSerialNumber(faker.numerify("####-####-####-####"));
-        userCard.setCardName("카드이름");
-        userCard.setValidDate("12-25");
-        userCard.setVisa(true);
-        userCard.setMaster(true);
-        userCard.setCardDefaultImage("url");
-
-        return userCard;
     }
 }
