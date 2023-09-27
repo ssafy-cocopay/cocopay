@@ -90,6 +90,7 @@ public class UserService {
                 .cardUuid(null)
                 .serialNumber(null)
                 .cardOrder(0)
+                .cardDefaultImage("https://storage.googleapis.com/cocopay/cocopay.png")
                 .build();
         userCardRepository.save(userCard);
         return userRepository.findByTel(userJoinDto.getTel()).get().getId();
