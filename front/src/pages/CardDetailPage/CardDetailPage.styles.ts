@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
+  display: flex;
 `;
 
 export const CardWrapper = styled.div`
-    padding: 0 28px;
-`
+  padding: 0 28px;
+`;
 
 export const Hr = styled.hr`
   border: none;
