@@ -5,7 +5,9 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 const Performance = () => {
   return (
     <PerformanceWrapper>
+      {/* 회색 바 */}
       <BarWrapper $position="relative">
+        {/* 왼쪽 레벨 */}
         <Level
           $bgc="lightblue"
           width="28px"
@@ -23,24 +25,26 @@ const Performance = () => {
             1
           </Text>
         </Level>
+        {/* blue bar */}
         <Level
           $bgc="blue"
-          width="150px"
+          width="100px"
           height="28px"
           $position="absolute"
           $left="0"
           $zIndex="1"
         >
-          <Text
+          {/* <Text
             size="small2"
             fontWeight="bold"
             color="white"
             style={{ textAlign: "center", lineHeight: "26px" }}
           >
             353,499원
-          </Text>
+          </Text> */}
         </Level>
       </BarWrapper>
+      {/* 오른쪽 레벨 */}
       <Level $bgc="grey2" width="28px" height="28px">
         <Text
           size="small2"

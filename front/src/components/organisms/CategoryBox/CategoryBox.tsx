@@ -28,6 +28,7 @@ import movieImg from "@/assets/images/img-category-movie.png";
 import oilImg from "@/assets/images/img-category-oil.png";
 import onlineShoppingImg from "@/assets/images/img-category-onlineShopping.png";
 import transportImg from "@/assets/images/img-category-transport.png";
+import numberToAmount from "@/utils/NumToAmount";
 
 export interface CategoryBoxProps {
   key: number;
@@ -88,7 +89,7 @@ const CategoryBox = (props: CategoryBoxProps) => {
       <CategoryTextBoxWrapper>
         <Text size="small2">{props.category}</Text>
         <Text size="small3" fontWeight="light" color="grey1" $marginTop="2px">
-          {props.amount}원
+          {numberToAmount(props.amount)}원
         </Text>
       </CategoryTextBoxWrapper>
     </CategoryWhiteBox>
