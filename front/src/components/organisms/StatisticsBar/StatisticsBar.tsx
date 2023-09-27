@@ -52,6 +52,7 @@ const StatisticsBar = () => {
               ></BarRate>
             );
           })}
+          
         </BarRateWrapper>
       </StatisticsBarWrapper>
     </>
