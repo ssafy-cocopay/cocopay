@@ -13,6 +13,9 @@ import iconPlusGrey from "@/assets/images/icon-plus-grey.png";
 import { Image } from "@/components/atoms/Image/Image";
 import Modal from "@/components/atoms/Modal/Modal";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import cardImg1 from "@/assets/images/img-card1.png";
+import cardImg2 from "@/assets/images/img-card2.png";
+import cardImg3 from "@/assets/images/img-card3.png";
 
 const CardListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +31,69 @@ const CardListPage = () => {
     toggleModal(); // 삭제 요청 후 모달을 닫을 수 있도록 모달을 닫는 함수를 호출합니다.
   };
 
+  // 현재 스와이핑되고 있는 CardItem의 인덱스를 저장
+  const [swipedIndex, setSwipedIndex] = useState<number | null>(null);
+
+  const handleSwipeStart = (index: number) => {
+    if (swipedIndex !== null && swipedIndex !== index) {
+      // 다른 CardItem을 스와이핑할 때 기존의 스와이핑된 CardItem 초기화
+      setSwipedIndex(null);
+    } else {
+      setSwipedIndex(index);
+    }
+  };
+
+  const CardInfo = [
+    {
+      cardImg: cardImg1,
+      cardName: "위버스 신한카드 체크(BTS)",
+      serialNumber: "2128-46**-****-3510",
+      cardType: "신용",
+      master: true,
+      percennt: 30,
+    },
+    {
+      cardImg: cardImg2,
+      cardName: "신한카드 플리(산리오캐릭터즈)",
+      serialNumber: "2128-46**-****-3510",
+      cardType: "신용",
+      master: true,
+      percennt: 50,
+    },
+    {
+      cardImg: cardImg3,
+      cardName: "신한카드 Way 체크 (최고심)",
+      serialNumber: "2128-46**-****-3510",
+      cardType: "체크",
+      master: true,
+      percennt: 10,
+    },
+    {
+      cardImg: cardImg1,
+      cardName: "위버스 신한카드 체크(BTS)",
+      serialNumber: "2128-46**-****-3510",
+      cardType: "신용",
+      master: true,
+      percennt: 30,
+    },
+    {
+      cardImg: cardImg2,
+      cardName: "신한카드 플리(산리오캐릭터즈)",
+      serialNumber: "2128-46**-****-3510",
+      cardType: "신용",
+      master: true,
+      percennt: 50,
+    },
+    {
+      cardImg: cardImg3,
+      cardName: "신한카드 Way 체크 (최고심)",
+      serialNumber: "2128-46**-****-3510",
+      cardType: "체크",
+      master: true,
+      percennt: 10,
+    },
+  ];
+
   return (
     <Background
       style={{
@@ -35,7 +101,6 @@ const CardListPage = () => {
       }}
     >
       <CardListContainer>
-        카드 리스트 페이지
         <Text
           size="body1"
           fontWeight="bold"
@@ -61,11 +126,16 @@ const CardListPage = () => {
           오른쪽 아이콘을 눌러 카드 순서를 변경할 수 있어요.
         </Text>
         <Hr />
-        <CardItem />
-        <CardItem />
-        <CardItem />
-        <CardItem />
-        <CardItem />
+        {CardInfo.map((card, idx) => (
+          <CardItem
+            key={idx}
+            card={card}
+            onSwipeStart={() => handleSwipeStart(idx)}
+            resetSwipe={swipedIndex !== null && swipedIndex !== idx}
+            swipedIndex={swipedIndex}   // 추가
+            index={idx}                 // 추가
+          />
+        ))}
         <Layout>
           <Button
             option="dashed"
