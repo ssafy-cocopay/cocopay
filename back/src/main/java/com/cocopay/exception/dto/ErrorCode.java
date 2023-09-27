@@ -24,6 +24,7 @@ public enum ErrorCode {
     DUPLICATE_USER(HttpStatus.CONFLICT, "이미 가입한 회원입니다."),
 
     //추가할 것들은 여기에 작성해주세요.
+    DUPLICATE_CARD(HttpStatus.CONFLICT, "이미 등록된 카드입니다."),
 
     //utils
     FCMTOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "FCM 토큰 정보가 없습니다."),
