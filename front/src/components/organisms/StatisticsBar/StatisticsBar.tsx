@@ -2,6 +2,7 @@ import React from "react";
 import { StatisticsBarWrapper } from "../StatisticsBar/StatisticsBar.styles";
 import styled from "styled-components";
 import theme from "@/styles/theme";
+import { CATEGORY_COLORS, Category } from "@/types/category";
 
 const BarRateWrapper = styled.div`
   display: flex;
@@ -11,11 +12,16 @@ const BarRateWrapper = styled.div`
 
 const BarRate = styled.div`
   background-color: ${theme.color.black1};
-  /* width: 29px; */
-  /* height: 100%; */
 `;
 
-const tempAmounts = [
+type CategoryData = {
+    category: Category;
+    price: number;
+    rate: number;
+}
+
+// TODO: API 에서 따오기
+const tempAmounts: CategoryData[] = [
   { category: "편의점", price: 94970, rate: 44.7 },
   { category: "영화", price: 82820, rate: 22.8 },
   { category: "문화", price: 64900, rate: 10.0 },
@@ -30,14 +36,22 @@ const tempAmounts = [
   { category: "기타", price: 38610, rate: 3.1 },
 ];
 
-
 const StatisticsBar = () => {
   return (
     <>
       <StatisticsBarWrapper>
         <BarRateWrapper>
-          <BarRate style={{ flexGrow: 33, backgroundColor: "blue" }}></BarRate>
-          <BarRate style={{ flexGrow: 22 }}></BarRate>
+          {tempAmounts.map((category, index) => {
+            return (
+              <BarRate
+                key={index}
+                style={{
+                  flexGrow: category.rate,
+                  backgroundColor: CATEGORY_COLORS[category.category],
+                }}
+              ></BarRate>
+            );
+          })}
         </BarRateWrapper>
       </StatisticsBarWrapper>
     </>
