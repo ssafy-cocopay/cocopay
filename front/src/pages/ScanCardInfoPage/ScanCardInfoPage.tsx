@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@/components/atoms/Button/Button";
 import Input from "@/components/atoms/Input/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,10 +14,10 @@ import { WhiteRoundedBox } from "@/components/atoms/WhiteRoundedBox/WhiteRounded
 
 //TODO: 백그라운드 흰색으로 바꾸기
 interface FormValue {
-  cardNumber: number;
-  expirationPeriod: number;
-  CVC: number;
-  cardPassword: number;
+  cardNumber: string;
+  expirationPeriod: string;
+  CVC: string;
+  cardPassword: string;
 }
 
 const ScanCardInfoPage = () => {
@@ -26,12 +26,33 @@ const ScanCardInfoPage = () => {
     navigate(path);
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<FormValue>({ mode: "onChange" });
+  const [maskedCardNumber, setMaskedCardNumber] = useState<string>("");
+  const [cardNumber, setCardNumber] = useState<string>("");
+
+  const handleCardNumberChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let newCardNumber = event.target.value.replace(/\D/g, ""); // 숫자만 남기고 나머지 제거
+    newCardNumber = newCardNumber.slice(0, 16); // 16자리까지만 유효하도록 자름
+
+    // 가운데 8자리 마스킹
+    const maskedPortion = newCardNumber.slice(4, 12).replace(/\d/g, "*");
+    const formattedCardNumber = `${newCardNumber.slice(
+      0,
+      4
+    )}-${maskedPortion}-${newCardNumber.slice(12)}`;
+
+    setCardNumber(newCardNumber);
+    setMaskedCardNumber(formattedCardNumber);
+  };
+
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  //   getValues,
+  //   setValue,
+  // } = useForm<FormValue>({ mode: "onChange" });
 
   return (
     <Background>
@@ -49,7 +70,7 @@ const ScanCardInfoPage = () => {
             <br />
             {/* TODO: 카드번호 사이에 '-' 넣기, 중간 글씨 '*'로 표시*/}
             <Text size="small1">카드번호</Text>
-            <Input></Input>
+            <Input value={cardNumber} onChange={handleCardNumberChange}></Input>
             <Wrapper $justifyContent="space-between" $flexDirection="row">
               <Wrapper $alignItems="left">
                 <Text size="small1">유효 기간</Text>

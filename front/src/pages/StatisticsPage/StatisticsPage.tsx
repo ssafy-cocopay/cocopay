@@ -11,26 +11,18 @@ import { Line } from "@/components/atoms/Line/Line.style";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
 import { BlueContainerWrapper } from "../HomePage/HomePage";
-import { HeaderContainer, WhiteContainer } from "./StatisticsPage.styles";
+import {
+  HeaderContainer,
+  WhiteContainer,
+  StatisticsContainer,
+  TabWrapper,
+  TotalAmountWrapper,
+} from "./StatisticsPage.styles";
 import { FourCategory } from "@/components/organisms/FourCategory/FourCategory";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import theme from "@/styles/theme";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 import numberToAmount from "@/utils/NumToAmount";
-
-const StatisticsContainer = styled(Container)`
-  overflow-y: scroll;
-  position: relative;
-  top: 240px;
-  left: -26px;
-`;
-
-const TabWrapper = styled(Wrapper)`
-  padding: 27px 0 15px 0;
-  border: 3px solid black;
-  border-width: 0px 0px 3px 0px;
-  /* border-bottom: 3px; */
-`;
 
 const StatisticsPage = () => {
   // Tab 선택 여부
@@ -51,6 +43,7 @@ const StatisticsPage = () => {
 
   // TODO: API로 get해야 함
   const thisMonthAmount = numberToAmount(128762);
+  const thisMonthDiscount = numberToAmount(8930);
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
@@ -91,7 +84,6 @@ const StatisticsPage = () => {
           </Text>
           <FourCategory></FourCategory>
         </WhiteContainer>
-
         <StatisticsContainer
           $borderRadius="38px"
           $backgroundColor="white"
@@ -119,8 +111,7 @@ const StatisticsPage = () => {
               </>
             ))}
           </Wrapper>
-          {/* <Statisti */}
-          <Wrapper $alignItems="start" style={{ marginTop: "30px" }}>
+          <TotalAmountWrapper>
             <Text size="subtitle2" fontWeight="bold">
               이번 달에는
             </Text>
@@ -131,7 +122,10 @@ const StatisticsPage = () => {
                 color="blue"
                 $marginTop="3px"
               >
-                {thisMonthAmount}원
+                {selectedTab === "내 소비"
+                  ? thisMonthAmount
+                  : thisMonthDiscount}
+                원
               </Text>
               <Text
                 size="subtitle2"
@@ -139,10 +133,20 @@ const StatisticsPage = () => {
                 $marginLeft="6px"
                 $marginTop="6px"
               >
-                썼어요
+                {selectedTab === "내 소비" ? "썼어요" : "할인 받았어요"}
               </Text>
             </FlexDiv>
-          </Wrapper>
+          </TotalAmountWrapper>
+          <Wrapper
+            $border={true}
+            style={{
+              marginTop: "10px",
+              height: "35px",
+              borderRadius: "12px",
+              width: "95%",
+              marginBottom: "100px",
+            }}
+          ></Wrapper>
         </StatisticsContainer>
       </Container>
 
