@@ -15,6 +15,7 @@ import Modal from "@/components/atoms/Modal/Modal";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import { ModalWrapper } from "./SignupPage.styles";
 import TimerComponent from "@/utils/Timer";
+
 interface FormValue {
   name: string;
   identification_number: number;
