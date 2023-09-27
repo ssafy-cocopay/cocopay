@@ -41,4 +41,13 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                 .where(userCard.cardUuid.eq(cardUuid))
                 .fetchOne());
     }
+
+    @Override
+    public List<UserCard> findByUserCardId(int userCardId) {
+        return jpaQueryFactory
+                .selectFrom(userCard)
+                .where(userCard.cardUuid.eq(userCardId),
+                        userCard.cocoType.eq(false), userCard.withdrawDate.isNull())
+                .fetch();
+    }
 }
