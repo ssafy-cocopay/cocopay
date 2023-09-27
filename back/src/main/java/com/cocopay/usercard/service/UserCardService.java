@@ -48,8 +48,9 @@ public class UserCardService {
                 .bodyToMono(UserCardDto.class)
                 .block();
 
-        int check = userCardRepository.findByUserCardId(userCardDto.getUserCardId()).size();
-        if(check>=1){
+
+        Optional<UserCard> check = userCardRepository.findByUserCardId(userCardDto.getUserCardId());
+        if (check.isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATE_CARD);
         }
 
