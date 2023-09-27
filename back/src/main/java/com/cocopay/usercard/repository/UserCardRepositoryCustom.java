@@ -12,4 +12,6 @@ public interface UserCardRepositoryCustom {
     public List<UserCard> FindAllUserCard(int userId);
 
     Optional<UserCard> findUserCardByUuid(int cardUuid);
+
+    List<UserCard> findByUserCardId(int userCardId);
 }
