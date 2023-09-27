@@ -1,9 +1,8 @@
 import React from "react";
-import { CategoryWhiteBox } from "@/pages/StatisticsPage/StatisticsPage.styles";
-import { CategoryContainerWrapper } from "./CategoryContainer.styles";
+import { FourCategoryWrapper } from "./FourCategory.styles";
 import CategoryBox from "@/components/organisms/CategoryBox/CategoryBox";
 
-export const CategoryContainer = () => {
+export const FourCategory = () => {
   // TODO: API로 상위 카테고리 4개
   const fourCategory = [
     { num: 89, category: "주유", amount: 4970 },
@@ -13,7 +12,7 @@ export const CategoryContainer = () => {
   ];
 
   return (
-    <CategoryContainerWrapper>
+    <FourCategoryWrapper>
       {/* TODO: CategoryWhiteBox들 organisms로 빼기 */}
       {/* <CategoryBox></CategoryBox> */}
       {fourCategory.map((category, index) => {
@@ -26,6 +25,6 @@ export const CategoryContainer = () => {
           ></CategoryBox>
         );
       })}
-    </CategoryContainerWrapper>
+    </FourCategoryWrapper>
   );
 };

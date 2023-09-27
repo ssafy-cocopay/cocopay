@@ -12,13 +12,45 @@ import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
 import { BlueContainerWrapper } from "../HomePage/HomePage";
 import { HeaderContainer, WhiteContainer } from "./StatisticsPage.styles";
-import { CategoryContainer } from "@/components/organisms/CategoryWhiteBox/CategoryContainer";
+import { FourCategory } from "@/components/organisms/FourCategory/FourCategory";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import theme from "@/styles/theme";
+import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
+import numberToAmount from "@/utils/NumToAmount";
+
+const StatisticsContainer = styled(Container)`
+  overflow-y: scroll;
+  position: relative;
+  top: 240px;
+  left: -26px;
+`;
+
+const TabWrapper = styled(Wrapper)`
+  padding: 27px 0 15px 0;
+  border: 3px solid black;
+  border-width: 0px 0px 3px 0px;
+  /* border-bottom: 3px; */
+`;
 
 const StatisticsPage = () => {
+  // Tab 선택 여부
+  const [selectedTab, setSelectedTab] = useState("내 소비");
+  const handleTabClick = (tabName: string) => {
+    setSelectedTab(tabName);
+  };
+
+  const TABS = [
+    { name: "내 소비", key: "내 소비" },
+    { name: "혜택", key: "혜택" },
+  ];
+
   //TODO: currentMonth는 리코일에서
   const currentMonth = 9;
   const category = "주유";
   const [isModalOpen, setModalOpen] = useState(false);
+
+  // TODO: API로 get해야 함
+  const thisMonthAmount = numberToAmount(128762);
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
@@ -27,7 +59,13 @@ const StatisticsPage = () => {
   return (
     <Background
       $colormode="gradient"
-      style={{ overflowY: "scroll", position: "fixed", height: "auto", border: "true" }}
+      style={{
+        overflowY: "scroll",
+        overflowX: "hidden",
+        position: "fixed",
+        height: "auto",
+        border: "true",
+      }}
     >
       <BlueContainerWrapper>
         <BlueStatisticsContainer />
@@ -51,16 +89,61 @@ const StatisticsPage = () => {
           <Text size="body2" $marginLeft="8px" $marginTop="4px">
             <b>제일 많은 혜택</b>을 받았어요 !
           </Text>
-          <CategoryContainer></CategoryContainer>
+          <FourCategory></FourCategory>
         </WhiteContainer>
 
-        <Container
-          $border={true}
-          style={{ zIndex: 110, position: "relative", overflowY: "scroll" }}
+        <StatisticsContainer
+          $borderRadius="38px"
+          $backgroundColor="white"
+          width="100vw"
         >
-          <Text size="heading1" style={{ zIndex: 100, position: "relative" }}>123123123</Text>
-          
-        </Container>
+          <Wrapper $flexDirection="row">
+            {TABS.map((tab) => (
+              <>
+                <TabWrapper
+                  key={tab.key}
+                  onClick={() => handleTabClick(tab.key)}
+                  style={{
+                    borderColor:
+                      selectedTab === tab.key ? theme.color.blue : "white",
+                  }}
+                >
+                  <Text
+                    size="body2"
+                    fontWeight="bold"
+                    color={selectedTab === tab.key ? "black1" : "grey2"}
+                  >
+                    {tab.name}
+                  </Text>
+                </TabWrapper>
+              </>
+            ))}
+          </Wrapper>
+          {/* <Statisti */}
+          <Wrapper $alignItems="start" style={{ marginTop: "30px" }}>
+            <Text size="subtitle2" fontWeight="bold">
+              이번 달에는
+            </Text>
+            <FlexDiv>
+              <Text
+                size="subtitle1"
+                fontWeight="bold"
+                color="blue"
+                $marginTop="3px"
+              >
+                {thisMonthAmount}원
+              </Text>
+              <Text
+                size="subtitle2"
+                fontWeight="light"
+                $marginLeft="6px"
+                $marginTop="6px"
+              >
+                썼어요
+              </Text>
+            </FlexDiv>
+          </Wrapper>
+        </StatisticsContainer>
       </Container>
 
       {isModalOpen && (
