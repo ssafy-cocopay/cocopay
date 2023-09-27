@@ -13,8 +13,34 @@ import Modal from "@/components/atoms/Modal/Modal";
 import { BlueContainerWrapper } from "../HomePage/HomePage";
 import { HeaderContainer, WhiteContainer } from "./StatisticsPage.styles";
 import { CategoryContainer } from "@/components/organisms/CategoryWhiteBox/CategoryContainer";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import theme from "@/styles/theme";
+
+export const StatisticsContainer = styled(Container)`
+  overflow-y: scroll;
+  position: relative;
+  top: 240px;
+  left: -26px;
+`;
+
+const TabWrapper = styled(Wrapper)`
+  padding: 27px 0 15px 0;
+  border: 3px solid white;
+  border-width: 0px 0px 2px 0px;
+
+  /* border-bottom: 3px; */
+`;
 
 const StatisticsPage = () => {
+  // Tab 선택 여부
+  const [selectedTab, setSelectedTab] = useState("내 소비");
+  const handleTabClick = (tabName: string) => {
+    setSelectedTab(tabName);
+  };
+
+  const InactiveTextColor = "grey1";
+  const ActiveTextColor = "black1";
+
   //TODO: currentMonth는 리코일에서
   const currentMonth = 9;
   const category = "주유";
@@ -27,7 +53,12 @@ const StatisticsPage = () => {
   return (
     <Background
       $colormode="gradient"
-      style={{ overflowY: "scroll", position: "fixed", height: "auto", border: "true" }}
+      style={{
+        overflowY: "scroll",
+        position: "fixed",
+        height: "auto",
+        border: "true",
+      }}
     >
       <BlueContainerWrapper>
         <BlueStatisticsContainer />
@@ -54,13 +85,44 @@ const StatisticsPage = () => {
           <CategoryContainer></CategoryContainer>
         </WhiteContainer>
 
-        <Container
-          $border={true}
-          style={{ zIndex: 110, position: "relative", overflowY: "scroll" }}
+        <StatisticsContainer
+          $borderRadius="38px"
+          $backgroundColor="white"
+          width="100vw"
         >
-          <Text size="heading1" style={{ zIndex: 100, position: "relative" }}>123123123</Text>
-          
-        </Container>
+          <Wrapper $flexDirection="row">
+            <TabWrapper
+              onClick={() => handleTabClick("내 소비")}
+              style={{
+                borderColor:
+                  selectedTab === "내 소비" ? theme.color.blue : "white",
+              }}
+            >
+              <Text
+                size="body2"
+                fontWeight="bold"
+                color={selectedTab === "내 소비" ? "black1" : "grey2"}
+              >
+                내 소비
+              </Text>
+            </TabWrapper>
+            <TabWrapper
+              onClick={() => handleTabClick("혜택")}
+              style={{
+                borderColor:
+                  selectedTab === "혜택" ? theme.color.blue : "white",
+              }}
+            >
+              <Text
+                size="body2"
+                fontWeight="bold"
+                color={selectedTab === "혜택" ? "black1" : "grey2"}
+              >
+                혜택
+              </Text>
+            </TabWrapper>
+          </Wrapper>
+        </StatisticsContainer>
       </Container>
 
       {isModalOpen && (

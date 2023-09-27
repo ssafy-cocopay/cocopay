@@ -16,6 +16,7 @@ const BlueStatisticsContainer = () => {
       $borderRadius="0 0 54px 54px"
       height="286px"
       style={{ position: "relative" }}
+      // width="120vw"
     >
       <Image
         src={thorusBlue}
