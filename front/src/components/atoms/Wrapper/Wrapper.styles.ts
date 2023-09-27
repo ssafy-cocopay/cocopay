@@ -14,7 +14,6 @@ export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: ${(props) => props.$flexDirection || "column"};
   justify-content: ${(props) => props.$justifyContent || "center"};
-  /* justify-content: space-between; */
   align-items: ${(props) => props.$alignItems || "center"};
   width: ${(props) => props.width || "100%"};
   flex-grow: ${(props) => props.$flexGrow || "none"};

@@ -48,6 +48,12 @@ public class UserCardService {
                 .bodyToMono(UserCardDto.class)
                 .block();
 
+
+        Optional<UserCard> check = userCardRepository.findByUserCardId(userCardDto.getUserCardId());
+        if (check.isPresent()) {
+            throw new CustomException(ErrorCode.DUPLICATE_CARD);
+        }
+
         Optional<User> user = userRepository.findById(userCardRegisterDto.getUserId());
         System.out.println(userCardDto.getUserCardId());
         int count = userCardRepository.findUserCardListByCocoType(userCardRegisterDto.getUserId()).size() + 1;
