@@ -80,7 +80,7 @@ const HomePage = () => {
           <BarcodeContainer code={barcodeValue} />
           <BarcodeUnderWrapper>
             <FlexDiv>
-              <TimerComponent timerColor="grey1" />
+              <TimerComponent />
               <Image
                 src={refresh}
                 width={1}

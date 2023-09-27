@@ -4,7 +4,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 
 export const StatisticsContainer = styled(Container)`
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   position: relative;
   top: 240px;
   left: -26px;
@@ -55,4 +55,12 @@ export const TotalAmountWrapper = styled(Wrapper)`
   align-items: start;
   margin-top: 30px;
   padding-left: 10px;
-`
+`;
+
+export const BarWrapper = styled(Wrapper)`
+  margin-top: 10px;
+  height: 35px;
+  border-radius: 12px;
+  width: 95%;
+  margin-bottom: 100px;
+`;
