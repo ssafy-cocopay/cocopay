@@ -15,6 +15,13 @@ import Performance from "@/components/molecules/Performance/Performance";
 import Calendar from "@/components/molecules/Calendar/Calendar";
 import CardHistory from "@/components/molecules/CardHistory/CardHistory";
 import PaymentList from "@/components/molecules/PaymentList/PaymentList";
+import styled from "styled-components";
+
+export const TextCenterWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+`;
 
 const CardDetailPage = () => {
   const navigate = useNavigate();
@@ -26,10 +33,9 @@ const CardDetailPage = () => {
     <Background
       $colormode="gradient"
       style={{
-        minHeight: "100vh",
+        position: "fixed",
       }}
     >
-      카드 상세정보 페이지
       <CardListContainer $padding="36px 24px">
         <Wrapper>
           <Image
@@ -37,23 +43,32 @@ const CardDetailPage = () => {
             width={24}
             height={24}
             $unit="px"
+            style={{ position: "fixed" }}
           ></Image>
-          <Text size="body2" fontWeight="bold" color="black1">
-            카드 결제내역
-          </Text>
-          <Image
+          <TextCenterWrapper>
+            <Text
+              $marginLeft="auto"
+              size="body2"
+              style={{ position: "absolute" }}
+              fontWeight="bold"
+              color="black1"
+            >
+              카드 결제내역
+            </Text>
+          </TextCenterWrapper>
+          {/* <Image
             src={iconDotsVerticalBlack}
             width={24}
             height={24}
             $unit="px"
-          ></Image>
+          ></Image> */}
         </Wrapper>
         <CardWrapper>
           <Image
             src={imgCard1}
             height={180}
             $unit="px"
-            $margin="16px 0 12px 0"
+            $margin="46px 0 12px 0"
             style={{ width: "100%" }}
           ></Image>
         </CardWrapper>

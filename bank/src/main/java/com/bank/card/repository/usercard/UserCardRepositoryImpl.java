@@ -92,7 +92,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                         card.cardName,
                         userCard.validDate,
                         card.visa, card.master,
-                        card.cardDefaultImage))
+                        card.cardDefaultImage.as("cardDefaulImage")))
                 .from(userCard)
                 .join(account).on(account.id.eq(userCard.account.id))
                 .join(user).on(user.uuid.eq(account.user.uuid))

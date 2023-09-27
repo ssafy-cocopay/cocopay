@@ -43,7 +43,7 @@ const StatisticsPage = () => {
       </HeaderContainer>
       <Container style={{ position: "relative", top: "-14px" }}>
         <WhiteContainer $left={true}>
-          <Calendar onClick={toggleModal} />
+          <Calendar onMonthClick={toggleModal} />
           <Line $margin=" 0 0 20px 0" />
           <Text size="body2" $marginLeft="8px">
             <b>{currentMonth}월</b>엔 <b>{category}</b> 카테고리에서
