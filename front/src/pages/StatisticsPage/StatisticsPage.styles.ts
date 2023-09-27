@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 
-export const CatogoryWhiteBox = styled(Container)`
+export const CategoryWhiteBox = styled(Container)`
   background-color: white;
   border-radius: 38px;
   height: 138px;
   width: 47%;
   box-shadow: ${(props) => props.theme.shadow.shadow1};
-  padding-top: 36px;
+  padding-top: 20px;
 `;
 
 export const HeaderContainer = styled(Container)`
@@ -24,10 +24,11 @@ export const WhiteContainer = styled(Container)`
   margin-top: 36px;
   background-color: white;
   border-radius: 38px;
-  height:  ;
+  height: auto;
   position: relative;
   top: 220px;
-  padding-top: 30px;
+  padding-top: 24px;
+  padding-bottom: 24px;
 `;
 
 export const WhiteCategoryWrapper = styled(FlexDiv)`
