@@ -1,44 +1,97 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { Image } from "@/components/atoms/Image/Image";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import cardImg1 from "@/assets/images/img-card1.png";
-import cardImg2 from "@/assets/images/img-card2.png";
-import cardImg3 from "@/assets/images/img-card3.png";
 import korImg from "@/assets/images/img-kor.png";
 import iconHamburgerGrey from "@/assets/images/icon-hamburger-grey.png";
 import { CardItemWrapper, Hr, CardListBar } from "./CardItem.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
-const CardItem = () => {
-  const CardInfo = [
-    {
-      cardImg: cardImg1,
-      cardName: "위버스 신한카드 체크(BTS)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 30,
-    },
-    {
-      cardImg: cardImg2,
-      cardName: "신한카드 플리(산리오캐릭터즈)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 50,
-    },
-    {
-      cardImg: cardImg3,
-      cardName: "신한카드 Way 체크 (최고심)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "체크",
-      master: true,
-      percennt: 10,
-    },
-  ];
+interface CardInfoType {
+  cardImg: string;
+  cardName: string;
+  serialNumber: string;
+  cardType: string;
+  master: boolean;
+  percennt: number;
+}
+
+interface CardItemProps {
+  card: CardInfoType;
+  onSwipeStart: () => void;
+  resetSwipe: boolean;
+  swipedIndex: number | null;  // 추가
+  index: number;               // 추가
+}
+
+function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index }: CardItemProps) {
+  // 카드의 현재 위치 (픽셀 기준)를 나타냄, 초기값 0
+  const [x, setX] = useState<number>(0);
+  // 현재 드래그 중인지의 여부, 초기값 false
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  // 드래그 시작 시의 마우스 위치, 초기값은 0
+  const [startX, setStartX] = useState<number>(0);
+  const isDeleteVisible = x <= -window.innerWidth / 32; // 이 값은 카드가 왼쪽으로 얼마나 스와이프되어야 버튼이 보일지 결정합니다.
+
+
+  // 카드 위치 초기화 하는 코드
+  // swipedIndex 또는 index가 변경될 때, 현재 카드의 index가 마지막으로 스와이프된 카드의 swipedIndex와 다르면 카드의 위치를 원래대로 초기화
+  useEffect(() => {
+    if (index !== swipedIndex) {
+      setX(0);
+    }
+  }, [swipedIndex, index]);
+
+  // resetSwipe가 true로 변경될 때 카드의 위치를 원래대로 초기화
+  useEffect(() => {
+    if (resetSwipe) {
+      setX(0);
+    }
+  }, [resetSwipe]);
+
+  // 카드 스와이핑 하는 코드
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    onSwipeStart(); // 외부에서 전달받은 함수를 호출
+    setIsDragging(true); // 드래그 시작을 알리기 위해 isDragging을 true로 설정
+    setStartX(e.clientX - x);  // 시작 위치 저장(startX를 현재 마우스 위치에서 카드의 위치 x를 뺀 값으로 설정)
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return; // isDragging이 false면 함수를 종료
+    const newX = e.clientX - startX; // newX를 계산하여 현재 마우스 위치에서 시작점 startX를 뺀 값으로 설정
+    if (newX < 0 && newX > -window.innerWidth / 16) {  // 4분의 1 제한
+      setX(newX); // newX가 0보다 작고 화면 너비의 1/16보다 큰 값이면, x를 newX로 업데이트하여 카드의 위치를 변경
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false); // 드래그 종료를 알리기 위해 isDragging을 false로 설정
+    if (x < -window.innerWidth / 32) {  // 8분의 1 지점에서 놓으면 완전히 이동
+      setX(-window.innerWidth / 16);
+    } else {
+      setX(0);  // 원래 위치로 복귀
+    }
+  };
+
 
   return (
-    <div>
+    <div
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      style={{
+          transform: `translateX(${x}px)`,
+          transition: isDragging ? 'none' : 'transform 0.3s ease',
+          display: "flex",
+          width: "125%"
+      }}
+    >
+      <div
+      style={{
+        width: "80%"
+      }}
+      >
       {/* TODO: 서영이가 위에 만들어놓은 더미로 맵 뿌리기 ! */}
       {/* {CardInfo.map((card,idx) => {
         return
@@ -98,7 +151,21 @@ const CardItem = () => {
       </CardItemWrapper>
       <Hr />
     </div>
+      <button
+      style={{
+        width: "15%",
+        border: "none",
+        backgroundColor: "red",
+        color: "white",
+        fontSize: "16px",
+        opacity: isDeleteVisible ? 1 : 0,  // 투명도를 사용하여 보이게/안 보이게 처리
+        pointerEvents: isDeleteVisible ? 'auto' : 'none' // 삭제 버튼을 터치/클릭하지 못하게 만듭니다.
+        }}
+      >
+        삭제
+      </button>
+    </div>
   );
-};
+}
 
 export default CardItem;
