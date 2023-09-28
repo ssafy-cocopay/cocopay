@@ -37,6 +37,16 @@ public class CardHistoryController {
         return ResponseEntity.ok(cardHistoryService.getAllamount(findHistoryByUserId));
     }
 
+    @PostMapping("/total/price")
+    ResponseEntity<?> getTotalPriceByUserId(@RequestBody FindHistoryByUserId findHistoryByUserId) {
+        return ResponseEntity.ok(cardHistoryService.getAllPrice(findHistoryByUserId));
+    }
+    @PostMapping("/total/discount")
+    ResponseEntity<?> getTotalDiscountByUserId(@RequestBody FindHistoryByUserId findHistoryByUserId) {
+        return ResponseEntity.ok(cardHistoryService.getAllDiscount(findHistoryByUserId));
+    }
+
+
     @PostMapping("/total/amount")
     ResponseEntity getTotalAmount(@RequestBody TotalByMonthReqDto totalByMonth) {
         TotalByMonth res = cardHistoryService.getTotalByMonth(totalByMonth.getCardUuidList(), totalByMonth.getMonth());

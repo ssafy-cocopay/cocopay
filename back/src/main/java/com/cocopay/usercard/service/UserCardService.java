@@ -112,7 +112,7 @@ public class UserCardService {
         userCardRepository.save(userCard.get());
     }
 
-    //사용자별 통계
+    //사용자별 통계 - 전체
     public CategoryResponseDto getAllamount(FindHistoryByUserId findHistoryByUserId) {
         WebClient webClient = WebClient.create();
 
@@ -128,8 +128,47 @@ public class UserCardService {
                 .bodyToMono(CategoryResponseDto.class)
                 .block();
 
-
         return categoryResponseDto;
+    }
+
+    //사용자별 통계 - 소비
+    public CategoryPriceResponseDto getAllPrice(FindHistoryByUserId findHistoryByUserId) {
+        WebClient webClient = WebClient.create();
+
+        //api 주소
+        String url = "http://localhost:8081/bank/card-history/total/price";
+
+        //임시 동기 요청
+        CategoryPriceResponseDto categoryPriceResponseDto = webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(findHistoryByUserId)
+                .retrieve()
+                .bodyToMono(CategoryPriceResponseDto.class)
+                .block();
+
+
+        return categoryPriceResponseDto;
+    }
+
+    //사용자별 통계 - 혜택
+    public CategoryDiscountResponseDto getAllDiscount(FindHistoryByUserId findHistoryByUserId) {
+        WebClient webClient = WebClient.create();
+
+        //api 주소
+        String url = "http://localhost:8081/bank/card-history/total/discount";
+
+        //임시 동기 요청
+        CategoryDiscountResponseDto categoryDiscountResponseDto = webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(findHistoryByUserId)
+                .retrieve()
+                .bodyToMono(CategoryDiscountResponseDto.class)
+                .block();
+
+
+        return categoryDiscountResponseDto;
     }
 
     //카드 한달 이용내역
@@ -245,7 +284,7 @@ public class UserCardService {
                 .bodyToMono(CategoryResponseDto.class)
                 .block();
         MainAmountDto mainAmountDto = MainAmountDto.builder()
-                .allPrice(categoryResponseDto.getAllPrice())
+                .allPrice(categoryResponseDto.getAllPriceAmount())
                 .allDiscountAmount(categoryResponseDto.getAllDiscountAmount())
                 .build();
 

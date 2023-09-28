@@ -1,4 +1,4 @@
-package com.cocopay.usercard.dto;
+package com.bank.card_history.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryResponseDto {
+public class CategoryPriceResponseDto {
     private Long allPriceAmount;
-    private int allDiscountAmount;
-    private List<CategoryDto> categoryList;
+    private List<CategoryPriceDto> categoryList;
 }
