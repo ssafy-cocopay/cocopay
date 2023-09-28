@@ -13,7 +13,7 @@ public class AppConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
-                .exposedHeaders("AccessToken","RefreshToken")
+                .exposedHeaders("AccessToken","RefreshToken","userId")
                 .allowCredentials(true);
     }
 }

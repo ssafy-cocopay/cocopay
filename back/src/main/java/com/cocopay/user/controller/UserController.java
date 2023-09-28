@@ -12,8 +12,12 @@ import com.cocopay.user.dto.response.UserJoinResDto;
 import com.cocopay.user.mapper.UserMapper;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
+import com.cocopay.usercard.dto.UserCardDto;
+import com.cocopay.usercard.dto.UserCardResDto;
 import com.cocopay.usercard.entity.UserCard;
+import com.cocopay.usercard.mapper.UserCardMapper;
 import com.cocopay.usercard.repository.UserCardRepository;
+import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +38,14 @@ public class UserController {
     private final UserCardRepository userCardRepository;
     private final UserMapper userMapper;
     private final PaymentService paymentService;
+    private final UserCardService userCardService;
+    private final UserCardMapper userCardMapper;
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(
             @RequestBody AuthRequestDto authRequestDto) {
-        if(authRequestDto.getTel().length() != 11)
-            throw  new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
+        if (authRequestDto.getTel().length() != 11)
+            throw new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
 
         String code = userService.sendRandomMessage(authRequestDto.getTel());
 
@@ -52,8 +58,8 @@ public class UserController {
     @PostMapping("/auth-check")
     public ResponseEntity<?> checkAuthMessage(@RequestBody AuthCheckDto authCheckDto) {
         log.info("문자 인증 확인 요청");
-        if(authCheckDto.getTel().length() != 11)
-            throw  new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
+        if (authCheckDto.getTel().length() != 11)
+            throw new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
         if (!userService.checkAuthMessage(authCheckDto.getTel(), authCheckDto.getCode()))
             throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
 
@@ -85,8 +91,7 @@ public class UserController {
     //경로 관련 이슈
     //userId가 헤더에 담아서 오나요..?
     @PutMapping("")
-    public ResponseEntity<?> updateUserInfo(@RequestHeader("userId") int userId, @RequestBody UserUpdateDto userUpdateDto)
-    {
+    public ResponseEntity<?> updateUserInfo(@RequestHeader("userId") int userId, @RequestBody UserUpdateDto userUpdateDto) {
         userService.updateUserInfo(userId, userUpdateDto);
 
         return ResponseEntity.ok("OK");
@@ -113,13 +118,28 @@ public class UserController {
     @GetMapping("/card")
     public ResponseEntity<?> getUserCardList(@RequestHeader("userId") int userId) {
         userService.checkUser(userId);
+
         UserCardResponseListDto result = userApiCallService.getUserCardFromBank(userId);
-        userService.insertUserCard(result.getUserCardList(), userId);
-        return ResponseEntity.ok(result);
+        List<UserCardDto> userCardDtoList = userService.checkDuplicate(result.getUserCardList(), userId);
+
+        //사용자 카드 암호화 진행
+        userCardDtoList = userCardService.cardNumEncryption(userCardDtoList);
+        
+        //저장
+        userService.insertUserCard(userCardDtoList, userId);
+        List<Integer> cardUuidList = userCardService.getCardUuidList(userCardDtoList);
+        //실적 조회 api call 이후 실적 정보 redis에 저장
+        paymentService.getPerformanceAndSave(cardUuidList);
+
+        //실적 == carduuid 매칭 진행
+        //반환 진행 할 떄 매퍼로 신용카드 -> 신용으로 바꿈
+        List<UserCardResDto> resDtoList = userCardService.cardUuidEqPerformance(userCardDtoList);
+
+        return ResponseEntity.ok(resDtoList);
     }
 
     @GetMapping()
-    public ResponseEntity getTotalByMonth(@RequestHeader ("userId") int userId) {
+    public ResponseEntity getTotalByMonth(@RequestHeader("userId") int userId) {
         log.info("userId : {}", userId);
         log.info("메인페이지 한 달 사용내역 및 할인 받은 금액 조회");
         int month = LocalDateTime.now().getMonth().getValue();

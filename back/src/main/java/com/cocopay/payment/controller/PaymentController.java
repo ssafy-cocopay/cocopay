@@ -28,19 +28,16 @@ import java.util.List;
 public class PaymentController {
 
     private final OrderKeyService orderKeyService;
-    private final UserCardService userCardService;
     private final PaymentService paymentService;
     private final PaymentMapper paymentMapperTest;
     private final BarcodeKeyService barcodeKeyService;
-    private final ApiCallService apiCallService;
-    private final PerformanceKeyService performanceKeyService;
 
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
                                          @RequestBody PayPostDto payPostDto) {
         log.info("payPostDto : {}", payPostDto);
         payPostDto.setUserId(userId);
-        UserCard findUserCard = userCardService.findUserCardById(payPostDto.getCardId());
+        UserCard findUserCard = paymentService.findUserCardById(payPostDto.getCardId());
 
         OrderKey findOrderKey = orderKeyService.findOrderKey(payPostDto.getUserId());
 
@@ -79,7 +76,7 @@ public class PaymentController {
         log.info("바코드에서 추출한 카드id : {}", cardId);
         payPostDto.setCardId(cardId);
 
-        UserCard findUserCard = userCardService.findUserCardById(cardId);
+        UserCard findUserCard = paymentService.findUserCardById(cardId);
         PaymentReqDto paymentReqDto = paymentService.isCocoCard(findUserCard, payPostDto);
 
         //최종 결제 진행

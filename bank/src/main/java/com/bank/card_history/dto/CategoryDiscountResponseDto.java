@@ -4,10 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+
 @Builder
 @Getter
-public class CategoryResponseDto {
-    private Long allPriceAmount;
+public class CategoryDiscountResponseDto {
     private int allDiscountAmount;
-    private List<CategoryDto> categoryList;
+    private List<CategoryDiscountDto> categoryList;
 }

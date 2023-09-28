@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import { Text } from "@/components/atoms/Text/Text.styles";
@@ -25,6 +24,7 @@ import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 import numberToAmount from "@/utils/NumToAmount";
 import StatisticsBar from "@/components/organisms/StatisticsBar/StatisticsBar";
 import StatisticsContents from "@/components/organisms/StatisticsContents/StatisticsContents";
+import { CategoryData } from "../../types/category";
 
 const StatisticsPage = () => {
   // Tab 선택 여부
@@ -46,6 +46,37 @@ const StatisticsPage = () => {
   // TODO: API로 get해야 함
   const thisMonthAmount = numberToAmount(128762);
   const thisMonthDiscount = numberToAmount(8930);
+
+  // TODO: API로 get
+  const priceAmounts: CategoryData[] = [
+    { category: "편의점", price: 94970, rate: 44.7 },
+    { category: "영화", price: 82820, rate: 22.8 },
+    { category: "문화", price: 64900, rate: 10.0 },
+    { category: "배달", price: 34280, rate: 5.3 },
+    { category: "카페", price: 24970, rate: 3.8 },
+    { category: "대형쇼핑몰", price: 20300, rate: 3.1 },
+    { category: "항공", price: 19310, rate: 2.9 },
+    { category: "음식점", price: 14970, rate: 2.3 },
+    { category: "주유", price: 9200, rate: 1.4 },
+    { category: "온라인쇼핑", price: 4130, rate: 0.6 },
+    { category: "대중교통", price: 290, rate: 0 },
+    { category: "기타", price: 38610, rate: 3.1 },
+  ];
+
+  const discountedAmounts: CategoryData[] = [
+    { category: "영화", price: 82820, rate: 22.8 },
+    { category: "편의점", price: 94970, rate: 44.7 },
+    { category: "카페", price: 24970, rate: 3.8 },
+    { category: "문화", price: 64900, rate: 10.0 },
+    { category: "온라인쇼핑", price: 4130, rate: 0.6 },
+    { category: "항공", price: 19310, rate: 2.9 },
+    { category: "음식점", price: 14970, rate: 2.3 },
+    { category: "주유", price: 9200, rate: 1.4 },
+    { category: "배달", price: 34280, rate: 5.3 },
+    { category: "대중교통", price: 290, rate: 0 },
+    { category: "대형쇼핑몰", price: 20300, rate: 3.1 },
+    { category: "기타", price: 38610, rate: 3.1 },
+  ];
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
@@ -92,12 +123,12 @@ const StatisticsPage = () => {
           $borderRadius="38px"
           $backgroundColor="white"
           width="100vw"
+          height="auto"
         >
           <Wrapper $flexDirection="row">
             {TABS.map((tab) => (
-              <>
+              <React.Fragment key={tab.key}>
                 <TabWrapper
-                  key={tab.key}
                   onClick={() => handleTabClick(tab.key)}
                   style={{
                     borderColor:
@@ -112,7 +143,7 @@ const StatisticsPage = () => {
                     {tab.name}
                   </Text>
                 </TabWrapper>
-              </>
+              </React.Fragment>
             ))}
           </Wrapper>
           <TotalAmountWrapper>
@@ -143,7 +174,12 @@ const StatisticsPage = () => {
           </TotalAmountWrapper>
           {/* bar */}
           <StatisticsBar />
-          <StatisticsContents />
+          {/* 카테고리별 소비/혜택순 콘텐츠 */}
+          <StatisticsContents
+            contents={
+              selectedTab === "내 소비" ? priceAmounts : discountedAmounts
+            }
+          />
         </StatisticsContainer>
       </Container>
 

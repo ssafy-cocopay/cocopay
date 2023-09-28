@@ -34,9 +34,10 @@ public class UserCardController {
     }
 
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
-    @PostMapping("/list/")
-    public ResponseEntity<List<UserCard>> UserCardList(@RequestHeader("userId") int userId){
-        return ResponseEntity.ok(userCardService.findUserCardList(userId));
+    @GetMapping("/list")
+    public ResponseEntity<List<CardListDto>> UserCardList(@RequestHeader("userId") int userId){
+        List<UserCard> userCardList = userCardService.findUserCardList(userId);
+        return ResponseEntity.ok(userCardMapper.userCardListToCardListList(userCardList));
     }
 
     //카드 삭제
@@ -47,10 +48,20 @@ public class UserCardController {
     }
 
     //사용자 통계 조회
-    @PostMapping("/total")
+    @GetMapping("/total")
     ResponseEntity<?> getCardHistoryByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
         findHistoryByUserId.setUserId(userId);
         return ResponseEntity.ok(userCardService.getAllamount(findHistoryByUserId));
+    }
+    @GetMapping("/total/price")
+    ResponseEntity<?> getTotalPriceByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+        findHistoryByUserId.setUserId(userId);
+        return ResponseEntity.ok(userCardService.getAllPrice(findHistoryByUserId));
+    }
+    @GetMapping("/total/discount")
+    ResponseEntity<?> getTotalDiscountByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+        findHistoryByUserId.setUserId(userId);
+        return ResponseEntity.ok(userCardService.getAllDiscount(findHistoryByUserId));
     }
 
     //월단위 카드 이용 내역 조회

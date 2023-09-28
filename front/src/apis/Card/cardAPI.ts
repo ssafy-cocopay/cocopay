@@ -1,5 +1,5 @@
 // apis/User/UserAPI.ts
-import { instance } from '@/apis/instance';
+import { instance } from "@/apis/instance";
 // TODO: types에 카드 타입 지정해주고 그곳으로부터 불러오기
 // import { Card, TotalAmountMonth } from '@/types/card';
 
