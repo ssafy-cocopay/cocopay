@@ -57,7 +57,7 @@ public class UserCardService {
         Optional<User> user = userRepository.findById(userCardRegisterDto.getUserId());
         System.out.println(userCardDto.getUserCardId());
         int count = userCardRepository.findUserCardListByCocoType(userCardRegisterDto.getUserId()).size() + 1;
-        String SerialNumber = userCardDto.getSerialNumber().substring(0, 4) + "-****-****-" + userCardDto.getSerialNumber().substring(15, 19);
+        String SerialNumber = userCardDto.getSerialNumber().substring(0, 7) + "**-****-" + userCardDto.getSerialNumber().substring(15, 19);
         UserCard userCard = UserCard.builder()
                 .user(user.get())
                 .cocoType(cocopay)
