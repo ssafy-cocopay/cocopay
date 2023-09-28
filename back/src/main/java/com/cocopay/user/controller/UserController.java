@@ -120,11 +120,11 @@ public class UserController {
         List<UserCardDto> userCardDtoList = userService.checkDuplicate(result.getUserCardList(), userId);
         userService.insertUserCard(userCardDtoList, userId);
 
-        return ResponseEntity.ok(userCardDtoList);
+//        return ResponseEntity.ok(userCardDtoList);
         List<UserCardDto> userCardList = result.getUserCardList();
         userCardList = userCardService.cardNumEncryption(userCardList);
         userService.insertUserCard(userCardList, userId);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(userCardList);
     }
 
     @GetMapping()
