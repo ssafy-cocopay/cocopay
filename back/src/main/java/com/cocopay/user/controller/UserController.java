@@ -41,8 +41,8 @@ public class UserController {
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(
             @RequestBody AuthRequestDto authRequestDto) {
-        if(authRequestDto.getTel().length() != 11)
-            throw  new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
+        if (authRequestDto.getTel().length() != 11)
+            throw new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
 
         String code = userService.sendRandomMessage(authRequestDto.getTel());
 
@@ -55,8 +55,8 @@ public class UserController {
     @PostMapping("/auth-check")
     public ResponseEntity<?> checkAuthMessage(@RequestBody AuthCheckDto authCheckDto) {
         log.info("문자 인증 확인 요청");
-        if(authCheckDto.getTel().length() != 11)
-            throw  new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
+        if (authCheckDto.getTel().length() != 11)
+            throw new CustomException(ErrorCode.INVALID_PHONE_NUMBER);
         if (!userService.checkAuthMessage(authCheckDto.getTel(), authCheckDto.getCode()))
             throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
 
@@ -88,8 +88,7 @@ public class UserController {
     //경로 관련 이슈
     //userId가 헤더에 담아서 오나요..?
     @PutMapping("")
-    public ResponseEntity<?> updateUserInfo(@RequestHeader("userId") int userId, @RequestBody UserUpdateDto userUpdateDto)
-    {
+    public ResponseEntity<?> updateUserInfo(@RequestHeader("userId") int userId, @RequestBody UserUpdateDto userUpdateDto) {
         userService.updateUserInfo(userId, userUpdateDto);
 
         return ResponseEntity.ok("OK");
@@ -116,7 +115,12 @@ public class UserController {
     @GetMapping("/card")
     public ResponseEntity<?> getUserCardList(@RequestHeader("userId") int userId) {
         userService.checkUser(userId);
+
         UserCardResponseListDto result = userApiCallService.getUserCardFromBank(userId);
+        List<UserCardDto> userCardDtoList = userService.checkDuplicate(result.getUserCardList(), userId);
+        userService.insertUserCard(userCardDtoList, userId);
+
+        return ResponseEntity.ok(userCardDtoList);
         List<UserCardDto> userCardList = result.getUserCardList();
         userCardList = userCardService.cardNumEncryption(userCardList);
         userService.insertUserCard(userCardList, userId);
@@ -124,7 +128,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity getTotalByMonth(@RequestHeader ("userId") int userId) {
+    public ResponseEntity getTotalByMonth(@RequestHeader("userId") int userId) {
         log.info("userId : {}", userId);
         log.info("메인페이지 한 달 사용내역 및 할인 받은 금액 조회");
         int month = LocalDateTime.now().getMonth().getValue();
