@@ -203,7 +203,7 @@ public class UserCardService {
         String url = "http://localhost:8081/bank/performance/list";
 
         List<Integer> cardList = new ArrayList<>();
-        cardList.add(cardId);
+        cardList.add(userCard.getCardUuid());
         CardUuidListDto cardUuidListDto = new CardUuidListDto();
         cardUuidListDto.setCardUuidList(cardList);
 
