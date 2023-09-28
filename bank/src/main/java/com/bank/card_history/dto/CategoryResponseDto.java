@@ -7,7 +7,7 @@ import java.util.List;
 @Builder
 @Getter
 public class CategoryResponseDto {
-    private Long allPrice;
+    private Long allPriceAmount;
     private int allDiscountAmount;
     private List<CategoryDto> categoryList;
 }
