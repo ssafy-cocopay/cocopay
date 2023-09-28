@@ -1,5 +1,7 @@
 package com.cocopay.payment.service;
 
+import com.cocopay.exception.dto.CustomException;
+import com.cocopay.exception.dto.ErrorCode;
 import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.apicall.dto.req.UserCardBenefitBodyDto;
@@ -15,6 +17,7 @@ import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.redis.service.BenefitKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
+import com.cocopay.user.repository.UserRepository;
 import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
@@ -36,10 +39,9 @@ public class PaymentService {
     private final ApiCallService apiCallService;
     private final PerformanceKeyService performanceKeyService;
     private final BenefitKeyService benefitKeyService;
-    private final UserService userService;
     private final UserCardRepository userCardRepository;
     private final PaymentMapper paymentMapper;
-    private final UserCardService userCardService;
+    private final UserRepository userRepository;
 
     //오토체인징
     //카드 리스트 업만 진행하고 바로 반환 진행
@@ -58,7 +60,7 @@ public class PaymentService {
         //실적 + 할인이 적용된 dto
         List<CardOfferResDto> offerResDtoList = makeCardOfferList(userCardList, dto);
 
-        User findUser = userService.findUserById(dto.getUserId());
+        User findUser = findUserById(dto.getUserId());
         if (findUser.isRecommendType()) {
             log.info("할인 기준 카드 정렬 진행");
             return benefitOrder(offerResDtoList);
@@ -85,13 +87,13 @@ public class PaymentService {
 
             CardOfferResDto cardOfferResDto = autoChanging(payPostDto).get(0);
             log.info("코코페이가 추천한 카드 이름 : {}", cardOfferResDto.getCardName());
-            cardUuid = userCardService.findUserCardById(cardOfferResDto.getCardId()).getCardUuid();
+            cardUuid = findUserCardById(cardOfferResDto.getCardId()).getCardUuid();
             return paymentMapper.toPaymentReqDto(cardUuid, payPostDto, payPostDto.getOrderPrice());
         }
         //코코카드가 아님
         else {
             log.info("코코카드 아님");
-            cardUuid = userCardService.findUserCardById(payPostDto.getCardId()).getCardUuid();
+            cardUuid = findUserCardById(payPostDto.getCardId()).getCardUuid();
             return paymentMapper.toPaymentReqDto(cardUuid, payPostDto);
         }
     }
@@ -271,7 +273,7 @@ public class PaymentService {
         String graphRate = String.format("%.1f", getGraphRate(performanceKey.getTotalPrice(), performanceKey.getPrice()));
         int remainingAmt = getRemainingAmt(performanceKey);
 
-        UserCard findUserCard = userCardService.findUserCardByUuid(cardUuid);
+        UserCard findUserCard = findUserCardByUuid(cardUuid);
         String cardImage = findUserCard.getCardDefaultImage();
 
         if (findUserCard.getCardCustomImage() != null) {
@@ -279,6 +281,27 @@ public class PaymentService {
         }
 
         return paymentMapper.toPayAfterResDto(cardImage, findUserCard.getCardName(), remainingAmt, graphRate, performanceKey.getNextLevel(),discounted);
+    }
+
+    public UserCard findUserCardById(int cardId) {
+        Optional<UserCard> findUserCard = userCardRepository.findById(cardId);
+
+        return findUserCard
+                .orElseThrow(() -> new RuntimeException("해당 카드 없음"));
+    }
+
+    public UserCard findUserCardByUuid(int cardUuid) {
+        Optional<UserCard> findUserCard = userCardRepository.findUserCardByUuid(cardUuid);
+
+        return findUserCard
+                .orElseThrow(() -> new CustomException(ErrorCode.DATA_NOT_FOUND));
+    }
+
+    public User findUserById(int userId) {
+        Optional<User> findUser = userRepository.findById(userId);
+
+        return findUser
+                .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
     }
 
 }
