@@ -7,6 +7,7 @@ import com.cocopay.redis.key.AuthHash;
 import com.cocopay.redis.repository.AuthHashRepository;
 import com.cocopay.redis.service.FcmKeyService;
 import com.cocopay.user.dto.request.*;
+import com.cocopay.user.dto.response.UserCardResponseListDto;
 import com.cocopay.user.dto.response.UserFindResponseDto;
 import com.cocopay.user.dto.response.UserJoinResDto;
 import com.cocopay.user.entity.User;
@@ -14,6 +15,7 @@ import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.UserCardDto;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
+import com.cocopay.usercard.service.UserCardService;
 import com.cocopay.util.fcm.service.FcmService;
 import com.cocopay.util.sens.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +38,7 @@ public class UserService {
     private final UserCardRepository userCardRepository;
     private final UserApiCallService userApiCallService;
     private final FcmKeyService fcmKeyService;
+    private final UserCardService userCardService;
 
     public String sendRandomMessage(String tel) {
         Naver_Sens_V2 message = new Naver_Sens_V2();
@@ -176,4 +176,15 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
     }
 
+    //코코페이와 은행카드의 동기화이전에 중복을 걸러주는 메소드입니다.
+    public List<UserCardDto> checkDuplicate(List<UserCardDto> bankCardList, int userId) {
+        bankCardList.get(0).getUserCardId();
+        List<UserCard> userCardList = userCardService.findUserCardList(userId);
+        List<UserCardDto> result = bankCardList.stream()
+                .filter(bankCard -> userCardList.stream()
+                        .noneMatch(cocoCard -> Objects.equals(bankCard.getUserCardId(), cocoCard.getCardUuid())))
+                .toList();
+
+        return result;
+    }
 }

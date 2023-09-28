@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import { useHistory } from "react-router-dom";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import Back from "@/components/atoms/Back/Back";
@@ -8,7 +9,19 @@ import Penguins from "@/assets/images/img-penguins.png";
 import Background1 from "@/assets/images/bg-onboarding-1.png";
 import Hello from "@/assets/images/text-안녕하세요.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-const OnboardingPage1 = () => {
+
+// onNextPage의 타입을 명시적으로 정의
+type OnboardingPage1Props = {
+  onNextPage: () => void; // 예를 들어, 이동 함수의 타입은 void로 정의할 수 있습니다.
+};
+
+function OnboardingPage1(props: OnboardingPage1Props) {
+  const { onNextPage } = props;
+  const handlePageTransition = () => {
+    // 페이지 이동 로직 추가
+    onNextPage(); // 다음 페이지로 이동
+  };
+
   return (
     <Container
       // $left={true}
@@ -19,6 +32,7 @@ const OnboardingPage1 = () => {
         backgroundPosition: "center center",
       }}
       $border={true}
+      onClick={handlePageTransition}
     >
       <Container
         $left={true}
@@ -55,6 +69,6 @@ const OnboardingPage1 = () => {
       </Container>
     </Container>
   );
-};
+}
 
 export default OnboardingPage1;

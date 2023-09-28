@@ -22,6 +22,7 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                 .selectFrom(userCard)
                 .where(userCard.user.id.eq(userId),
                         userCard.cocoType.eq(false), userCard.withdrawDate.isNull())
+                .orderBy(userCard.cardOrder.asc())
                 .fetch();
     }
 
