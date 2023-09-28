@@ -13,7 +13,7 @@ const getCardDetails = async (cardId: number) => {
     }
   };
 
-// 카드 정보를 업데이트할 일은 없으나 다른 put 요청이 있다면~
+// 카드 정보를 업데이트할 일은 없으나 다른 put 요청이 있다면 이런 구조로 활용하기 ~ 
 // 필요없으면 이 부분 지워주삼
 const updateCard = async (card: Card) => {
   try {
@@ -22,6 +22,8 @@ const updateCard = async (card: Card) => {
     new Error('user name put error');
   }
 };
+
+
 
 
 export { updateCard, getCardDetails }
