@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryResponseDto {
-    private Long allPrice;
+    private Long allPriceAmount;
     private int allDiscountAmount;
     private List<CategoryDto> categoryList;
 }
