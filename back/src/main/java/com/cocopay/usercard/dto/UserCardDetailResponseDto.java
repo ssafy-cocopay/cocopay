@@ -20,8 +20,9 @@ public class UserCardDetailResponseDto {
     private int price;
 
     //달성한 비율
-    private int percent;
+    private double percent;
 
-    //이번달 총 금액
-    private int totalPrice;
+    //카드 이미지
+    private String cardImage;
+
 }
