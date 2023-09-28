@@ -15,6 +15,9 @@ import cardImg3 from "@/assets/images/img-card3.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
+import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
+import { useDeleteCard } from "@/apis/Card/Mutations/useDeleteCard";
+import { Card } from "@/types/card";
 
 const CardUploadCompletePage = () => {
 
@@ -23,6 +26,7 @@ const CardUploadCompletePage = () => {
   const navigatePage = (path: string) => {
       navigate(path);
   };
+  const CardList = useGetCardList();
 
   // 현재 스와이핑되고 있는 CardItem의 인덱스를 저장
   const [swipedIndex, setSwipedIndex] = useState<number | null>(null);
@@ -37,68 +41,28 @@ const CardUploadCompletePage = () => {
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteCardId, setDeleteCardId] = useState(0)
+  const useDeleteCardMutation = useDeleteCard()
+  const deleteCard = (deleteCardId : number) => {
+    useDeleteCardMutation.mutate(
+      deleteCardId
+    ),
+    {
+      onSuccess: () => {
+        setIsModalOpen((prev) => !prev);
+      },
+      onError: () => {
+        console.log('삭제 실패')
+      }
+    }
+  }
 
   //모달 오픈 함수
-  const toggleModal = () => {
-    console.log("Modal");
+  const toggleModal = (cardId : number) => {
+    setDeleteCardId(cardId)
     setIsModalOpen((prev) => !prev);
   };
 
-  const deleteCard = () => {
-    console.log("카드 삭제 요청 보내기"); // 여기에서 실제 삭제 요청을 보내는 로직을 추가해야 합니다.
-    toggleModal(); // 삭제 요청 후 모달을 닫을 수 있도록 모달을 닫는 함수를 호출합니다.
-  };
-
-  const CardInfo = [
-    {
-      cardImg: cardImg1,
-      cardName: "위버스 신한카드 체크(BTS)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 30,
-    },
-    {
-      cardImg: cardImg2,
-      cardName: "신한카드 플리(산리오캐릭터즈)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 50,
-    },
-    {
-      cardImg: cardImg3,
-      cardName: "신한카드 Way 체크 (최고심)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "체크",
-      master: true,
-      percennt: 10,
-    },
-    {
-      cardImg: cardImg1,
-      cardName: "위버스 신한카드 체크(BTS)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 30,
-    },
-    {
-      cardImg: cardImg2,
-      cardName: "신한카드 플리(산리오캐릭터즈)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 50,
-    },
-    {
-      cardImg: cardImg3,
-      cardName: "신한카드 Way 체크 (최고심)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "체크",
-      master: true,
-      percennt: 10,
-    },
-  ];
 
   return (
     <Background
@@ -132,7 +96,7 @@ const CardUploadCompletePage = () => {
           오른쪽 아이콘을 눌러 카드 순서를 변경할 수 있어요.
         </Text>
         <Hr />
-        {CardInfo.map((card, idx) => (
+        {CardList.map((card: Card, idx: number) => (
           <CardItem
             key={idx}
             card={card}
@@ -140,7 +104,7 @@ const CardUploadCompletePage = () => {
             resetSwipe={swipedIndex !== null && swipedIndex !== idx}
             swipedIndex={swipedIndex}   // 추가
             index={idx}                 // 추가
-            deletemodal={() => toggleModal()}
+            opendeletemodal={() => toggleModal(card.id)}
           />
         ))}
         <Layout>
@@ -165,8 +129,8 @@ const CardUploadCompletePage = () => {
             </Button>
         </Layout>
         {isModalOpen && (
-        <ModalBg onClick={toggleModal}>
-          <Modal toggleModal={toggleModal}>
+        <ModalBg onClick={() =>toggleModal(deleteCardId)}>
+          <Modal toggleModal={() =>toggleModal(deleteCardId)}>
             <Wrapper $padding="10px" style={{ paddingTop: "30px" }}>
               <Wrapper>
                 <Text
@@ -195,7 +159,7 @@ const CardUploadCompletePage = () => {
                   $width="9rem"
                   option="deActivated"
                   style={{ margin: 10 }}
-                  onClick={toggleModal}
+                  onClick={() =>toggleModal(deleteCardId)}
                 >
                   취소
                 </Button>
@@ -203,7 +167,7 @@ const CardUploadCompletePage = () => {
                   $width="9rem"
                   option="danger"
                   style={{ margin: 10 }}
-                  onClick={deleteCard}
+                  onClick={() => deleteCard(deleteCardId)}
                 >
                   삭제
                 </Button>

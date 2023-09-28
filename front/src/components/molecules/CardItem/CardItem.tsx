@@ -6,26 +6,20 @@ import korImg from "@/assets/images/img-kor.png";
 import iconHamburgerGrey from "@/assets/images/icon-hamburger-grey.png";
 import { CardItemWrapper, Hr, CardListBar } from "./CardItem.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-
-interface CardInfoType {
-  cardImg: string;
-  cardName: string;
-  serialNumber: string;
-  cardType: string;
-  master: boolean;
-  percennt: number;
-}
+import imgMaster from "@/assets/images/img-master.png"
+import imgVisa from "@/assets/images/img-visa.png"
+import { Card } from '@/types/card';
 
 interface CardItemProps {
-  card: CardInfoType;
+  card: Card;
   onSwipeStart: () => void;
   resetSwipe: boolean;
   swipedIndex: number | null;  // 추가
   index: number;               // 추가
-  deletemodal: () => void;
+  opendeletemodal: () => void;
 }
 
-function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, deletemodal }: CardItemProps) {
+function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendeletemodal }: CardItemProps) {
   // 카드의 현재 위치 (픽셀 기준)를 나타냄, 초기값 0
   const [x, setX] = useState<number>(0);
   // 현재 드래그 중인지의 여부, 초기값 false
@@ -98,10 +92,10 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, deletemo
         return
       })} */}
       <CardItemWrapper $margin="12px 24px">
-        <Image src={cardImg1} width={90} height={56} $unit="px"></Image>
+        <Image src={card.cardImage} width={90} height={56} $unit="px"></Image>
         {/* TODO: 이부분 asset에 이미지 저장해놓고 api값이랑 맞춰서 국내인지 master 인지 뿌리는건가요? 확인부탁 */}
         <Image
-          src={korImg}
+          src={card.master ? imgMaster : card.visa ? imgVisa : korImg}
           width={24}
           height={16}
           $unit="px"
@@ -111,7 +105,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, deletemo
         <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around">
           <CardItemWrapper>
             <Text size="small2" fontWeight="regular" color="black1">
-              위버스 신한카드 체크(BTS)
+              {card.cardName}
             </Text>
           </CardItemWrapper>
           <CardItemWrapper>
@@ -121,20 +115,20 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, deletemo
               color="grey1"
               $margin="0 4px 0 0"
             >
-              체크
+              {card.cardType}
             </Text>
             <Text size="small3" fontWeight="light" color="grey1">
-              3571-89**-****-4485
+              {card.serialNumber}
             </Text>
           </CardItemWrapper>
           <div style={{position: 'relative', width: '90%'}}>
             <CardListBar
-            width="90%"
+            width="100%"
             $bgc="grey4"
             >
             </CardListBar>
             <CardListBar
-            width="30%"
+            width={`${card.graphRate}%`}
             $bgc="blue"
             $isAbsolute={true}
             >
@@ -153,7 +147,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, deletemo
       <Hr />
     </div>
       <button
-      onClick={deletemodal}
+      onClick={opendeletemodal}
       style={{
         width: "15%",
         border: "none",

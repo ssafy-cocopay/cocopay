@@ -15,7 +15,7 @@ import BlueContainer from "@/components/molecules/BlueContainer/BlueContainer";
 import BarcodeContainer from "@/components/molecules/BarcodeContainer.tsx/BarcodeContainer";
 import TimerComponent from "@/utils/Timer";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
-
+import { useGetTotalAmountMonth } from "@/apis/Card/Queries/useGetCard";
 import {
   HeaderContainer,
   BarcodeWhiteContainer,
@@ -56,6 +56,7 @@ const HomePage = () => {
 
   // TODO: 밑에 스크롤할 수 있는 카드 컴포넌트 만들기, 캐로셀 사용
   // TODO: 3분 만료랑 새로고침, 큐알....
+  const TotalAmountMonth = useGetTotalAmountMonth();
 
   return (
     <Background
@@ -73,9 +74,9 @@ const HomePage = () => {
         </Text>
         <BarcodeWhiteContainer>
           <DiscountAndAmountContainer $left={true}>
-            <BodyAndHeading amountType="할인받은" amount={6750} />
+            <BodyAndHeading amountType="할인받은" amount={TotalAmountMonth.totalDiscountByMonth} />
             <Line $margin="18px 0" />
-            <BodyAndHeading amountType="소비한" amount={273350} />
+            <BodyAndHeading amountType="소비한" amount={TotalAmountMonth.totalPayByMonth} />
           </DiscountAndAmountContainer>
           <BarcodeContainer code={barcodeValue} />
           <BarcodeUnderWrapper>
