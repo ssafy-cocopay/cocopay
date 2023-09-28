@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface UserCardRepositoryCustom {
 
-    public List<UserCard> findUserCardListByCocoType(int userId);
+    List<UserCard> findUserCardListByCocoType(int userId);
 
-    public List<UserCard> FindAllUserCard(int userId);
+    List<UserCard> FindAllUserCard(int userId);
 
     Optional<UserCard> findUserCardByUuid(int cardUuid);
 
