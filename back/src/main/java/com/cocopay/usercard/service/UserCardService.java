@@ -171,10 +171,31 @@ public class UserCardService {
                 .block();
 
         PerformanceResDto performanceResDto = performanceResListDto.getPerformanceList().get(0);
+        log.info("채워야하는 조건 금액 : "+String.valueOf(performanceResDto.getPrice()));
+        log.info("이번달 총 금액 : "+String.valueOf(performanceResDto.getTotalPrice()));
         //남은 금액
-        int price = performanceResDto.getPrice() - performanceResDto.getTotalPrice();
+        int price = 0;
+        if(performanceResDto.getLevel()==performanceResDto.getNextLevel()&&performanceResDto.getTotalPrice()>=performanceResDto.getPrice()){
+            price = 0;
+        }else {
+            price = performanceResDto.getPrice()-performanceResDto.getTotalPrice();
+        }
+
         //퍼센트
-        int percent = performanceResDto.getTotalPrice() / performanceResDto.getPrice() * 100;
+        double percent;
+        if(performanceResDto.getTotalPrice()>=performanceResDto.getPrice()){
+            percent = 100.0;
+        }else {
+            percent = ((double)performanceResDto.getTotalPrice() / performanceResDto.getPrice() * 100);
+        }
+
+        //카드 이미지
+        String cardImge;
+        if(userCard.getCardCustomImage()== null){
+            cardImge = userCard.getCardDefaultImage();
+        }else {
+            cardImge = userCard.getCardCustomImage();
+        }
 
         UserCardDetailResponseDto userCardDetailResponseDto = UserCardDetailResponseDto.builder()
                 .userCardId(cardId)
@@ -183,7 +204,7 @@ public class UserCardService {
                 .nextLevel(performanceResDto.getNextLevel())
                 .price(price)
                 .percent(percent)
-                .totalPrice(performanceResDto.getTotalPrice())
+                .cardImage(cardImge)
                 .build();
         return userCardDetailResponseDto;
 
