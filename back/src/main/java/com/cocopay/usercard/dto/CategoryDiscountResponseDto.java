@@ -11,8 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryResponseDto {
-    private Long allPriceAmount;
+public class CategoryDiscountResponseDto {
     private int allDiscountAmount;
-    private List<CategoryDto> categoryList;
+    private List<CategoryDiscountDto> categoryList;
 }

@@ -48,12 +48,21 @@ public class UserCardController {
     }
 
     //사용자 통계 조회
-    @PostMapping("/total")
+    @GetMapping("/total")
     ResponseEntity<?> getCardHistoryByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
         findHistoryByUserId.setUserId(userId);
         return ResponseEntity.ok(userCardService.getAllamount(findHistoryByUserId));
     }
-
+    @GetMapping("/total/price")
+    ResponseEntity<?> getTotalPriceByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+        findHistoryByUserId.setUserId(userId);
+        return ResponseEntity.ok(userCardService.getAllPrice(findHistoryByUserId));
+    }
+    @GetMapping("/total/discount")
+    ResponseEntity<?> getTotalDiscountByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+        findHistoryByUserId.setUserId(userId);
+        return ResponseEntity.ok(userCardService.getAllDiscount(findHistoryByUserId));
+    }
 
     //월단위 카드 이용 내역 조회
     @PostMapping("/history")
