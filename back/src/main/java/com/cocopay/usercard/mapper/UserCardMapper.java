@@ -2,6 +2,8 @@ package com.cocopay.usercard.mapper;
 
 import com.cocopay.usercard.dto.CardListDto;
 import com.cocopay.usercard.dto.MainCardDto;
+import com.cocopay.usercard.dto.UserCardDto;
+import com.cocopay.usercard.dto.UserCardResDto;
 import com.cocopay.usercard.entity.UserCard;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -66,4 +68,10 @@ public interface UserCardMapper {
     }
 
     List<CardListDto> userCardListToCardListList(List<UserCard> userCardList);
+
+    @Mapping(source = "dto.cardType.name", target = "cardType")
+    @Mapping(source = "dto.cardDefaulImage", target = "cardDefaultImage")
+    UserCardResDto toUserCardResDto(UserCardDto dto);
+
+    List<UserCardResDto> toList(List<UserCardDto> dtoList);
 }

@@ -143,6 +143,10 @@ public class UserCardService {
         return cardHistoryList;
     }
 
+    public void replaceCardName() {
+
+    }
+
     //카드 정보 보내주기(카드 상세페이지 부분)
     public UserCardDetailResponseDto findUserCardDetail(Integer cardId) {
 

@@ -13,7 +13,9 @@ import com.cocopay.user.mapper.UserMapper;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.dto.UserCardDto;
+import com.cocopay.usercard.dto.UserCardResDto;
 import com.cocopay.usercard.entity.UserCard;
+import com.cocopay.usercard.mapper.UserCardMapper;
 import com.cocopay.usercard.repository.UserCardRepository;
 import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,7 @@ public class UserController {
     private final UserMapper userMapper;
     private final PaymentService paymentService;
     private final UserCardService userCardService;
+    private final UserCardMapper userCardMapper;
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(
@@ -118,13 +121,17 @@ public class UserController {
 
         UserCardResponseListDto result = userApiCallService.getUserCardFromBank(userId);
         List<UserCardDto> userCardDtoList = userService.checkDuplicate(result.getUserCardList(), userId);
+
+        //사용자 카드 암호화 진행
+        userCardDtoList = userCardService.cardNumEncryption(userCardDtoList);
+        
+        //저장
         userService.insertUserCard(userCardDtoList, userId);
 
-//        return ResponseEntity.ok(userCardDtoList);
-        List<UserCardDto> userCardList = result.getUserCardList();
-        userCardList = userCardService.cardNumEncryption(userCardList);
-        userService.insertUserCard(userCardList, userId);
-        return ResponseEntity.ok(userCardList);
+        //반환 진행 할 떄 매퍼로 신용카드 -> 신용으로 바꿈
+        List<UserCardResDto> list = userCardMapper.toList(userCardDtoList);
+
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping()
