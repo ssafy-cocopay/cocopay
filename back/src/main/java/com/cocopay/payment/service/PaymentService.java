@@ -177,7 +177,7 @@ public class PaymentService {
             String format = String.format("%.1f", graphRate);
             log.info("format : {}", format);
 
-            offerResDtoList.add(paymentMapper.tocCardOfferDto(userCard, cardImage, discountRate, discountType, discounted, finalPrice, remainingAmt, format, performanceKey));
+            offerResDtoList.add(paymentMapper.toCardOfferDto(userCard, cardImage, discountRate, discountType, discounted, finalPrice, remainingAmt, format, performanceKey));
         }
         return offerResDtoList;
     }
