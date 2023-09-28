@@ -4,15 +4,13 @@ import theme from "@/styles/theme";
 
 export const StatisticsBarWrapper = styled(Wrapper)`
   margin-top: 10px;
+  margin-bottom: 18px;
   height: 35px;
   border-radius: 12px;
   width: 95%;
-  margin-bottom: 100px;
   align-items: flex-start;
   overflow: hidden;
-  /* padding: none; */
 `;
-
 
 export const BarRateWrapper = styled.div`
   display: flex;
@@ -26,4 +24,4 @@ export const BarRate = styled.div`
 
 export const StatisticsContentsWrapper = styled.div`
   border: 1px solid black;
-`
+`;
