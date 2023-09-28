@@ -4,7 +4,7 @@ import { instance } from '@/apis/instance';
 import { Card } from '@/types';
 
 // 예시일뿐... 이름과 async로 넘길 인자, api 주소 등 맞춰서 수정해주세요 
-const getCard = async (cardId: number) => {
+const getCardDetails = async (cardId: number) => {
     try {
       const response = await instance.get(`/name/${cardId}`);
       return response.data;
@@ -24,4 +24,4 @@ const updateCard = async (card: Card) => {
 };
 
 
-export { updateCard, getCard };
+export { updateCard, getCardDetails }
