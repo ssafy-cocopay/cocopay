@@ -80,7 +80,7 @@ public class UserCardService {
         for (UserCardDto userCardDto : list) {
             String serialNumber = userCardDto.getSerialNumber();
 
-            String encSerialNum = serialNumber.substring(0, 7) + "**-****" + serialNumber.substring(15);
+            String encSerialNum = serialNumber.substring(0, 7) + "**-****-" + serialNumber.substring(15);
 
             userCardDto.setSerialNumber(encSerialNum);
         }

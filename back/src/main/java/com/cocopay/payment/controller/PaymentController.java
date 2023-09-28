@@ -32,8 +32,6 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final PaymentMapper paymentMapperTest;
     private final BarcodeKeyService barcodeKeyService;
-    private final ApiCallService apiCallService;
-    private final PerformanceKeyService performanceKeyService;
 
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
