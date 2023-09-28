@@ -26,17 +26,16 @@ import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineComple
 import MainPage from "@/pages/MainPage/MainPage";
 import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
 import PayOfflineCompletePage from "@/pages/PayOfflineCompletePage/PayOfflineCompletePage";
+import OnboardingPage from "@/pages/OnboardingPage/OnboardingPage";
 
-import OnboardnigPage from "@/pages/OnboardingPage/OnboardingPage";
-import OnboardingPage1 from "@/pages/OnboardingPage/OnboardingPage1";
-import OnboardnigPage2 from "@/pages/OnboardingPage/OnboardingPage2";
-import OnboardnigPage3 from "@/pages/OnboardingPage/OnboardingPage3";
-import OnboardnigPage4 from "@/pages/OnboardingPage/OnboardingPage4";
-
-import ShoppingPage from "@/pages/ShoppingPage/ShoppingPage"
+// import OnboardingPage1 from "@/pages/OnboardingPage/OnboardingPage1";
+// import OnboardingPage2 from "@/pages/OnboardingPage/OnboardingPage2";
+// import OnboardingPage3 from "@/pages/OnboardingPage/OnboardingPage3";
+// import OnboardingPage4 from "@/pages/OnboardingPage/OnboardingPage4";
+// import OnboardingPage5 from "@/pages/OnboardingPage/OnboardingPage5";
+import ShoppingPage from "@/pages/ShoppingPage/ShoppingPage";
 import OnlineQrPage from "@/pages/OnlineQrPage/OnlineQrPage";
 import ShoppingCompletePage from "@/pages/ShoppingCompletePage/ShoppingCompletePage";
-
 
 const router = createBrowserRouter([
   {
@@ -58,13 +57,7 @@ const router = createBrowserRouter([
   },
   {
     path: PATH.Onboarding,
-    element: <OnboardnigPage />,
-
-    // element: <OnboardnigPage2 />,
-    // element: <OnboardnigPage3 />,
-    //  element:<OnboardnigPage4/>,
-
-    // element: <OnboardingPage1 />,
+    element: <OnboardingPage />,
   },
   {
     path: PATH.CARDUPLOAD,
