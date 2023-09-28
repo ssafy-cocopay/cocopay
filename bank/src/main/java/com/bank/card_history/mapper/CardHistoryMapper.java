@@ -2,6 +2,9 @@ package com.bank.card_history.mapper;
 
 import com.bank.card.dto.PaymentRequestDto;
 import com.bank.card.entity.UserCard;
+import com.bank.card_history.dto.CategoryDiscountDto;
+import com.bank.card_history.dto.CategoryDto;
+import com.bank.card_history.dto.CategoryPriceDto;
 import com.bank.card_history.dto.HistoryResponseDto;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.entity.DiscountType;
@@ -30,4 +33,11 @@ public interface CardHistoryMapper {
     CardHistory payRequestDtoToHistory(PaymentRequestDto paymentRequestDto,
                                        Integer accountBalance, Boolean isPayback);
 
+    CategoryPriceDto categotyTocategotPrice(CategoryDto categoryDto);
+
+    List<CategoryPriceDto> categotyTocategotPriceList(List<CategoryDto> categoryDtoList);
+
+    CategoryDiscountDto categotyTocategotDiscount(CategoryDto categoryDto);
+
+    List<CategoryDiscountDto> categotyTocategotDiscountList(List<CategoryDto> categoryDtoList);
 }
