@@ -1,6 +1,7 @@
 package com.cocopay.usercard.controller;
 
 import com.cocopay.payment.dto.req.CardUuidListDto;
+import com.cocopay.payment.service.PaymentService;
 import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.mapper.UserCardMapper;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserCardController {
     private final UserCardService userCardService;
     private final UserCardMapper userCardMapper;
+    private final PaymentService paymentService;
 
     //카드 등록
     @PostMapping("")
@@ -37,7 +39,13 @@ public class UserCardController {
     @GetMapping("/list")
     public ResponseEntity<List<CardListDto>> UserCardList(@RequestHeader("userId") int userId){
         List<UserCard> userCardList = userCardService.findUserCardList(userId);
-        return ResponseEntity.ok(userCardMapper.userCardListToCardListList(userCardList));
+        List<Integer> cardUuid = userCardService.getCardUuid(userCardList);
+        paymentService.getPerformanceAndSave(cardUuid);
+        List<CardListDto> res = userCardService.getCardUuidEqPerformance(userCardList);
+
+//        List<CardListDto> cardListDtoList = userCardMapper.userCardListToCardListList(userCardList);
+
+        return ResponseEntity.ok(res);
     }
 
     //카드 삭제
