@@ -75,6 +75,19 @@ public class UserCardService {
         return userCard;
     }
 
+    //카드 번호 암호화 진행
+    public List<UserCardDto> cardNumEncryption(List<UserCardDto> list) {
+        for (UserCardDto userCardDto : list) {
+            String serialNumber = userCardDto.getSerialNumber();
+
+            String encSerialNum = serialNumber.substring(0, 7) + "**-****" + serialNumber.substring(15);
+
+            userCardDto.setSerialNumber(encSerialNum);
+        }
+        return list;
+
+    }
+
     //카드 목록 조회(코코페이 포함)
     public List<UserCard> findAllUserCardList(Integer userId) {
         return userCardRepository.FindAllUserCard(userId);
