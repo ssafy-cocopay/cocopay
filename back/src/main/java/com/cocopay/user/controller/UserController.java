@@ -12,8 +12,10 @@ import com.cocopay.user.dto.response.UserJoinResDto;
 import com.cocopay.user.mapper.UserMapper;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
+import com.cocopay.usercard.dto.UserCardDto;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
+import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,7 @@ public class UserController {
     private final UserCardRepository userCardRepository;
     private final UserMapper userMapper;
     private final PaymentService paymentService;
+    private final UserCardService userCardService;
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(
@@ -114,7 +117,9 @@ public class UserController {
     public ResponseEntity<?> getUserCardList(@RequestHeader("userId") int userId) {
         userService.checkUser(userId);
         UserCardResponseListDto result = userApiCallService.getUserCardFromBank(userId);
-        userService.insertUserCard(result.getUserCardList(), userId);
+        List<UserCardDto> userCardList = result.getUserCardList();
+        userCardList = userCardService.cardNumEncryption(userCardList);
+        userService.insertUserCard(userCardList, userId);
         return ResponseEntity.ok(result);
     }
 
