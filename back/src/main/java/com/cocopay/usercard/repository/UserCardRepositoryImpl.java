@@ -21,7 +21,8 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
         return jpaQueryFactory
                 .selectFrom(userCard)
                 .where(userCard.user.id.eq(userId),
-                        userCard.cocoType.eq(false), userCard.withdrawDate.isNull())
+                        userCard.cocoType.eq(false),
+                        userCard.withdrawDate.isNull())
                 .orderBy(userCard.cardOrder.asc())
                 .fetch();
     }
