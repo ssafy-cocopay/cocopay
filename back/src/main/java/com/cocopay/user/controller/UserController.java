@@ -127,11 +127,15 @@ public class UserController {
         
         //저장
         userService.insertUserCard(userCardDtoList, userId);
+        List<Integer> cardUuidList = userCardService.getCardUuidList(userCardDtoList);
+        //실적 조회 api call 이후 실적 정보 redis에 저장
+        paymentService.getPerformanceAndSave(cardUuidList);
 
+        //실적 == carduuid 매칭 진행
         //반환 진행 할 떄 매퍼로 신용카드 -> 신용으로 바꿈
-        List<UserCardResDto> list = userCardMapper.toList(userCardDtoList);
+        List<UserCardResDto> resDtoList = userCardService.cardUuidEqPerformance(userCardDtoList);
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(resDtoList);
     }
 
     @GetMapping()

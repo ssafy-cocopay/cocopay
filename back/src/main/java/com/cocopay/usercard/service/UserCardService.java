@@ -5,11 +5,15 @@ import com.cocopay.exception.dto.ErrorCode;
 import com.cocopay.payment.dto.req.CardUuidListDto;
 import com.cocopay.payment.dto.res.PerformanceResDto;
 import com.cocopay.payment.dto.res.PerformanceResListDto;
+import com.cocopay.payment.service.PaymentService;
+import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.redis.service.BarcodeKeyService;
+import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
 import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
+import com.cocopay.usercard.mapper.UserCardMapper;
 import com.cocopay.usercard.repository.UserCardRepository;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +35,9 @@ public class UserCardService {
     private final UserCardRepository userCardRepository;
     private final UserRepository userRepository;
     private final BarcodeKeyService barcodeKeyService;
+    private final PerformanceKeyService performanceKeyService;
+    private final PaymentService paymentService;
+    private final UserCardMapper userCardMapper;
 
     //카드 등록
     public UserCard registUserCard(UserCardRegisterDto userCardRegisterDto, boolean cocopay) {
@@ -221,12 +228,7 @@ public class UserCardService {
         }
     }
 
-    public UserCard findUserCardById(int cardId) {
-        Optional<UserCard> findUserCard = userCardRepository.findById(cardId);
 
-        return findUserCard
-                .orElseThrow(() -> new RuntimeException("해당 카드 없음"));
-    }
 
     public MainAmountDto getAmount(FindHistoryByUserId findHistoryByUserId) {
         WebClient webClient = WebClient.create();
@@ -260,12 +262,29 @@ public class UserCardService {
         return barcodeNum;
     }
 
-    public UserCard findUserCardByUuid(int cardUuid) {
-        Optional<UserCard> findUserCard = userCardRepository.findUserCardByUuid(cardUuid);
-
-        return findUserCard
-                .orElseThrow(() -> new CustomException(ErrorCode.DATA_NOT_FOUND));
+    //카드 uuid리스트 추출
+    public List<Integer> getCardUuidList(List<UserCardDto> list) {
+        return list.stream()
+                .map(UserCardDto::getUserCardId)
+                .toList();
     }
 
+    //redis에 있는 실적 정보와 매칭 진행
+    public List<UserCardResDto> cardUuidEqPerformance(List<UserCardDto> list) {
+        List<UserCardResDto> resDtoList = new ArrayList<>();
+
+        for (UserCardDto userCardDto : list) {
+            //redis에서 해당 실적 정보 조회
+            PerformanceKey performanceKey = performanceKeyService.findPerformanceKey(userCardDto.getUserCardId());
+            //그래피 비율 계산
+            double graphRate = paymentService.getGraphRate(performanceKey.getTotalPrice(), performanceKey.getPrice());
+            //소숫점 첫번째 자리까지만
+            String format = String.format("%.1f", graphRate);
+
+            resDtoList.add(userCardMapper.toUserCardResDto(userCardDto, format));
+        }
+
+        return resDtoList;
+    }
 
 }
