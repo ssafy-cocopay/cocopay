@@ -10,13 +10,24 @@ import cards from "@/assets/images/img-cardline.png";
 import questionPerson from "@/assets/images/img-questionPerson.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
-const OnboardnigPage3 = () => {
+type OnboardingPage3Props = {
+  onNextPage: () => void; // 예를 들어, 이동 함수의 타입은 void로 정의할 수 있습니다.
+};
+
+function OnboardingPage3(props: OnboardingPage3Props) {
+  const { onNextPage } = props;
+  const handlePageTransition = () => {
+    // 페이지 이동 로직 추가
+    onNextPage(); // 다음 페이지로 이동
+  };
+
   return (
     // TODO: 반응형 크기 맞추기
     <Container
       $border={true}
       $overflow="visible"
       style={{ paddingBottom: "100px", position: "relative" }}
+      onClick={handlePageTransition}
     >
       <Container
         // align-items="left"
@@ -52,6 +63,6 @@ const OnboardnigPage3 = () => {
       {/* TODO:크기 조절해서 맞추기 */}
     </Container>
   );
-};
+}
 
-export default OnboardnigPage3;
+export default OnboardingPage3;
