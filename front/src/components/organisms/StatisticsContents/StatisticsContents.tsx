@@ -1,6 +1,7 @@
 import React from "react";
 import { CategoryData } from "@/types/category";
 import { Image } from "@/components/atoms/Image/Image";
+import { Text } from "react-native-svg";
 
 import convenientIcon from "@/assets/images/icon-circle-convenient.png";
 import movieIcon from "@/assets/images/icon-circle-movie.png";
@@ -34,9 +35,14 @@ const tempAmounts: CategoryData[] = [
 const StatisticsContents = () => {
   return (
     <>
-      {/* {tempAmounts.map((category, index) => {
-        return <Image key={index} src={category.convenientIcon}></Image>;
-      })} */}
+      {tempAmounts.map((category, index) => {
+        return (
+          <>
+            <Image key={index} src={convenientIcon}></Image>
+            <Text>category.category</Text>
+          </>
+        );
+      })}
     </>
   );
 };
