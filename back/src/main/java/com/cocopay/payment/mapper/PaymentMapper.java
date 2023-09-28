@@ -20,9 +20,10 @@ public interface PaymentMapper {
     PaymentReqDto toPaymentReqDto(int cardUuid, PayPostDto dto, int requestPrice);
 
     @Mapping(source = "userCard.id", target = "cardId")
+    @Mapping(source = "userCard.cardType.name",target = "cardType")
     @Mapping(source = "key.pastPerformance", target = "pastPerformance")
     @Mapping(source = "key.level", target = "curPerLevel")
-    CardOfferResDto tocCardOfferDto(UserCard userCard,
+    CardOfferResDto toCardOfferDto(UserCard userCard,
                                     String cardImage,
                                     Integer discountRate, String discountType,
                                     int discounted, int finalPrice,
