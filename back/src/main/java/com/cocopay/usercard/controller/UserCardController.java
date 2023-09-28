@@ -34,9 +34,10 @@ public class UserCardController {
     }
 
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
-    @PostMapping("/list/")
-    public ResponseEntity<List<UserCard>> UserCardList(@RequestHeader("userId") int userId){
-        return ResponseEntity.ok(userCardService.findUserCardList(userId));
+    @PostMapping("/list")
+    public ResponseEntity<List<CardListDto>> UserCardList(@RequestHeader("userId") int userId){
+        List<UserCard> userCardList = userCardService.findUserCardList(userId);
+        return ResponseEntity.ok(userCardMapper.userCardListToCardListList(userCardList));
     }
 
     //카드 삭제
