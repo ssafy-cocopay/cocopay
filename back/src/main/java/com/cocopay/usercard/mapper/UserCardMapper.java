@@ -1,5 +1,6 @@
 package com.cocopay.usercard.mapper;
 
+import com.cocopay.usercard.dto.CardListDto;
 import com.cocopay.usercard.dto.MainCardDto;
 import com.cocopay.usercard.entity.UserCard;
 import org.mapstruct.Mapper;
@@ -34,4 +35,35 @@ public interface UserCardMapper {
     }
 
      List<MainCardDto> userCardListToMainCardList(List<UserCard> userCardList);
+
+
+    default CardListDto userCardToCardListCard(UserCard userCard){
+        if ( userCard == null ) {
+            return null;
+        }
+
+        CardListDto.CardListDtoBuilder cardListDto = CardListDto.builder();
+
+        cardListDto.id(userCard.getId());
+        cardListDto.serialNumber(userCard.getSerialNumber());
+        cardListDto.cardOrder(userCard.getCardOrder());
+        cardListDto.cardType(userCard.getCardType());
+        if(userCard.getCardNickname() != null){
+            cardListDto.cardName(userCard.getCardNickname());
+        }else{
+            cardListDto.cardName(userCard.getCardName());
+        }
+        cardListDto.visa(userCard.isVisa());
+        cardListDto.master(userCard.isMaster());
+        if ( userCard.getCardCustomImage() != null ) {
+            cardListDto.cardImage( userCard.getCardCustomImage() );
+        }
+        else {
+            cardListDto.cardImage(userCard.getCardDefaultImage() );
+        }
+
+        return cardListDto.build();
+    }
+
+    List<CardListDto> userCardListToCardListList(List<UserCard> userCardList);
 }
