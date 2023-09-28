@@ -3,12 +3,8 @@ import {
   StatisticsBarWrapper,
   BarRateWrapper,
   BarRate,
-  StatisticsContentsWrapper,
 } from "../StatisticsBar/StatisticsBar.styles";
-import { CATEGORY_COLORS, Category, CATEGORY_ICONS, CategoryData } from "@/types/category";
-import { Image } from "@/components/atoms/Image/Image";
-
-
+import { CATEGORY_COLORS,  CategoryData } from "@/types/category";
 
 // TODO: API 에서 따오기
 // TODO: 얘는 상위에서 주기
