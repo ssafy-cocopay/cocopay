@@ -215,7 +215,7 @@ public class UserCardService {
     public String makeBarcode(int userId, int cardId) {
         Faker faker = new Faker(new Locale("ko"));
 
-        String barcodeNum = faker.numerify("################");
+        String barcodeNum = faker.numerify("############");
         log.info("barcodeNum : {}", barcodeNum);
         barcodeKeyService.barcodeSave(userId, cardId, barcodeNum);
 
