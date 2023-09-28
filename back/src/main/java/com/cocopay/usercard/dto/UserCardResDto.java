@@ -18,4 +18,5 @@ public class UserCardResDto {
     private boolean visa;
     private boolean master;
     private String cardDefaultImage;
+    private String graphRate;
 }

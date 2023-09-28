@@ -143,7 +143,7 @@ public class UserService {
     }
 
     public void insertUserCard(List<UserCardDto> userCardList, Integer userId) {
-        User findUser = findUserById(userId);
+        User findUser = checkUser(userId);
 
         //매퍼
         int cnt = 2;
@@ -166,14 +166,6 @@ public class UserService {
             cnt++;
             //batch 사용 여지 있음
         }
-    }
-
-    //유저 찾는 메서드 추가
-    public User findUserById(int userId) {
-        Optional<User> findUser = userRepository.findById(userId);
-
-        return findUser
-                .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
     }
 
     //코코페이와 은행카드의 동기화이전에 중복을 걸러주는 메소드입니다.

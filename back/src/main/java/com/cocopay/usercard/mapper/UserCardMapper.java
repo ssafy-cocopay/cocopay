@@ -71,7 +71,6 @@ public interface UserCardMapper {
 
     @Mapping(source = "dto.cardType.name", target = "cardType")
     @Mapping(source = "dto.cardDefaulImage", target = "cardDefaultImage")
-    UserCardResDto toUserCardResDto(UserCardDto dto);
+    UserCardResDto toUserCardResDto(UserCardDto dto, String graphRate);
 
-    List<UserCardResDto> toList(List<UserCardDto> dtoList);
 }
