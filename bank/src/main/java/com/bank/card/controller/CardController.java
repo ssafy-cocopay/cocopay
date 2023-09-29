@@ -72,6 +72,7 @@ public class CardController {
     //시리얼 번호로 카드 조회
     @PostMapping("/search")
     public ResponseEntity<?> getUserCard(@RequestBody FindBySerialNumber findBySerialNumber){
-        return ResponseEntity.ok(userCardService.getUserCard(findBySerialNumber.getSerialNumber(),findBySerialNumber.getCvc(),findBySerialNumber.getPassword()));
+        UserCardDto userCard = userCardService.getUserCard(findBySerialNumber.getSerialNumber(), findBySerialNumber.getCvc(), findBySerialNumber.getPassword());
+        return ResponseEntity.ok(userCard);
     }
 }
