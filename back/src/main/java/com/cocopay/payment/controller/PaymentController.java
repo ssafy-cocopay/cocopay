@@ -95,6 +95,7 @@ public class PaymentController {
     @GetMapping("/complete")
     public ResponseEntity complete(@RequestHeader("userId") int userId) {
         PayCompleteKey findComplete = payCompleteKeyService.findComplete(userId);
+        payCompleteKeyService.deleteComplete(userId);
         PayCompleteResDto payCompleteResDto = paymentMapper.toPayCompleteResDto(findComplete);
 
         return ResponseEntity.ok(payCompleteResDto);
