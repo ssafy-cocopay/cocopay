@@ -94,8 +94,9 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                         card.visa, card.master,
                         card.cardDefaultImage.as("cardDefaulImage")))
                 .from(userCard)
-                .join(account).on(account.id.eq(userCard.account.id))
-                .join(user).on(user.uuid.eq(account.user.uuid))
+                .join(userCard.account)
+                .join(account.user)
+                .where(user.uuid.eq(uuid))
                 .fetch();
     }
 

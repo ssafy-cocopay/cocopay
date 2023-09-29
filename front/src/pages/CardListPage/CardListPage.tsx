@@ -16,38 +16,34 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
 import { useDeleteCard } from "@/apis/Card/Mutations/useDeleteCard";
 import { Card } from "@/types/card";
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from "@tanstack/react-query";
 
 const CardListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(isModalOpen)
+  console.log(isModalOpen);
   const CardList = useGetCardList();
-  console.log(CardList)
-  const [deleteCardId, setDeleteCardId] = useState(0)
+  console.log(CardList);
+  const [deleteCardId, setDeleteCardId] = useState(0);
   const queryClient = useQueryClient();
-  const useDeleteCardMutation = useDeleteCard()
+  const useDeleteCardMutation = useDeleteCard();
+
   const deleteCard = (deleteCardId: number) => {
-    useDeleteCardMutation.mutate(
-      deleteCardId, 
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(['CardList']);
-          setIsModalOpen(false); // 모달 닫기
-        },
-        onError: () => {
-          console.log('삭제 실패');
-        }
-      }
-    );
-};
-
-
-  //모달 오픈 함수
-  const toggleModal = (cardId : number) => {
-    setDeleteCardId(cardId)
-    setIsModalOpen((prev) => !prev);
+    useDeleteCardMutation.mutate(deleteCardId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["CardList"]);
+        setIsModalOpen(false); // 모달 닫기
+      },
+      onError: () => {
+        console.log("삭제 실패");
+      },
+    });
   };
 
+  //모달 오픈 함수
+  const toggleModal = (cardId: number) => {
+    setDeleteCardId(cardId);
+    setIsModalOpen((prev) => !prev);
+  };
 
   // 현재 스와이핑되고 있는 CardItem의 인덱스를 저장
   const [swipedIndex, setSwipedIndex] = useState<number | null>(null);
@@ -60,7 +56,6 @@ const CardListPage = () => {
       setSwipedIndex(index);
     }
   };
-
 
   return (
     <Background
@@ -100,8 +95,8 @@ const CardListPage = () => {
             card={card}
             onSwipeStart={() => handleSwipeStart(idx)}
             resetSwipe={swipedIndex !== null && swipedIndex !== idx}
-            swipedIndex={swipedIndex}   // 추가
-            index={idx}                 // 추가
+            swipedIndex={swipedIndex} // 추가
+            index={idx} // 추가
             opendeletemodal={() => toggleModal(card.id)}
           />
         ))}
@@ -120,8 +115,8 @@ const CardListPage = () => {
 
       {/* 모달 부분 */}
       {isModalOpen && (
-        <ModalBg onClick={() =>toggleModal(deleteCardId)}>
-          <Modal toggleModal={() =>toggleModal(deleteCardId)}>
+        <ModalBg onClick={() => toggleModal(deleteCardId)}>
+          <Modal toggleModal={() => toggleModal(deleteCardId)}>
             <Wrapper $padding="10px" style={{ paddingTop: "30px" }}>
               <Wrapper>
                 <Text
@@ -150,7 +145,7 @@ const CardListPage = () => {
                   $width="9rem"
                   option="deActivated"
                   style={{ margin: 10 }}
-                  onClick={() =>toggleModal(deleteCardId)}
+                  onClick={() => toggleModal(deleteCardId)}
                 >
                   취소
                 </Button>
