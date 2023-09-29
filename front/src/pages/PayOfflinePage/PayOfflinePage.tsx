@@ -13,15 +13,18 @@ import CardImg1 from "@/assets/images/img-cardimg1.png";
 import CardImg2 from "@/assets/images/img-cardimg2.png";
 import CardImg3 from "@/assets/images/img-cardimg3.png";
 
-const PayOfflinePage = () => {
-  //TODO:api요청으로 수정
+function PayOfflinePage() {
   const CardImgList = [CardImg1, CardImg2, CardImg3];
 
-  const navigate = useNavigate();
+  // const handlePageTransition = () => {
+  //   // 페이지 이동 로직 추가
+  //   onNextPage(); // 다음 페이지로 이동
+  // };
+  // const navigate = useNavigate();
 
-  const navigatePage = (path: string) => {
-    navigate(path);
-  };
+  // const navigatePage = (path: string) => {
+  //   navigate(path);
+
   return (
     <Background
       $colormode="gradient"
@@ -78,6 +81,6 @@ const PayOfflinePage = () => {
       </Container>
     </Background>
   );
-};
+}
 
 export default PayOfflinePage;

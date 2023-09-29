@@ -1,6 +1,6 @@
 // Queries는 Get요청
 
-import { getCardDetails } from "@/apis/Card/cardAPI";
+// import { getCardDetails } from "@/apis/Card/cardAPI";
 // import { Card } from '@/types'; // 타입 api 호출 맞춰 지정해주세요
 import { useQuery } from "@tanstack/react-query";
 
