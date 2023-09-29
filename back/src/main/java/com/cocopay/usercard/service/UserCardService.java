@@ -11,6 +11,7 @@ import com.cocopay.redis.service.BarcodeKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
+import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.mapper.UserCardMapper;
@@ -22,7 +23,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +40,7 @@ public class UserCardService {
     private final UserCardMapper userCardMapper;
 
     //카드 등록
-    public UserCard registUserCard(UserCardRegisterDto userCardRegisterDto, boolean cocopay) {
+    public Integer registUserCard(UserCardRegisterDto userCardRegisterDto, boolean cocopay) {
         WebClient webClient = WebClient.create();
 
         //api 주소
@@ -55,31 +55,25 @@ public class UserCardService {
                 .bodyToMono(UserCardDto.class)
                 .block();
 
-
+        //중복체크
         Optional<UserCard> check = userCardRepository.findByUserCardId(userCardDto.getUserCardId());
         if (check.isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATE_CARD);
         }
+        User findUser = findUser(userCardRegisterDto.getUserId());
 
-        Optional<User> user = userRepository.findById(userCardRegisterDto.getUserId());
         System.out.println(userCardDto.getUserCardId());
         int count = userCardRepository.findUserCardListByCocoType(userCardRegisterDto.getUserId()).size() + 1;
-        String SerialNumber = userCardDto.getSerialNumber().substring(0, 7) + "**-****-" + userCardDto.getSerialNumber().substring(15, 19);
-        UserCard userCard = UserCard.builder()
-                .user(user.get())
-                .cocoType(cocopay)
-                .cardUuid(userCardDto.getUserCardId())
-                .serialNumber(SerialNumber)
-                .cardOrder(count)
-                .cardType(userCardDto.getCardType())
-                .cardName(userCardDto.getCardName())
-                .validDate(userCardDto.getValidDate())
-                .visa(userCardDto.isVisa())
-                .master(userCardDto.isMaster())
-                .cardDefaultImage(userCardDto.getCardDefaulImage())
-                .build();
-        userCardRepository.save(userCard);
-        return userCard;
+        String encSerialNum = getEncSerialNum(userCardDto.getSerialNumber());
+        log.info("encSerialNum : {}", encSerialNum);
+        UserCard userCard = userCardMapper.toUserCard(findUser, encSerialNum, cocopay, count, userCardDto);
+
+        return userCardRepository.save(userCard).getId();
+    }
+
+    //카드 번호 암호화
+    public String getEncSerialNum(String serialNumber) {
+        return serialNumber.substring(0, 7) + "**-****-" + serialNumber.substring(15);
     }
 
     //카드 번호 암호화 진행
@@ -87,7 +81,7 @@ public class UserCardService {
         for (UserCardDto userCardDto : list) {
             String serialNumber = userCardDto.getSerialNumber();
 
-            String encSerialNum = serialNumber.substring(0, 7) + "**-****-" + serialNumber.substring(15);
+            String encSerialNum = getEncSerialNum(serialNumber);
 
             userCardDto.setSerialNumber(encSerialNum);
         }
@@ -349,4 +343,10 @@ public class UserCardService {
         return cardListDtoList;
     }
 
+    public User findUser(int userId ) {
+        Optional<User> findUser = userRepository.findById(userId);
+
+        return findUser
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
 }
