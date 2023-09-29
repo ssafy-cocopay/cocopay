@@ -52,7 +52,7 @@ const PriorityPage = () => {
         $borderRadius="38px"
         $boxShadow="shadow1"
         onClick={() => handleBoxClick("sale")}
-        $isGrayscale={selectedBox === "sale"}
+        $isGrayscale={selectedBox === "performance"}
       ></WhiteRoundedBox>
       <WhiteRoundedBox
         height="220px"
@@ -61,7 +61,7 @@ const PriorityPage = () => {
         $borderRadius="38px"
         $boxShadow="shadow1"
         onClick={() => handleBoxClick("performance")}
-        $isGrayscale={selectedBox === "performance"}
+        $isGrayscale={selectedBox === "sale"} //performance를 누르면 sale 부분이 graybox로 바껴야 함.
       ></WhiteRoundedBox>
       <Button
         onClick={() => navigatePage(PATH.MAIN)}

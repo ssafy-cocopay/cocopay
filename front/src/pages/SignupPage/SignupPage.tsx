@@ -15,6 +15,7 @@ import Modal from "@/components/atoms/Modal/Modal";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import { ModalWrapper } from "./SignupPage.styles";
 import TimerComponent from "@/utils/Timer";
+import { useAddMessage } from "@/apis/User/Mutations/useAddMessage";
 
 interface FormValue {
   name: string;
@@ -30,9 +31,11 @@ const SignupPage = () => {
 
   const [btnMent, setBtnMent] = useState("인증번호 받기");
 
-  const sendMessage = () => {
+  const sendMessage = (value: string) => {
     console.log("인증번호 전송!");
     setBtnMent("인증번호 재전송");
+    // TODO: 메시지요청하기
+    // useAddMessage(value);
   };
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -53,7 +56,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Container $paddingTop="70px" $border={true}>
+    <Container $paddingTop="70px" $border={false}>
       {/* <form onSubmit={handleSubmit(onSubmitHandler)}> */}
       <Container
         $padding="none"
@@ -125,7 +128,7 @@ const SignupPage = () => {
           <Input width={150}></Input>
 
           <Button
-            onClick={sendMessage}
+            // onClick={sendMessage("01080087536")}
             $fontSize="18px"
             option="activated"
             $width="50%"
@@ -135,10 +138,10 @@ const SignupPage = () => {
           </Button>
         </Wrapper>
 
-        <TimerComponent
+        {/* <TimerComponent
         // timerColor="danger"
         // initialSeconds={initialSeconds}
-        ></TimerComponent>
+        ></TimerComponent> */}
 
         <br />
         <Button
