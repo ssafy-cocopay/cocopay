@@ -1,5 +1,5 @@
 import { Background } from "@/components/atoms/Background/Background.styles";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
@@ -17,6 +17,7 @@ import CardHistory from "@/components/molecules/CardHistory/CardHistory";
 import PaymentList from "@/components/molecules/PaymentList/PaymentList";
 import styled from "styled-components";
 import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails";
+import { usePostCardPurchased } from "@/apis/Card/Mutations/useAddCardList";
 import { useParams } from 'react-router-dom';
 
 export const TextCenterWrapper = styled.div`
@@ -33,10 +34,35 @@ const CardDetailPage = () => {
   };
 
   const { cardId: cardIdStr } = useParams();
-  
+  const [cardPurchasedData, setCardPurchasedData] = useState([])
+  const [month, setMonth] = useState(0)
   const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
   const CardDetail = useGetCardDetail(cardId);
-  console.log(CardDetail)
+  const CardPurchased = usePostCardPurchased()
+  // 달 가져오기
+  useEffect(() => {
+    const getCurrentMonth = () => {
+      const date = new Date();
+      setMonth(date.getMonth() + 1)
+    };
+      getCurrentMonth()
+    }, [setMonth])
+  // 결제내역 가져오기
+  useEffect(() => {
+    const handleCardPurchased = () => {
+      const payload = {
+          cardUuid: 24,
+          month: `${month}`
+      };
+      CardPurchased.mutate(payload, {
+          onSuccess: (data) => {
+              console.log(data)
+              setCardPurchasedData(data);
+          }
+      });
+    }
+    handleCardPurchased()
+  }, [setCardPurchasedData]);
 
   return (
     <Background

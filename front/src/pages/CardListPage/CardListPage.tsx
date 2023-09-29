@@ -66,9 +66,9 @@ const CardListPage = () => {
 
   return (
     <Background
-      style={{
-        position: "fixed",
-      }}
+      // style={{
+      //   position: "fixed",
+      // }}
     >
       <CardListContainer>
         <Text

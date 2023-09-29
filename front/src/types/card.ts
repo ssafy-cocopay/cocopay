@@ -25,8 +25,35 @@ interface CardDetail {
     cardImage: string;
 }
 
-// interface PayOffline {
+interface CardInfo {
+    serialNumber: string;
+    cvc: string;
+    validDate: string;
+    password: string;
+}
 
-// }
+interface CardPurchased {
+    cardHistoryId: number;
+    cardUuid: number;
+    transactionDate: string;
+    amount: number;
+    store: string;
+    accountBalance: number;
+    discountAmount: number;
+    discountType: string;
+    transactionType: string;
+    category: string;
+}
 
-export type { Card, TotalAmountMonth, CardDetail }
+interface PostCardPurchasedPayload {
+    cardUuid: number;
+    month: string;
+}
+
+interface PayOnline {
+    category: string;
+    storeName: string;
+    orderPrice: number;
+}
+
+export type { Card, TotalAmountMonth, CardDetail, CardInfo, CardPurchased, PostCardPurchasedPayload, PayOnline }

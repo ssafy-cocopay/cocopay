@@ -1,5 +1,7 @@
 // apis/User/UserAPI.ts
 import { instance } from "@/apis/instance";
+import { CardInfo, PostCardPurchasedPayload, PayOnline } from "@/types/card";
+
 // TODO: types에 카드 타입 지정해주고 그곳으로부터 불러오기
 // import { Card, TotalAmountMonth } from '@/types/card';
 
@@ -54,4 +56,28 @@ const getCardDetail = async (cardId : number) => {
   }
 };
 
-export { getTotalAmountMonth, getCardList, deleteCard, getCardDetail }
+// const getCardPurchased = async (cardId : number) => {
+//   try {
+//     const response = await instance.get(`/cards/detail/${cardId}`);
+//     return response.data;
+//   } catch {
+//     new Error('card name put error');
+//   }
+// };
+
+
+const postCard = async (cardInfo: CardInfo) => {
+  await instance.post('/cards', cardInfo);
+};
+
+const postCardPurchased = async (cardPurchased: PostCardPurchasedPayload) => {
+  const response = await instance.post('/cards/history', cardPurchased);
+  return response.data;  // 응답 데이터를 반환
+};
+
+const postPayOnline = async (payOnline: PayOnline) => {
+  const response = await instance.post('/pay/online', payOnline);
+  return response.data;  // 응답 데이터를 반환
+};
+
+export { getTotalAmountMonth, getCardList, deleteCard, getCardDetail, postCard, postCardPurchased, postPayOnline }
