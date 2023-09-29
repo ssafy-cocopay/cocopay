@@ -9,19 +9,19 @@ import com.cocopay.payment.apicall.dto.res.BenefitResDto;
 import com.cocopay.payment.dto.req.CardUuidListDto;
 import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
-import com.cocopay.payment.dto.res.PayAfterResDto;
 import com.cocopay.payment.dto.res.PerformanceResDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.redis.key.BenefitKey;
+import com.cocopay.redis.key.PayCompleteKey;
 import com.cocopay.redis.key.PerformanceKey;
+import com.cocopay.redis.mapper.RedisMapper;
 import com.cocopay.redis.service.BenefitKeyService;
+import com.cocopay.redis.service.PayCompleteKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
-import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.repository.UserCardRepository;
-import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,6 +42,8 @@ public class PaymentService {
     private final UserCardRepository userCardRepository;
     private final PaymentMapper paymentMapper;
     private final UserRepository userRepository;
+    private final PayCompleteKeyService payCompleteKeyService;
+    private final RedisMapper redisMapper;
 
     //오토체인징
     //카드 리스트 업만 진행하고 바로 반환 진행
@@ -259,7 +261,7 @@ public class PaymentService {
     }
 
     //결제 이후 생색내기
-    public PayAfterResDto payAfter(int cardHistoryId, int cardUuid) {
+    public void payAfter(int userId, int cardHistoryId, int cardUuid) {
         Integer discounted = apiCallService.findDiscounted(cardHistoryId);
 
         //요청 보낼 list 만들기
@@ -280,7 +282,8 @@ public class PaymentService {
             cardImage = findUserCard.getCardCustomImage();
         }
 
-        return paymentMapper.toPayAfterResDto(cardImage, findUserCard.getCardName(), remainingAmt, graphRate, performanceKey.getNextLevel(),discounted);
+        PayCompleteKey payCompleteKey = redisMapper.toPayCompleteKey(userId, cardImage, findUserCard.getCardName(), remainingAmt, graphRate, performanceKey.getNextLevel(), discounted);
+        payCompleteKeyService.completeSave(payCompleteKey);
     }
 
     public UserCard findUserCardById(int cardId) {

@@ -1,19 +1,18 @@
 package com.cocopay.payment.controller;
 
-import com.cocopay.payment.apicall.ApiCallService;
 import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
 import com.cocopay.payment.dto.res.OnlineResponse;
-import com.cocopay.payment.dto.res.PayAfterResDto;
+import com.cocopay.payment.dto.res.PayCompleteResDto;
 import com.cocopay.payment.mapper.PaymentMapper;
 import com.cocopay.payment.service.PaymentService;
 import com.cocopay.redis.key.OrderKey;
+import com.cocopay.redis.key.PayCompleteKey;
 import com.cocopay.redis.service.BarcodeKeyService;
 import com.cocopay.redis.service.OrderKeyService;
-import com.cocopay.redis.service.PerformanceKeyService;
+import com.cocopay.redis.service.PayCompleteKeyService;
 import com.cocopay.usercard.entity.UserCard;
-import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +28,9 @@ public class PaymentController {
 
     private final OrderKeyService orderKeyService;
     private final PaymentService paymentService;
-    private final PaymentMapper paymentMapperTest;
+    private final PaymentMapper paymentMapper;
     private final BarcodeKeyService barcodeKeyService;
+    private final PayCompleteKeyService payCompleteKeyService;
 
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
@@ -45,7 +45,7 @@ public class PaymentController {
         payPostDto.setStoreName(findOrderKey.getStoreName());
 
         log.info("최종 결제 할 카드 이름 : {}", findUserCard.getCardName());
-        PaymentReqDto paymentReqDto = paymentMapperTest.toPaymentReqDto(findUserCard.getCardUuid(), payPostDto, findOrderKey.getOrderPrice());
+        PaymentReqDto paymentReqDto = paymentMapper.toPaymentReqDto(findUserCard.getCardUuid(), payPostDto, findOrderKey.getOrderPrice());
 
         paymentService.finalPayCall(paymentReqDto);
 
@@ -86,7 +86,17 @@ public class PaymentController {
         //필요한거 -> 사용자의 이번 달 총 이용금액
         //실적 정보 -> 해당 카드의 실적 정보
         //카드 이용내역 pk로 할인된 금액 받아오기
-        PayAfterResDto payAfterResDto = paymentService.payAfter(cardHistoryId, paymentReqDto.getCardUuid());
-        return ResponseEntity.ok(payAfterResDto);
+        paymentService.payAfter(userId, cardHistoryId, paymentReqDto.getCardUuid());
+
+        //fcm call 예정
+        return ResponseEntity.ok("결제 완료");
+    }
+
+    @GetMapping("/complete")
+    public ResponseEntity complete(@RequestHeader("userId") int userId) {
+        PayCompleteKey findComplete = payCompleteKeyService.findComplete(userId);
+        PayCompleteResDto payCompleteResDto = paymentMapper.toPayCompleteResDto(findComplete);
+
+        return ResponseEntity.ok(payCompleteResDto);
     }
 }
