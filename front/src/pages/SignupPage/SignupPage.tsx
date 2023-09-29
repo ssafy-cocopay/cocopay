@@ -53,7 +53,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Container $paddingTop="70px" $border={true}>
+    <Container $paddingTop="70px" $border={false}>
       {/* <form onSubmit={handleSubmit(onSubmitHandler)}> */}
       <Container
         $padding="none"
