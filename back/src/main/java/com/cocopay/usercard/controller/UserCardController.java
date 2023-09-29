@@ -22,10 +22,13 @@ public class UserCardController {
 
     //카드 등록
     @PostMapping("")
-    public ResponseEntity<?> registerCard(@RequestHeader("userId") int userId, @RequestBody UserCardRegisterDto userCardRegisterDto){
+    public ResponseEntity<?> registerCard(@RequestHeader("userId") int userId,
+                                          @RequestBody UserCardRegisterDto userCardRegisterDto){
         userCardRegisterDto.setUserId(userId);
         boolean cocopay = false;
-        return ResponseEntity.ok(userCardService.registUserCard(userCardRegisterDto, cocopay));
+        Integer cardId = userCardService.registUserCard(userCardRegisterDto, cocopay);
+        UserCardRegistResDto userCardRegistResDto = new UserCardRegistResDto(cardId);
+        return ResponseEntity.ok(userCardRegistResDto);
     }
 
     //카드 목록 조회(코코페이 포함, 메인페이지에 들어갈것)
