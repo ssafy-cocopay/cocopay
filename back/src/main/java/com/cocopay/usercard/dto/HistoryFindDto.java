@@ -9,6 +9,5 @@ import java.time.LocalDateTime;
 @Setter
 public class HistoryFindDto {
     private Integer cardUuid;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private int month;
 }
