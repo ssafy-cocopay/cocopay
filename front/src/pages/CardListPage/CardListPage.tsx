@@ -27,34 +27,30 @@ const CardListPage = () => {
     navigate(path);
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(isModalOpen)
+  console.log(isModalOpen);
   const CardList = useGetCardList();
-  console.log(CardList)
-  const [deleteCardId, setDeleteCardId] = useState(0)
+  console.log(CardList);
+  const [deleteCardId, setDeleteCardId] = useState(0);
   const queryClient = useQueryClient();
-  const useDeleteCardMutation = useDeleteCard()
+  const useDeleteCardMutation = useDeleteCard();
+
   const deleteCard = (deleteCardId: number) => {
-    useDeleteCardMutation.mutate(
-      deleteCardId, 
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(['CardList']);
-          setIsModalOpen(false); // 모달 닫기
-        },
-        onError: () => {
-          console.log('삭제 실패');
-        }
-      }
-    );
-};
-
-
-  //모달 오픈 함수
-  const toggleModal = (cardId : number) => {
-    setDeleteCardId(cardId)
-    setIsModalOpen((prev) => !prev);
+    useDeleteCardMutation.mutate(deleteCardId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["CardList"]);
+        setIsModalOpen(false); // 모달 닫기
+      },
+      onError: () => {
+        console.log("삭제 실패");
+      },
+    });
   };
 
+  //모달 오픈 함수
+  const toggleModal = (cardId: number) => {
+    setDeleteCardId(cardId);
+    setIsModalOpen((prev) => !prev);
+  };
 
   // 현재 스와이핑되고 있는 CardItem의 인덱스를 저장
   const [swipedIndex, setSwipedIndex] = useState<number | null>(null);
@@ -67,7 +63,6 @@ const CardListPage = () => {
       setSwipedIndex(index);
     }
   };
-
 
   return (
     <Background
@@ -107,8 +102,8 @@ const CardListPage = () => {
             card={card}
             onSwipeStart={() => handleSwipeStart(idx)}
             resetSwipe={swipedIndex !== null && swipedIndex !== idx}
-            swipedIndex={swipedIndex}   // 추가
-            index={idx}                 // 추가
+            swipedIndex={swipedIndex} // 추가
+            index={idx} // 추가
             opendeletemodal={() => toggleModal(card.id)}
             onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
           />
@@ -128,8 +123,8 @@ const CardListPage = () => {
 
       {/* 모달 부분 */}
       {isModalOpen && (
-        <ModalBg onClick={() =>toggleModal(deleteCardId)}>
-          <Modal toggleModal={() =>toggleModal(deleteCardId)}>
+        <ModalBg onClick={() => toggleModal(deleteCardId)}>
+          <Modal toggleModal={() => toggleModal(deleteCardId)}>
             <Wrapper $padding="10px" style={{ paddingTop: "30px" }}>
               <Wrapper>
                 <Text
@@ -158,7 +153,7 @@ const CardListPage = () => {
                   $width="9rem"
                   option="deActivated"
                   style={{ margin: 10 }}
-                  onClick={() =>toggleModal(deleteCardId)}
+                  onClick={() => toggleModal(deleteCardId)}
                 >
                   취소
                 </Button>

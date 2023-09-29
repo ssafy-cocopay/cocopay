@@ -13,6 +13,7 @@ import LoginFingerPage from "@/pages/LoginFingerPage/LoginFingerPage";
 import LoginPasswordPage from "@/pages/LoginPasswordPage/LoginPasswordPage";
 import HomePage from "@/pages/HomePage/HomePage";
 import PayOfflinePage from "@/pages/PayOfflinePage/PayOfflinePage";
+import PayOffline from "@/pages/PayOfflinePage/PayOffline";
 import CardListPage from "@/pages/CardListPage/CardListPage";
 import ScanPage from "@/pages/ScanPage/ScanPage";
 import ScanCardInfoPage from "@/pages/ScanCardInfoPage/ScanCardInfoPage";
@@ -25,7 +26,7 @@ import PayOnlinePage from "@/pages/PayOnlinePage/PayOnlinePage";
 import PayOnlineCompletePage from "@/pages/PayOnlineCompletePage/PayOnlineCompletePage";
 import MainPage from "@/pages/MainPage/MainPage";
 import QrCameraPage from "@/pages/QrCameraPage/QrCameraPage";
-import PayOfflineCompletePage from "@/pages/PayOfflineCompletePage/PayOfflineCompletePage";
+// import PayOfflineCompletePage from "@/pages/PayOfflinePage/PayOfflineCompletePage";
 import OnboardingPage from "@/pages/OnboardingPage/OnboardingPage";
 
 // import OnboardingPage1 from "@/pages/OnboardingPage/OnboardingPage1";
@@ -118,7 +119,8 @@ const router = createBrowserRouter([
     //TODO: 둘이 한 페이지로 묶어서 3초뒤에 페이지만 넘어갈 수 있도록 만들기
     path: PATH.PAYOFFLINE,
     // element: <PayOfflinePage />,
-    element: <PayOfflineCompletePage />,
+    // element: <PayOfflineCompletePage />,
+    element: <PayOffline />,
   },
   // {
   //   path: PATH.CARDLIST,
