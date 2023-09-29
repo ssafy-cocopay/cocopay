@@ -267,8 +267,6 @@ public class UserCardService {
         }
     }
 
-
-
     public MainAmountDto getAmount(FindHistoryByUserId findHistoryByUserId) {
         WebClient webClient = WebClient.create();
 
@@ -324,6 +322,30 @@ public class UserCardService {
         }
 
         return resDtoList;
+    }
+
+    public List<Integer> getCardUuid(List<UserCard> list) {
+        return list.stream()
+                .map(UserCard::getCardUuid)
+                .toList();
+    }
+
+    public List<CardListDto> getCardUuidEqPerformance(List<UserCard> list) {
+        List<CardListDto> cardListDtoList = new ArrayList<>();
+        for (UserCard userCard : list) {
+            String cardImage = userCard.getCardCustomImage();
+            PerformanceKey performanceKey = performanceKeyService.findPerformanceKey(userCard.getCardUuid());
+
+            double graphRate = paymentService.getGraphRate(performanceKey.getTotalPrice(), performanceKey.getPrice());
+
+            String format = String.format("%.1f", graphRate);
+
+            if (cardImage == null) {
+                cardImage = userCard.getCardDefaultImage();
+            }
+            cardListDtoList.add(userCardMapper.toCardListDto(userCard, format, cardImage));
+        }
+        return cardListDtoList;
     }
 
 }

@@ -49,7 +49,7 @@ public interface UserCardMapper {
         cardListDto.id(userCard.getId());
         cardListDto.serialNumber(userCard.getSerialNumber());
         cardListDto.cardOrder(userCard.getCardOrder());
-        cardListDto.cardType(userCard.getCardType());
+        cardListDto.cardType(userCard.getCardType().getName());
         if(userCard.getCardNickname() != null){
             cardListDto.cardName(userCard.getCardNickname());
         }else{
@@ -72,5 +72,8 @@ public interface UserCardMapper {
     @Mapping(source = "dto.cardType.name", target = "cardType")
     @Mapping(source = "dto.cardDefaulImage", target = "cardDefaultImage")
     UserCardResDto toUserCardResDto(UserCardDto dto, String graphRate);
+
+    @Mapping(source = "userCard.cardType.name",target = "cardType")
+    CardListDto toCardListDto(UserCard userCard, String graphRate,String cardImage);
 
 }
