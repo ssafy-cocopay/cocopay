@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PayAfterResDto {
+public class PayCompleteResDto {
     private String cardImage;
     private String cardName;
     private int discounted;
