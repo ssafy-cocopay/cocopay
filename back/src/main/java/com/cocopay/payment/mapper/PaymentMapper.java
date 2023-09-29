@@ -3,7 +3,8 @@ package com.cocopay.payment.mapper;
 import com.cocopay.payment.apicall.dto.req.PaymentReqDto;
 import com.cocopay.payment.dto.req.PayPostDto;
 import com.cocopay.payment.dto.res.CardOfferResDto;
-import com.cocopay.payment.dto.res.PayAfterResDto;
+import com.cocopay.payment.dto.res.PayCompleteResDto;
+import com.cocopay.redis.key.PayCompleteKey;
 import com.cocopay.redis.key.PerformanceKey;
 import com.cocopay.usercard.entity.UserCard;
 import org.mapstruct.Mapper;
@@ -30,7 +31,5 @@ public interface PaymentMapper {
                                     int remainingAmt, String graphRate,
                                     PerformanceKey key);
 
-    PayAfterResDto toPayAfterResDto(String cardImage, String cardName, int remainingAmt, String graphRate, int nextPerLevel,int discounted);
-
-
+    PayCompleteResDto toPayCompleteResDto(PayCompleteKey payCompleteKey);
 }
