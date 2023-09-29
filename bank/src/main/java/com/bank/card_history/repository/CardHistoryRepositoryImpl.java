@@ -21,7 +21,7 @@ public class CardHistoryRepositoryImpl implements CardHistoryRepositoryCustom {
     public List<CardHistory> getCardHistory(HistoryFindDto historyFindDto) {
         return jpaQueryFactory.selectFrom(cardHistory)
                 .where(cardHistory.userCard.id.eq(historyFindDto.getCardUuid()),
-                        cardHistory.transactionDate.between(historyFindDto.getStartDate(), historyFindDto.getEndDate()))
+                        cardHistory.transactionDate.month().eq(historyFindDto.getMonth()))
                 .fetch();
     }
 
