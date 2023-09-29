@@ -9,6 +9,7 @@ import GlobalStyle from "@/styles/GlobalStyle";
 import theme from "@/styles/theme";
 import "@/styles/font.css";
 import reportWebVitals from "./reportWebVitals";
+import { Suspense } from "react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -29,12 +30,16 @@ root.render(
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <GlobalStyle />
-          <AppRouter />
+          <Suspense fallback="..loading">
+            <AppRouter />
+          </Suspense>
         </QueryClientProvider>
       </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

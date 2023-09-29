@@ -45,4 +45,13 @@ const deleteCard = async (cardId : number) => {
     await instance.delete(`/cards/${cardId}`);
 };
 
-export { getTotalAmountMonth, getCardList, deleteCard }
+const getCardDetail = async (cardId : number) => {
+  try {
+    const response = await instance.get(`/cards/detail/${cardId}`);
+    return response.data;
+  } catch {
+    new Error('card name put error');
+  }
+};
+
+export { getTotalAmountMonth, getCardList, deleteCard, getCardDetail }

@@ -18,6 +18,7 @@ import Modal from "@/components/atoms/Modal/Modal";
 import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
 import { useDeleteCard } from "@/apis/Card/Mutations/useDeleteCard";
 import { Card } from "@/types/card";
+import { useQueryClient } from '@tanstack/react-query';
 
 const CardUploadCompletePage = () => {
 
@@ -42,19 +43,21 @@ const CardUploadCompletePage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteCardId, setDeleteCardId] = useState(0)
+  const queryClient = useQueryClient();
   const useDeleteCardMutation = useDeleteCard()
   const deleteCard = (deleteCardId : number) => {
     useDeleteCardMutation.mutate(
-      deleteCardId
-    ),
-    {
-      onSuccess: () => {
-        setIsModalOpen((prev) => !prev);
-      },
-      onError: () => {
-        console.log('삭제 실패')
+      deleteCardId,
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['CardList']);
+          setIsModalOpen(false); // 모달 닫기
+        },
+        onError: () => {
+          console.log('삭제 실패');
+        }
       }
-    }
+    );
   }
 
   //모달 오픈 함수
@@ -105,6 +108,7 @@ const CardUploadCompletePage = () => {
             swipedIndex={swipedIndex}   // 추가
             index={idx}                 // 추가
             opendeletemodal={() => toggleModal(card.id)}
+            onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
           />
         ))}
         <Layout>

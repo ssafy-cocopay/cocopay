@@ -16,6 +16,8 @@ import Calendar from "@/components/molecules/Calendar/Calendar";
 import CardHistory from "@/components/molecules/CardHistory/CardHistory";
 import PaymentList from "@/components/molecules/PaymentList/PaymentList";
 import styled from "styled-components";
+import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails";
+import { useParams } from 'react-router-dom';
 
 export const TextCenterWrapper = styled.div`
   flex: 1;
@@ -29,6 +31,13 @@ const CardDetailPage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
+
+  const { cardId: cardIdStr } = useParams();
+  
+  const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
+  const CardDetail = useGetCardDetail(cardId);
+  console.log(CardDetail)
+
   return (
     <Background
       $colormode="gradient"
@@ -65,7 +74,7 @@ const CardDetailPage = () => {
         </Wrapper>
         <CardWrapper>
           <Image
-            src={imgCard1}
+            src={CardDetail.cardImage}
             height={180}
             $unit="px"
             $margin="46px 0 12px 0"
@@ -78,7 +87,7 @@ const CardDetailPage = () => {
           color="black1"
           style={{ textAlign: "center" }}
         >
-          위버스 신한카드 체크(BTS)
+          {CardDetail.cardName}
         </Text>
         <WhiteRoundedBox
           height="144px"
@@ -94,11 +103,11 @@ const CardDetailPage = () => {
             size="subtitle1"
             fontWeight="bold"
             color="black1"
-            $margin="0 0 16px 0"
+            $margin="4px 0 16px 0"
           >
-            87,623원
+            {CardDetail.price}원
           </Text>
-          <Performance />
+          {CardDetail && <Performance Performance={CardDetail} />}
         </WhiteRoundedBox>
         <WhiteRoundedBox
           height="auto"

@@ -15,4 +15,18 @@ interface TotalAmountMonth {
     totalDiscountByMonth: number;
 }
 
-export type { Card, TotalAmountMonth }
+interface CardDetail {
+    userCardId: number;
+    cardName: string;
+    level: number;
+    nextLevel: number;
+    price: number;
+    percent: number;
+    cardImage: string;
+}
+
+// interface PayOffline {
+
+// }
+
+export type { Card, TotalAmountMonth, CardDetail }

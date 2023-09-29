@@ -17,8 +17,15 @@ import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
 import { useDeleteCard } from "@/apis/Card/Mutations/useDeleteCard";
 import { Card } from "@/types/card";
 import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from "react-router-dom";
+import { PATH } from "@/constants/path";
 
 const CardListPage = () => {
+  const navigate = useNavigate();
+
+  const navigatePage = (path: string) => {
+    navigate(path);
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   console.log(isModalOpen)
   const CardList = useGetCardList();
@@ -103,6 +110,7 @@ const CardListPage = () => {
             swipedIndex={swipedIndex}   // 추가
             index={idx}                 // 추가
             opendeletemodal={() => toggleModal(card.id)}
+            onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
           />
         ))}
         <Layout>
