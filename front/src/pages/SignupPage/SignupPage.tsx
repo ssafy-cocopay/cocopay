@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "@/components/atoms/Image/Image";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -14,9 +14,9 @@ import Dropdown from "@/components/molecules/Dropdown/Dropdown";
 import Modal from "@/components/atoms/Modal/Modal";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import { ModalWrapper } from "./SignupPage.styles";
-import TimerComponent from "@/utils/Timer";
 import { useAddMessage } from "@/apis/User/Mutations/useAddMessage";
-
+import { useAddMessageConfirm } from "@/apis/User/Mutations/useAddMessageConfirm";
+import { AddMessageConfirmParams } from "@/apis/User/Mutations/useAddMessageConfirm";
 interface FormValue {
   name: string;
   identification_number: number;
@@ -28,21 +28,46 @@ const SignupPage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
-
   const [btnMent, setBtnMent] = useState("인증번호 받기");
 
-  const sendMessage = (value: string) => {
+  // 1. api에서 받아온 값을 그대로 사용 불가 ->addMessageMutation로 한번 지정 후 사용
+  const addMessageMutation = useAddMessage();
+  //유저가 입력한 핸드폰번호 state에 저장해주는 로직->추후 mutate에 담아서 보내기
+  const [userTel, setUserTel] = useState("");
+
+  // 2. 버튼을 눌렀을 때 -> 메세지 버튼 바꾸기 and 메세지 요청하는 api
+  const sendMessage = () => {
     console.log("인증번호 전송!");
     setBtnMent("인증번호 재전송");
-    // TODO: 메시지요청하기
-    // useAddMessage(value);
+    //3. api를 보내는데, mutate로 유저의 핸드폰 번호 담아서 보내기.
+    addMessageMutation.mutate(userTel);
   };
 
+  // 인증번호 확인 api
+  const addMessageConMutation = useAddMessageConfirm();
+  const [messageNum, setMessageNum] = useState("");
+  //  인증번호 입력 후 확인버튼 눌렀을 때
+  const numberCheck = () => {
+    const messageData = { tel: userTel, code: messageNum };
+    addMessageConMutation.mutate(messageData);
+    // 인증번호가 맞으면(response : OK) 1.Navigate로 화면이동 2. 회원정보 리코일에 저장
+  };
   const [isModalOpen, setModalOpen] = useState(false);
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
+    console.log("토글모달");
   };
+
+  if (addMessageConMutation.isSuccess) {
+    navigatePage(PATH.PASSWORD_SETTING);
+  }
+
+  useEffect(() => {
+    if (addMessageConMutation.isError) {
+      toggleModal();
+    }
+  }, [addMessageConMutation.isError]);
 
   const {
     register,
@@ -51,13 +76,8 @@ const SignupPage = () => {
     getValues,
   } = useForm<FormValue>({ mode: "onChange" });
 
-  const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
-    console.log(data);
-  };
-
   return (
     <Container $paddingTop="70px" $border={false}>
-      {/* <form onSubmit={handleSubmit(onSubmitHandler)}> */}
       <Container
         $padding="none"
         $border={false}
@@ -116,6 +136,8 @@ const SignupPage = () => {
               message: " '-'없이 11자리 번호만 입력해주세요!'",
             },
           })}
+          value={userTel}
+          onChange={(e) => setUserTel(e.target.value)}
         ></Input>
         {errors.phone_number && (
           <small style={{ color: "red", fontSize: "14px" }}>
@@ -125,10 +147,14 @@ const SignupPage = () => {
         <br />
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
-          <Input width={150}></Input>
+          <Input
+            width={150}
+            value={messageNum}
+            onChange={(e) => setMessageNum(e.target.value)}
+          ></Input>
 
           <Button
-            // onClick={sendMessage("01080087536")}
+            onClick={sendMessage}
             $fontSize="18px"
             option="activated"
             $width="50%"
@@ -147,7 +173,8 @@ const SignupPage = () => {
         <Button
           option="deActivated"
           $borderRadius="10px"
-          onClick={() => navigatePage(PATH.PASSWORD_SETTING)}
+          onClick={numberCheck}
+          // () => navigatePage(PATH.PASSWORD_SETTING)}
           size="medium"
         >
           확인

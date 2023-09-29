@@ -27,24 +27,24 @@ import { CardInfo, PostCardPurchasedPayload, PayOnline } from "@/types/card";
 
 const getTotalAmountMonth = async () => {
   try {
-    const response = await instance.get('/users');
+    const response = await instance.get("/users");
     return response.data;
   } catch {
-    new Error('card name put error');
+    new Error("card name put error");
   }
 };
 
 const getCardList = async () => {
   try {
-    const response = await instance.get('/cards/list');
+    const response = await instance.get("/cards/list");
     return response.data;
   } catch {
-    new Error('card name put error');
+    new Error("card name put error");
   }
 };
 
-const deleteCard = async (cardId : number) => {
-    await instance.delete(`/cards/${cardId}`);
+const deleteCard = async (cardId: number) => {
+  await instance.delete(`/cards/${cardId}`);
 };
 
 const getCardDetail = async (cardId : number) => {
