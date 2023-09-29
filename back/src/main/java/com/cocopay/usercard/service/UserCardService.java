@@ -108,8 +108,9 @@ public class UserCardService {
     //사용자 카드 삭제
     public void deleteUserCard(Integer cardId) {
         Optional<UserCard> userCard = userCardRepository.findById(cardId);
-        userCard.get().setWithdrawDate(LocalDateTime.now());
-        userCardRepository.save(userCard.get());
+//        userCard.get().setWithdrawDate(LocalDateTime.now());
+//        userCardRepository.save(userCard.get());
+        userCardRepository.delete(userCard.get());
     }
 
     //사용자별 통계 - 전체
