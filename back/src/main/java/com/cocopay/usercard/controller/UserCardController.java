@@ -77,10 +77,14 @@ public class UserCardController {
 
     //월단위 카드 이용 내역 조회
     @PostMapping("/history")
-    ResponseEntity<?> getCardHistoryByMonth(@RequestHeader("userId") int userId,@RequestBody HistoryFindDto historyFindDto)
+    ResponseEntity<?> getCardHistoryByMonth(@RequestHeader("userId") int userId,
+                                            @RequestBody HistoryFindDto historyFindDto)
     {
-        historyFindDto.setCardUuid(userId);
-        List<HistoryResponseDto> result = userCardService.getCardHistory(historyFindDto);
+        //historyFindDto.setCardUuid(userId);
+        UserCard userCard = userCardService.findUsersCard(historyFindDto.getCardId());
+        HistoryFindReqDto historyFindReqDto = new HistoryFindReqDto(userCard.getCardUuid(), historyFindDto.getMonth());
+
+        List<HistoryResponseDto> result = userCardService.getCardHistory(historyFindReqDto);
 
         return ResponseEntity.ok(result);
     }
