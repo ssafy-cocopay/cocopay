@@ -65,9 +65,8 @@ const SignupPage: React.FC = () => {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
-    console.log(newName, "왜 안바뀌니?");
     setUserInfo((prev) => ({ ...prev, name: newName }));
-    console.log("Updated User Info:", userInfo);
+    console.log("Updated User Info:", newName);
   };
 
   const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +78,11 @@ const SignupPage: React.FC = () => {
 
   const handleCompanyChange = (newCompany: string) => {
     setUserInfo((prev) => ({ ...prev, company: newCompany }));
+    console.log("Updated User Info:", userInfo);
+  };
+
+  const handleBirthChange = (newBirth: string) => {
+    setUserInfo((prev) => ({ ...prev, birth: newBirth }));
     console.log("Updated User Info:", userInfo);
   };
 
@@ -102,6 +106,7 @@ const SignupPage: React.FC = () => {
       handleNameChange={handleNameChange}
       handleTelChange={handleTelChange}
       handleCompanyChange={handleCompanyChange}
+      handleBirthChange={handleBirthChange}
     />
   );
 };
@@ -121,6 +126,7 @@ interface SignupLayoutProps {
   handleNameChange: any;
   handleTelChange: any;
   handleCompanyChange: any;
+  handleBirthChange: any;
 }
 
 const SignupLayout = ({
@@ -138,6 +144,7 @@ const SignupLayout = ({
   handleNameChange,
   handleTelChange,
   handleCompanyChange,
+  handleBirthChange,
 }: SignupLayoutProps) => {
   return (
     <Container $paddingTop="70px" $border={false}>
@@ -157,22 +164,27 @@ const SignupLayout = ({
         <Input
           name="name"
           placeholder="이름을 작성해주세요"
-          onChange={(e)=>{handleNameChange(e)}}
-          {...register("name", {
-            required: true, // 필수 입력
-            minLength: {
-              value: 2,
-              message: "최소 2글자 이상 입력하세요",
-            },
-            maxLength: {
-              value: 8,
-              message: "최대 8글자까지 입력 가능합니다",
-            },
-            pattern: {
-              value: /^[a-zA-Z가-힣\s]*$/, // 문자 또는 공백만 허용
-              message: "올바른 이름 형식이 아닙니다",
-            },
-          })} //TODO: 에러메세지 text스타일컴포넌트로 커스텀하기
+          onChange={(e) => {
+            handleNameChange(e);
+          }}
+
+          // dear. 혜현 : 이 부분을 지워야 userInfo에 값이 들어가서 일단 주석처리
+          // {...register("name", {
+          //   required: true, // 필수 입력
+          //   minLength: {
+          //     value: 2,
+          //     message: "최소 2글자 이상 입력하세요",
+          //   },
+          //   maxLength: {
+          //     value: 8,
+          //     message: "최대 8글자까지 입력 가능합니다",
+          //   },
+          //   pattern: {
+          //     value: /^[a-zA-Z가-힣\s]*$/, // 문자 또는 공백만 허용
+          //     message: "올바른 이름 형식이 아닙니다",
+          //   },
+          // })} //TODO: 에러메세지 text스타일컴포넌트로 커스텀하기
+
         ></Input>
         {errors.name && (
           <small style={{ color: "red", fontSize: "14px" }}>
@@ -182,7 +194,7 @@ const SignupLayout = ({
         <br />
         {/* birth input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
-          <Input width={122} name="birth"></Input>
+          <Input width={122} name="birth" onChange={(e) => {handleBirthChange(e.target.value)}}></Input>
           <Text size="subtitle1" color="grey3">
             -
           </Text>
@@ -202,6 +214,7 @@ const SignupLayout = ({
             },
           })}
           value={userTel}
+          // 여긴 됨
           onChange={(e) => {
             setUserTel(e.target.value.toString());
             handleTelChange(e);
