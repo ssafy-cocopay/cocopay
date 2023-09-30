@@ -105,7 +105,6 @@ const StatisticsPage = () => {
           이번 달에 받은 할인 혜택이에요!
           {/* {pigImg} */}
         </Text>
-        <Image src={pigImg} width={2} style={{ marginBottom: "400px" }}></Image>
       </HeaderContainer>
       <Container style={{ position: "relative", top: "-14px" }}>
         <WhiteContainer $left={true}>

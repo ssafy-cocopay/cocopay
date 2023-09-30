@@ -1,5 +1,6 @@
 package com.cocopay.usercard.mapper;
 
+import com.cocopay.user.entity.User;
 import com.cocopay.usercard.dto.CardListDto;
 import com.cocopay.usercard.dto.MainCardDto;
 import com.cocopay.usercard.dto.UserCardDto;
@@ -75,5 +76,13 @@ public interface UserCardMapper {
 
     @Mapping(source = "userCard.cardType.name",target = "cardType")
     CardListDto toCardListDto(UserCard userCard, String graphRate,String cardImage);
+
+    @Mapping(source = "dto.userCardId", target = "cardUuid")
+    @Mapping(source = "dto.cardDefaulImage",target = "cardDefaultImage")
+    @Mapping(target = "registedDate",ignore = true)
+    @Mapping(target = "withdrawDate",ignore = true)
+    @Mapping(target = "id",ignore = true)
+    @Mapping(source = "serialNumber",target = "serialNumber")
+    UserCard toUserCard(User user, String serialNumber, boolean cocoType,int cardOrder,UserCardDto dto);
 
 }
