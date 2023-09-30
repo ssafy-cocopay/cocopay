@@ -7,6 +7,7 @@ import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.mapper.UserCardMapper;
 import com.cocopay.usercard.service.UserCardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/cards")
+@Slf4j
 public class UserCardController {
     private final UserCardService userCardService;
     private final UserCardMapper userCardMapper;
@@ -82,6 +84,9 @@ public class UserCardController {
     {
         //historyFindDto.setCardUuid(userId);
         UserCard userCard = userCardService.findUsersCard(historyFindDto.getCardId());
+        log.info("월단위 카드 내역 조회");
+        log.info("카드 id : " + historyFindDto.getCardId());
+        log.info("카드 uuid : " + userCard.getCardUuid());
         HistoryFindReqDto historyFindReqDto = new HistoryFindReqDto(userCard.getCardUuid(), historyFindDto.getMonth());
 
         List<HistoryResponseDto> result = userCardService.getCardHistory(historyFindReqDto);
