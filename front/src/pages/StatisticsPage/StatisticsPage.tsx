@@ -172,7 +172,9 @@ const StatisticsPage = () => {
             </FlexDiv>
           </TotalAmountWrapper>
           {/* bar */}
-          <StatisticsBar />
+          <StatisticsBar contents={
+              selectedTab === "내 소비" ? priceAmounts : discountedAmounts
+            }/>
           {/* 카테고리별 소비/혜택순 콘텐츠 */}
           <StatisticsContents
             contents={
