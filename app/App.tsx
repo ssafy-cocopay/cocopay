@@ -15,6 +15,12 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import WebView from 'react-native-webview';
+import {
+  WebViewErrorEvent,
+  WebViewNavigationEvent,
+  WebViewMessageEvent,
+} from 'react-native-webview/lib/WebViewTypes';
 
 import {
   Colors,
@@ -54,19 +60,44 @@ type SectionProps = PropsWithChildren<{
 //   );
 // }
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
+  //웹뷰와 RN과의 소통은 아래의 ref 값을 이용하여 이루어진다
+  let webviewRef = useRef<WebView>(null);
+
+  // WebView 로딩 완료시
+  const handleEndLoading = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
+    console.log('handleEndLoading', e);
+    // RN에서 웹뷰로 정보 보내는 메소드
+    webviewRef.current?.postMessage('로딩완료시 webview로 정보 보내는 곳');
+  };
 
   enum Event {
     BIO_AUTH,
   }
+
+  const convertToEvent = (data: any): Event | undefined => {
+    if (data === 'BIO_AUTH') {
+      return Event.BIO_AUTH;
+    }
+
+    // 인증 완료시 다음 actions은 여기에
+
+    return undefined;
+  };
+
   /** 웹뷰에서 rn으로 값을 보낼때 거치는 함수 */
   const handleOnMessage = async (e: WebViewMessageEvent) => {
     // data에 웹뷰에서 보낸 값이 들어옵니다.
     console.log(e.nativeEvent.data);
-    switch (Event.convert(e.nativeEvent.data)) {
-      case Event.BIO_AUTH:
-        await handleBioAuth();
+    const event = convertToEvent(e.nativeEvent.data);
+    if (event !== undefined) {
+      switch (event) {
+        case Event.BIO_AUTH:
+          await handleBioAuth();
+          break;
+
+        // 필요하다면 다음 actions 작성은 여기에
+      }
     }
   };
 
@@ -86,7 +117,7 @@ function App(): JSX.Element {
       // API 요청 instance도 같이 바꿔줘야 함
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   sectionContainer: {
