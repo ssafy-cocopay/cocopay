@@ -66,28 +66,24 @@ const SignupPage: React.FC = () => {
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
     setUserInfo((prev) => ({ ...prev, name: newName }));
-    console.log("Updated User Info:", newName);
   };
 
   const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTel = e.target.value.toString();
     setUserTel(newTel);
     setUserInfo((prev) => ({ ...prev, tel: newTel }));
-    console.log("Updated User Info:", userInfo);
   };
 
   const handleCompanyChange = (newCompany: string) => {
     setUserInfo((prev) => ({ ...prev, company: newCompany }));
-    console.log("Updated User Info:", userInfo);
   };
 
   const handleBirthChange = (newBirth: string) => {
     setUserInfo((prev) => ({ ...prev, birth: newBirth }));
-    console.log("Updated User Info:", userInfo);
   };
 
   useEffect(() => {
-    console.log("Updated User Info????:", userInfo);
+    console.log(userInfo);
   }, [userInfo]);
 
   return (

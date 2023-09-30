@@ -6,6 +6,10 @@ import { Image } from "@/components/atoms/Image/Image";
 import { PATH } from "@/constants/path";
 import Button from "@/components/atoms/Button/Button";
 import backArrow from "@/assets/images/icon-arrow-left-grey.png";
+
+import { useRecoilState } from "recoil";
+import { userInfoState } from "@/states/UserInfoAtoms";
+
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
 type KeypadButtonsProps = {
@@ -25,6 +29,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   const [enteredPassword, setEnteredPassword] = useState<string>(""); // 입력중인 숫자 문자열로 저장
   const [setPassword, setSetPassword] = useState<string>(""); // 비번등록시 - 유저가 처음 설정하는 비밀번호 6자
   const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비번등록시 - 비밀번호 확인을 위한 값
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
   const userPassword = "123456";
@@ -52,6 +57,10 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
     }
   };
 
+  const handlePutPassword = (newPassword: string) => {
+    setUserInfo((prev) => ({ ...prev, password: newPassword }));
+  };
+
   useEffect(() => {
     if (pressedCount === 6) {
       if (step === 1) {
@@ -61,11 +70,11 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
         setPressedCount(0);
         setStep(2); // 다음 단계로 전환
       } else if (step === 2) {
-        // 두 번째 단계: 비밀번호 확인
+        // 회원가입시 두 번째 단계: 비밀번호 확인
         setConfirmPassword(enteredPassword);
       }
 
-      // 유저가 입력한 비밀번호와 userPassword가 동일한지 검사
+      // 로그인시 유저가 입력한 비밀번호와 userPassword가 동일한지 검사
       if (enteredPassword === userPassword) {
         onPasswordMatch?.(); // 비밀번호가 일치하면 callback 호출
       } else {
@@ -80,6 +89,9 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
     if (step === 2 && confirmPassword) {
       if (setPassword === confirmPassword) {
         console.log("비밀번호 왕왕 일치");
+        // console.log(setPassword);
+        handlePutPassword(setPassword.toString());
+        // console.log("최종", userInfo);
         // TODO: 성공 시 메인 페이지로 이동, DB에 비밀번호 설정 포함 유저값 송신
         navigatePage(PATH.MAIN);
       } else {
@@ -89,6 +101,10 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
       }
     }
   }, [confirmPassword, setPassword, step]);
+
+  useEffect(() => {
+    console.log("최종", userInfo);
+  }, [userInfo]);
 
   const starButton = (_: unknown, index: number) => (
     <Button
