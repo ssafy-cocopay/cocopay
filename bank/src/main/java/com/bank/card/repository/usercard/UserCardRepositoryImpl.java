@@ -94,8 +94,9 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                         card.visa, card.master,
                         card.cardDefaultImage.as("cardDefaulImage")))
                 .from(userCard)
-                .join(account).on(account.id.eq(userCard.account.id))
-                .join(user).on(user.uuid.eq(account.user.uuid))
+                .join(userCard.account)
+                .join(account.user)
+                .where(user.uuid.eq(uuid))
                 .fetch();
     }
 
@@ -109,11 +110,12 @@ public class UserCardRepositoryImpl implements UserCardRepositoryCustom {
                         card.cardName,
                         userCard.validDate,
                         card.visa, card.master,
-                        card.cardDefaultImage))
+                        card.cardDefaultImage.as("cardDefaulImage")))
                 .from(userCard)
                 .join(card).on(card.id.eq(userCard.card.id))
                 .where(userCard.serialNumber.eq(serialNumber),
                         userCard.cvc.eq(cvc),
-                        userCard.password.like(password + '%')).fetchOne();
+                        userCard.password.like(password + '%'))
+                .fetchOne();
     }
 }
