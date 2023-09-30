@@ -15,12 +15,6 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import WebView from 'react-native-webview';
-import {
-  WebViewErrorEvent,
-  WebViewNavigationEvent,
-  WebViewMessageEvent,
-} from 'react-native-webview/lib/WebViewTypes';
 
 import {
   Colors,
@@ -60,16 +54,8 @@ type SectionProps = PropsWithChildren<{
 //   );
 // }
 
-const App = () => {
-  //웹뷰와 RN과의 소통은 아래의 ref 값을 이용하여 이루어진다
-  let webviewRef = useRef<WebView>(null);
-
-  // WebView 로딩 완료시
-  const handleEndLoading = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
-    console.log('handleEndLoading', e);
-    // RN에서 웹뷰로 정보 보내는 메소드
-    webviewRef.current?.postMessage('로딩완료시 webview로 정보 보내는 곳');
-  };
+function App(): JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
 
   enum Event {
     BIO_AUTH,
@@ -100,7 +86,7 @@ const App = () => {
       // API 요청 instance도 같이 바꿔줘야 함
     />
   );
-};
+}
 
 const styles = StyleSheet.create({
   sectionContainer: {
