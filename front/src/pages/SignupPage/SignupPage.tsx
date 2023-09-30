@@ -10,7 +10,9 @@ import Dots from "@/assets/images/img-dots-row-gray.png";
 import Button from "@/components/atoms/Button/Button";
 import Input from "@/components/atoms/Input/Input";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-import Dropdown from "@/components/molecules/Dropdown/Dropdown";
+// import Dropdown from "@/components/molecules/Dropdown/Dropdown";
+import Dropdown from "@/components/atoms/Dropdown/Dropdown";
+
 import Modal from "@/components/atoms/Modal/Modal";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import { ModalWrapper } from "./SignupPage.styles";
@@ -56,7 +58,6 @@ const SignupPage = () => {
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
-    console.log("토글모달");
   };
 
   if (addMessageConMutation.isSuccess) {
@@ -94,7 +95,7 @@ const SignupPage = () => {
         <Input
           placeholder="이름을 작성해주세요"
           {...register("name", {
-            required: true, // 필수 입력 필드임을 나타냅니다.
+            required: true, // 필수 입력 필드
             minLength: {
               value: 2,
               message: "최소 2글자 이상 입력하세요",
@@ -125,10 +126,10 @@ const SignupPage = () => {
           <Image src={Dots} width={40} $unit="%"></Image>
         </Wrapper>
         <br />
-        <Dropdown />
+        {/* <Dropdown /> */}
         {/* 핸드폰번호 input */}
         <Input
-          placeholder="핸드폰번호"
+          placeholder="핸드폰 번호를 입력해주세요"
           {...register("phone_number", {
             required: true, // 필수 입력 필드임을 나타냅니다.
             pattern: {
@@ -145,6 +146,12 @@ const SignupPage = () => {
           </small>
         )}
         <br />
+        <Dropdown
+          options={["SKT", "KT", "LG"]}
+          defaultValue="통신사를 선택해주세요"
+          onChange={(value) => console.log(value)}
+          // fontSize="body1"
+        />
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
           <Input
@@ -158,7 +165,8 @@ const SignupPage = () => {
             $fontSize="18px"
             option="activated"
             $width="50%"
-            $borderRadius="10px"
+            size="large"
+            $borderRadius="13px"
           >
             {btnMent}
           </Button>
@@ -172,21 +180,11 @@ const SignupPage = () => {
         <br />
         <Button
           option="deActivated"
-          $borderRadius="10px"
+          // $borderRadius="10px"
           onClick={numberCheck}
-          // () => navigatePage(PATH.PASSWORD_SETTING)}
-          size="medium"
+          size="large"
         >
           확인
-        </Button>
-        <br />
-        <Button
-          option="deActivated"
-          $borderRadius="10px"
-          size="medium"
-          onClick={toggleModal}
-        >
-          유효하지 않을 때
         </Button>
         {isModalOpen && (
           <ModalBg onClick={toggleModal}>
@@ -220,17 +218,7 @@ const SignupPage = () => {
             </Modal>
           </ModalBg>
         )}
-        <br />
-        <div>
-          {/* <!-- 드롭다운(싱글타입) --> */}
-          <select name="telecom" id="telecom">
-            <option value="SKT">SKT</option>
-            <option value="KT">KT</option>
-            <option value="U+">LG U+</option>
-          </select>
-        </div>
       </Container>
-      {/* </form> */}
     </Container>
   );
 };

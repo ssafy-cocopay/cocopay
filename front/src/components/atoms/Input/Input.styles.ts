@@ -4,6 +4,7 @@ import { css, styled } from "styled-components";
 export interface InputStyleProps {
   inputType?: "text" | "dropdown"; //TODO: password 만들기
   height?: number | string;
+  width?: number | string;
   $borderRadius?: number;
   $unit?: "rem" | "px" | "em" | "%";
   fontSize?: typeof theme.fontSize;
@@ -11,7 +12,7 @@ export interface InputStyleProps {
   $textAlign?: string;
 }
 
-const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
+export const getTypeStyling = (inputType: Required<InputStyleProps>["inputType"]) => {
   const style = {
     // 기본 input
     text: css`
