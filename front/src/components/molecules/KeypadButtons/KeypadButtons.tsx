@@ -31,6 +31,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   const [setPassword, setSetPassword] = useState<string>(""); // 비번등록시 - 유저가 처음 설정하는 비밀번호 6자
   const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비번등록시 - 비밀번호 확인을 위한 값
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const addAddUserMutation = useAddUser();
 
   // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
   const userPassword = "123456";
@@ -85,17 +86,17 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
     }
   }, [pressedCount, enteredPassword, step]);
 
-// 회원가입시 두 번째 단계: 비밀번호 확인
+  // 회원가입시 두 번째 단계: 비밀번호 확인
   useEffect(() => {
     if (step === 2 && confirmPassword) {
       if (setPassword === confirmPassword) {
         console.log("비밀번호 왕왕 일치");
         // console.log(setPassword);
         handlePutPassword(setPassword.toString());
--        // TODO: 성공  지문 사용할거냐고 묻기 (우선순위낮음) 
-         // TODO: 성공시 온보딩 페이지로 전환 (우선순위 높음)
-         // TODO: 성공시 회원가입하기, 리턴값 리코일로 userId 저장 (우선순위 짱높음)
-        useAddUser()
+        // TODO: 성공  지문 사용할거냐고 묻기 (우선순위낮음)
+        // TODO: 성공시 온보딩 페이지로 전환 (우선순위 높음)
+        // TODO: 성공시 회원가입하기, 리턴값 리코일로 userId 저장 (우선순위 짱높음)
+        
         navigatePage(PATH.MAIN);
       } else {
         console.log("비밀번호 일치하지 않음");
@@ -107,6 +108,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
 
   useEffect(() => {
     console.log("최종", userInfo);
+    addAddUserMutation.mutate(userInfo);
   }, [userInfo]);
 
   const starButton = (_: unknown, index: number) => (
