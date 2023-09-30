@@ -10,7 +10,7 @@ export const DropdownContainer = styled.select<InputStyleProps>`
   height: 64px;
   border-radius: 10px;
   font-size: 20px;
-  padding: 0 20px;
+  padding: 0 24px;
   color: ${({ theme }) => theme.color.grey1};
   text-align: ${(props) => props.$textAlign || "none"};
   margin-bottom: 18px;

@@ -31,6 +31,7 @@ const SignupPage: React.FC = () => {
   const [userTel, setUserTel] = useState<string>("");
   const [messageNum, setMessageNum] = useState<string>("");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isFormComplete, setFormComplete] = useState<boolean>(false);
 
   // 훅, 뮤테이션훅
   const navigate = useNavigate();
@@ -39,6 +40,8 @@ const SignupPage: React.FC = () => {
   const {
     register,
     formState: { errors },
+    handleSubmit,
+    getValues,
   } = useForm<FormValue>({ mode: "onChange" });
 
   // 핸들러
@@ -54,6 +57,20 @@ const SignupPage: React.FC = () => {
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
+  };
+
+  const checkFormCompletion = () => {
+    const formData = getValues();
+
+    if (
+      formData.name &&
+      formData.identification_number &&
+      formData.phone_number
+    ) {
+      setFormComplete(true);
+    } else {
+      setFormComplete(false);
+    }
   };
 
   useEffect(() => {
@@ -74,6 +91,8 @@ const SignupPage: React.FC = () => {
       setMessageNum={setMessageNum}
       numberCheck={numberCheck}
       toggleModal={toggleModal}
+      checkFormCompletion={checkFormCompletion}
+      isFormComplete={isFormComplete}
     />
   );
 };
@@ -90,6 +109,8 @@ interface SignupLayoutProps {
   setMessageNum: (num: string) => void;
   numberCheck: () => void;
   toggleModal: () => void;
+  checkFormCompletion: () => void;
+  isFormComplete: boolean;
 }
 
 const SignupLayout = ({
@@ -104,6 +125,8 @@ const SignupLayout = ({
   setMessageNum,
   numberCheck,
   toggleModal,
+  checkFormCompletion,
+  isFormComplete,
 }: SignupLayoutProps) => {
   return (
     <Container $paddingTop="70px" $border={false}>
@@ -164,7 +187,10 @@ const SignupLayout = ({
             },
           })}
           value={userTel}
-          onChange={(e) => setUserTel(e.target.value)}
+          onChange={(e) => {
+            setUserTel(e.target.value);
+            checkFormCompletion();
+          }}
         ></Input>
         {errors.phone_number && (
           <small style={{ color: "red", fontSize: "14px" }}>
@@ -176,14 +202,20 @@ const SignupLayout = ({
         <Dropdown
           options={["SKT", "KT", "LG"]}
           defaultValue="통신사를 선택해주세요"
-          onChange={(value) => console.log(value)}
+          onChange={(value) => {
+            console.log(value);
+            checkFormCompletion();
+          }}
         />
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
           <Input
             width={150}
             value={messageNum}
-            onChange={(e) => setMessageNum(e.target.value)}
+            onChange={(e) => {
+              setMessageNum(e.target.value);
+              checkFormCompletion();
+            }}
           ></Input>
 
           <Button
@@ -232,7 +264,10 @@ const SignupLayout = ({
                 >
                   정보 확인 후 재시도해주세요.
                 </Text>
-                <Button option="activated" onClick={toggleModal}>
+                <Button
+                  option={isFormComplete ? "activated" : "deActivated"}
+                  onClick={toggleModal}
+                >
                   확인
                 </Button>
               </ModalWrapper>
