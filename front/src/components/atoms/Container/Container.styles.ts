@@ -28,7 +28,7 @@ export const Container = styled.div<ContainerProps>`
   align-items: ${(props) => (props.$left ? "flex-start" : "center")};
   height: ${(props) => props.height || "100vh"};
   width: ${(props) => props.width || "100%"};
-  max-width: 390px;
+  max-width: 412px;
   margin: ${(props) => props.$margin || "0 auto"};
   margin-top: ${(props) => props.$marginTop};
   padding: ${(props) => props.$padding || "0 26px"};
@@ -46,7 +46,7 @@ export const Container = styled.div<ContainerProps>`
 
 export const CardListContainer = styled.div<CardListContainerProps>`
   height: 100vh;
-  max-width: 390px;
+  max-width: 412px;
   padding: ${(props) => props.$padding};
   margin: ${(props) => props.$margin || "0 auto"};
 `;

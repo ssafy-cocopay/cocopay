@@ -19,8 +19,6 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 import numberToAmount from "@/utils/NumToAmount";
 
-// TODO: 얘는 상위에서 주기
-
 const categoryIcons = {
   편의점: convenientIcon,
   영화: movieIcon,
