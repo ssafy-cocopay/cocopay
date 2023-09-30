@@ -1,82 +1,110 @@
 import React, { useEffect } from "react";
 import { Image } from "@/components/atoms/Image/Image";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { PATH } from "@/constants/path";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Dots from "@/assets/images/img-dots-row-gray.png";
 import Button from "@/components/atoms/Button/Button";
 import Input from "@/components/atoms/Input/Input";
-import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-// import Dropdown from "@/components/molecules/Dropdown/Dropdown";
 import Dropdown from "@/components/atoms/Dropdown/Dropdown";
-
 import Modal from "@/components/atoms/Modal/Modal";
-import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
+
 import { ModalWrapper } from "./SignupPage.styles";
 import { useAddMessage } from "@/apis/User/Mutations/useAddMessage";
 import { useAddMessageConfirm } from "@/apis/User/Mutations/useAddMessageConfirm";
-import { AddMessageConfirmParams } from "@/apis/User/Mutations/useAddMessageConfirm";
+
 interface FormValue {
   name: string;
   identification_number: number;
   phone_number: number;
 }
 
-const SignupPage = () => {
+const SignupPage: React.FC = () => {
+  // 상태관리
+  const [btnMent, setBtnMent] = useState<string>("인증번호 받기");
+  const [userTel, setUserTel] = useState<string>("");
+  const [messageNum, setMessageNum] = useState<string>("");
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+
+  // 훅, 뮤테이션훅
   const navigate = useNavigate();
-  const navigatePage = (path: string) => {
-    navigate(path);
-  };
-  const [btnMent, setBtnMent] = useState("인증번호 받기");
-
-  // 1. api에서 받아온 값을 그대로 사용 불가 ->addMessageMutation로 한번 지정 후 사용
   const addMessageMutation = useAddMessage();
-  //유저가 입력한 핸드폰번호 state에 저장해주는 로직->추후 mutate에 담아서 보내기
-  const [userTel, setUserTel] = useState("");
+  const addMessageConMutation = useAddMessageConfirm();
+  const {
+    register,
+    formState: { errors },
+  } = useForm<FormValue>({ mode: "onChange" });
 
-  // 2. 버튼을 눌렀을 때 -> 메세지 버튼 바꾸기 and 메세지 요청하는 api
+  // 핸들러
   const sendMessage = () => {
-    console.log("인증번호 전송!");
     setBtnMent("인증번호 재전송");
-    //3. api를 보내는데, mutate로 유저의 핸드폰 번호 담아서 보내기.
     addMessageMutation.mutate(userTel);
   };
 
-  // 인증번호 확인 api
-  const addMessageConMutation = useAddMessageConfirm();
-  const [messageNum, setMessageNum] = useState("");
-  //  인증번호 입력 후 확인버튼 눌렀을 때
   const numberCheck = () => {
     const messageData = { tel: userTel, code: messageNum };
     addMessageConMutation.mutate(messageData);
-    // 인증번호가 맞으면(response : OK) 1.Navigate로 화면이동 2. 회원정보 리코일에 저장
   };
-  const [isModalOpen, setModalOpen] = useState(false);
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
   };
 
-  if (addMessageConMutation.isSuccess) {
-    navigatePage(PATH.PASSWORD_SETTING);
-  }
-
   useEffect(() => {
-    if (addMessageConMutation.isError) {
-      toggleModal();
-    }
-  }, [addMessageConMutation.isError]);
+    if (addMessageConMutation.isError) toggleModal();
+    if (addMessageConMutation.isSuccess) navigate(PATH.PASSWORD_SETTING);
+  }, [addMessageConMutation.isError, addMessageConMutation.isSuccess]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<FormValue>({ mode: "onChange" });
+  return (
+    <SignupLayout
+      btnMent={btnMent}
+      userTel={userTel}
+      messageNum={messageNum}
+      isModalOpen={isModalOpen}
+      errors={errors}
+      register={register}
+      sendMessage={sendMessage}
+      setUserTel={setUserTel}
+      setMessageNum={setMessageNum}
+      numberCheck={numberCheck}
+      toggleModal={toggleModal}
+    />
+  );
+};
 
+interface SignupLayoutProps {
+  btnMent: string;
+  userTel: string;
+  messageNum: string;
+  isModalOpen: boolean;
+  errors: any; // 예외적 any... errors 무슨 유형이 오는지 몰라서 이렇게 적어둡니다
+  register: any;
+  sendMessage: () => void;
+  setUserTel: (tel: string) => void;
+  setMessageNum: (num: string) => void;
+  numberCheck: () => void;
+  toggleModal: () => void;
+}
+
+const SignupLayout = ({
+  btnMent,
+  userTel,
+  messageNum,
+  isModalOpen,
+  errors,
+  register,
+  sendMessage,
+  setUserTel,
+  setMessageNum,
+  numberCheck,
+  toggleModal,
+}: SignupLayoutProps) => {
   return (
     <Container $paddingTop="70px" $border={false}>
       <Container
@@ -85,17 +113,16 @@ const SignupPage = () => {
         $left={true}
         $overflow="scroll"
       >
-        <Text size="subtitle1">
+        <Text size="subtitle1" style={{ marginBottom: "6px" }}>
           코코페이 이용을 위해
-          <br /> <b>본인확인</b>을 진행해주세요
         </Text>
-        <br />
-
-        {/* 이름 input */}
+        <Text size="subtitle1" style={{ marginBottom: "26px" }}>
+          <b>본인확인</b>을 진행해주세요
+        </Text>
         <Input
           placeholder="이름을 작성해주세요"
           {...register("name", {
-            required: true, // 필수 입력 필드
+            required: true, // 필수 입력
             minLength: {
               value: 2,
               message: "최소 2글자 이상 입력하세요",
@@ -105,7 +132,7 @@ const SignupPage = () => {
               message: "최대 8글자까지 입력 가능합니다",
             },
             pattern: {
-              value: /^[a-zA-Z가-힣\s]*$/, // 문자 또는 공백만 허용하는 정규식
+              value: /^[a-zA-Z가-힣\s]*$/, // 문자 또는 공백만 허용
               message: "올바른 이름 형식이 아닙니다",
             },
           })} //TODO:에러메세지 text스타일컴포넌트로 커스텀하기
@@ -126,12 +153,11 @@ const SignupPage = () => {
           <Image src={Dots} width={40} $unit="%"></Image>
         </Wrapper>
         <br />
-        {/* <Dropdown /> */}
         {/* 핸드폰번호 input */}
         <Input
           placeholder="핸드폰 번호를 입력해주세요"
           {...register("phone_number", {
-            required: true, // 필수 입력 필드임을 나타냅니다.
+            required: true,
             pattern: {
               value: /^[0-9]{11}$/,
               message: " '-'없이 11자리 번호만 입력해주세요!'",
@@ -146,11 +172,11 @@ const SignupPage = () => {
           </small>
         )}
         <br />
+        {/* 통신사 dropdown */}
         <Dropdown
           options={["SKT", "KT", "LG"]}
           defaultValue="통신사를 선택해주세요"
           onChange={(value) => console.log(value)}
-          // fontSize="body1"
         />
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
@@ -173,23 +199,18 @@ const SignupPage = () => {
         </Wrapper>
 
         {/* <TimerComponent
-        // timerColor="danger"
-        // initialSeconds={initialSeconds}
+          timerColor="danger"
+          initialSeconds={initialSeconds}
         ></TimerComponent> */}
 
         <br />
-        <Button
-          option="deActivated"
-          // $borderRadius="10px"
-          onClick={numberCheck}
-          size="large"
-        >
+        <Button option="deActivated" onClick={numberCheck} size="large">
           확인
         </Button>
         {isModalOpen && (
           <ModalBg onClick={toggleModal}>
             <Modal toggleModal={toggleModal}>
-              <ModalWrapper>
+              <ModalWrapper style={{ width: "100%" }}>
                 <Text
                   size="body1"
                   fontWeight="bold"
