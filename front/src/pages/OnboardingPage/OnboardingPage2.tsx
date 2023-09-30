@@ -7,6 +7,22 @@ import { Image } from "@/components/atoms/Image/Image";
 import cards from "@/assets/images/img-cardsAnimation.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
+import styled, { keyframes } from "styled-components";
+
+const moveRight = keyframes`
+  to {
+    transform: translateX(calc(-50% + 100px));
+  }
+`;
+
+const AnimatedImage = styled(Image)`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: ${moveRight} 5s forwards;
+`;
+
 type OnboardingPage2Props = {
   onNextPage: () => void; // 예를 들어, 이동 함수의 타입은 void로 정의할 수 있습니다.
 };
@@ -42,17 +58,7 @@ function OnboardnigPage2(props: OnboardingPage2Props) {
       </Container>
       <br />
       {/* TODO:크기 조절해서 맞추기 */}
-      <Image
-        onClick={handlePageTransition}
-        src={cards}
-        width={30}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-      ></Image>
+      <AnimatedImage onClick={handlePageTransition} src={cards} width={30} />
     </Container>
   );
 }

@@ -9,6 +9,7 @@ import backArrow from "@/assets/images/icon-arrow-left-grey.png";
 
 import { useRecoilState } from "recoil";
 import { userInfoState } from "@/states/UserInfoAtoms";
+import { useAddUser } from "@/apis/User/Mutations/useAddUser";
 
 //TODO: 욕심파트 : 새로고침 버튼 누르면 배열 바뀌게
 
@@ -94,6 +95,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
 -        // TODO: 성공  지문 사용할거냐고 묻기 (우선순위낮음) 
          // TODO: 성공시 온보딩 페이지로 전환 (우선순위 높음)
          // TODO: 성공시 회원가입하기, 리턴값 리코일로 userId 저장 (우선순위 짱높음)
+        useAddUser()
         navigatePage(PATH.MAIN);
       } else {
         console.log("비밀번호 일치하지 않음");
