@@ -4,9 +4,7 @@
  *
  * @format
  */
-
-import React, {MutableRefObject} from 'react';
-import {useRef} from 'react';
+import React, {MutableRefObject, useRef} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -36,31 +34,31 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+// function Section({children, title}: SectionProps): JSX.Element {
+//   const isDarkMode = useColorScheme() === 'dark';
+//   return (
+//       <View style={styles.sectionContainer}>
+//         <Text
+//           style={[
+//             styles.sectionTitle,
+//             {
+//               color: isDarkMode ? Colors.white : Colors.black,
+//             },
+//           ]}>
+//           {title}
+//         </Text>
+//         <Text
+//           style={[
+//             styles.sectionDescription,
+//             {
+//               color: isDarkMode ? Colors.light : Colors.dark,
+//             },
+//           ]}>
+//           {children}
+//         </Text>
+//       </View>
+//   );
+// }
 
 const App = () => {
   //웹뷰와 RN과의 소통은 아래의 ref 값을 이용하여 이루어진다
@@ -73,14 +71,14 @@ const App = () => {
     webviewRef.current?.postMessage('로딩완료시 webview로 정보 보내는 곳');
   };
 
-  enum Event{
-    BIO_AUTH
+  enum Event {
+    BIO_AUTH,
   }
   /** 웹뷰에서 rn으로 값을 보낼때 거치는 함수 */
   const handleOnMessage = async (e: WebViewMessageEvent) => {
     // data에 웹뷰에서 보낸 값이 들어옵니다.
     console.log(e.nativeEvent.data);
-    switch(Event.convert(e.nativeEvent.data)){
+    switch (Event.convert(e.nativeEvent.data)) {
       case Event.BIO_AUTH:
         await handleBioAuth();
     }
@@ -88,15 +86,18 @@ const App = () => {
 
   const handleBioAuth = () => {
     //complete
-    webviewRef.current?.postMessage('SUCCESS')
-  }
+    webviewRef.current?.postMessage('SUCCESS');
+  };
 
   return (
     <WebView
       onLoadEnd={handleEndLoading}
       onMessage={handleOnMessage}
       webviewRef={webviewRef}
-      source={{uri: 'http://localhost:3000'}}
+      // source={{uri: 'http://localhost:3000'}}
+      source={{uri: 'http://192.168.219.102:3000'}}
+      // 웹뷰에서는 로컬 주소가 안됨 -> 어랏 되네..? -> apk 내보낼때만 프론트 배포 주소 쓰자
+      // API 요청 instance도 같이 바꿔줘야 함
     />
   );
 };
