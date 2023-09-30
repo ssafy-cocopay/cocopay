@@ -18,13 +18,13 @@ public class PayCompleteKeyService {
     private final PayCompleteKeyRepository payCompleteKeyRepository;
 
     //생색내기 페이지 데이터 저장
-    @CachePut(value = "completeCache",key = "#payCompleteKey.userId")
+    @CachePut(value = "completeCache",key = "#payCompleteKey.userId",cacheManager = "cacheManager")
     public PayCompleteKey completeSave(PayCompleteKey payCompleteKey) {
         return payCompleteKeyRepository.save(payCompleteKey);
     }
 
     //생색내기 페이지 데이터 조회
-    @Cacheable(value = "completeCache",key = "#userId")
+    @Cacheable(value = "completeCache",key = "#userId",cacheManager = "cacheManager")
     public PayCompleteKey findComplete(int userId) {
         Optional<PayCompleteKey> find = payCompleteKeyRepository.findById(userId);
 
@@ -32,7 +32,7 @@ public class PayCompleteKeyService {
                 .orElseThrow(() -> new CustomException(ErrorCode.DATA_NOT_FOUND));
     }
 
-    @CacheEvict(value = "completeCache", key = "#userId")
+    @CacheEvict(value = "completeCache", key = "#userId",cacheManager = "cacheManager")
     public void deleteComplete(int userId) {
         payCompleteKeyRepository.deleteById(userId);
     }
