@@ -70,7 +70,6 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
         setPressedCount(0);
         setStep(2); // 다음 단계로 전환
       } else if (step === 2) {
-        // 회원가입시 두 번째 단계: 비밀번호 확인
         setConfirmPassword(enteredPassword);
       }
 
@@ -85,14 +84,16 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
     }
   }, [pressedCount, enteredPassword, step]);
 
+// 회원가입시 두 번째 단계: 비밀번호 확인
   useEffect(() => {
     if (step === 2 && confirmPassword) {
       if (setPassword === confirmPassword) {
         console.log("비밀번호 왕왕 일치");
         // console.log(setPassword);
         handlePutPassword(setPassword.toString());
-        // console.log("최종", userInfo);
-        // TODO: 성공 시 메인 페이지로 이동, DB에 비밀번호 설정 포함 유저값 송신
+-        // TODO: 성공  지문 사용할거냐고 묻기 (우선순위낮음) 
+         // TODO: 성공시 온보딩 페이지로 전환 (우선순위 높음)
+         // TODO: 성공시 회원가입하기, 리턴값 리코일로 userId 저장 (우선순위 짱높음)
         navigatePage(PATH.MAIN);
       } else {
         console.log("비밀번호 일치하지 않음");
