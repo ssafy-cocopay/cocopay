@@ -49,6 +49,9 @@ public class PaymentController {
 
         paymentService.finalPayCall(paymentReqDto);
 
+        //주문 정보 redis에서 삭제
+        orderKeyService.deleteOrderKey(findOrderKey);
+
         return ResponseEntity.ok("결제 요청 완료");
     }
 
