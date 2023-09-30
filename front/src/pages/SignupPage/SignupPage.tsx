@@ -1,28 +1,29 @@
-import React, { useEffect } from "react";
-import { Image } from "@/components/atoms/Image/Image";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { PATH } from "@/constants/path";
+import { useAddMessage } from "@/apis/User/Mutations/useAddMessage";
+import { useAddMessageConfirm } from "@/apis/User/Mutations/useAddMessageConfirm";
 import { useForm } from "react-hook-form";
+import { PATH } from "@/constants/path";
 
+import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
+import { ModalWrapper } from "./SignupPage.styles";
 import Dots from "@/assets/images/img-dots-row-gray.png";
 import Button from "@/components/atoms/Button/Button";
 import Input from "@/components/atoms/Input/Input";
 import Dropdown from "@/components/atoms/Dropdown/Dropdown";
 import Modal from "@/components/atoms/Modal/Modal";
 
-import { ModalWrapper } from "./SignupPage.styles";
-import { useAddMessage } from "@/apis/User/Mutations/useAddMessage";
-import { useAddMessageConfirm } from "@/apis/User/Mutations/useAddMessageConfirm";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "@/states/UserInfoAtoms";
 
 interface FormValue {
   name: string;
-  identification_number: number;
-  phone_number: number;
+  identification_number: string;
+  phone_number: string;
 }
 
 const SignupPage: React.FC = () => {
@@ -31,7 +32,7 @@ const SignupPage: React.FC = () => {
   const [userTel, setUserTel] = useState<string>("");
   const [messageNum, setMessageNum] = useState<string>("");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [isFormComplete, setFormComplete] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   // 훅, 뮤테이션훅
   const navigate = useNavigate();
@@ -40,7 +41,6 @@ const SignupPage: React.FC = () => {
   const {
     register,
     formState: { errors },
-    getValues,
   } = useForm<FormValue>({ mode: "onChange" });
 
   // 핸들러
@@ -58,24 +58,33 @@ const SignupPage: React.FC = () => {
     setModalOpen((prev) => !prev);
   };
 
-  const checkFormCompletion = () => {
-    const formData = getValues();
-
-    if (
-      formData.name &&
-      formData.identification_number &&
-      formData.phone_number
-    ) {
-      setFormComplete(true);
-    } else {
-      setFormComplete(false);
-    }
-  };
-
   useEffect(() => {
     if (addMessageConMutation.isError) toggleModal();
     if (addMessageConMutation.isSuccess) navigate(PATH.PASSWORD_SETTING);
   }, [addMessageConMutation.isError, addMessageConMutation.isSuccess]);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+    console.log(newName, "왜 안바뀌니?");
+    setUserInfo((prev) => ({ ...prev, name: newName }));
+    console.log("Updated User Info:", userInfo);
+  };
+
+  const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTel = e.target.value.toString();
+    setUserTel(newTel);
+    setUserInfo((prev) => ({ ...prev, tel: newTel }));
+    console.log("Updated User Info:", userInfo);
+  };
+
+  const handleCompanyChange = (newCompany: string) => {
+    setUserInfo((prev) => ({ ...prev, company: newCompany }));
+    console.log("Updated User Info:", userInfo);
+  };
+
+  useEffect(() => {
+    console.log("Updated User Info????:", userInfo);
+  }, [userInfo]);
 
   return (
     <SignupLayout
@@ -90,8 +99,9 @@ const SignupPage: React.FC = () => {
       setMessageNum={setMessageNum}
       numberCheck={numberCheck}
       toggleModal={toggleModal}
-      checkFormCompletion={checkFormCompletion}
-      isFormComplete={isFormComplete}
+      handleNameChange={handleNameChange}
+      handleTelChange={handleTelChange}
+      handleCompanyChange={handleCompanyChange}
     />
   );
 };
@@ -108,8 +118,9 @@ interface SignupLayoutProps {
   setMessageNum: (num: string) => void;
   numberCheck: () => void;
   toggleModal: () => void;
-  checkFormCompletion: () => void;
-  isFormComplete: boolean;
+  handleNameChange: any;
+  handleTelChange: any;
+  handleCompanyChange: any;
 }
 
 const SignupLayout = ({
@@ -124,8 +135,9 @@ const SignupLayout = ({
   setMessageNum,
   numberCheck,
   toggleModal,
-  checkFormCompletion,
-  isFormComplete,
+  handleNameChange,
+  handleTelChange,
+  handleCompanyChange,
 }: SignupLayoutProps) => {
   return (
     <Container $paddingTop="70px" $border={false}>
@@ -141,8 +153,11 @@ const SignupLayout = ({
         <Text size="subtitle1" style={{ marginBottom: "26px" }}>
           <b>본인확인</b>을 진행해주세요
         </Text>
+        {/* name input */}
         <Input
+          name="name"
           placeholder="이름을 작성해주세요"
+          onChange={(e)=>{handleNameChange(e)}}
           {...register("name", {
             required: true, // 필수 입력
             minLength: {
@@ -157,7 +172,7 @@ const SignupLayout = ({
               value: /^[a-zA-Z가-힣\s]*$/, // 문자 또는 공백만 허용
               message: "올바른 이름 형식이 아닙니다",
             },
-          })} //TODO:에러메세지 text스타일컴포넌트로 커스텀하기
+          })} //TODO: 에러메세지 text스타일컴포넌트로 커스텀하기
         ></Input>
         {errors.name && (
           <small style={{ color: "red", fontSize: "14px" }}>
@@ -165,9 +180,9 @@ const SignupLayout = ({
           </small>
         )}
         <br />
-        {/* 주민등록번호 input */}
+        {/* birth input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
-          <Input width={122}></Input>
+          <Input width={122} name="birth"></Input>
           <Text size="subtitle1" color="grey3">
             -
           </Text>
@@ -175,8 +190,9 @@ const SignupLayout = ({
           <Image src={Dots} width={40} $unit="%"></Image>
         </Wrapper>
         <br />
-        {/* 핸드폰번호 input */}
+        {/* tel input */}
         <Input
+          name="tel"
           placeholder="핸드폰 번호를 입력해주세요"
           {...register("phone_number", {
             required: true,
@@ -187,8 +203,8 @@ const SignupLayout = ({
           })}
           value={userTel}
           onChange={(e) => {
-            setUserTel(e.target.value);
-            checkFormCompletion();
+            setUserTel(e.target.value.toString());
+            handleTelChange(e);
           }}
         ></Input>
         {errors.phone_number && (
@@ -197,14 +213,11 @@ const SignupLayout = ({
           </small>
         )}
         <br />
-        {/* 통신사 dropdown */}
+        {/* company dropdown */}
         <Dropdown
           options={["SKT", "KT", "LG"]}
           defaultValue="통신사를 선택해주세요"
-          onChange={(value) => {
-            console.log(value);
-            checkFormCompletion();
-          }}
+          onChange={handleCompanyChange}
         />
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
@@ -213,7 +226,6 @@ const SignupLayout = ({
             value={messageNum}
             onChange={(e) => {
               setMessageNum(e.target.value);
-              checkFormCompletion();
             }}
           ></Input>
 
@@ -263,10 +275,7 @@ const SignupLayout = ({
                 >
                   정보 확인 후 재시도해주세요.
                 </Text>
-                <Button
-                  option={isFormComplete ? "activated" : "deActivated"}
-                  onClick={toggleModal}
-                >
+                <Button option="deActivated" onClick={toggleModal}>
                   확인
                 </Button>
               </ModalWrapper>
