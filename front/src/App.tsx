@@ -1,9 +1,13 @@
-import React from "react";
-// import { Suspense } from "react"; // 추후에 비동기 처리하면서 시간 지연시 활용할 예정
+import React, { Suspense } from "react";
 import { LandingPage } from "@/pages/LandingPage/LandingPage";
+import { Text } from "@/components/atoms/Text/Text.styles";
 
 function App() {
-  return <LandingPage></LandingPage>;
+  return (
+    <Suspense fallback={<Text>로딩중</Text>}>
+      <LandingPage />
+    </Suspense>
+  );
 }
 
 export default App;
