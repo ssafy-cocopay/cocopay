@@ -23,6 +23,10 @@ spring:
       host: j9b208.p.ssafy.io
       password: 'ssafy'
 
+logging:
+  level:
+    root: debug
+
 bank:
   local-url : http://localhost:8081/bank/
   url : https://j9b208.p.ssafy.io/bank/
