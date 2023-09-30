@@ -16,8 +16,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CardHistoryMapper {
 
-    @Mapping(source = "id", target = "cardHistoryId")
-    @Mapping(source = "userCard.id", target = "cardUuid")
+    //@Mapping(source = "id", target = "cardHistoryId")
+   // @Mapping(source = "userCard.id", target = "cardUuid")
     HistoryResponseDto historyToResponseDto(CardHistory cardHistory);
 
     List<HistoryResponseDto> toDtoList(List<CardHistory> cardHistories);

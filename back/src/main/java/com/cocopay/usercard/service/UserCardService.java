@@ -167,7 +167,7 @@ public class UserCardService {
     }
 
     //카드 한달 이용내역
-    public List<HistoryResponseDto> getCardHistory(HistoryFindDto historyFindDto) {
+    public List<HistoryResponseDto> getCardHistory(HistoryFindReqDto historyFindReqDto) {
         WebClient webClient = WebClient.create();
 
         //api 주소
@@ -177,7 +177,7 @@ public class UserCardService {
         List<HistoryResponseDto> cardHistoryList = webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(historyFindDto)
+                .bodyValue(historyFindReqDto)
                 .retrieve()
                 .bodyToMono(List.class)
                 .block();
@@ -212,29 +212,29 @@ public class UserCardService {
                 .block();
 
         PerformanceResDto performanceResDto = performanceResListDto.getPerformanceList().get(0);
-        log.info("채워야하는 조건 금액 : "+String.valueOf(performanceResDto.getPrice()));
-        log.info("이번달 총 금액 : "+String.valueOf(performanceResDto.getTotalPrice()));
+        log.info("채워야하는 조건 금액 : " + String.valueOf(performanceResDto.getPrice()));
+        log.info("이번달 총 금액 : " + String.valueOf(performanceResDto.getTotalPrice()));
         //남은 금액
         int price = 0;
-        if(performanceResDto.getLevel()==performanceResDto.getNextLevel()&&performanceResDto.getTotalPrice()>=performanceResDto.getPrice()){
+        if (performanceResDto.getLevel() == performanceResDto.getNextLevel() && performanceResDto.getTotalPrice() >= performanceResDto.getPrice()) {
             price = 0;
-        }else {
-            price = performanceResDto.getPrice()-performanceResDto.getTotalPrice();
+        } else {
+            price = performanceResDto.getPrice() - performanceResDto.getTotalPrice();
         }
 
         //퍼센트
         double percent;
-        if(performanceResDto.getTotalPrice()>=performanceResDto.getPrice()){
+        if (performanceResDto.getTotalPrice() >= performanceResDto.getPrice()) {
             percent = 100.0;
-        }else {
-            percent = ((double)performanceResDto.getTotalPrice() / performanceResDto.getPrice() * 100);
+        } else {
+            percent = ((double) performanceResDto.getTotalPrice() / performanceResDto.getPrice() * 100);
         }
 
         //카드 이미지
         String cardImge;
-        if(userCard.getCardCustomImage()== null){
+        if (userCard.getCardCustomImage() == null) {
             cardImge = userCard.getCardDefaultImage();
-        }else {
+        } else {
             cardImge = userCard.getCardCustomImage();
         }
 
@@ -343,10 +343,17 @@ public class UserCardService {
         return cardListDtoList;
     }
 
-    public User findUser(int userId ) {
+    public User findUser(int userId) {
         Optional<User> findUser = userRepository.findById(userId);
 
         return findUser
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    public UserCard findUsersCard(int userCardId) {
+        Optional<UserCard> findUserCard = userCardRepository.findById(userCardId);
+
+        return findUserCard
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER_CARD));
     }
 }
