@@ -40,7 +40,6 @@ const SignupPage: React.FC = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit,
     getValues,
   } = useForm<FormValue>({ mode: "onChange" });
 

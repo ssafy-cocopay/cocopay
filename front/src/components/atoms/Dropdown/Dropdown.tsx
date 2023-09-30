@@ -1,5 +1,8 @@
 import React from "react";
-import { DropdownContainer } from "@/components/atoms/Dropdown/Dropdown.styles";
+import {
+  DropdownContainer,
+  OptionContainer,
+} from "@/components/atoms/Dropdown/Dropdown.styles";
 import { InputStyleProps } from "@/components/atoms/Input/Input.styles";
 
 interface DropdownProps extends InputStyleProps {
@@ -22,9 +25,9 @@ const Dropdown = ({
     >
       {defaultValue && <option value="">{defaultValue}</option>}
       {options.map((option) => (
-        <option key={option} value={option}>
+        <OptionContainer key={option} value={option}>
           {option}
-        </option>
+        </OptionContainer>
       ))}
     </DropdownContainer>
   );
