@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisHash;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash(value = "barcode")
+@RedisHash(value = "barcode",timeToLive = 182)
 public class BarcodeKey {
     @Id
     private Integer userId;
