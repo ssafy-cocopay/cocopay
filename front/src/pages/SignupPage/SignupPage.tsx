@@ -31,11 +31,13 @@ const SignupPage = () => {
 
   const [btnMent, setBtnMent] = useState("인증번호 받기");
 
-  const sendMessage = (value: string) => {
+  const addMessageMutation = useAddMessage();
+
+  const sendMessage = () => {
     console.log("인증번호 전송!");
     setBtnMent("인증번호 재전송");
     // TODO: 메시지요청하기
-    // useAddMessage(value);
+    addMessageMutation.mutate('01080087536');
   };
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -128,7 +130,7 @@ const SignupPage = () => {
           <Input width={150}></Input>
 
           <Button
-            // onClick={sendMessage("01080087536")}
+            onClick={sendMessage}
             $fontSize="18px"
             option="activated"
             $width="50%"

@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { addMessage } from "../userAPI";
-// import { User } from '@/types';
-// import { updateUser } from '@/apis/User/userAPI';
+// import { useQueryClient } from "@tanstack/react-query";
 
 const useAddMessage = () => {
+  // const queryCilent = useQueryClient();
   return useMutation((tel: string) => addMessage(tel), {
     onSuccess: () => {
       console.log("메세지 갔니?");
