@@ -7,12 +7,12 @@ import { PATH } from "@/constants/path";
 import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
- 
- export const LandingPage = () => {
-    const navigate = useNavigate();
-    const navigatePage = (path: string) => {
-      navigate(path);
-    };
+
+export const LandingPage = () => {
+  const navigate = useNavigate();
+  const navigatePage = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <Background
@@ -23,18 +23,23 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
         alignItems: "center",
       }}
     >
-      <Container $margin="50px 0">
-        <Wrapper $flexGrow={4}>
+      <Container $margin="85px 0">
+        <Wrapper $flexGrow={5}>
           <Image src={coco} width={12} />
         </Wrapper>
-        <Wrapper $flexGrow={2} style={{ gap: "15px" }}>
-          <Button onClick={() => navigatePage(PATH.LOGIN_FINGER)} size="large">
+        <Wrapper $flexGrow={3} style={{ gap: "15px" }}>
+          <Button
+            onClick={() => navigatePage(PATH.LOGIN_FINGER)}
+            size="large"
+            $width="85%"
+          >
             로그인
           </Button>
           <Button
             onClick={() => navigatePage(PATH.SIGNUP)}
             option="activated"
             size="large"
+            $width="85%"
           >
             회원가입
           </Button>

@@ -28,11 +28,11 @@ const ScrollableContainer = styled(Container)`
   display: flex;
   flex-direction: row;
   gap: 20px;
-  padding-left: 70px;
+  padding-left: 85px;
   margin-top: 200px;
   width: auto;
   position: absolute;
-  left: 0px;
+  left: -11px;
 `;
 
 export const BlueContainerWrapper = styled.div`
@@ -74,9 +74,17 @@ const HomePage = () => {
         </Text>
         <BarcodeWhiteContainer>
           <DiscountAndAmountContainer $left={true}>
-            <BodyAndHeading amountType="할인받은" amount={TotalAmountMonth.totalDiscountByMonth} />
+            <BodyAndHeading
+              amountType="할인받은"
+              amount={
+                TotalAmountMonth ? TotalAmountMonth.totalDiscountByMonth : 0
+              }
+            />
             <Line $margin="18px 0" />
-            <BodyAndHeading amountType="소비한" amount={TotalAmountMonth.totalPayByMonth} />
+            <BodyAndHeading
+              amountType="소비한"
+              amount={TotalAmountMonth ? TotalAmountMonth.totalPayByMonth : 0}
+            />
           </DiscountAndAmountContainer>
           <BarcodeContainer code={barcodeValue} />
           <BarcodeUnderWrapper>
