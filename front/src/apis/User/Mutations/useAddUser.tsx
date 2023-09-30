@@ -4,14 +4,19 @@ import { UserInfo } from "@/types/user";
 import { useSetRecoilState } from "recoil";
 import { userIdState } from "../../../states/UserIdAtoms";
 
+type AddUserResponse = {
+  userId: number;
+};
+
 const useAddUser = () => {
-  const setUserId = useSetRecoilState(userIdState);
+  // const setUserId = useSetRecoilState(userIdState);
   // const queryCilent = useQueryClient();
   return useMutation((userInfo: UserInfo) => addUser(userInfo), {
-    onSuccess: (data) => {
+    onSuccess: (aa) => {
       console.log("회원 등록!");
-      console.log(data);
-    //   setUserId(data.userId);
+      console.log(aa);
+      // console.log(data.userId);
+      //   setUserId(data.userId);
     },
     onError: () => {
       console.log("회원 등록 실패...");
