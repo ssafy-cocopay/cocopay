@@ -13,7 +13,7 @@ const instance: Axios = axios.create({
   withCredentials: true, //  요청과 응답에 쿠키 포함
   headers: {
     "Content-Type": "application/json",
-    userId: 2 || undefined, // 여기 오류나면 userId 냅다 1로 해보기
+    userId: `${localStorage.getItem('userId')}` || 4, // 여기 오류나면 userId 냅다 1로 해보기
   },
 });
 

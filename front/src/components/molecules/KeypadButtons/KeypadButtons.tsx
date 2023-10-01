@@ -31,7 +31,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   const [setPassword, setSetPassword] = useState<string>(""); // 비번등록시 - 유저가 처음 설정하는 비밀번호 6자
   const [confirmPassword, setConfirmPassword] = useState<string>(""); // 비번등록시 - 비밀번호 확인을 위한 값
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const addAddUserMutation = useAddUser();
+  const addUserMutation = useAddUser();
 
   // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
   const userPassword = "123456";
@@ -61,6 +61,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
 
   const handlePutPassword = (newPassword: string) => {
     setUserInfo((prev) => ({ ...prev, password: newPassword }));
+    addUserMutation.mutate(userInfo);
   };
 
   useEffect(() => {
