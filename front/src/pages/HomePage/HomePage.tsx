@@ -6,6 +6,7 @@ import { Line } from "@/components/atoms/Line/Line.style";
 import search from "@/assets/images/icon-search-blue.png";
 import cocoCard from "@/assets/images/img-card-coco.png";
 import refresh from "@/assets/images/icon-refresh-grey.png";
+import { useGetMainCards } from "@/apis/Card/Queries/useGetMainCards";
 
 import {
   BlueContainerWrapper,
@@ -26,9 +27,16 @@ import {
   DiscountAndAmountContainer,
   CircleIconContainer,
 } from "@/components/atoms/Container/Containers.styles";
+import { MainCard } from "@/types/card";
 
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
+  const MainCards = useGetMainCards();
+  console.log(MainCards, "mainCards");
+  
+  MainCards.map((card: MainCard) => {
+    console.log(card.cardImage);
+  });
 
   // TODO: 바코드값 지금은 임시 하드코딩
   const [barcodeValue] = useState("3873827336732991");
@@ -88,8 +96,10 @@ const HomePage = () => {
           </CircleIconContainer>
         </BarcodeWhiteContainer>
         <ScrollableContainer>
-          <Image src={cocoCard} width={15}></Image>
-          <Image src={cocoCard} width={15}></Image>
+          {MainCards &&
+            MainCards.map((card: MainCard) => (
+              <Image key={card.id} src={card.cardImage} width={15}></Image>
+            ))}
         </ScrollableContainer>
       </HeaderContainer>
     </Background>
