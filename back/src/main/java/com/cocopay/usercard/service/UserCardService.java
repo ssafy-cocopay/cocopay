@@ -238,7 +238,7 @@ public class UserCardService {
         log.info("이번달 총 금액 : " + String.valueOf(performanceResDto.getTotalPrice()));
         //남은 금액
         int price = 0;
-        if (performanceResDto.getLevel() == performanceResDto.getNextLevel() && performanceResDto.getTotalPrice() >= performanceResDto.getPrice()) {
+        if (performanceResDto.getLevel() == performanceResDto.getNextLevel() || performanceResDto.getTotalPrice() >= performanceResDto.getPrice()) {
             price = 0;
         } else {
             price = performanceResDto.getPrice() - performanceResDto.getTotalPrice();
