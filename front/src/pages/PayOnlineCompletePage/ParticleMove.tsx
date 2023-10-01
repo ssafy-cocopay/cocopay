@@ -31,7 +31,7 @@ const ParticleMove = () => {
         emitters: {
           position: {
             x: 50,
-            y: 0,
+            y: -30,
           },
           rate: {
             quantity: 5,
