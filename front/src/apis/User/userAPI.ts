@@ -14,10 +14,14 @@ const addMessageConfirm = async (data: AddMessageConfirmParams) => {
   await instance.post("/users/auth-check", data);
 };
 
+const addPriority = async (recommendType: number) => {
+  console.log("우선순위", recommendType);
+  await instance.put("/users", { recommendType });
+};
 const addUser = async (data: UserInfo) => {
   const response = await instance.post("/users/join", data);
-  console.log(response.data, 'addUser안에서 localstorage에 userId 저장');
-  localStorage.setItem('userId', response.data.userId);
+  console.log(response.data, "addUser안에서 localstorage에 userId 저장");
+  localStorage.setItem("userId", response.data.userId);
 };
 
-export { addMessage, addMessageConfirm, addUser };
+export { addMessage, addMessageConfirm, addUser, addPriority };
