@@ -5,12 +5,32 @@ import Back from "@/components/atoms/Back/Back";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import Background4 from "@/assets/images/bg-onboarding4.png";
+import Background4_2 from "@/assets/images/bg-onboarding4-2.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import styled, { keyframes } from "styled-components";
+import handcard from "@/assets/images/img-hancard.png";
 
 // onNextPage의 타입을 명시적으로 정의
 type OnboardingPage4Props = {
   onNextPage: () => void; // 예를 들어, 이동 함수의 타입은 void로 정의할 수 있습니다.
 };
+
+const moveTop = keyframes`
+  from{
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+
+const AnimatedImage = styled(Image)`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateY(-50%);
+  animation: ${moveTop} 3s forwards;
+`;
 
 function OnboardingPage4(props: OnboardingPage4Props) {
   const { onNextPage } = props;
@@ -25,7 +45,7 @@ function OnboardingPage4(props: OnboardingPage4Props) {
     <Container
       $border={true}
       style={{
-        backgroundImage: `url(${Background4})`,
+        backgroundImage: `url(${Background4_2})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
@@ -47,6 +67,7 @@ function OnboardingPage4(props: OnboardingPage4Props) {
             도와드릴게요!
           </Text>
         </Wrapper>
+        <AnimatedImage  src={handcard} width={16} />
       </Container>
     </Container>
   );
