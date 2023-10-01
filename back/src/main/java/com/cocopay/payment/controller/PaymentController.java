@@ -75,7 +75,7 @@ public class PaymentController {
         payPostDto.setUserId(userId);
         orderKeyService.orderKeySave(payPostDto);
         log.info("요청 값 : {}", payPostDto);
-        int cardId = barcodeKeyService.findCardId(userId, barcodeNum);
+        int cardId = barcodeKeyService.findCardId(barcodeNum);
         log.info("바코드에서 추출한 카드id : {}", cardId);
         payPostDto.setCardId(cardId);
 
