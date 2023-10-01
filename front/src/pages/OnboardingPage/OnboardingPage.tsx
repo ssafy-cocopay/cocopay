@@ -26,7 +26,7 @@ function OnboardingPages() {
       case 4:
         return <OnboardingPage4 onNextPage={handleNextPage} />;
       case 5:
-        return <OnboardingPage5 onNextPage={handleNextPage} />;
+        return <OnboardingPage5 />;
       default:
         return null;
     }
