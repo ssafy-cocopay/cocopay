@@ -1,8 +1,10 @@
 import React from "react";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "./CardHistory.styles";
+import { CardAmount } from "@/types/card";
+import numberToAmount from "@/utils/NumToAmount";
 
-const CardHistory = () => {
+const CardHistory = ({ CardAmount }: CardAmount) => {
   return (
     <div>
       <Wrapper $margin="0 0 12px 0">
@@ -11,7 +13,7 @@ const CardHistory = () => {
         </Text>
         <div style={{ display: "flex"}}>
           <Text size="subtitle2" fontWeight="bold" color="black1">
-            164,800
+            {numberToAmount(CardAmount.amount)}
           </Text>
           <Text size="subtitle2" fontWeight="light" color="black1">
             원
@@ -24,7 +26,7 @@ const CardHistory = () => {
         </Text>
         <div style={{ display: "flex"}}>
           <Text size="subtitle2" fontWeight="bold" color="blue">
-            9,348
+          {numberToAmount(CardAmount.discountAmount)}
           </Text>
           <Text size="subtitle2" fontWeight="light" color="blue">
             원

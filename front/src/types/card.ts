@@ -32,22 +32,9 @@ interface CardInfo {
   password: string;
 }
 
-interface CardPurchased {
-  cardHistoryId: number;
-  cardUuid: number;
-  transactionDate: string;
-  amount: number;
-  store: string;
-  accountBalance: number;
-  discountAmount: number;
-  discountType: string;
-  transactionType: string;
-  category: string;
-}
-
 interface PostCardPurchasedPayload {
-  cardUuid: number;
-  month: string;
+    cardId: number;
+    month: string;
 }
 
 interface PayOnline {
@@ -64,13 +51,23 @@ interface MainCard {
   barcodeNum: string;
 }
 
-export type {
-  Card,
-  TotalAmountMonth,
-  CardDetail,
-  CardInfo,
-  CardPurchased,
-  PostCardPurchasedPayload,
-  PayOnline,
-  MainCard,
-};
+interface CardAmount {
+    CardAmount: Data
+  }
+  
+interface CardHistoryLists {
+    transactionDate: string;
+    amount: number;
+    store: string;
+    discountAmount: number;
+    discountType: string | null;
+    transactionType: string;
+}
+  
+interface Data {
+    amount: number;
+    discountAmount: number;
+    cardHistoryList: CardHistoryLists[];
+}
+
+export type { Card, TotalAmountMonth, CardDetail, CardInfo, PostCardPurchasedPayload, PayOnline, CardAmount, CardHistoryLists }

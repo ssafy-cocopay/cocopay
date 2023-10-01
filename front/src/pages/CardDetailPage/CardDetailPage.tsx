@@ -19,6 +19,11 @@ import styled from "styled-components";
 import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails";
 import { usePostCardPurchased } from "@/apis/Card/Mutations/useAddCardList";
 import { useParams } from 'react-router-dom';
+import { useRecoilState } from "recoil";
+import { CardDetailAtom } from "@/states/CardDetailAtoms";
+import { CardAmount, CardHistoryLists } from "@/types/card";
+import numberToAmount from "@/utils/NumToAmount";
+
 
 export const TextCenterWrapper = styled.div`
   flex: 1;
@@ -32,24 +37,44 @@ const CardDetailPage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
+  
 
   const { cardId: cardIdStr } = useParams();
-  const [cardPurchasedData, setCardPurchasedData] = useState([])
+  const [cardPurchasedData, setCardPurchasedData] = useState({
+      amount: 0,
+      discountAmount: 0,
+      cardHistoryList: []
+  });
   const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
   const CardDetail = useGetCardDetail(cardId);
   const CardPurchased = usePostCardPurchased()
+  const date = new Date();
+  const [month, setMonth] = useState(date.getMonth() + 1)
+  console.log(CardDetail)
+
+  const handleMonthMinus = () => {
+    setMonth((prev) => prev - 1);
+  };
+
+  const handleMonthPlus = () => {
+    setMonth((prev) => prev + 1);
+  };
+
+  const handleMonthChange = (newmonth:number) => {
+    setMonth(newmonth)
+  }
 
   // 결제내역 가져오기
   useEffect(() => {
     const handleCardPurchased = () => {
-      const date = new Date();
       const payload = {
-          cardUuid: 94,
-          month: `${date.getMonth() + 1}`
+          cardId: 72,
+          month: month.toString()
       };
       CardPurchased.mutate(payload, {
           onSuccess: (data) => {
               console.log(data)
+              console.log("야 된다??")
               setCardPurchasedData(data);
           },
           onError: (error) => {
@@ -58,13 +83,14 @@ const CardDetailPage = () => {
       });
     }
     handleCardPurchased()
-  }, [setCardPurchasedData]);
+  }, [setCardPurchasedData, setMonth, month]);
 
   return (
     <Background
       $colormode="gradient"
       style={{
-        position: "fixed",
+        height: "auto",
+        paddingBottom: "70px"
       }}
     >
       <CardListContainer $padding="36px 24px">
@@ -74,7 +100,7 @@ const CardDetailPage = () => {
             width={24}
             height={24}
             $unit="px"
-            style={{ position: "fixed" }}
+            onClick={() => navigate(-1)}
           ></Image>
           <TextCenterWrapper>
             <Text
@@ -87,12 +113,6 @@ const CardDetailPage = () => {
               카드 결제내역
             </Text>
           </TextCenterWrapper>
-          {/* <Image
-            src={iconDotsVerticalBlack}
-            width={24}
-            height={24}
-            $unit="px"
-          ></Image> */}
         </Wrapper>
         <CardWrapper>
           <Image
@@ -127,7 +147,7 @@ const CardDetailPage = () => {
             color="black1"
             $margin="4px 0 16px 0"
           >
-            {CardDetail.price}원
+            {numberToAmount(CardDetail.price)}원
           </Text>
           {CardDetail && <Performance Performance={CardDetail} />}
         </WhiteRoundedBox>
@@ -137,8 +157,8 @@ const CardDetailPage = () => {
           $borderRadius="20px"
           $boxShadow="shadow1"
         >
-          <Calendar />
-          <CardHistory />
+          <Calendar month={month} minusmonth={handleMonthMinus} plusmonth={handleMonthPlus} changemonth={handleMonthChange} />
+          {cardPurchasedData && <CardHistory CardAmount={cardPurchasedData} />}
           <Text
             size="small3"
             fontWeight="light"
@@ -148,13 +168,16 @@ const CardDetailPage = () => {
             최근 결제
           </Text>
           <Hr />
-          <PaymentList />
-          <PaymentList />
-          <PaymentList />
+          {cardPurchasedData.cardHistoryList && cardPurchasedData.cardHistoryList.slice(0, 3).map((item:CardHistoryLists, index:number) => (
+              <PaymentList key={index} CardHistory={item} />
+          ))}
           <Button
             onClick={() => navigatePage(PATH.CARD_DETAIL_PURCHASED)}
             option="activated"
             size="medium"
+            style={{
+              marginTop:"30px"
+            }}
           >
             전체내역보기
           </Button>
