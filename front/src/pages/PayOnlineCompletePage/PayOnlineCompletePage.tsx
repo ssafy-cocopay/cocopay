@@ -1,13 +1,12 @@
 import { Background } from "@/components/atoms/Background/Background.styles";
 import React from "react";
-import Button from "@/components/atoms/Button/Button";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import Penguin from "@/assets/images/img-penguin-congraturation.png";
-import ParticleAnimation from "@/components/organisms/Confettie/Confettie";
+import ParticleMove from './ParticleMove';
 
 const PayOnlineCompletePage = () => {
   const navigate = useNavigate();
@@ -15,6 +14,7 @@ const PayOnlineCompletePage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
+
   return (
     <Background
       $colormode="gradient"
@@ -22,6 +22,7 @@ const PayOnlineCompletePage = () => {
         minHeight: "100vh",
       }}
     >
+      <ParticleMove/>
       <Container
         $border={true}
         $left={true}
@@ -43,14 +44,18 @@ const PayOnlineCompletePage = () => {
           <Text size="body2" fontWeight="medium">
             웹페이지로 이동하면
           </Text>
+
           <Text size="body2" fontWeight="medium">
             결제가 완료돼요
           </Text>
           <br />
           {/* <Image src={Penguin} width={70} $unit="%"></Image> */}
         </Container>
+        <Container
+          style={{ position: "absolute", left: "0px" }}
+          $padding="0"
+        >
 
-        <Container style={{ position: "absolute", left: "0px" }} $padding="0">
           {/* TODO: 이미지 누르면 홈으로 이동하기 onClick */}
           <Image
             src={Penguin}

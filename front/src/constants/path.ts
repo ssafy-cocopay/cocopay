@@ -24,7 +24,8 @@ const PATH = {
   QRCAMERA: "/main/qrcamera",
   SHOPPING: "/shopping",
   SHOPPING_COMPLETE: "/shopping/complete",
-  ONLINEQR: "/pay/online/qrcode"
+  ONLINEQR: "/pay/online/qrcode",
+  TEST: "/test",
 } as const;
 
 export { PATH };
