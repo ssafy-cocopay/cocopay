@@ -18,7 +18,6 @@ const addUser = async (data: UserInfo) => {
   const response = await instance.post("/users/join", data);
   console.log(response.data, 'addUser안에서 localstorage에 userId 저장');
   localStorage.setItem('userId', response.data.userId);
-  // return response.data;
 };
 
 export { addMessage, addMessageConfirm, addUser };
