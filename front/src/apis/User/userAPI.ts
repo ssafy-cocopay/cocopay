@@ -14,4 +14,8 @@ const addMessageConfirm = async (data: AddMessageConfirmParams) => {
   await instance.post("/users/auth-check", data);
 };
 
-export { addMessage, addMessageConfirm };
+const addPriority = async (recommendType: number) => {
+  console.log("우선순위", recommendType);
+  await instance.put("/users/message-auth", { recommendType });
+};
+export { addMessage, addMessageConfirm, addPriority };

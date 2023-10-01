@@ -8,19 +8,30 @@ import { PriorityWrapper } from "./PriorityPage.styles";
 import { WhiteRoundedBox } from "@/components/atoms/WhiteRoundedBox/WhiteRoundedBox.styles";
 import imgPriorityPerformance from "@/assets/images/img-priority-performane.png";
 import imgPrioritySale from "@/assets/images/img-priority-sale.png";
+import { useAddPriority } from "@/apis/User/Mutations/useAddPriority";
 
 const PriorityPage = () => {
-  const navigate = useNavigate();
+  const addUseAddPriority = useAddPriority();
+  const [clikedBtn, setClickedBtn] = useState(2);
   const [selectedBox, setSelectedBox] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
     navigate(path);
   };
 
+  // 우선순위 선택
+
+  // TODO: 핸들러랑 위에 우선순위 코드 같으면 합치기. 전달값 0,1 -> 수정하기
+  // 핸들러
   const handleBoxClick = (boxType: string) => {
     setSelectedBox(boxType);
   };
 
+  const prioritysave = () => {
+    addUseAddPriority.mutate(clikedBtn);
+  };
   return (
     <Background
       $colormode="gradient"
@@ -51,7 +62,10 @@ const PriorityPage = () => {
         $src={imgPrioritySale}
         $borderRadius="38px"
         $boxShadow="shadow1"
-        onClick={() => handleBoxClick("sale")}
+        onClick={() => {
+          handleBoxClick("sale");
+          setClickedBtn(0);
+        }}
         $isGrayscale={selectedBox === "performance"}
       ></WhiteRoundedBox>
       <WhiteRoundedBox
@@ -60,11 +74,15 @@ const PriorityPage = () => {
         $src={imgPriorityPerformance}
         $borderRadius="38px"
         $boxShadow="shadow1"
-        onClick={() => handleBoxClick("performance")}
+        onClick={() => {
+          handleBoxClick("performance");
+          setClickedBtn(1);
+        }}
         $isGrayscale={selectedBox === "sale"} //performance를 누르면 sale 부분이 graybox로 바껴야 함.
       ></WhiteRoundedBox>
       <Button
-        onClick={() => navigatePage(PATH.MAIN)}
+        onClick={prioritysave}
+        // () => navigatePage(PATH.MAIN)}
         option="activated"
         size="medium"
       >

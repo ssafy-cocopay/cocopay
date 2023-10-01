@@ -157,7 +157,9 @@ const SignupLayout = ({
         <Input
           name="name"
           placeholder="이름을 작성해주세요"
-          onChange={(e)=>{handleNameChange(e)}}
+          onChange={(e) => {
+            handleNameChange(e);
+          }}
           {...register("name", {
             required: true, // 필수 입력
             minLength: {
