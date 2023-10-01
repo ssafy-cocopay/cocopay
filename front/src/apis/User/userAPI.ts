@@ -1,6 +1,7 @@
 // 1. 인스턴스에서 기본 요청 형식을 사용하기 위해 불러온다.
 import { instance } from "@/apis/instance";
 import { AddMessageConfirmParams } from "./Mutations/useAddMessageConfirm";
+import { UserInfo } from "@/types/user";
 
 // 2. 사용할 함수 이름을 지정하고, 어떤 값을 가지고 전달할 건지 타입 지정 -> 어떤 형식
 const addMessage = async (tel: string) => {
@@ -9,13 +10,14 @@ const addMessage = async (tel: string) => {
 };
 
 const addMessageConfirm = async (data: AddMessageConfirmParams) => {
-  console.log("훅내부임", data);
   // data가 애초에 객체로 들어올때는 {data} 감싸주지 않고 그냥 data라고 작성하기 !!! -> 안감싸도 되냐고 마지막에 윤하하한테 검사받기 윤 하 하
   await instance.post("/users/auth-check", data);
 };
 
-const addPriority = async (recommendType: number) => {
-  console.log("우선순위", recommendType);
-  await instance.put("/users/message-auth", { recommendType });
+const addUser = async (data: UserInfo) => {
+  const response = await instance.post("/users/join", data);
+  console.log(response.data, 'addUser안에서 localstorage에 userId 저장');
+  localStorage.setItem('userId', response.data.userId);
 };
-export { addMessage, addMessageConfirm, addPriority };
+
+export { addMessage, addMessageConfirm, addUser };

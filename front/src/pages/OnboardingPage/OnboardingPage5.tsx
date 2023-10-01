@@ -5,7 +5,26 @@ import { PATH } from "@/constants/path";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Background5 from "@/assets/images/bg-onboarding5.png";
+// import Background5 from "@/assets/images/bg-onboarding5.png";
+import {Image} from "@/components/atoms/Image/Image";
+import hand from "@/assets/images/img-hand.png";
+import Background5_1 from "@/assets/images/bg-onboarding5-2.png";
+
+import styled, { keyframes } from "styled-components";
+import cards from "@/assets/images/img-cardsAnimation.png";
+
+const moveTop = keyframes`
+  to {
+    transform: translateY(calc(-10% - 20px));
+  }
+`;
+
+const AnimatedImage = styled(Image)`
+  position: absolute;
+  bottom: 0;
+  transform: translateY(-7%);
+  animation: ${moveTop} 3s forwards;
+`;
 
 type OnboardingPage5Props = {
   onNextPage: () => void;
@@ -22,7 +41,7 @@ function OnboardingPage5(props: OnboardingPage5Props) {
     <Container
       $border={true}
       style={{
-        backgroundImage: `url(${Background5})`,
+        backgroundImage: `url(${Background5_1})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
@@ -47,7 +66,19 @@ function OnboardingPage5(props: OnboardingPage5Props) {
             시작해볼까요?
           </Text>
         </Wrapper>
-        <Button
+          {/*<Image*/}
+          {/*    src={hand}*/}
+          {/*    width={20}*/}
+          {/*    style={{*/}
+          {/*        position: "absolute",*/}
+          {/*        bottom: 0,*/}
+          {/*        left: "50%",*/}
+          {/*        transform: "translateX(-50%)",*/}
+          {/*    }}*/}
+          {/*></Image>*/}
+          <AnimatedImage  src={hand} width={24} />
+
+          <Button
           style={{
             position: "absolute",
             bottom: "20px",

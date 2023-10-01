@@ -1,5 +1,5 @@
 import { Background } from "@/components/atoms/Background/Background.styles";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
@@ -16,6 +16,9 @@ import Calendar from "@/components/molecules/Calendar/Calendar";
 import CardHistory from "@/components/molecules/CardHistory/CardHistory";
 import PaymentList from "@/components/molecules/PaymentList/PaymentList";
 import styled from "styled-components";
+import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails";
+import { usePostCardPurchased } from "@/apis/Card/Mutations/useAddCardList";
+import { useParams } from 'react-router-dom';
 
 export const TextCenterWrapper = styled.div`
   flex: 1;
@@ -29,6 +32,34 @@ const CardDetailPage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
+
+  const { cardId: cardIdStr } = useParams();
+  const [cardPurchasedData, setCardPurchasedData] = useState([])
+  const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
+  const CardDetail = useGetCardDetail(cardId);
+  const CardPurchased = usePostCardPurchased()
+
+  // 결제내역 가져오기
+  useEffect(() => {
+    const handleCardPurchased = () => {
+      const date = new Date();
+      const payload = {
+          cardUuid: 94,
+          month: `${date.getMonth() + 1}`
+      };
+      CardPurchased.mutate(payload, {
+          onSuccess: (data) => {
+              console.log(data)
+              setCardPurchasedData(data);
+          },
+          onError: (error) => {
+            console.log('작성 실패', error);
+         },
+      });
+    }
+    handleCardPurchased()
+  }, [setCardPurchasedData]);
+
   return (
     <Background
       $colormode="gradient"
@@ -65,7 +96,7 @@ const CardDetailPage = () => {
         </Wrapper>
         <CardWrapper>
           <Image
-            src={imgCard1}
+            src={CardDetail.cardImage}
             height={180}
             $unit="px"
             $margin="46px 0 12px 0"
@@ -78,7 +109,7 @@ const CardDetailPage = () => {
           color="black1"
           style={{ textAlign: "center" }}
         >
-          위버스 신한카드 체크(BTS)
+          {CardDetail.cardName}
         </Text>
         <WhiteRoundedBox
           height="144px"
@@ -94,11 +125,11 @@ const CardDetailPage = () => {
             size="subtitle1"
             fontWeight="bold"
             color="black1"
-            $margin="0 0 16px 0"
+            $margin="4px 0 16px 0"
           >
-            87,623원
+            {CardDetail.price}원
           </Text>
-          <Performance />
+          {CardDetail && <Performance Performance={CardDetail} />}
         </WhiteRoundedBox>
         <WhiteRoundedBox
           height="auto"

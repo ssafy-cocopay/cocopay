@@ -1,13 +1,13 @@
 package com.cocopay.usercard.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
-public class HistoryFindDto {
-    private Integer cardId;
+@AllArgsConstructor
+public class HistoryFindReqDto {
+    private Integer cardUuid;
     private int month;
 }

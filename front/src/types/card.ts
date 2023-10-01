@@ -15,4 +15,45 @@ interface TotalAmountMonth {
     totalDiscountByMonth: number;
 }
 
-export type { Card, TotalAmountMonth }
+interface CardDetail {
+    userCardId: number;
+    cardName: string;
+    level: number;
+    nextLevel: number;
+    price: number;
+    percent: number;
+    cardImage: string;
+}
+
+interface CardInfo {
+    serialNumber: string;
+    cvc: string;
+    validDate: string;
+    password: string;
+}
+
+interface CardPurchased {
+    cardHistoryId: number;
+    cardUuid: number;
+    transactionDate: string;
+    amount: number;
+    store: string;
+    accountBalance: number;
+    discountAmount: number;
+    discountType: string;
+    transactionType: string;
+    category: string;
+}
+
+interface PostCardPurchasedPayload {
+    cardUuid: number;
+    month: string;
+}
+
+interface PayOnline {
+    category: string;
+    storeName: string;
+    orderPrice: number;
+}
+
+export type { Card, TotalAmountMonth, CardDetail, CardInfo, CardPurchased, PostCardPurchasedPayload, PayOnline }

@@ -17,9 +17,10 @@ interface CardItemProps {
   swipedIndex: number | null;  // 추가
   index: number;               // 추가
   opendeletemodal: () => void;
+  onClick: () => void;
 }
 
-function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendeletemodal }: CardItemProps) {
+function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendeletemodal, onClick }: CardItemProps) {
   // 카드의 현재 위치 (픽셀 기준)를 나타냄, 초기값 0
   const [x, setX] = useState<number>(0);
   // 현재 드래그 중인지의 여부, 초기값 false
@@ -83,6 +84,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
       }}
     >
       <div
+      onClick={onClick}
       style={{
         width: "80%"
       }}
