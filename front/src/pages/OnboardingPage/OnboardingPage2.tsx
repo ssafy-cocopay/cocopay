@@ -44,7 +44,6 @@ function OnboardnigPage2(props: OnboardingPage2Props) {
       //   backgroundPosition: "center center",
       // }}\
       $overflow="visible"
-      $border={true}
     >
       <Container $border={true} $padding="0px" onClick={handlePageTransition}>
         <Wrapper $alignItems="start" style={{ paddingTop: "100px" }}>

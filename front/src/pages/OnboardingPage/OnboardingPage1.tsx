@@ -24,14 +24,12 @@ function OnboardingPage1(props: OnboardingPage1Props) {
 
   return (
     <Container
-      // $left={true}
       style={{
         backgroundImage: `url(${Background1})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
       }}
-      $border={true}
       onClick={handlePageTransition}
     >
       <Container

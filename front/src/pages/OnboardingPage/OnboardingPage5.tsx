@@ -39,7 +39,6 @@ function OnboardingPage5(props: OnboardingPage5Props) {
   };
   return (
     <Container
-      $border={true}
       style={{
         backgroundImage: `url(${Background5_1})`,
         backgroundSize: "cover",

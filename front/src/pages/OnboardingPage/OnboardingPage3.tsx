@@ -37,7 +37,6 @@ function OnboardingPage3(props: OnboardingPage3Props) {
   return (
     // TODO: 반응형 크기 맞추기
     <Container
-      $border={true}
       $overflow="visible"
       style={{ paddingBottom: "100px", position: "relative" }}
       onClick={handlePageTransition}

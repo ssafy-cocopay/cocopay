@@ -23,7 +23,6 @@ function OnboardingPage4(props: OnboardingPage4Props) {
   return (
     // TODO: 반응형 크기 맞추기
     <Container
-      $border={true}
       style={{
         backgroundImage: `url(${Background4})`,
         backgroundSize: "cover",
