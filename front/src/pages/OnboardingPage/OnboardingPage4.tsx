@@ -14,22 +14,32 @@ type OnboardingPage4Props = {
   onNextPage: () => void; // 예를 들어, 이동 함수의 타입은 void로 정의할 수 있습니다.
 };
 
-const moveTop = keyframes`
-  from{
-    transform: translateY(0);
+const shake = keyframes`
+  0% {
+    transform: rotate(-7deg);
   }
-  to {
-    transform: translateY(0);
+  25% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(-7deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(-7deg);
   }
 `;
 
 const AnimatedImage = styled(Image)`
   position: absolute;
   bottom: 0;
-  left: 3%;
+  left: 1%;
   top: 41%;
   transform: translateY(-50%);
-  animation: ${moveTop} 3s forwards;
+  animation: ${shake} 1s infinite;
+  transform-origin: right bottom;
 `;
 
 function OnboardingPage4(props: OnboardingPage4Props) {
