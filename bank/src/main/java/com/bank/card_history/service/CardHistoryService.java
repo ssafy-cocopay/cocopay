@@ -107,7 +107,11 @@ public class CardHistoryService {
         List<CategoryDiscountDto> categoryDiscountDtoList = cardHistoryMapper.categotyTocategotDiscountList(categoryDtoList);
 
         for (CategoryDiscountDto categoryDiscountDto :categoryDiscountDtoList) {
-            categoryDiscountDto.setDiscountPercent(String.format("%.1f",(double)categoryDiscountDto.getDiscountAmount()/totalByMonth.getTotalDiscountByMonth()*100));
+            if(categoryDiscountDto.getDiscountAmount()==0) {
+                categoryDiscountDtoList.remove(categoryDiscountDto);
+            }else{
+                categoryDiscountDto.setDiscountPercent(String.format("%.1f",(double)categoryDiscountDto.getDiscountAmount()/totalByMonth.getTotalDiscountByMonth()*100));
+            }
         }
 
         List<CategoryDiscountDto> sorted = categoryDiscountDtoList.stream()
@@ -119,7 +123,6 @@ public class CardHistoryService {
                 .allDiscountAmount(totalByMonth.getTotalDiscountByMonth())
                 .build();
 
-        System.out.println(categoryDiscountResponseDto.getCategoryList().get(0).getDiscountAmount());
 
         return categoryDiscountResponseDto;
     }
