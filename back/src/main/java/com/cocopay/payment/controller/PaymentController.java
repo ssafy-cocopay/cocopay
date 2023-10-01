@@ -75,7 +75,7 @@ public class PaymentController {
         payPostDto.setUserId(userId);
         orderKeyService.orderKeySave(payPostDto);
         log.info("요청 값 : {}", payPostDto);
-        int cardId = barcodeKeyService.findCardId(userId, barcodeNum);
+        int cardId = barcodeKeyService.findCardId(barcodeNum);
         log.info("바코드에서 추출한 카드id : {}", cardId);
         payPostDto.setCardId(cardId);
 
@@ -98,7 +98,7 @@ public class PaymentController {
     @GetMapping("/complete")
     public ResponseEntity complete(@RequestHeader("userId") int userId) {
         PayCompleteKey findComplete = payCompleteKeyService.findComplete(userId);
-        payCompleteKeyService.deleteComplete(userId);
+//        payCompleteKeyService.deleteComplete(userId);
         PayCompleteResDto payCompleteResDto = paymentMapper.toPayCompleteResDto(findComplete);
 
         return ResponseEntity.ok(payCompleteResDto);

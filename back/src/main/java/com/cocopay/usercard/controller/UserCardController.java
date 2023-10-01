@@ -6,12 +6,14 @@ import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.mapper.UserCardMapper;
 import com.cocopay.usercard.service.UserCardService;
+import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,7 +39,9 @@ public class UserCardController {
     @GetMapping("")
     public ResponseEntity<List<MainCardDto>> FindUserCard(@RequestHeader("userId") int userId) {
         List<UserCard> userCardList = userCardService.findAllUserCardList(userId);
-        return ResponseEntity.ok(userCardMapper.userCardListToMainCardList(userCardList));
+        List<MainCardDto> mainCardDtoList = userCardMapper.userCardListToMainCardList(userCardList);
+        List<MainCardDto> res = userCardService.setBarcodeNum(mainCardDtoList, userId);
+        return ResponseEntity.ok(res);
     }
 
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
@@ -118,8 +122,8 @@ public class UserCardController {
     @GetMapping("/barcode/{card-id}")
     public ResponseEntity makeBarcodeNum(@RequestHeader("userId") int userId,
                                          @PathVariable("card-id") int cardId) {
-
-        String barcodeNum = userCardService.makeBarcode(userId, cardId);
+        Faker faker = new Faker(new Locale("ko"));
+        String barcodeNum = userCardService.makeBarcode(userId, cardId,faker);
         BarcodeNumResDto barcodeNumResDto = new BarcodeNumResDto(barcodeNum);
 
         return ResponseEntity.ok(barcodeNumResDto);

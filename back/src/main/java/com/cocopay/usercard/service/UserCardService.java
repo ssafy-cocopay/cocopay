@@ -22,10 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -91,6 +88,25 @@ public class UserCardService {
     //카드 목록 조회(코코페이 포함)
     public List<UserCard> findAllUserCardList(Integer userId) {
         return userCardRepository.FindAllUserCard(userId);
+    }
+
+    //메인페이지 바코드 번호 세팅
+    public List<MainCardDto> setBarcodeNum(List<MainCardDto> list, int userId) {
+        Faker faker = new Faker(new Locale("ko"));
+        long start = System.currentTimeMillis();
+
+        list.parallelStream()
+                .forEach(v -> {
+                    String barcodeNum = makeBarcode(userId, v.getId(), faker);
+                    v.setBarcodeNum(barcodeNum);
+                });
+
+        long end = System.currentTimeMillis() - start;
+        log.info("end : {}", end);
+
+        return list.stream()
+                .sorted(Comparator.comparing(MainCardDto::getCardOrder))
+                .toList();
     }
 
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
@@ -290,11 +306,9 @@ public class UserCardService {
         return mainAmountDto;
     }
 
-    public String makeBarcode(int userId, int cardId) {
-        Faker faker = new Faker(new Locale("ko"));
+    public String makeBarcode(int userId, int cardId,Faker faker) {
 
         String barcodeNum = faker.numerify("############");
-        log.info("barcodeNum : {}", barcodeNum);
         barcodeKeyService.barcodeSave(userId, cardId, barcodeNum);
 
         return barcodeNum;
