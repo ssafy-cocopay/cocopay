@@ -37,7 +37,7 @@ const FingerSettingPage = () => {
           <Button
             $border="none"
             style={{ marginBottom: "20px" }}
-            onClick={() => navigatePage(PATH.MAIN)}
+            onClick={() => navigatePage(PATH.Onboarding)}
           >
             건너뛰기
           </Button>

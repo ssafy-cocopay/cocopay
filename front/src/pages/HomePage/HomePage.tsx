@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useRef } from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import { Line } from "@/components/atoms/Line/Line.style";
-import { Container } from "@/components/atoms/Container/Container.styles";
 import search from "@/assets/images/icon-search-blue.png";
-import cocoCard from "@/assets/images/img-card-coco.png";
 import refresh from "@/assets/images/icon-refresh-grey.png";
+import { useGetMainCards } from "@/apis/Card/Queries/useGetMainCards";
+
+import {
+  BlueContainerWrapper,
+  BarcodeUnderWrapper,
+  ScrollableContainer,
+} from "@/pages/HomePage/HomePage.styles";
 
 import { Checkbox } from "@/pages/Mypage/Mypage.styles";
 import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
@@ -22,41 +26,28 @@ import {
   DiscountAndAmountContainer,
   CircleIconContainer,
 } from "@/components/atoms/Container/Containers.styles";
-
-const ScrollableContainer = styled(Container)`
-  overflow-x: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding-left: 85px;
-  margin-top: 200px;
-  width: auto;
-  position: absolute;
-  left: -11px;
-`;
-
-export const BlueContainerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-`;
-
-const BarcodeUnderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 10px auto 20px 15px;
-  width: 92%;
-`;
+import { MainCard } from "@/types/card";
 
 const HomePage = () => {
-  // TODO: API 요청 -> amount BodyAndHeading에 전달
-
-  // TODO: 바코드값 지금은 임시 하드코딩
-  const [barcodeValue] = useState("3873827336732991");
-
-  // TODO: 밑에 스크롤할 수 있는 카드 컴포넌트 만들기, 캐로셀 사용
+  const MainCards = useGetMainCards();
+  const [barcodeValue, setBarcodeValue] = useState("491731284377");
+  const [resetTimerFlag, setResetTimerFlag] = useState(false);
   // TODO: 3분 만료랑 새로고침, 큐알....
   const TotalAmountMonth = useGetTotalAmountMonth();
+  const scrollableRef = useRef<HTMLDivElement | null>(null);
+
+  const handleScroll = () => {
+    // 스크롤 위치를 사용하여 현재 중앙에 있는 이미지를 판단
+    const scrollPosition = scrollableRef.current?.scrollLeft || 0;
+    const cardWidth = 240; // 카드의 폭을 정확한 값으로 설정해주세요.
+    const centeredCardIndex = Math.round(scrollPosition / cardWidth);
+
+    if (MainCards && MainCards[centeredCardIndex]) {
+      console.log(MainCards[centeredCardIndex].barcodeNum);
+      setBarcodeValue(MainCards[centeredCardIndex].barcodeNum);
+      setResetTimerFlag(!resetTimerFlag);
+    }
+  };
 
   return (
     <Background
@@ -89,7 +80,7 @@ const HomePage = () => {
           <BarcodeContainer code={barcodeValue} />
           <BarcodeUnderWrapper>
             <FlexDiv>
-              <TimerComponent />
+              <TimerComponent resetTimer={resetTimerFlag} />
               <Image
                 src={refresh}
                 width={1}
@@ -108,9 +99,11 @@ const HomePage = () => {
             <Image src={search} width={2.5} $margin="auto"></Image>
           </CircleIconContainer>
         </BarcodeWhiteContainer>
-        <ScrollableContainer>
-          <Image src={cocoCard} width={15}></Image>
-          <Image src={cocoCard} width={15}></Image>
+        <ScrollableContainer onScroll={handleScroll} ref={scrollableRef}>
+          {MainCards &&
+            MainCards.map((card: MainCard) => (
+              <Image key={card.id} src={card.cardImage} width={15}></Image>
+            ))}
         </ScrollableContainer>
       </HeaderContainer>
     </Background>

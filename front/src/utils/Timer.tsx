@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "@/components/atoms/Text/Text.styles";
 
-const TimerComponent = () => {
+interface TimerProps {
+  resetTimer: boolean;
+}
+
+const TimerComponent = ({ resetTimer }: TimerProps) => {
   const [seconds, setSeconds] = useState(180);
   const [isActive, setIsActive] = useState(true); // 타이머가 끝났는지
+
+  useEffect(() => {
+    if (resetTimer) {
+      setSeconds(180);
+      setIsActive(true);
+    }
+  }, [resetTimer]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
