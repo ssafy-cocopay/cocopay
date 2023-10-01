@@ -40,6 +40,11 @@ public class UserService {
     private final FcmKeyService fcmKeyService;
     private final UserCardService userCardService;
 
+
+    public User getAuthInformation(int userId){
+        return userRepository.findById(userId).get();
+    }
+
     public String sendRandomMessage(String tel) {
         Naver_Sens_V2 message = new Naver_Sens_V2();
         Random rand = new Random();
