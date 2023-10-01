@@ -93,6 +93,22 @@ public class UserCardService {
         return userCardRepository.FindAllUserCard(userId);
     }
 
+    //메인페이지 바코드 번호 세팅
+    public List<MainCardDto> setBarcodeNum(List<MainCardDto> list, int userId) {
+        Faker faker = new Faker(new Locale("ko"));
+        long start = System.currentTimeMillis();
+
+        list.parallelStream()
+                .forEach(v -> {
+                    String barcodeNum = makeBarcode(userId, v.getId(), faker);
+                    v.setBarcodeNum(barcodeNum);
+                });
+
+        long end = System.currentTimeMillis() - start;
+        log.info("end : {}", end);
+        return list;
+    }
+
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
     public List<UserCard> findUserCardList(Integer userId) {
         return userCardRepository.findUserCardListByCocoType(userId);
@@ -290,11 +306,9 @@ public class UserCardService {
         return mainAmountDto;
     }
 
-    public String makeBarcode(int userId, int cardId) {
-        Faker faker = new Faker(new Locale("ko"));
+    public String makeBarcode(int userId, int cardId,Faker faker) {
 
         String barcodeNum = faker.numerify("############");
-        log.info("barcodeNum : {}", barcodeNum);
         barcodeKeyService.barcodeSave(userId, cardId, barcodeNum);
 
         return barcodeNum;
