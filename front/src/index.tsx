@@ -9,7 +9,6 @@ import GlobalStyle from "@/styles/GlobalStyle";
 import theme from "@/styles/theme";
 import "@/styles/font.css";
 import reportWebVitals from "./reportWebVitals";
-import { Suspense } from "react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -30,9 +29,7 @@ root.render(
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <GlobalStyle />
-          <Suspense fallback="..loading">
             <AppRouter />
-          </Suspense>
         </QueryClientProvider>
       </ThemeProvider>
     </RecoilRoot>
