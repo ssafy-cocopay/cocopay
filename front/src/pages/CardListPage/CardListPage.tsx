@@ -110,6 +110,7 @@ const CardListPage = () => {
         ))}
         <Layout>
           <Button
+            onClick={() => navigatePage(PATH.SCAN_CARDINFO)}
             option="dashed"
             size="medium"
             $borderRadius="16px"

@@ -4,8 +4,10 @@ import { CardInfo, PostCardPurchasedPayload, PayOnline } from '@/types/card';
 
 const usePostCard = () => {
     return useMutation((cardInfo: CardInfo) => postCard(cardInfo), {
-        onSuccess: () => {
+        onSuccess: (data) => {
             console.log("야 됐냐?");
+            console.log(data)
+            return data
         },
         onError: () => {
             console.log('작성 실패');

@@ -35,30 +35,26 @@ const CardDetailPage = () => {
 
   const { cardId: cardIdStr } = useParams();
   const [cardPurchasedData, setCardPurchasedData] = useState([])
-  const [month, setMonth] = useState(0)
   const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
   const CardDetail = useGetCardDetail(cardId);
   const CardPurchased = usePostCardPurchased()
-  // 달 가져오기
-  useEffect(() => {
-    const getCurrentMonth = () => {
-      const date = new Date();
-      setMonth(date.getMonth() + 1)
-    };
-      getCurrentMonth()
-    }, [setMonth])
+
   // 결제내역 가져오기
   useEffect(() => {
     const handleCardPurchased = () => {
+      const date = new Date();
       const payload = {
-          cardUuid: 24,
-          month: `${month}`
+          cardUuid: 94,
+          month: `${date.getMonth() + 1}`
       };
       CardPurchased.mutate(payload, {
           onSuccess: (data) => {
               console.log(data)
               setCardPurchasedData(data);
-          }
+          },
+          onError: (error) => {
+            console.log('작성 실패', error);
+         },
       });
     }
     handleCardPurchased()

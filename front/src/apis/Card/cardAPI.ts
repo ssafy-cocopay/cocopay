@@ -67,7 +67,8 @@ const getCardDetail = async (cardId : number) => {
 
 
 const postCard = async (cardInfo: CardInfo) => {
-  await instance.post('/cards', cardInfo);
+  const response = await instance.post('/cards', cardInfo);
+  return response.data
 };
 
 const postCardPurchased = async (cardPurchased: PostCardPurchasedPayload) => {

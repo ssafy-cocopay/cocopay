@@ -10,8 +10,8 @@ import { Image } from "@/components/atoms/Image/Image";
 import CardImg from "@/assets/images/icon-cardinfo.png";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { usePostCard } from "@/apis/Card/Mutations/useAddCardList";
-import { CardInfo } from "@/types/card";
-
+import { useRecoilState } from "recoil";
+import { CardNumberAtom, CvcAtom, ValidDateAtom, CardPasswordAtom, CardIdAtom } from "@/states/CardInfoAtoms";
 
 //TODO: 백그라운드 흰색으로 바꾸기
 interface FormValue {
@@ -29,11 +29,11 @@ interface FormValue {
     };
 
     const PostCard = usePostCard()
-    const [maskedCardNumber, setMaskedCardNumber] = useState<string>("");
+    const [maskedCardNumber, setMaskedCardNumber] = useRecoilState<string>(CardNumberAtom);
     const [cardNumber, setCardNumber] = useState<string>("");
-    const [CVC, setCVC] = useState<string>(""); // CVC
-    const [validDate, setValidDate] = useState<string>(""); // validDate
-    const [cardPassword, setCardPassword] = useState<string>(""); // 카드 비밀번호
+    const [CVC, setCVC] = useRecoilState<string>(CvcAtom); // CVC
+    const [validDate, setValidDate] = useRecoilState<string>(ValidDateAtom); // validDate
+    const [cardPassword, setCardPassword] = useRecoilState<string>(CardPasswordAtom); // 카드 비밀번호
 
     const handleCardNumberChange = (
       event: React.ChangeEvent<HTMLInputElement>
@@ -58,11 +58,20 @@ interface FormValue {
     };
 
     const handleCVC = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setCVC(event.target.value);
+      const newCVCNumber = event.target.value.slice(0, 3); // 16자리까지만 유효하도록 자름
+      setCVC(newCVCNumber);
     };
 
     const handleValidDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValidDate(event.target.value);
+      let newValidDateNumber = event.target.value.replace(/\D/g, ""); // 숫자만 남기고 나머지 제거
+      newValidDateNumber = newValidDateNumber.slice(0, 4); // 4자리까지만 유효하도록 자름
+
+      const formatValidDate = (num: string) => {
+        if (num.length <= 2) return num; // 2자리 이하면 그냥 반환
+        return num.slice(0, 2) + '/' + num.slice(2);
+      };
+      
+      setValidDate(formatValidDate(newValidDateNumber).slice(0, 5));
     };
 
     const handleCardPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,17 +85,26 @@ interface FormValue {
         console.error('카드 번호는 19자리여야 합니다.');
         return;
       }
-    
-      // 유효성 검사 후 카드 정보를 서버에 보냅니다.
-      PostCard.mutate({
+      const CardData = {
         serialNumber: cardNumber,
         cvc: CVC,
         validDate: validDate,
         password: cardPassword
-      });
+      }
+    
+      // 유효성 검사 후 카드 정보를 서버에 보냅니다.
+      PostCard.mutate(CardData,{
+        onSuccess: (data) => {
+          console.log(data)
+          navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", data.userCardId.toString())}`)
+        },
+        onError: (error) => {
+          console.error("등록 실패", error)
+        }
+    });
     
       // 다음 페이지로 이동합니다.
-      navigatePage(PATH.CARD_DETAIL);
+      // navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", data.userCardId.toString())}`)
     };
 
   return (
