@@ -8,7 +8,7 @@ import { Container } from "@/components/atoms/Container/Container.styles";
 // import Background5 from "@/assets/images/bg-onboarding5.png";
 import {Image} from "@/components/atoms/Image/Image";
 import hand from "@/assets/images/img-hand.png";
-import Background5_1 from "@/assets/images/bg-onboarding5-2.png";
+import Background5_2 from "@/assets/images/bg-onboarding5-2.png";
 
 import styled, { keyframes } from "styled-components";
 import cards from "@/assets/images/img-cardsAnimation.png";
@@ -41,7 +41,7 @@ function OnboardingPage5(props: OnboardingPage5Props) {
     <Container
       $border={true}
       style={{
-        backgroundImage: `url(${Background5_1})`,
+        backgroundImage: `url(${Background5_2})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
