@@ -1,8 +1,14 @@
 import React from "react";
 import { PerformanceWrapper, Level, BarWrapper } from "./Performance.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
+import { CardDetail } from "@/types/card";
 
-const Performance = () => {
+interface CardPerformanceProps {
+  Performance: CardDetail
+}
+
+const Performance = ({ Performance }: CardPerformanceProps) => {
+  console.log(Performance.percent)
   return (
     <PerformanceWrapper>
       {/* 회색 바 */}
@@ -22,13 +28,13 @@ const Performance = () => {
             color="white"
             style={{ textAlign: "center", lineHeight: "26px" }}
           >
-            1
+            {Performance.level}
           </Text>
         </Level>
         {/* blue bar */}
         <Level
           $bgc="blue"
-          width="100px"
+          width={`${Performance.percent}%`}
           height="28px"
           $position="absolute"
           $left="0"
@@ -45,14 +51,14 @@ const Performance = () => {
         </Level>
       </BarWrapper>
       {/* 오른쪽 레벨 */}
-      <Level $bgc="grey2" width="28px" height="28px">
+      <Level $bgc="grey2" width="28px" height="28px" $zIndex="2">
         <Text
           size="small2"
           fontWeight="bold"
           color="white"
           style={{ textAlign: "center", lineHeight: "26px" }} // 어케하누...
         >
-          2
+          {Performance.nextLevel}
         </Text>
       </Level>
     </PerformanceWrapper>

@@ -7,6 +7,7 @@ export const PerformanceWrapper = styled.div`
     height: 28px;
     background-color: ${(props) => props.theme.color.grey4};
     border-radius: 10px;
+    position: relative;
 `
 
 type LevelProps = {
@@ -23,8 +24,9 @@ export const Level = styled.div<LevelProps>`
     height: ${(props) => props.height};
     background-color: ${(props) => props.theme.color[props.$bgc ?? 'grey1']};
     border-radius: 10px;
-    position: ${(props) => props.$position};
-    left: ${(props) => props.$left};
+    position: ${(props) => props.$position || 'absolute'};  // 변경
+    left: ${(props) => props.$left || 'unset'};            // 추가
+    right: ${(props) => props.$bgc === 'grey2' ? '0' : 'unset'}; // 추가
     z-index: ${(props) => props.$zIndex};
 `;
 
@@ -33,6 +35,8 @@ type BarWrapperProps = {
 }
 
 export const BarWrapper = styled.div<BarWrapperProps>`
+    position: absolute;  // 변경
+    left: 0;             // 추가
+    width: 100%;         // 추가 (선택적)
     display: flex;
-    position: ${(props) => props.$position};
-`
+`;

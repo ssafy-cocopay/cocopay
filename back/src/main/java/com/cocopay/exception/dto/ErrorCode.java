@@ -25,6 +25,7 @@ public enum ErrorCode {
 
     //추가할 것들은 여기에 작성해주세요.
     DUPLICATE_CARD(HttpStatus.CONFLICT, "이미 등록된 카드입니다."),
+    NOT_FOUND_USER_CARD(HttpStatus.NOT_FOUND, "카드를 찾을 수 없습니다."),
 
     //utils
     FCMTOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "FCM 토큰 정보가 없습니다."),
