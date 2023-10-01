@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import { Line } from "@/components/atoms/Line/Line.style";
-import { Container } from "@/components/atoms/Container/Container.styles";
 import search from "@/assets/images/icon-search-blue.png";
 import cocoCard from "@/assets/images/img-card-coco.png";
 import refresh from "@/assets/images/icon-refresh-grey.png";
+
+import {
+  BlueContainerWrapper,
+  BarcodeUnderWrapper,
+  ScrollableContainer,
+} from "@/pages/HomePage/HomePage.styles";
 
 import { Checkbox } from "@/pages/Mypage/Mypage.styles";
 import BodyAndHeading from "@/components/molecules/BodyAndHeading/BodyAndHeading";
@@ -22,31 +26,6 @@ import {
   DiscountAndAmountContainer,
   CircleIconContainer,
 } from "@/components/atoms/Container/Containers.styles";
-
-const ScrollableContainer = styled(Container)`
-  overflow-x: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding-left: 85px;
-  margin-top: 200px;
-  width: auto;
-  position: absolute;
-  left: -11px;
-`;
-
-export const BlueContainerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-`;
-
-const BarcodeUnderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 10px auto 20px 15px;
-  width: 92%;
-`;
 
 const HomePage = () => {
   // TODO: API 요청 -> amount BodyAndHeading에 전달
