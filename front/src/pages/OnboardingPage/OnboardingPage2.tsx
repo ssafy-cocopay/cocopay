@@ -36,16 +36,9 @@ function OnboardnigPage2(props: OnboardingPage2Props) {
 
   return (
     <Container
-      // $left={true}
-      // style={{
-      //   // backgroundImage: `url(${})`,
-      //   backgroundSize: "cover",
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundPosition: "center center",
-      // }}\
       $overflow="visible"
     >
-      <Container $border={true} $padding="0px" onClick={handlePageTransition}>
+      <Container $padding="20px" onClick={handlePageTransition}>
         <Wrapper $alignItems="start" style={{ paddingTop: "100px" }}>
           <Text size="subtitle2" fontWeight="bold">
             지갑속의

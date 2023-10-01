@@ -21,6 +21,7 @@ const AnimatedImage = styled(Image)`
   left: 50%;
   transform: translateX(10%);
   animation: ${moveRight} 15s forwards;
+  margin-top: 200px;
 `;
 
 type OnboardingPage3Props = {
@@ -42,19 +43,16 @@ function OnboardingPage3(props: OnboardingPage3Props) {
       onClick={handlePageTransition}
     >
       <Container
-        // align-items="left"
         $paddingTop="100px"
-        // height="auto"
-        $padding="0px"
-        $border={true}
+        $padding="20px"
         style={{ paddingBottom: "100px" }}
       >
         <Wrapper $alignItems="start">
           <Text size="subtitle2" fontWeight="bold">
-            실적과 혜택을 고려하면서
+            매번 실적과 혜택을 고려하면서
           </Text>
           <Text size="subtitle2" fontWeight="bold">
-            매번 적절한 카드를 선택해
+            적절한 카드를 선택해
           </Text>
           <Text size="subtitle2" fontWeight="bold">
             결제하기 어려우셨죠?
