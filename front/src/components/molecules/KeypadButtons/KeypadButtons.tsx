@@ -93,7 +93,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
       if (setPassword === confirmPassword) {
         console.log("step2: 비밀번호 왕왕 일치");
         handlePutPassword(setPassword);
-        navigatePage(PATH.Onboarding);
+        navigatePage(PATH.FIGNER_SETTING);
       } else {
         console.log("비밀번호 일치하지 않음");
         setEnteredPassword("");

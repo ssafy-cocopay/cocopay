@@ -3,6 +3,7 @@ import { PerformanceWrapper, Level, BarWrapper } from "./Performance.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { CardDetail } from "@/types/card";
 
+
 interface CardPerformanceProps {
   Performance: CardDetail
 }
@@ -40,14 +41,6 @@ const Performance = ({ Performance }: CardPerformanceProps) => {
           $left="0"
           $zIndex="1"
         >
-          {/* <Text
-            size="small2"
-            fontWeight="bold"
-            color="white"
-            style={{ textAlign: "center", lineHeight: "26px" }}
-          >
-            353,499원
-          </Text> */}
         </Level>
       </BarWrapper>
       {/* 오른쪽 레벨 */}

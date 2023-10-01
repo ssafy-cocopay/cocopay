@@ -45,7 +45,6 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const CardListContainer = styled.div<CardListContainerProps>`
-  height: 100vh;
   max-width: 412px;
   padding: ${(props) => props.$padding};
   margin: ${(props) => props.$margin || "0 auto"};

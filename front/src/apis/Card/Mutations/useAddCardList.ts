@@ -5,8 +5,6 @@ import { CardInfo, PostCardPurchasedPayload, PayOnline } from '@/types/card';
 const usePostCard = () => {
     return useMutation((cardInfo: CardInfo) => postCard(cardInfo), {
         onSuccess: (data) => {
-            console.log("야 됐냐?");
-            console.log(data)
             return data
         },
         onError: () => {
@@ -18,7 +16,8 @@ const usePostCard = () => {
 const usePostCardPurchased = () => {
     return useMutation((cardPurchased: PostCardPurchasedPayload) => postCardPurchased(cardPurchased), {
         onSuccess: (data) => {
-            console.log("야 됐냐?");
+            console.log("야 usePostCardPurchased?");
+            console.log(data);
             return data
         },
         onError: () => {
@@ -30,7 +29,6 @@ const usePostCardPurchased = () => {
 const usePostPayOnline = () => {
     return useMutation((payOnline: PayOnline) => postPayOnline(payOnline), {
         onSuccess: (data) => {
-            console.log("야 됐냐?");
             return data
         },
         onError: () => {

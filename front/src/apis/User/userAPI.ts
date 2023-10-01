@@ -24,4 +24,10 @@ const addUser = async (data: UserInfo) => {
   localStorage.setItem("userId", response.data.userId);
 };
 
-export { addMessage, addMessageConfirm, addUser, addPriority };
+const getOfflinePay = async () => {
+  const response = await instance.get("/pay/complete");
+  console.log(response.data, "왓니");
+  return response.data;
+};
+
+export { addMessage, addMessageConfirm, addUser, addPriority, getOfflinePay };

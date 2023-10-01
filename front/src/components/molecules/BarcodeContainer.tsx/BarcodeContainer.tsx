@@ -25,19 +25,20 @@ const BarcodeContainer = (props: BarcodeContainerProps) => {
         style={{
           borderRadius: "15px",
           overflow: "hidden",
-          width: "100%",
+          width: "93%",
           marginTop: "10px",
           display: "flex",
           justifyContent: "center",
+          opacity: "90%",
         }}
       >
         <Barcode
           value={props.code}
           format="CODE128"
-          width={2.2}
+          width={2.6}
           displayValue={false}
           margin={0}
-          height={113}
+          height={100}
           lineColor="#303030"
         />
       </div>
