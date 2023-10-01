@@ -6,6 +6,7 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import Background4 from "@/assets/images/bg-onboarding4.png";
 import Background4_2 from "@/assets/images/bg-onboarding4-2.png";
+import Peng from "@/assets/images/img-peng-onboarding4.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import styled, { keyframes } from "styled-components";
 import handcard from "@/assets/images/img-hancard.png";
@@ -27,7 +28,8 @@ const moveTop = keyframes`
 const AnimatedImage = styled(Image)`
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: 7%;
+  top: 45%;
   transform: translateY(-50%);
   animation: ${moveTop} 3s forwards;
 `;
@@ -52,6 +54,7 @@ function OnboardingPage4(props: OnboardingPage4Props) {
       }}
       onClick={handlePageTransition}
     >
+
       <Container $border={true} $paddingTop="100px">
         <Wrapper $alignItems="start">
           <Text size="subtitle2" color="white">
@@ -68,6 +71,15 @@ function OnboardingPage4(props: OnboardingPage4Props) {
           </Text>
         </Wrapper>
         <AnimatedImage  src={handcard} width={16} />
+        <Container>
+          <Image src={Peng}
+                 width={27}
+          style={{
+            position:"absolute",
+            left: "40%",
+            bottom: "7%"
+          }}/>
+        </Container>
       </Container>
     </Container>
   );
