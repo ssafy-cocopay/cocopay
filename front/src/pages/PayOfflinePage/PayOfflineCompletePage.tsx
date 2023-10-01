@@ -4,22 +4,11 @@ import Button from "@/components/atoms/Button/Button";
 import { Image } from "@/components/atoms/Image/Image";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
-import Performance from "@/components/molecules/Performance/Performance";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-import Penguin from "@/assets/images/img-penguin-thinking.png";
-import Dot from "@/assets/images/icon-dot-gray.png";
-import CardImg from "@/assets/images/img-cardimg.png";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails"; // x
-import { useParams } from 'react-router-dom'; // x
-
-const CardInfo = {
-  cardImg: CardImg,
-  cardName: "Deep Dream 체크카드",
-  헤택: "330원",
-  남은실적: "55300원",
-};
+import numberToAmount from "@/utils/NumToAmount";
+import { useGetOfflinePay } from "@/apis/User/useQueries/useGetOfflinePay";
 
 const PayOfflinePage = () => {
   const navigate = useNavigate();
@@ -27,12 +16,14 @@ const PayOfflinePage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
+  const OfflinePayCard = useGetOfflinePay();
+  console.log(OfflinePayCard);
 
-  const { cardId: cardIdStr } = useParams();
-  
-  const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
-  const CardDetail = useGetCardDetail(cardId);
-  console.log(CardDetail)
+  // OfflinePayCard.remainingAmt를 numberToAmount 함수를 사용하여 변환합니다.
+  const formattedRemainingAmt = numberToAmount(OfflinePayCard.remainingAmt);
+
+  // OfflinePayCard.discounted를 numberToAmount 함수를 사용하여 변환합니다.
+  const formattedDiscounted = numberToAmount(OfflinePayCard.discounted);
 
   return (
     <Background
@@ -51,31 +42,37 @@ const PayOfflinePage = () => {
           // $padding="36px"
           // $border={true}
         >
-          <Text size="body1" fontWeight="bold">
+          <Text style={{ marginBottom: "70px" }} size="body1" fontWeight="bold">
             결제 완료!
           </Text>
+
+          <Image
+            style={{ transform: "rotate(90deg)" }}
+            src={OfflinePayCard.cardImage}
+            width={73}
+            $unit="%"
+          ></Image>
           <br />
-          <Image src={CardImg} width={68} $unit="%"></Image>
-          <br />
-          <Container $left={true}>
+          <Container $padding="40px" $marginTop="50px" $left={true}>
             <Text size="subtitle2" fontWeight="light">
               코코가 추천해 준
             </Text>
             {/* TODO: 글씨 크기 커졌을 때 어떻게 할지 의논 후 수정 */}
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Text size="subtitle2" fontWeight="bold" color="blue">
-                {CardInfo.cardName}
+                {OfflinePayCard.cardName}
               </Text>
-              <Text size="body1" fontWeight="light">
-                로
+              <Text size="subtitle2" fontWeight="light">
+                카드로
               </Text>
             </Wrapper>
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Text size="subtitle2" fontWeight="bold" color="blue">
-                {CardInfo.헤택}
+                {/* {OfflinePayCard.discounted} */}
+                {formattedDiscounted}
               </Text>
               <Text size="subtitle2" fontWeight="light">
-                할인 받았어요!
+                원 할인 받았어요!
               </Text>
             </Wrapper>
             <br />
@@ -84,15 +81,16 @@ const PayOfflinePage = () => {
             </Text>
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Text size="subtitle2" fontWeight="bold" color="blue">
-                {CardInfo.남은실적}
+                {/* {OfflinePayCard.remainingAmt} */}
+                {formattedRemainingAmt}
               </Text>
               <Text size="subtitle2" fontWeight="light">
-                남았어요
+                원 남았어요
               </Text>
             </Wrapper>
             <br />
-            {/* TODO: 실적바 데이터바인딩 생각해서 다시 수정! */}
-            {CardDetail && <Performance Performance={CardDetail} />}
+            {/* TODO: 실적바 퍼포먼스 재사용가능하게 수정해서 넣기 */}
+            {/* {CardDetail && <Performance Performance={CardDetail} />} */}
             <br />
             <Button onClick={() => navigatePage(PATH.MAIN)} option="activated">
               홈으로
