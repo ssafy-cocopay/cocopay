@@ -24,7 +24,7 @@ public class CardHistoryService {
     private final UserCardRepository userCardRepository;
     private final CardHistoryMapper cardHistoryMapper;
 
-    public List<CardHistory> getCardHistory(HistoryFindDto historyFindDto) {
+    public List<HistoryResponseDto> getCardHistory(HistoryFindDto historyFindDto) {
         return cardHistoryRepository.getCardHistory(historyFindDto);
     }
 

@@ -11,7 +11,6 @@ import com.cocopay.redis.service.BarcodeKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
-import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.mapper.UserCardMapper;
@@ -167,25 +166,32 @@ public class UserCardService {
     }
 
     //카드 한달 이용내역
-    public List<HistoryResponseDto> getCardHistory(HistoryFindReqDto historyFindReqDto) {
+    public HistoryResDtoTemp getCardHistory(HistoryFindReqDto historyFindReqDto) {
         WebClient webClient = WebClient.create();
 
         //api 주소
         String url = "http://localhost:8081/bank/card-history";
 
         //임시 동기 요청
-        List<HistoryResponseDto> cardHistoryList = webClient.post()
+        return webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(historyFindReqDto)
                 .retrieve()
-                .bodyToMono(List.class)
+                .bodyToMono(HistoryResDtoTemp.class)
                 .block();
-        return cardHistoryList;
     }
 
-    public void replaceCardName() {
+    public HistoryResDto calHistory(List<HistoryResponseDto> list) {
+        long amountSum = list.stream()
+                .mapToLong(HistoryResponseDto::getAmount)
+                .sum();
 
+        int discountSum = list.stream()
+                .mapToInt(HistoryResponseDto::getDiscountAmount)
+                .sum();
+
+       return userCardMapper.toHistoryResDto(amountSum, discountSum, list);
     }
 
     //카드 정보 보내주기(카드 상세페이지 부분)
