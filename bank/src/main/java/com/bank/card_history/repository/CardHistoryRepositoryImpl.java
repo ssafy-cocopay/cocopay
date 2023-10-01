@@ -2,8 +2,8 @@ package com.bank.card_history.repository;
 
 import com.bank.card_history.dto.CategoryDto;
 import com.bank.card_history.dto.HistoryFindDto;
+import com.bank.card_history.dto.HistoryResponseDto;
 import com.bank.card_history.dto.TotalByMonth;
-import com.bank.card_history.entity.CardHistory;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +18,19 @@ public class CardHistoryRepositoryImpl implements CardHistoryRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<CardHistory> getCardHistory(HistoryFindDto historyFindDto) {
-        return jpaQueryFactory.selectFrom(cardHistory)
+    public List<HistoryResponseDto> getCardHistory(HistoryFindDto historyFindDto) {
+        return jpaQueryFactory
+                .select(Projections.fields(HistoryResponseDto.class,
+                        cardHistory.amount,
+                        cardHistory.transactionDate,
+                        cardHistory.store,
+                        cardHistory.discountAmount,
+                        cardHistory.discountType,
+                        cardHistory.transactionType))
+                .from(cardHistory)
                 .where(cardHistory.userCard.id.eq(historyFindDto.getCardUuid()),
                         cardHistory.transactionDate.month().eq(historyFindDto.getMonth()))
+                .orderBy(cardHistory.transactionDate.desc())
                 .fetch();
     }
 
