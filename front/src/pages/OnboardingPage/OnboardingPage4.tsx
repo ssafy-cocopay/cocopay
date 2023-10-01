@@ -26,8 +26,8 @@ const moveTop = keyframes`
 const AnimatedImage = styled(Image)`
   position: absolute;
   bottom: 0;
-  left: 7%;
-  top: 45%;
+  left: 3%;
+  top: 41%;
   transform: translateY(-50%);
   animation: ${moveTop} 3s forwards;
 `;
@@ -61,7 +61,7 @@ function OnboardingPage4(props: OnboardingPage4Props) {
         </Wrapper>
         <AnimatedImage
             src={handcard}
-            width={16} />
+            width={17} />
         <Container>
           <Image
               src={Peng}
