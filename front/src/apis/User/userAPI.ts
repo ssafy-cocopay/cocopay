@@ -14,8 +14,20 @@ const addMessageConfirm = async (data: AddMessageConfirmParams) => {
   await instance.post("/users/auth-check", data);
 };
 
+const addPriority = async (recommendType: number) => {
+  console.log("우선순위", recommendType);
+  await instance.put("/users", { recommendType });
+};
 const addUser = async (data: UserInfo) => {
-  await instance.post("/users/join", data);
+  const response = await instance.post("/users/join", data);
+  console.log(response.data, "addUser안에서 localstorage에 userId 저장");
+  localStorage.setItem("userId", response.data.userId);
 };
 
-export { addMessage, addMessageConfirm, addUser };
+const getOfflinePay = async () => {
+  const response = await instance.get("/pay/complete");
+  console.log(response.data, "왓니");
+  return response.data;
+};
+
+export { addMessage, addMessageConfirm, addUser, addPriority, getOfflinePay };

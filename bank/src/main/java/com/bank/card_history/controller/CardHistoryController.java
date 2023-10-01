@@ -1,13 +1,9 @@
 package com.bank.card_history.controller;
 
-import com.bank.card_history.dto.FindHistoryByUserId;
-import com.bank.card_history.dto.HistoryFindDto;
-import com.bank.card_history.dto.TotalByMonth;
-import com.bank.card_history.dto.TotalByMonthReqDto;
+import com.bank.card_history.dto.*;
 import com.bank.card_history.entity.CardHistory;
 import com.bank.card_history.mapper.CardHistoryMapper;
 import com.bank.card_history.service.CardHistoryService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,9 +22,9 @@ public class CardHistoryController {
     //카드 결제 내역 조회
     @PostMapping("")
     ResponseEntity<?> getCardHistoryByMonth(@RequestBody HistoryFindDto historyFindDto) {
-        List<CardHistory> result = cardHistoryService.getCardHistory(historyFindDto);
-
-        return ResponseEntity.ok(cardHistoryMapper.toDtoList(result));
+        List<HistoryResponseDto> result = cardHistoryService.getCardHistory(historyFindDto);
+        HistoryResDto historyResDto = new HistoryResDto(result);
+        return ResponseEntity.ok(historyResDto);
     }
 
     //사용자 아이디로 사용한 금액 조회

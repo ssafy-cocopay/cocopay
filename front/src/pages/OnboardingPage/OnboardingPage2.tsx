@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { Background } from "@/components/atoms/Background/Background.styles";
+import React from "react";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Back from "@/components/atoms/Back/Back";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import cards from "@/assets/images/img-cardsAnimation.png";
@@ -36,17 +34,9 @@ function OnboardnigPage2(props: OnboardingPage2Props) {
 
   return (
     <Container
-      // $left={true}
-      // style={{
-      //   // backgroundImage: `url(${})`,
-      //   backgroundSize: "cover",
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundPosition: "center center",
-      // }}\
       $overflow="visible"
-      $border={true}
     >
-      <Container $border={true} $padding="0px" onClick={handlePageTransition}>
+      <Container $padding="20px" onClick={handlePageTransition}>
         <Wrapper $alignItems="start" style={{ paddingTop: "100px" }}>
           <Text size="subtitle2" fontWeight="bold">
             지갑속의

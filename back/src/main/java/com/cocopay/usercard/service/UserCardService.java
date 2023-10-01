@@ -11,7 +11,6 @@ import com.cocopay.redis.service.BarcodeKeyService;
 import com.cocopay.redis.service.PerformanceKeyService;
 import com.cocopay.user.entity.User;
 import com.cocopay.user.repository.UserRepository;
-import com.cocopay.user.service.UserService;
 import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import com.cocopay.usercard.mapper.UserCardMapper;
@@ -23,10 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -92,6 +88,25 @@ public class UserCardService {
     //카드 목록 조회(코코페이 포함)
     public List<UserCard> findAllUserCardList(Integer userId) {
         return userCardRepository.FindAllUserCard(userId);
+    }
+
+    //메인페이지 바코드 번호 세팅
+    public List<MainCardDto> setBarcodeNum(List<MainCardDto> list, int userId) {
+        Faker faker = new Faker(new Locale("ko"));
+        long start = System.currentTimeMillis();
+
+        list.parallelStream()
+                .forEach(v -> {
+                    String barcodeNum = makeBarcode(userId, v.getId(), faker);
+                    v.setBarcodeNum(barcodeNum);
+                });
+
+        long end = System.currentTimeMillis() - start;
+        log.info("end : {}", end);
+
+        return list.stream()
+                .sorted(Comparator.comparing(MainCardDto::getCardOrder))
+                .toList();
     }
 
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
@@ -167,25 +182,32 @@ public class UserCardService {
     }
 
     //카드 한달 이용내역
-    public List<HistoryResponseDto> getCardHistory(HistoryFindReqDto historyFindReqDto) {
+    public HistoryResDtoTemp getCardHistory(HistoryFindReqDto historyFindReqDto) {
         WebClient webClient = WebClient.create();
 
         //api 주소
         String url = "http://localhost:8081/bank/card-history";
 
         //임시 동기 요청
-        List<HistoryResponseDto> cardHistoryList = webClient.post()
+        return webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(historyFindReqDto)
                 .retrieve()
-                .bodyToMono(List.class)
+                .bodyToMono(HistoryResDtoTemp.class)
                 .block();
-        return cardHistoryList;
     }
 
-    public void replaceCardName() {
+    public HistoryResDto calHistory(List<HistoryResponseDto> list) {
+        long amountSum = list.stream()
+                .mapToLong(HistoryResponseDto::getAmount)
+                .sum();
 
+        int discountSum = list.stream()
+                .mapToInt(HistoryResponseDto::getDiscountAmount)
+                .sum();
+
+       return userCardMapper.toHistoryResDto(amountSum, discountSum, list);
     }
 
     //카드 정보 보내주기(카드 상세페이지 부분)
@@ -284,11 +306,9 @@ public class UserCardService {
         return mainAmountDto;
     }
 
-    public String makeBarcode(int userId, int cardId) {
-        Faker faker = new Faker(new Locale("ko"));
+    public String makeBarcode(int userId, int cardId,Faker faker) {
 
         String barcodeNum = faker.numerify("############");
-        log.info("barcodeNum : {}", barcodeNum);
         barcodeKeyService.barcodeSave(userId, cardId, barcodeNum);
 
         return barcodeNum;

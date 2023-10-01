@@ -12,4 +12,5 @@ public class MainCardDto {
     private int cardOrder;
     private boolean cocoType;
     private String cardImage;
+    private String barcodeNum;
 }

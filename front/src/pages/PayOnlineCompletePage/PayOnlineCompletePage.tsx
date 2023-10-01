@@ -29,6 +29,9 @@ const PayOnlineCompletePage = () => {
         $paddingTop="36px"
         style={{ position: "relative" }}
       >
+        2023.10.01 콘페티 여기 잠들다
+        <ParticleAnimation></ParticleAnimation>
+        그는 좋은 꽃가루였습니다
         <Container
           $paddingTop="63px"
           $backgroundColor="white"
