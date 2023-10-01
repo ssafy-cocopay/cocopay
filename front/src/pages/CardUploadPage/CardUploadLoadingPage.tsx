@@ -1,4 +1,4 @@
-import React from "react"
+import React, { startTransition } from "react"
 import Button from "@/components/atoms/Button/Button";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { LoadingWrapper } from "./CardUploadLoadingPage.styles";
@@ -12,7 +12,7 @@ type CardUploadPageProps = {
     onNextPage: () => void;
   };
 
-const CardUploadPage = (props:CardUploadPageProps) => {
+const CardUploadLoadingPage = (props:CardUploadPageProps) => {
     const { onNextPage } = props;
 
     const navigate = useNavigate();
@@ -20,6 +20,12 @@ const CardUploadPage = (props:CardUploadPageProps) => {
     const navigatePage = (path: string) => {
         navigate(path);
     };
+
+    const handleNextPage = async () => {
+        await startTransition(() => {
+          onNextPage();
+        });
+      };
 
     return (
         <Background
@@ -56,7 +62,7 @@ const CardUploadPage = (props:CardUploadPageProps) => {
                 >
                 </Image>
                 <Button
-                onClick={onNextPage}
+                onClick={handleNextPage}
                 option="activated"
                 style={{
                     fontSize: "18px",
@@ -79,4 +85,4 @@ const CardUploadPage = (props:CardUploadPageProps) => {
     )
 }
 
-export default CardUploadPage;
+export default CardUploadLoadingPage;

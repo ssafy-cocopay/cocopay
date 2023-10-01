@@ -70,4 +70,4 @@ interface Data {
     cardHistoryList: CardHistoryLists[];
 }
 
-export type { Card, TotalAmountMonth, CardDetail, CardInfo, PostCardPurchasedPayload, PayOnline, CardAmount, CardHistoryLists }
+export type { Card, TotalAmountMonth, CardDetail, CardInfo, PostCardPurchasedPayload, PayOnline, CardAmount, CardHistoryLists, MainCard }
