@@ -4,10 +4,13 @@ import com.bank.card.entity.UserCard;
 import com.bank.card_history.entity.Category;
 import com.bank.card_history.entity.DiscountType;
 import com.bank.card_history.entity.TransactionType;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@Builder
 @Slf4j
 public class PaymentRequestDto {
     private Integer cardUuid;
