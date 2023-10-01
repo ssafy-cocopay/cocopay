@@ -1,7 +1,6 @@
 package com.bank;
 
 import com.bank.account.entity.Account;
-import com.bank.account.entity.QAccount;
 import com.bank.account.repository.AccountRepository;
 import com.bank.bank.entity.Bank;
 import com.bank.bank.repository.BankRepository;
@@ -33,7 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import static com.bank.account.entity.QAccount.*;
+import static com.bank.account.entity.QAccount.account;
 import static com.bank.bank.entity.QBank.bank;
 import static com.bank.benefit.entity.QBenefit.benefit;
 import static com.bank.card.entity.QCard.card;
@@ -84,11 +83,11 @@ public class DockerDbDummyTest {
     //이후 2번메서드 userCardDummy()에 userId와 보라색 부분의 카드이름을 변경 후 실행
     @Test
     public void makeDummy() {
-        String name = "";
-        String tel = "";
-        userDummy(name,tel);
-        bankDummy();
-        cardDummy();
+        String name = "한성현";
+        String tel = "01051365349";
+        userDummy(name, tel);
+//        bankDummy();
+//        cardDummy();
         accountDummy();
         performanceDummy();
         benefitDummy();
@@ -98,15 +97,15 @@ public class DockerDbDummyTest {
     public void userCardDummy() {
         //유저 찾기
         //변수 필요하면 바꾸면 댐
-        int userId = 1;
+        int userId = 7;
         User findUser = userRepository.findById(userId).get();
 
         //만들고 싶은 카드 이름 가져오기
         //CardList.만들고싶은거 고르고
         //.getCardName 까지 진행하야함
         //보라색 부분만 수정하면 됨
-        String cardName = CardList.Deep_Dream_체크.getCardName();
-        String bankName = CardList.Deep_Dream_체크.getBankName();
+        String cardName = CardList.현대패밀리.getCardName();
+        String bankName = CardList.현대패밀리.getBankName();
 
         Card findCard = findCardByName(cardName);
         Bank findBank = findBankByBankName(bankName);
@@ -118,7 +117,7 @@ public class DockerDbDummyTest {
                 .card(findCard)
                 .password("0000")
                 .serialNumber(faker.numerify("####-####-####-####"))
-                .isPerformanced(false)
+                .isPerformanced(true)
                 .validDate("12/25")
                 .cvc("000")
                 .performanceLevel(0)
@@ -144,6 +143,19 @@ public class DockerDbDummyTest {
 
     @Test
     public void userDummy(String name, String tel) {
+
+        User user = User.builder()
+                .name(name)
+                .tel(tel)
+                .build();
+
+        userRepository.save(user);
+    }
+
+    @Test
+    public void userDummy2() {
+        String name = "조환희";
+        String tel = "01021278653";
         User user = User.builder()
                 .name(name)
                 .tel(tel)
@@ -183,12 +195,12 @@ public class DockerDbDummyTest {
 
     @Test
     public void accountDummy() {
-        List<User> findUserList = userRepository.findAll();
+        User user = userRepository.findById(8).get();
 
         List<Bank> findBankList = bankRepository.findAll();
 
         List<Account> accountList = new ArrayList<>();
-        for (User user : findUserList) {
+
             for (Bank bank : findBankList) {
                 Account account = Account.builder()
                         .num(faker.numerify("###-###-######"))
@@ -198,7 +210,7 @@ public class DockerDbDummyTest {
                         .build();
                 accountList.add(account);
             }
-        }
+
         accountRepository.saveAll(accountList);
     }
 
@@ -283,7 +295,6 @@ public class DockerDbDummyTest {
                         account.user.eq(user))
                 .fetchOne();
     }
-
 
 
     public Bank findBankByBankName(String bankName) {

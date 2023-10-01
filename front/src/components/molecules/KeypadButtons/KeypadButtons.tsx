@@ -33,7 +33,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const addUserMutation = useAddUser();
 
-  // TODO: recoil 통해 DB에서 받아올 userPassword로 수정
+  // TODO: recoil 통해 DB에서 받아올 userPassword로 수정 -> 자동로그인 되어야함
   const userPassword = "123456";
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
 
@@ -91,14 +91,9 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   useEffect(() => {
     if (step === 2 && confirmPassword) {
       if (setPassword === confirmPassword) {
-        console.log("비밀번호 왕왕 일치");
-        // console.log(setPassword);
+        console.log("step2: 비밀번호 왕왕 일치");
         handlePutPassword(setPassword);
-        // TODO: 성공  지문 사용할거냐고 묻기 (우선순위낮음)
-        // TODO: 성공시 온보딩 페이지로 전환 (우선순위 높음)
-        // TODO: 성공시 회원가입하기, 리턴값 리코일로 userId 저장 (우선순위 짱높음)
-
-        navigatePage(PATH.MAIN);
+        navigatePage(PATH.FIGNER_SETTING);
       } else {
         console.log("비밀번호 일치하지 않음");
         setEnteredPassword("");
