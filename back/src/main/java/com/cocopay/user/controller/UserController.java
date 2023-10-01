@@ -9,6 +9,7 @@ import com.cocopay.user.dto.request.*;
 import com.cocopay.user.dto.response.TotalByMonth;
 import com.cocopay.user.dto.response.UserCardResponseListDto;
 import com.cocopay.user.dto.response.UserJoinResDto;
+import com.cocopay.user.entity.User;
 import com.cocopay.user.mapper.UserMapper;
 import com.cocopay.user.service.UserApiCallService;
 import com.cocopay.user.service.UserService;
@@ -40,6 +41,13 @@ public class UserController {
     private final PaymentService paymentService;
     private final UserCardService userCardService;
     private final UserCardMapper userCardMapper;
+
+    @GetMapping("/detail")
+    public ResponseEntity<?> AuthInformation(@RequestHeader("userId") int userId){
+        User user = userService.getAuthInformation(userId);
+        return ResponseEntity.ok(userMapper.toAuthInformationByUser(user));
+    }
+
 
     @PostMapping("/message-auth")
     public ResponseEntity<?> sendAuthMessage(
