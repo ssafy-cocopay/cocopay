@@ -61,6 +61,11 @@ public class UserService {
         return authHash.getCode().equals(code);
     }
 
+    public void quit(int userId) {
+        User user = checkUser(userId);
+        userRepository.delete(user);
+    }
+
 
     public UserJoinResDto join(UserJoinDto userJoinDto) {
         // 똑같은 번호 있으면 빠꾸시켜야됨
