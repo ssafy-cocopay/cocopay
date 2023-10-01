@@ -6,7 +6,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import hand from "@/assets/images/img-hand.png";
-import Background5_1 from "@/assets/images/bg-onboarding5-2.png";
+import Background5_2 from "@/assets/images/bg-onboarding5-2.png";
 
 import styled, { keyframes } from "styled-components";
 import { OnboardingText } from "@/pages/OnboardingPage/OnboardingPage.styles";
@@ -33,7 +33,7 @@ function OnboardingPage5() {
   return (
     <Container
       style={{
-        backgroundImage: `url(${Background5_1})`,
+        backgroundImage: `url(${Background5_2})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
