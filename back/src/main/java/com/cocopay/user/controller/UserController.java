@@ -73,6 +73,13 @@ public class UserController {
         return ResponseEntity.ok(userJoinResDto);
     }
 
+    @PutMapping("/quit")
+    public ResponseEntity<?> quit(@RequestHeader("userId") int userId){
+        userService.quit(userId);
+
+        return ResponseEntity.ok("OK");
+    }
+
     @PostMapping("/login/password")
     public ResponseEntity<?> loginByPassword(@RequestHeader("userId") int userId, @RequestBody LoginRequestDto loginRequestDto) {
         loginRequestDto.setUserId(userId);

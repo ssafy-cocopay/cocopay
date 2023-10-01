@@ -9,7 +9,7 @@ import Calendar from "@/components/molecules/Calendar/Calendar";
 import { Line } from "@/components/atoms/Line/Line.style";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
-import { BlueContainerWrapper } from "../HomePage/HomePage";
+import { BlueContainerWrapper } from "@/pages/HomePage/HomePage.styles";
 import {
   HeaderContainer,
   WhiteContainer,
@@ -187,9 +187,11 @@ const StatisticsPage = () => {
             </FlexDiv>
           </TotalAmountWrapper>
           {/* bar */}
-          <StatisticsBar contents={
+          <StatisticsBar
+            contents={
               selectedTab === "내 소비" ? priceAmounts : discountedAmounts
-            }/>
+            }
+          />
           {/* 카테고리별 소비/혜택순 콘텐츠 */}
           <StatisticsContents
             contents={

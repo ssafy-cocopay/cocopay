@@ -3,16 +3,28 @@ import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-import { Text } from "@/components/atoms/Text/Text.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Background5 from "@/assets/images/bg-onboarding5.png";
+import { Image } from "@/components/atoms/Image/Image";
+import hand from "@/assets/images/img-hand.png";
+import Background5_2 from "@/assets/images/bg-onboarding5-2.png";
 
-type OnboardingPage5Props = {
-  onNextPage: () => void;
-};
+import styled, { keyframes } from "styled-components";
+import { OnboardingText } from "@/pages/OnboardingPage/OnboardingPage.styles";
 
-function OnboardingPage5(props: OnboardingPage5Props) {
-  const { onNextPage } = props;
+const moveTop = keyframes`
+  to {
+    transform: translateY(calc(-10% - 20px));
+  }
+`;
+
+const AnimatedImage = styled(Image)`
+  position: absolute;
+  bottom: 0;
+  transform: translateY(-7%);
+  animation: ${moveTop} 3s forwards;
+`;
+
+function OnboardingPage5() {
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
@@ -20,9 +32,8 @@ function OnboardingPage5(props: OnboardingPage5Props) {
   };
   return (
     <Container
-      $border={true}
       style={{
-        backgroundImage: `url(${Background5})`,
+        backgroundImage: `url(${Background5_2})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
@@ -30,23 +41,25 @@ function OnboardingPage5(props: OnboardingPage5Props) {
     >
       <Container $border={false} $paddingTop="100px">
         <Wrapper $alignItems="start">
-          <Text size="subtitle2" color="white">
-            모든 카드들의
-          </Text>
-          <Text size="subtitle2" color="white">
-            할인율과 실적을 분석하여
-          </Text>
-          <Text size="subtitle2" color="white">
-            소비처별 최적의 카드를
-          </Text>
-          <Text size="subtitle2" color="white">
-            추천해주는 코코페이!
-          </Text>
+          <OnboardingText>모든 카드들의</OnboardingText>
+          <OnboardingText>할인율과 실적을 분석하여</OnboardingText>
+          <OnboardingText>소비처별 최적의 카드를</OnboardingText>
+          <OnboardingText>추천해주는 코코페이!</OnboardingText>
           <br />
-          <Text size="subtitle2" color="white">
-            시작해볼까요?
-          </Text>
+          <OnboardingText>시작해볼까요?</OnboardingText>
         </Wrapper>
+        {/*<Image*/}
+        {/*    src={hand}*/}
+        {/*    width={20}*/}
+        {/*    style={{*/}
+        {/*        position: "absolute",*/}
+        {/*        bottom: 0,*/}
+        {/*        left: "50%",*/}
+        {/*        transform: "translateX(-50%)",*/}
+        {/*    }}*/}
+        {/*></Image>*/}
+        <AnimatedImage src={hand} width={24} />
+
         <Button
           style={{
             position: "absolute",

@@ -1,10 +1,7 @@
 package com.cocopay.usercard.mapper;
 
 import com.cocopay.user.entity.User;
-import com.cocopay.usercard.dto.CardListDto;
-import com.cocopay.usercard.dto.MainCardDto;
-import com.cocopay.usercard.dto.UserCardDto;
-import com.cocopay.usercard.dto.UserCardResDto;
+import com.cocopay.usercard.dto.*;
 import com.cocopay.usercard.entity.UserCard;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -84,5 +81,7 @@ public interface UserCardMapper {
     @Mapping(target = "id",ignore = true)
     @Mapping(source = "serialNumber",target = "serialNumber")
     UserCard toUserCard(User user, String serialNumber, boolean cocoType,int cardOrder,UserCardDto dto);
+
+    HistoryResDto toHistoryResDto(long amount, int discountAmount, List<HistoryResponseDto> cardHistoryList);
 
 }

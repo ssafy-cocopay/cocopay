@@ -20,8 +20,6 @@ public class BarcodeKeyService {
 
     public void barcodeSave(int userId, int cardId, String barcodeNum) {
         BarcodeKey barcodeKey = redisMapper.toBarcodeKey(userId, cardId, barcodeNum);
-        log.info("바코드 생성 후 저장");
-        log.info("barcodeKey : {}", barcodeKey);
         barcodeKeyRepository.save(barcodeKey);
     }
 
@@ -32,10 +30,14 @@ public class BarcodeKeyService {
                 .orElseThrow(() -> new CustomException(ErrorCode.DATA_NOT_FOUND));
     }
 
-    public int findCardId(int userId, String barcodeNum) {
-        return Optional.of(findBarcode(userId))
-                .filter(b -> b.getBarcodeNum().equals(barcodeNum))
-                .map(BarcodeKey::getCardId)
+    public int findCardId(String barcodeNum) {
+        return findByBarcode(barcodeNum).getCardId();
+    }
+
+    public BarcodeKey findByBarcode(String barcodeNum) {
+        Optional<BarcodeKey> findBarcode = barcodeKeyRepository.findByBarcodeNum(barcodeNum);
+
+        return findBarcode
                 .orElseThrow(() -> new CustomException(ErrorCode.DATA_NOT_FOUND));
     }
 }

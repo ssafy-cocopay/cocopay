@@ -15,12 +15,9 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class HistoryResponseDto {
-    //private Integer cardHistoryId;
-    //private Integer cardUuid;
     private LocalDateTime transactionDate;
     private Long amount;
     private String store;
-    private Long accountBalance;
     private Integer discountAmount;
     private DiscountType discountType;
     private TransactionType transactionType;

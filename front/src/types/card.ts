@@ -1,35 +1,35 @@
 interface Card {
-    id: number;
-    serialNumber: string;
-    cardOrder: number;
-    cardType: string;
-    cardName: string;
-    visa: boolean;
-    master: boolean;
-    cardImage: string;
-    graphRate: number;
+  id: number;
+  serialNumber: string;
+  cardOrder: number;
+  cardType: string;
+  cardName: string;
+  visa: boolean;
+  master: boolean;
+  cardImage: string;
+  graphRate: number;
 }
 
 interface TotalAmountMonth {
-    totalPayByMonth: number;
-    totalDiscountByMonth: number;
+  totalPayByMonth: number;
+  totalDiscountByMonth: number;
 }
 
 interface CardDetail {
-    userCardId: number;
-    cardName: string;
-    level: number;
-    nextLevel: number;
-    price: number;
-    percent: number;
-    cardImage: string;
+  userCardId: number;
+  cardName: string;
+  level: number;
+  nextLevel: number;
+  price: number;
+  percent: number;
+  cardImage: string;
 }
 
 interface CardInfo {
-    serialNumber: string;
-    cvc: string;
-    validDate: string;
-    password: string;
+  serialNumber: string;
+  cvc: string;
+  validDate: string;
+  password: string;
 }
 
 interface PostCardPurchasedPayload {
@@ -38,9 +38,17 @@ interface PostCardPurchasedPayload {
 }
 
 interface PayOnline {
-    category: string;
-    storeName: string;
-    orderPrice: number;
+  category: string;
+  storeName: string;
+  orderPrice: number;
+}
+
+interface MainCard {
+  id: number;
+  cardOrder: number;
+  cocoType: boolean;
+  cardImage: string;
+  barcodeNum: string;
 }
 
 interface CardAmount {
