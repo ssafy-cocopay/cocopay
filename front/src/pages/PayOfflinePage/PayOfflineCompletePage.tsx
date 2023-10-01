@@ -11,6 +11,8 @@ import Penguin from "@/assets/images/img-penguin-thinking.png";
 import Dot from "@/assets/images/icon-dot-gray.png";
 import CardImg from "@/assets/images/img-cardimg.png";
 import { Container } from "@/components/atoms/Container/Container.styles";
+import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails"; // x
+import { useParams } from 'react-router-dom'; // x
 
 const CardInfo = {
   cardImg: CardImg,
@@ -25,6 +27,13 @@ const PayOfflinePage = () => {
   const navigatePage = (path: string) => {
     navigate(path);
   };
+
+  const { cardId: cardIdStr } = useParams();
+  
+  const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
+  const CardDetail = useGetCardDetail(cardId);
+  console.log(CardDetail)
+
   return (
     <Background
       $colormode="gradient"
@@ -83,7 +92,7 @@ const PayOfflinePage = () => {
             </Wrapper>
             <br />
             {/* TODO: 실적바 데이터바인딩 생각해서 다시 수정! */}
-            <Performance />
+            {CardDetail && <Performance Performance={CardDetail} />}
             <br />
             <Button onClick={() => navigatePage(PATH.MAIN)} option="activated">
               홈으로

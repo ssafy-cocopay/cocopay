@@ -1,6 +1,12 @@
-import { atom } from "recoil";
+import {atom} from "recoil"
 
-export const IsPurchasedAtom = atom<boolean>({
-  key: "IsPurchasedAtom",
-  default: false,
-});
+
+export const IsPurchasedAtom = atom({
+    key: 'IsPurchasedAtom',
+    default:false
+})
+
+export const PayOnlineCardList = atom({
+    key: 'PayOnlineCardList',
+    default:[]
+})
