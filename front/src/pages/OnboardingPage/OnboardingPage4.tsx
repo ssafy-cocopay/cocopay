@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import { Background } from "@/components/atoms/Background/Background.styles";
+import React from "react";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Back from "@/components/atoms/Back/Back";
-import { Text } from "@/components/atoms/Text/Text.styles";
-import { Image } from "@/components/atoms/Image/Image";
 import Background4 from "@/assets/images/bg-onboarding4.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { OnboardingText } from "@/pages/OnboardingPage/OnboardingPage.styles";

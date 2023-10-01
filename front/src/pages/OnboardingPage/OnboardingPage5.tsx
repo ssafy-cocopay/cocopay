@@ -3,15 +3,12 @@ import Button from "@/components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-import { Text } from "@/components/atoms/Text/Text.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
-// import Background5 from "@/assets/images/bg-onboarding5.png";
 import { Image } from "@/components/atoms/Image/Image";
 import hand from "@/assets/images/img-hand.png";
 import Background5_1 from "@/assets/images/bg-onboarding5-2.png";
 
 import styled, { keyframes } from "styled-components";
-import cards from "@/assets/images/img-cardsAnimation.png";
 import { OnboardingText } from "@/pages/OnboardingPage/OnboardingPage.styles";
 
 const moveTop = keyframes`
@@ -27,12 +24,7 @@ const AnimatedImage = styled(Image)`
   animation: ${moveTop} 3s forwards;
 `;
 
-type OnboardingPage5Props = {
-  onNextPage: () => void;
-};
-
-function OnboardingPage5(props: OnboardingPage5Props) {
-  const { onNextPage } = props;
+function OnboardingPage5() {
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {

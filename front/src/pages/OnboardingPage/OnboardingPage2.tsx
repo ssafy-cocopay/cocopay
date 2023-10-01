@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { Background } from "@/components/atoms/Background/Background.styles";
+import React from "react";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Back from "@/components/atoms/Back/Back";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import cards from "@/assets/images/img-cardsAnimation.png";
