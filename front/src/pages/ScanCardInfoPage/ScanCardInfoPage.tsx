@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "@/components/atoms/Button/Button";
 import Input from "@/components/atoms/Input/Input";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
@@ -10,7 +9,9 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import CardImg from "@/assets/images/icon-cardinfo.png";
 import { Background } from "@/components/atoms/Background/Background.styles";
-import { WhiteRoundedBox } from "@/components/atoms/WhiteRoundedBox/WhiteRoundedBox.styles";
+import { usePostCard } from "@/apis/Card/Mutations/useAddCardList";
+import { useRecoilState } from "recoil";
+import { CardNumberAtom, CvcAtom, ValidDateAtom, CardPasswordAtom, CardIdAtom } from "@/states/CardInfoAtoms";
 
 //TODO: 백그라운드 흰색으로 바꾸기
 interface FormValue {
@@ -20,39 +21,91 @@ interface FormValue {
   cardPassword: string;
 }
 
-const ScanCardInfoPage = () => {
-  const navigate = useNavigate();
-  const navigatePage = (path: string) => {
+  const ScanCardInfoPage = () => {
+    const navigate = useNavigate();
+
+    const navigatePage = (path: string) => {
     navigate(path);
-  };
+    };
 
-  const [maskedCardNumber, setMaskedCardNumber] = useState<string>("");
-  const [cardNumber, setCardNumber] = useState<string>("");
+    const PostCard = usePostCard()
+    const [maskedCardNumber, setMaskedCardNumber] = useRecoilState<string>(CardNumberAtom);
+    const [cardNumber, setCardNumber] = useState<string>("");
+    const [CVC, setCVC] = useRecoilState<string>(CvcAtom); // CVC
+    const [validDate, setValidDate] = useRecoilState<string>(ValidDateAtom); // validDate
+    const [cardPassword, setCardPassword] = useRecoilState<string>(CardPasswordAtom); // 카드 비밀번호
 
-  const handleCardNumberChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let newCardNumber = event.target.value.replace(/\D/g, ""); // 숫자만 남기고 나머지 제거
-    newCardNumber = newCardNumber.slice(0, 16); // 16자리까지만 유효하도록 자름
+    const handleCardNumberChange = (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      let newCardNumber = event.target.value.replace(/\D/g, ""); // 숫자만 남기고 나머지 제거
+      newCardNumber = newCardNumber.slice(0, 16); // 16자리까지만 유효하도록 자름
 
-    // 가운데 8자리 마스킹
-    const maskedPortion = newCardNumber.slice(4, 12).replace(/\d/g, "*");
-    const formattedCardNumber = `${newCardNumber.slice(
-      0,
-      4
-    )}-${maskedPortion}-${newCardNumber.slice(12)}`;
+      const formatCardNumber = (num: string) => {
+        // 4자리마다 "-" 를 넣어서 반환
+        return num.replace(/(\d{4})/g, '$1-').replace(/-$/, '');
+      };
 
-    setCardNumber(newCardNumber);
-    setMaskedCardNumber(formattedCardNumber);
-  };
+      // 가운데 8자리 마스킹
+      const maskedPortion = newCardNumber.slice(4, 12).replace(/\d/g, "*");
+      const formattedCardNumber = `${newCardNumber.slice(
+        0,
+        4
+      )}-${maskedPortion}-${newCardNumber.slice(12)}`;
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   getValues,
-  //   setValue,
-  // } = useForm<FormValue>({ mode: "onChange" });
+      setCardNumber(formatCardNumber(newCardNumber));
+      setMaskedCardNumber(formattedCardNumber);
+    };
+
+    const handleCVC = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newCVCNumber = event.target.value.slice(0, 3); // 16자리까지만 유효하도록 자름
+      setCVC(newCVCNumber);
+    };
+
+    const handleValidDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+      let newValidDateNumber = event.target.value.replace(/\D/g, ""); // 숫자만 남기고 나머지 제거
+      newValidDateNumber = newValidDateNumber.slice(0, 4); // 4자리까지만 유효하도록 자름
+
+      const formatValidDate = (num: string) => {
+        if (num.length <= 2) return num; // 2자리 이하면 그냥 반환
+        return num.slice(0, 2) + '/' + num.slice(2);
+      };
+      
+      setValidDate(formatValidDate(newValidDateNumber).slice(0, 5));
+    };
+
+    const handleCardPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCardPassword(event.target.value);
+    };
+
+    console.log(cardNumber, CVC, validDate, cardPassword, maskedCardNumber)
+    const handleSubmit = () => {
+      // 유효성 검사
+      if (cardNumber.length !== 19) {
+        console.error('카드 번호는 19자리여야 합니다.');
+        return;
+      }
+      const CardData = {
+        serialNumber: cardNumber,
+        cvc: CVC,
+        validDate: validDate,
+        password: cardPassword
+      }
+    
+      // 유효성 검사 후 카드 정보를 서버에 보냅니다.
+      PostCard.mutate(CardData,{
+        onSuccess: (data) => {
+          console.log(data)
+          navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", data.userCardId.toString())}`)
+        },
+        onError: (error) => {
+          console.error("등록 실패", error)
+        }
+    });
+    
+      // 다음 페이지로 이동합니다.
+      // navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", data.userCardId.toString())}`)
+    };
 
   return (
     <Background>
@@ -76,20 +129,20 @@ const ScanCardInfoPage = () => {
                 <Text size="small1">유효 기간</Text>
                 {/* TODO: placeholder안에 글씨 작게하기 */}
                 {/* TODO: 숫자 2개 입력 후 자동으로 / 나오게 하기 */}
-                <Input placeholder="MM / YY"></Input>
+                <Input value={validDate} onChange={handleValidDate} placeholder="MM / YY"></Input>
               </Wrapper>
               <Wrapper $alignItems="left">
                 <Text size="small1">CVC</Text>
-                <Input placeholder="카드 뒷면 3자리"></Input>
+                <Input value={CVC} onChange={handleCVC} placeholder="카드 뒷면 3자리"></Input>
               </Wrapper>
             </Wrapper>
             {/* TODO: 비밀번호 type 패스워드로 해서 **로 보이게 설정 */}
             <Text size="small1">카드 비밀번호</Text>
-            <Input placeholder="비밀번호 앞 2자리 숫자"></Input>
+            <Input value={cardPassword} onChange={handleCardPassword} placeholder="비밀번호 앞 2자리 숫자"></Input>
 
             <br />
             <Button
-              onClick={() => navigatePage(PATH.CARD_DETAIL)}
+              onClick={handleSubmit}
               $borderRadius="10px"
               option="activated"
               size="medium"
