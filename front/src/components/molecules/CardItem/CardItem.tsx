@@ -9,6 +9,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import imgMaster from "@/assets/images/img-master.png"
 import imgVisa from "@/assets/images/img-visa.png"
 import { Card } from '@/types/card';
+import theme from '@/styles/theme';
 
 interface CardItemProps {
   card: Card;
@@ -77,16 +78,17 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
       style={{
+          position: "relative",
           transform: `translateX(${x}px)`,
           transition: isDragging ? 'none' : 'transform 0.3s ease',
           display: "flex",
-          width: "125%"
+          width: "100%"
       }}
     >
       <div
       onClick={onClick}
       style={{
-        width: "80%"
+        width: "100%"
       }}
       >
       {/* TODO: 서영이가 위에 만들어놓은 더미로 맵 뿌리기 ! */}
@@ -101,10 +103,9 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
           width={24}
           height={16}
           $unit="px"
-          $margin="0 8px 0 0"
-          style={{ margin: "4px 0 8px 12px" }}
+          style={{ margin: "6px 0 8px 12px" }}
         ></Image>
-        <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around">
+        <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around" >
           <CardItemWrapper>
             <Text size="small2" fontWeight="regular" color="black1">
               {card.cardName}
@@ -123,7 +124,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
               {card.serialNumber}
             </Text>
           </CardItemWrapper>
-          <div style={{position: 'relative', width: '90%'}}>
+          <div style={{position: 'relative', width: '100%'}}>
             <CardListBar
             width="100%"
             $bgc="grey4"
@@ -148,20 +149,24 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
       </CardItemWrapper>
       <Hr />
     </div>
+    {
+      isDeleteVisible &&
       <button
-      onClick={opendeletemodal}
-      style={{
-        width: "15%",
-        border: "none",
-        backgroundColor: "red",
-        color: "white",
-        fontSize: "16px",
-        opacity: isDeleteVisible ? 1 : 0,  // 투명도를 사용하여 보이게/안 보이게 처리
-        pointerEvents: isDeleteVisible ? 'auto' : 'none' // 삭제 버튼을 터치/클릭하지 못하게 만듭니다.
+        onClick={opendeletemodal}
+        style={{
+          width: "17%",
+          height: "100%",  // 버튼의 높이를 부모 div와 동일하게 설정
+          position: "absolute",
+          right: "-17%",
+          border: "none",
+          backgroundColor: theme.color.danger,
+          color: "white",
+          fontSize: "16px",
         }}
       >
         삭제
       </button>
+    }
     </div>
   );
 }

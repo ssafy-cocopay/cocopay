@@ -12,6 +12,7 @@ import { Background } from "@/components/atoms/Background/Background.styles";
 import { usePostCard } from "@/apis/Card/Mutations/useAddCardList";
 import { useRecoilState } from "recoil";
 import { CardNumberAtom, CvcAtom, ValidDateAtom, CardPasswordAtom, CardIdAtom } from "@/states/CardInfoAtoms";
+import theme from "@/styles/theme";
 
 //TODO: 백그라운드 흰색으로 바꾸기
 interface FormValue {
@@ -58,7 +59,7 @@ interface FormValue {
     };
 
     const handleCVC = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newCVCNumber = event.target.value.slice(0, 3); // 16자리까지만 유효하도록 자름
+      const newCVCNumber = event.target.value.slice(0, 3); // 3자리까지만 유효하도록 자름
       setCVC(newCVCNumber);
     };
 
@@ -75,7 +76,8 @@ interface FormValue {
     };
 
     const handleCardPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setCardPassword(event.target.value);
+      const newPassword = event.target.value.slice(0, 2);
+      setCardPassword(newPassword);
     };
 
     console.log(cardNumber, CVC, validDate, cardPassword, maskedCardNumber)
@@ -109,43 +111,39 @@ interface FormValue {
 
   return (
     <Background>
-      <Container $border={true} $paddingTop="70px">
+      <Container $border={false} $paddingTop="70px">
         <Container $padding="none">
-          <Text size="subtitle1">카드 정보</Text>
+          <Text size="body1" fontWeight="bold">카드 정보</Text>
           <Container $padding="none" $left={true}>
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Image src={CardImg} width={13} $unit="%"></Image>
               <Text $margin="10px" size="body2">
-                카드 정보를 입력 해 주세요.
+                카드 정보를 입력 해주세요.
               </Text>
             </Wrapper>
 
             <br />
-            {/* TODO: 카드번호 사이에 '-' 넣기, 중간 글씨 '*'로 표시*/}
-            <Text size="small1">카드번호</Text>
+            <Text size="body2" style={{margin:"0 0 10px 5px"}}>카드번호</Text>
             <Input value={cardNumber} onChange={handleCardNumberChange}></Input>
-            <Wrapper $justifyContent="space-between" $flexDirection="row">
-              <Wrapper $alignItems="left">
-                <Text size="small1">유효 기간</Text>
-                {/* TODO: placeholder안에 글씨 작게하기 */}
-                {/* TODO: 숫자 2개 입력 후 자동으로 / 나오게 하기 */}
-                <Input value={validDate} onChange={handleValidDate} placeholder="MM / YY"></Input>
+            <Wrapper $justifyContent="space-between" $alignItems="none" $flexDirection="none">
+              <Wrapper $alignItems="left" style={{width:"47%"}}>
+                <Text size="body2" style={{margin:"10px 0 10px 5px"}}>유효 기간</Text>
+                <Input fontSize={theme.fontSize.body2} value={validDate} onChange={handleValidDate} placeholder="MM / YY"></Input>
               </Wrapper>
-              <Wrapper $alignItems="left">
-                <Text size="small1">CVC</Text>
-                <Input value={CVC} onChange={handleCVC} placeholder="카드 뒷면 3자리"></Input>
+              <Wrapper $alignItems="left" style={{width:"47%"}}>
+                <Text size="body2" style={{margin:"10px 0 10px 5px"}}>CVC</Text>
+                <Input fontSize={theme.fontSize.body2} value={CVC} onChange={handleCVC} placeholder="카드 뒷면 3자리"></Input>
               </Wrapper>
             </Wrapper>
-            {/* TODO: 비밀번호 type 패스워드로 해서 **로 보이게 설정 */}
-            <Text size="small1">카드 비밀번호</Text>
-            <Input value={cardPassword} onChange={handleCardPassword} placeholder="비밀번호 앞 2자리 숫자"></Input>
+            <Text size="body2" style={{margin:"10px 0 10px 5px"}}>카드 비밀번호</Text>
+            <Input fontSize={theme.fontSize.body2} value={cardPassword} onChange={handleCardPassword} placeholder="비밀번호 앞 2자리 숫자"></Input>
 
             <br />
             <Button
               onClick={handleSubmit}
-              $borderRadius="10px"
+              $borderRadius="5px"
               option="activated"
-              size="medium"
+              size="large"
             >
               {/*TODO:카드등록 버튼 end로 바꾸기 */}
               카드 등록

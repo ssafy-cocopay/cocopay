@@ -52,6 +52,7 @@ const CardUploadCompletePage = () => {
         onSuccess: () => {
           queryClient.invalidateQueries(['CardList']);
           setIsModalOpen(false); // 모달 닫기
+          setSwipedIndex(null);
         },
         onError: () => {
           console.log('삭제 실패');
@@ -68,11 +69,7 @@ const CardUploadCompletePage = () => {
 
 
   return (
-    <Background
-      style={{
-        position:"fixed",
-      }}
-    >
+    <Background>
       <CardListContainer>
         <Text
           size="body1"
@@ -99,18 +96,20 @@ const CardUploadCompletePage = () => {
           오른쪽 아이콘을 눌러 카드 순서를 변경할 수 있어요.
         </Text>
         <Hr />
-        {CardList.map((card: Card, idx: number) => (
-          <CardItem
-            key={idx}
-            card={card}
-            onSwipeStart={() => handleSwipeStart(idx)}
-            resetSwipe={swipedIndex !== null && swipedIndex !== idx}
-            swipedIndex={swipedIndex}   // 추가
-            index={idx}                 // 추가
-            opendeletemodal={() => toggleModal(card.id)}
-            onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
-          />
-        ))}
+        {
+          CardList.length > 0 &&
+          CardList.map((card: Card, idx: number) => (
+            <CardItem
+              key={idx}
+              card={card}
+              onSwipeStart={() => handleSwipeStart(idx)}
+              resetSwipe={swipedIndex !== null && swipedIndex !== idx}
+              swipedIndex={swipedIndex} // 추가
+              index={idx} // 추가
+              opendeletemodal={() => toggleModal(card.id)}
+              onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
+            />
+          ))}
         <Layout>
           <Button
             option="dashed"
