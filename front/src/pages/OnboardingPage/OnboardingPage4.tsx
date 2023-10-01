@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { Background } from "@/components/atoms/Background/Background.styles";
+import React from "react";
 import { Container } from "@/components/atoms/Container/Container.styles";
-import Back from "@/components/atoms/Back/Back";
-import { Text } from "@/components/atoms/Text/Text.styles";
-import { Image } from "@/components/atoms/Image/Image";
 import Background4 from "@/assets/images/bg-onboarding4.png";
+import { Image } from "@/components/atoms/Image/Image";
 import Background4_2 from "@/assets/images/bg-onboarding4-2.png";
 import Peng from "@/assets/images/img-peng-onboarding4.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import { OnboardingText } from "@/pages/OnboardingPage/OnboardingPage.styles";
 import styled, { keyframes } from "styled-components";
 import handcard from "@/assets/images/img-hancard.png";
 
@@ -41,11 +39,11 @@ function OnboardingPage4(props: OnboardingPage4Props) {
     onNextPage(); // 다음 페이지로 이동
   };
 
+  //TODO: username API로부터 받기
   const Username = { name: "성현" };
   return (
     // TODO: 반응형 크기 맞추기
     <Container
-      $border={true}
       style={{
         backgroundImage: `url(${Background4_2})`,
         backgroundSize: "cover",
@@ -54,21 +52,12 @@ function OnboardingPage4(props: OnboardingPage4Props) {
       }}
       onClick={handlePageTransition}
     >
-
-      <Container $border={true} $paddingTop="100px">
+      <Container $paddingTop="100px">
         <Wrapper $alignItems="start">
-          <Text size="subtitle2" color="white">
-            이제부터는 코코가
-          </Text>
-          <Text size="subtitle2" color="white">
-            {Username.name}님의
-          </Text>
-          <Text size="subtitle2" color="white">
-            슬기로운 소비생활을
-          </Text>
-          <Text size="subtitle2" color="white">
-            도와드릴게요!
-          </Text>
+          <OnboardingText>이제부터는 코코가</OnboardingText>
+          <OnboardingText>{Username.name}님의</OnboardingText>
+          <OnboardingText>슬기로운 소비생활을</OnboardingText>
+          <OnboardingText>도와드릴게요!</OnboardingText>
         </Wrapper>
         <AnimatedImage  src={handcard} width={16} />
         <Container>
