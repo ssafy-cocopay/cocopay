@@ -1,14 +1,13 @@
 import { atom } from "recoil";
+import { UserInfo } from "@/types/user";
 
-interface User {
-  name: string;
-  birth: string;
-  company: string;
-  tel: string;
-  password: string;
-}
-
-export const UserInfoAtom = atom<User>({
-  key: "UserInfoAtom",
-  default: {} as User,
+export const userInfoState = atom<UserInfo>({
+  key: "userInfoState",
+  default: {
+    name: "",
+    birth: "",
+    company: "",
+    tel: "",
+    password: "",
+  },
 });

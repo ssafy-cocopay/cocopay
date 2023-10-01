@@ -208,7 +208,7 @@ public class PaymentService {
     //다음 실적까지 남은 금액 만들기
     public int getRemainingAmt(PerformanceKey key) {
         int remainingAmt;
-        if (key.getLevel() == key.getNextLevel() && key.getTotalPrice() >= key.getPrice()) {
+        if (key.getLevel() == key.getNextLevel() || key.getTotalPrice() >= key.getPrice()) {
             remainingAmt = 0;
         } else {
             remainingAmt = key.getPrice() - key.getTotalPrice();

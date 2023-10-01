@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class HistoryResponseDto {
-    private Integer cardHistoryId;
-    private Integer cardUuid;
+    //private Integer cardHistoryId;
+    //private Integer cardUuid;
     private LocalDateTime transactionDate;
     private Long amount;
     private String store;
@@ -22,5 +22,5 @@ public class HistoryResponseDto {
     private Integer discountAmount;
     private DiscountType discountType;
     private TransactionType transactionType;
-    private Category category;
+    //private Category category;
 }

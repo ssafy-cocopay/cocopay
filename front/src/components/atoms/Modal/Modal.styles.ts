@@ -14,8 +14,8 @@ export const ModalBg = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  width: auto;
-  padding: 20px;
+  width: 100%;
+  padding: 40px 20px 30px 20px;
   background-color: white;
   border-radius: 30px;
 `;

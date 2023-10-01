@@ -105,7 +105,6 @@ const StatisticsPage = () => {
           이번 달에 받은 할인 혜택이에요!
           {/* {pigImg} */}
         </Text>
-        <Image src={pigImg} width={2} style={{ marginBottom: "400px" }}></Image>
       </HeaderContainer>
       <Container style={{ position: "relative", top: "-14px" }}>
         <WhiteContainer $left={true}>
@@ -173,7 +172,9 @@ const StatisticsPage = () => {
             </FlexDiv>
           </TotalAmountWrapper>
           {/* bar */}
-          <StatisticsBar />
+          <StatisticsBar contents={
+              selectedTab === "내 소비" ? priceAmounts : discountedAmounts
+            }/>
           {/* 카테고리별 소비/혜택순 콘텐츠 */}
           <StatisticsContents
             contents={
