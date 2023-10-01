@@ -25,7 +25,6 @@ const CardUploadPage = (props:CardUploadPageProps) => {
         <Background
         $colormode="gradient"
         style={{
-            position:"fixed",
             padding: "96px 28px 0 28px",
         }}
         >
