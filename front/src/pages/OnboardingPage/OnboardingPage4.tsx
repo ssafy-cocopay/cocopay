@@ -59,10 +59,13 @@ function OnboardingPage4(props: OnboardingPage4Props) {
           <OnboardingText>슬기로운 소비생활을</OnboardingText>
           <OnboardingText>도와드릴게요!</OnboardingText>
         </Wrapper>
-        <AnimatedImage  src={handcard} width={16} />
+        <AnimatedImage
+            src={handcard}
+            width={16} />
         <Container>
-          <Image src={Peng}
-                 width={27}
+          <Image
+              src={Peng}
+              width={27}
           style={{
             position:"absolute",
             left: "40%",
