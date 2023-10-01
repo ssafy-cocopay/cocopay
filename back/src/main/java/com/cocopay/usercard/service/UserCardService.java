@@ -22,10 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -106,7 +103,10 @@ public class UserCardService {
 
         long end = System.currentTimeMillis() - start;
         log.info("end : {}", end);
-        return list;
+
+        return list.stream()
+                .sorted(Comparator.comparing(MainCardDto::getCardOrder))
+                .toList();
     }
 
     //카드 목록 조회(코코페이 빼고, 목록에 들어갈 카드 목록)
