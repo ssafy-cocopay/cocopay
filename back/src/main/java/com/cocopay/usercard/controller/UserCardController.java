@@ -65,19 +65,27 @@ public class UserCardController {
     }
 
     //사용자 통계 조회
-    @GetMapping("/total")
-    ResponseEntity<?> getCardHistoryByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+    @GetMapping("/total/{month}")
+    ResponseEntity<?> getCardHistoryByUserId(@RequestHeader("userId") int userId,
+                                             @PathVariable("month") int month){
+        FindHistoryByUserId findHistoryByUserId = new FindHistoryByUserId();
         findHistoryByUserId.setUserId(userId);
+        findHistoryByUserId.setMonth(month);
+
         return ResponseEntity.ok(userCardService.getAllamount(findHistoryByUserId));
     }
-    @GetMapping("/total/price")
-    ResponseEntity<?> getTotalPriceByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+    @GetMapping("/total/price/{month}")
+    ResponseEntity<?> getTotalPriceByUserId(@RequestHeader("userId") int userId,@PathVariable("month") int month){
+        FindHistoryByUserId findHistoryByUserId = new FindHistoryByUserId();
         findHistoryByUserId.setUserId(userId);
+        findHistoryByUserId.setMonth(month);
         return ResponseEntity.ok(userCardService.getAllPrice(findHistoryByUserId));
     }
-    @GetMapping("/total/discount")
-    ResponseEntity<?> getTotalDiscountByUserId(@RequestHeader("userId") int userId,@RequestBody FindHistoryByUserId findHistoryByUserId){
+    @GetMapping("/total/discount/{month}")
+    ResponseEntity<?> getTotalDiscountByUserId(@RequestHeader("userId") int userId,@PathVariable("month") int month){
+        FindHistoryByUserId findHistoryByUserId = new FindHistoryByUserId();
         findHistoryByUserId.setUserId(userId);
+        findHistoryByUserId.setMonth(month);
         return ResponseEntity.ok(userCardService.getAllDiscount(findHistoryByUserId));
     }
 
