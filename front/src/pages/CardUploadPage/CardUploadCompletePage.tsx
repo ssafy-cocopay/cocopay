@@ -1,7 +1,7 @@
 import CardItem from "@/components/molecules/CardItem/CardItem";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { CardListContainer } from "@/components/atoms/Container/Container.styles";
-import React, {useState} from "react";
+import React, {useState } from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Hr, Layout } from "@/pages/CardListPage/CardListPage.styles";
 import Button from "@/components/atoms/Button/Button";
@@ -9,9 +9,6 @@ import iconPlusGrey from "@/assets/images/icon-plus-grey.png";
 import { Image } from "@/components/atoms/Image/Image";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
-import cardImg1 from "@/assets/images/img-card1.png";
-import cardImg2 from "@/assets/images/img-card2.png";
-import cardImg3 from "@/assets/images/img-card3.png";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
@@ -25,9 +22,34 @@ const CardUploadCompletePage = () => {
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
-      navigate(path);
+    navigate(path);
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(isModalOpen);
   const CardList = useGetCardList();
+  console.log(CardList);
+  const [deleteCardId, setDeleteCardId] = useState(0);
+  const queryClient = useQueryClient();
+  const useDeleteCardMutation = useDeleteCard();
+
+  const deleteCard = (deleteCardId: number) => {
+    useDeleteCardMutation.mutate(deleteCardId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["CardList"]);
+        setIsModalOpen(false); // 모달 닫기
+        setSwipedIndex(null); // 현재 스와이프 된 카드 초기화
+      },
+      onError: () => {
+        console.log("삭제 실패");
+      },
+    });
+};
+
+  //모달 오픈 함수
+  const toggleModal = (cardId: number) => {
+    setDeleteCardId(cardId);
+    setIsModalOpen((prev) => !prev);
+  };
 
   // 현재 스와이핑되고 있는 CardItem의 인덱스를 저장
   const [swipedIndex, setSwipedIndex] = useState<number | null>(null);
@@ -41,44 +63,16 @@ const CardUploadCompletePage = () => {
     }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deleteCardId, setDeleteCardId] = useState(0)
-  const queryClient = useQueryClient();
-  const useDeleteCardMutation = useDeleteCard()
-  const deleteCard = (deleteCardId : number) => {
-    useDeleteCardMutation.mutate(
-      deleteCardId,
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(['CardList']);
-          setIsModalOpen(false); // 모달 닫기
-        },
-        onError: () => {
-          console.log('삭제 실패');
-        }
-      }
-    );
-  }
-
-  //모달 오픈 함수
-  const toggleModal = (cardId : number) => {
-    setDeleteCardId(cardId)
-    setIsModalOpen((prev) => !prev);
-  };
-
-
   return (
-    <Background
-      style={{
-        position:"fixed",
-      }}
-    >
-      <CardListContainer>
+    <Background>
+      <CardListContainer
+        $padding="36px 0 0 0"
+      >
         <Text
           size="body1"
           fontWeight="bold"
           color="black1"
-          $margin="36px 36px 4px 36px"
+          $margin="0 36px 4px 36px"
         >
           불러온 카드 목록
         </Text>
@@ -99,20 +93,23 @@ const CardUploadCompletePage = () => {
           오른쪽 아이콘을 눌러 카드 순서를 변경할 수 있어요.
         </Text>
         <Hr />
-        {CardList.map((card: Card, idx: number) => (
-          <CardItem
-            key={idx}
-            card={card}
-            onSwipeStart={() => handleSwipeStart(idx)}
-            resetSwipe={swipedIndex !== null && swipedIndex !== idx}
-            swipedIndex={swipedIndex}   // 추가
-            index={idx}                 // 추가
-            opendeletemodal={() => toggleModal(card.id)}
-            onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
-          />
-        ))}
+        {
+          CardList.length > 0 &&
+          CardList.map((card: Card, idx: number) => (
+            <CardItem
+              key={idx}
+              card={card}
+              onSwipeStart={() => handleSwipeStart(idx)}
+              resetSwipe={swipedIndex !== null && swipedIndex !== idx}
+              swipedIndex={swipedIndex} // 추가
+              index={idx} // 추가
+              opendeletemodal={() => toggleModal(card.id)}
+              onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
+            />
+          ))}
         <Layout>
           <Button
+            onClick={() => navigatePage(PATH.SCAN_CARDINFO)}
             option="dashed"
             size="medium"
             $borderRadius="16px"

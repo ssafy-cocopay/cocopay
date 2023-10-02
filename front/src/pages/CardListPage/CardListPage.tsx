@@ -39,12 +39,13 @@ const CardListPage = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(["CardList"]);
         setIsModalOpen(false); // 모달 닫기
+        setSwipedIndex(null); // 현재 스와이프 된 카드 초기화
       },
       onError: () => {
         console.log("삭제 실패");
       },
     });
-  };
+};
 
   //모달 오픈 함수
   const toggleModal = (cardId: number) => {
@@ -65,17 +66,15 @@ const CardListPage = () => {
   };
 
   return (
-    <Background
-      // style={{
-      //   position: "fixed",
-      // }}
-    >
-      <CardListContainer>
+    <Background>
+      <CardListContainer
+        $padding="36px 0 0 0"
+      >
         <Text
           size="body1"
           fontWeight="bold"
           color="black1"
-          $margin="36px 36px 4px 36px"
+          $margin="0 36px 4px 36px"
         >
           보유 카드 목록
         </Text>
@@ -96,7 +95,9 @@ const CardListPage = () => {
           오른쪽 아이콘을 눌러 카드 순서를 변경할 수 있어요.
         </Text>
         <Hr />
-        {CardList.map((card: Card, idx: number) => (
+        {
+        CardList.length > 0 &&
+        CardList.map((card: Card, idx: number) => (
           <CardItem
             key={idx}
             card={card}

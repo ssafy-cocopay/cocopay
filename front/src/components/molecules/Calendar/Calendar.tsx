@@ -1,28 +1,121 @@
-import React from "react"
+import React, {useState} from "react"
 import iconChevronLeftGrey from "@/assets/images/icon-chevron-left-grey.png"
 import iconChevronRightGrey from "@/assets/images/icon-chevron-right-grey.png"
 import { Image } from "@/components/atoms/Image/Image"
 import { Text } from "@/components/atoms/Text/Text.styles"
-import { Wrapper } from "./Calendar.styles"
+import { CalenderWrapper } from "./Calendar.styles"
 import iconCalender from "@/assets/images/icon-calendar.png"
+import Button from "@/components/atoms/Button/Button";
+import theme from "@/styles/theme";
+import Modal from "@/components/atoms/Modal/Modal";
+import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
+import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles"
 
-interface CalendarProps {
-    onMonthClick?: () => void; // 선택적 props로 onMonthClick 추가
-  }
+type CalendarProps = {
+    minusmonth: () => void;
+    plusmonth: () => void;
+    changemonth: (newMonth: number) => void;
+    month: number;
+  };
 
-  const Calendar = ({ onMonthClick }: CalendarProps) => {
+  const Calendar = (props: CalendarProps) => {
+    const { minusmonth, plusmonth, changemonth } = props;
+    const [isModalOpen, setModalOpen] = useState(false);
+    const keypad = ['10월', '11월', '12월', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월'];
+    const [selectedMonth, setSelectedMonth] = useState("");
+    console.log(selectedMonth.slice(0, -1))
+    const numberButton = (string: string | "", index: number) => (
+        <Button
+          key={index}
+          size="small"
+          $fontSize="18px"
+          onClick={() => handleMonthClick(string)}
+          style={{
+            width: "28%",
+            height: "44px",
+            fontWeight: "normal",
+            backgroundColor: string === selectedMonth ? theme.color.white : theme.color.grey5,
+            color: string === selectedMonth ? theme.color.blue : theme.color.grey2,
+            marginBottom: "4px",
+            border: string === selectedMonth ? `2px solid ${theme.color.blue}` : "none"
+          }}
+        >
+          {string}
+        </Button>
+      );
+
+    const toggleModal = () => {
+        setModalOpen((prev) => !prev);
+      };
+
+    const handleMonthClick = (month: string) => {
+        setSelectedMonth(month);
+    };
     return (
-        <Wrapper>
-            <Image src={iconChevronLeftGrey} width={24} height={24} $unit="px" />
-            {/* 여기에서 onMonthClick을 Text의 onClick으로 연결 */}
+        <CalenderWrapper>
+            <Image onClick={minusmonth} src={iconChevronLeftGrey} width={24} height={24} $unit="px" />
             <div style={{display:"flex", alignItems:"center"}}>
                 <Text size="body1" fontWeight="bold" color="black1" >
-                    9월
+                    {props.month}월
                 </Text>
-                <Image onClick={onMonthClick} src={iconCalender} width={20} height={20} $unit="px" $margin="0 0 0 8px" />
+                <Image onClick={toggleModal} src={iconCalender} width={20} height={20} $unit="px" $margin="0 0 0 8px" />
+                {isModalOpen && (
+                    <ModalBg onClick={toggleModal} style={{zIndex: "3"}}>
+                    <Modal toggleModal={toggleModal}>
+                        <Text
+                        size="body2"
+                        fontWeight="bold"
+                        style={{
+                            margin: "16px 0 12px 12px"
+                        }}
+                        >
+                        2022
+                        </Text>
+                        <Wrapper
+                            $flexDirection="row"
+                            $justifyContent="space-evenly"
+                            style={{ marginBottom: "28px", gap: "10px", flexWrap: "wrap" }}
+                        >
+                            {keypad.slice(0, 3).map((btn, index) => {
+                                return numberButton(btn, index);
+                            })}
+                        </Wrapper>
+                        <Text
+                        size="body2"
+                        fontWeight="bold"
+                        style={{
+                        margin: "0 0 12px 12px"
+                        }}
+                        >
+                        2023
+                        </Text>
+                        <Wrapper
+                            $flexDirection="row"
+                            $justifyContent="space-evenly"
+                            style={{ marginBottom: "28px", gap: "10px", flexWrap: "wrap" }}
+                        >
+                            {keypad.slice(3, 12).map((btn, index) => {
+                                return numberButton(btn, index);
+                            })}
+                        </Wrapper>
+                        <div
+                        style={{
+                            padding: "0 4px 8px 4px"
+                        }}
+                        >
+                            <Button
+                            option="activated"
+                            onClick={() => {toggleModal(); {selectedMonth !== "" ? changemonth(parseInt(selectedMonth.slice(0, -1))) : props.month}}}
+                            >
+                            확인
+                            </Button>
+                        </div>
+                    </Modal>
+                    </ModalBg>
+                )}
             </div>
-            <Image src={iconChevronRightGrey} width={24} height={24} $unit="px" />
-        </Wrapper>
+            <Image onClick={plusmonth} src={iconChevronRightGrey} width={24} height={24} $unit="px" />
+        </CalenderWrapper>
     );
 }
 

@@ -37,6 +37,7 @@ import OnboardingPage from "@/pages/OnboardingPage/OnboardingPage";
 import ShoppingPage from "@/pages/ShoppingPage/ShoppingPage";
 import OnlineQrPage from "@/pages/OnlineQrPage/OnlineQrPage";
 import ShoppingCompletePage from "@/pages/ShoppingCompletePage/ShoppingCompletePage";
+import TestPage from "@/pages/TestPage/TestPage";
 
 const router = createBrowserRouter([
   {
@@ -174,6 +175,10 @@ const router = createBrowserRouter([
     path: PATH.SHOPPING_COMPLETE,
     element: <ShoppingCompletePage />,
   },
+  {
+    path: PATH.TEST,
+    element: <TestPage />
+  }
 ]);
 
 const AppRouter = () => {

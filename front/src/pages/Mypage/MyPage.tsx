@@ -32,7 +32,6 @@ const MyPage = () => {
     <Background
       $colormode="gradient"
       style={{
-        position: "fixed",
         padding: "36px 28px",
       }}
     >
