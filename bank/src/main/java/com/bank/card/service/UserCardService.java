@@ -67,7 +67,11 @@ public class UserCardService {
         UserCard userCard = userCardRepository.findById(UserCardId).get();
         Card card = cardRepository.findById(userCard.getCard().getId()).get();
         Performance performance = performanceRepository.findPerformance(null,card.getId(),userCard.getPerformanceLevel()).get(0);
-        if (performance.getLevelPrice()>=userCard.getTotalPrice()){
+
+        log.info("level price : " + performance.getLevelPrice());
+        log.info("total price :" + userCard.getTotalPrice());
+
+        if (performance.getLevelPrice()<=userCard.getTotalPrice()){
             userCard.setPerformanceLevel(userCard.getPerformanceLevel()+1);
             userCardRepository.save(userCard);
         }

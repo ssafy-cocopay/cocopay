@@ -25,6 +25,9 @@ import numberToAmount from "@/utils/NumToAmount";
 import StatisticsBar from "@/components/organisms/StatisticsBar/StatisticsBar";
 import StatisticsContents from "@/components/organisms/StatisticsContents/StatisticsContents";
 import { CategoryData } from "../../types/category";
+import useThisMonth from "@/states/thisMonthAtoms";
+
+//TODO: 10월 기준으로 소비내역 더미 데이터 업데이트 요청
 
 const StatisticsPage = () => {
   // Tab 선택 여부
@@ -54,7 +57,7 @@ const StatisticsPage = () => {
   ];
 
   //TODO: currentMonth는 리코일에서
-  const currentMonth = 9;
+  const currentMonth = useThisMonth();
   const category = "주유";
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -118,7 +121,6 @@ const StatisticsPage = () => {
         </Text>
         <Text size="body2" color="white" style={{ marginTop: "4px" }}>
           이번 달에 받은 할인 혜택이에요!
-          {/* {pigImg} */}
         </Text>
       </HeaderContainer>
       <Container style={{ position: "relative", top: "-14px" }}>

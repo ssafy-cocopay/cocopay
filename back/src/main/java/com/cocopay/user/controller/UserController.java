@@ -42,7 +42,7 @@ public class UserController {
     private final UserCardService userCardService;
     private final UserCardMapper userCardMapper;
 
-    @GetMapping("/detail")
+    @GetMapping("/mypage")
     public ResponseEntity<?> AuthInformation(@RequestHeader("userId") int userId){
         User user = userService.getAuthInformation(userId);
         return ResponseEntity.ok(userMapper.toAuthInformationByUser(user));
