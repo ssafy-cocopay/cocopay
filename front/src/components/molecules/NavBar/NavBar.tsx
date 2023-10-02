@@ -36,8 +36,8 @@ const NavBar = () => {
   const nowPath = location.pathname;
 
   return (
-    <nav >
-      <StyledNavBarBackground style={{marginTop: '100px'}}>
+    <nav>
+      <StyledNavBarBackground style={{ marginTop: "100px" }}>
         <Image src={navbarBackground} width={100} $unit="%"></Image>
       </StyledNavBarBackground>
       <StyledNavBar>
@@ -56,7 +56,7 @@ const NavBar = () => {
               }
               onClick={() => {
                 if (path === PATH.QRCAMERA) {
-                  window.ReactNativeWebView.postMessage('OPEN_CAMERA');
+                  window.ReactNativeWebView.postMessage("QR_CAMERA");
                 } else {
                   navigatePage(path);
                 }
