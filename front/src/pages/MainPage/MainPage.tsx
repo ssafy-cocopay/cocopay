@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const MainPage = () => {
   return (
-    <Suspense fallback={<Text>로딩중</Text>}>
+    <Suspense fallback={<Text>로딩중123</Text>}>
       <Background
         $colormode="gradient"
         style={{
