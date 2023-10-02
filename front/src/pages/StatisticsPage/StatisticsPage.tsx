@@ -37,7 +37,8 @@ const StatisticsPage = () => {
   };
 
   const date = new Date();
-  const [month, setMonth] = useState(date.getMonth() + 1)
+  const [month, setMonth] = useState(date.getMonth() + 1);
+  console.log(month, "이번달 바꼈니");
 
   const handleMonthMinus = () => {
     setMonth((prev) => prev - 1);
@@ -47,9 +48,9 @@ const StatisticsPage = () => {
     setMonth((prev) => prev + 1);
   };
 
-  const handleMonthChange = (newmonth:number) => {
-    setMonth(newmonth)
-  }
+  const handleMonthChange = (newmonth: number) => {
+    setMonth(newmonth);
+  };
 
   const TABS = [
     { name: "내 소비", key: "내 소비" },
@@ -125,7 +126,12 @@ const StatisticsPage = () => {
       </HeaderContainer>
       <Container style={{ position: "relative", top: "-14px" }}>
         <WhiteContainer $left={true}>
-          <Calendar month={month} minusmonth={handleMonthMinus} plusmonth={handleMonthPlus} changemonth={handleMonthChange}/>
+          <Calendar
+            month={month}
+            minusmonth={handleMonthMinus}
+            plusmonth={handleMonthPlus}
+            changemonth={handleMonthChange}
+          />
           <Line $margin=" 0 0 20px 0" />
           <Text size="body2" $marginLeft="8px">
             <b>{currentMonth}월</b>엔 <b>{category}</b> 카테고리에서
