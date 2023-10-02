@@ -33,5 +33,6 @@
   },
   "engines": {
     "node": ">=16"
-  }
+  },
+  "proxy": "https://j9b208.p.ssafy.io"
 }
