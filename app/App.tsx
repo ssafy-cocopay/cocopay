@@ -6,6 +6,7 @@
  */
 import React, {MutableRefObject, useRef} from 'react';
 import type {PropsWithChildren} from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -15,6 +16,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+
 import WebView from 'react-native-webview';
 import {
   WebViewErrorEvent,
@@ -22,17 +24,17 @@ import {
   WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// import {
+//   Colors,
+//   DebugInstructions,
+//   Header,
+//   LearnMoreLinks,
+//   ReloadInstructions,
+// } from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+// type SectionProps = PropsWithChildren<{
+//   title: string;
+// }>;
 
 // function Section({children, title}: SectionProps): JSX.Element {
 //   const isDarkMode = useColorScheme() === 'dark';
@@ -112,7 +114,8 @@ const App = () => {
       onMessage={handleOnMessage}
       webviewRef={webviewRef}
       // source={{uri: 'http://localhost:3000'}}
-      source={{uri: 'http://192.168.219.102:3000'}}
+      // source={{uri: 'http://192.168.219.102:3000'}}
+      source={{uri: 'https://j9b208.p.ssafy.io/'}}
       // 웹뷰에서는 로컬 주소가 안됨 -> 어랏 되네..? -> apk 내보낼때만 프론트 배포 주소 쓰자
       // API 요청 instance도 같이 바꿔줘야 함
     />
