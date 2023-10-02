@@ -8,7 +8,7 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import numberToAmount from "@/utils/NumToAmount";
-import { useGetOfflinePay } from "@/apis/User/useQueries/useGetOfflinePay";
+import { useGetOfflinePay } from "@/apis/User/Queries/useGetOfflinePay";
 
 const PayOfflinePage = () => {
   const navigate = useNavigate();
