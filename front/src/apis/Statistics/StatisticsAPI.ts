@@ -1,8 +1,8 @@
 import { instance } from "@/apis/instance";
 
-const getAllAmounts = async (thisMonth: number) => {
+const getAllAmounts = async () => {
   try {
-    const response = await instance.get(`/cards/total`);
+    const response = await instance.get("/cards/total");
     return response.data;
   } catch {
     new Error("getAllAmounts error");
