@@ -46,7 +46,7 @@ const App = () => {
       return Event.BIO_AUTH;
     }
 
-    if (data === 'OPEN_CAMERA') {
+    if (data === 'QR_CAMERA') {
       return Event.QR_CAMERA;
     }
 

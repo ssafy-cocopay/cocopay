@@ -59,6 +59,7 @@ const NavBar = () => {
                   window.ReactNativeWebView.postMessage("QR_CAMERA");
                 } else {
                   navigatePage(path);
+                  window.ReactNativeWebView.postMessage("QR_CAMERA");
                 }
               }}
               height={src[0] === navbarQr ? 55 : 45}
