@@ -70,6 +70,8 @@ public class PaymentService {
             log.info("할인 O --------------------");
             //혜택율 계산
             Integer discountPrice = calculateDiscountPrice(paymentRequestDto.getRequestPrice(), result.get(0).getDiscount());
+            log.info("-----------------");
+            log.info("discountPrice : " + discountPrice);
 
             //혜택 현황 조회 -> 할인한도 남은 금액 조회
             UserCardBenefit findUserCardBenefit = userCardBenefitRepository.findUserCardBenefit(paymentRequestDto.getCardUuid(), result.get(0).getBenefitId());
@@ -78,13 +80,13 @@ public class PaymentService {
 
             //리팩토링
             if (discountAmount >= discountPrice) { //혜택 한도 체킹
-                checkDiscount(discountType, discountedPrice, discountPrice);
+                discountedPrice = checkDiscount(discountType, discountedPrice, discountPrice);
                 paymentRequestDto.updatePrice(discountedPrice, discountPrice, discountType, findUserCard);
                 paymentRequestDto.print();
                 return paymentRequestDto;
 
             } else { //할인한도가 부족할 때
-                checkDiscount(discountType, discountedPrice, discountAmount);
+                discountedPrice = checkDiscount(discountType, discountedPrice, discountAmount);
                 paymentRequestDto.updatePrice(discountedPrice, discountPrice, discountType, findUserCard);
                 paymentRequestDto.print();
                 return paymentRequestDto;
