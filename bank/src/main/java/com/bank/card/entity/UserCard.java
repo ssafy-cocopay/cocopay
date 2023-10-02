@@ -19,7 +19,7 @@ public class UserCard {
     @Column(name = "card_uuid")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
 
