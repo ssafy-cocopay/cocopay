@@ -35,8 +35,8 @@ const shake = keyframes`
 const AnimatedImage = styled(Image)`
   position: absolute;
   bottom: 0;
-  left: 1%;
-  top: 41%;
+  left: -2%;
+  top: 46%;
   transform: translateY(-50%);
   animation: ${shake} 1s infinite;
   transform-origin: right bottom;
