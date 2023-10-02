@@ -4,18 +4,22 @@
  *
  * @format
  */
-import React, {MutableRefObject, useRef} from 'react';
-import type {PropsWithChildren} from 'react';
+// import React, {MutableRefObject, useRef} from 'react';
+import React, {useRef} from 'react';
 
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+// import type {PropsWithChildren} from 'react';
+
+// import {
+//   SafeAreaView,
+//   ScrollView,
+//   StatusBar,
+//   StyleSheet,
+//   Text,
+//   useColorScheme,
+//   View,
+// } from 'react-native';
+
+// import StyleSheet from 'react-native';
 
 import WebView from 'react-native-webview';
 import {
@@ -114,7 +118,7 @@ const App = () => {
       onMessage={handleOnMessage}
       webviewRef={webviewRef}
       // source={{uri: 'http://localhost:3000'}}
-      // source={{uri: 'http://192.168.219.102:3000'}}
+      // source={{uri: 'http://172.28.128.1:3000'}}
       source={{uri: 'https://j9b208.p.ssafy.io/'}}
       // 웹뷰에서는 로컬 주소가 안됨 -> 어랏 되네..? -> apk 내보낼때만 프론트 배포 주소 쓰자
       // API 요청 instance도 같이 바꿔줘야 함
@@ -122,23 +126,23 @@ const App = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+// const styles = StyleSheet.create({
+//   sectionContainer: {
+//     marginTop: 32,
+//     paddingHorizontal: 24,
+//   },
+//   sectionTitle: {
+//     fontSize: 24,
+//     fontWeight: '600',
+//   },
+//   sectionDescription: {
+//     marginTop: 8,
+//     fontSize: 18,
+//     fontWeight: '400',
+//   },
+//   highlight: {
+//     fontWeight: '700',
+//   },
+// });
 
 export default App;
