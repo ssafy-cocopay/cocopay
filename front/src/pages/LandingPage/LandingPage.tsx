@@ -23,7 +23,7 @@ export const LandingPage = () => {
         alignItems: "center",
       }}
     >
-      <Container $margin="85px 0">
+      <Container>
         <Wrapper $flexGrow={5}>
           <Image src={coco} width={12} />
         </Wrapper>
