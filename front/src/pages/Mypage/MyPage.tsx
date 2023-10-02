@@ -11,22 +11,28 @@ import Button from "@/components/atoms/Button/Button";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Modal from "@/components/atoms/Modal/Modal";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
-import { userInfoState } from "@/states/UserInfoAtoms";
-import { useRecoilValue } from "recoil";
+import { useGetMyPage } from "@/apis/User/Queries/useGetMyPage";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "@/constants/path";
 
 const MyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const userName = useRecoilValue(userInfoState);
-  console.log(userName);
+
   //모달 오픈 함수
   const toggleModal = () => {
     console.log("Modal");
     setIsModalOpen((prev) => !prev);
   };
+  const navigate = useNavigate();
 
+  const navigatePage = (path: string) => {
+    navigate(path);
+  };
   const withdrawal = () => {
     toggleModal();
   };
+  const UserMyPage = useGetMyPage();
+  console.log(UserMyPage, "유저마이페이지");
 
   return (
     <Background
@@ -57,7 +63,7 @@ const MyPage = () => {
           }}
         >
           <Text size="subtitle2" fontWeight="bold" color="black1">
-            {userName.name}
+            {UserMyPage.name}
           </Text>
           <Text size="subtitle2" fontWeight="light" color="black1">
             님의 마이페이지
@@ -83,17 +89,24 @@ const MyPage = () => {
             </Text>
             <Checkbox type="checkbox" id="toggle" />
           </MypageWrapper>
-          <MypageWrapper $justifyContent="space-between">
+          <MypageWrapper
+            onClick={() => navigatePage(PATH.PASSWORD_SETTING)} //TODO: 비밀번호 재설정 후 -> 다시 마이페이지로 돌아오게
+            $justifyContent="space-between"
+          >
             <Text size="body2" fontWeight="bold" color="black1">
               비밀번호 설정(재설정)
             </Text>
             <Image src={iconChevronRightGrey} height={24} $unit="px"></Image>
           </MypageWrapper>
-          <MypageWrapper $justifyContent="space-between">
+          <MypageWrapper
+            onClick={() => navigatePage(PATH.PRIORITY)}
+            $justifyContent="space-between"
+          >
             <Text size="body2" fontWeight="bold" color="black1">
               카드 추천
             </Text>
-            <MypageWrapper // 할인율과 ChevronRight 감싸고 있음
+            <MypageWrapper
+              // 할인율과 ChevronRight 감싸고 있음
               $justifyContent="space-between"
             >
               <Text
@@ -119,7 +132,7 @@ const MyPage = () => {
       {isModalOpen && (
         <ModalBg onClick={toggleModal}>
           <Modal toggleModal={toggleModal}>
-            <Wrapper $padding="30px">
+            <Wrapper $padding="10px">
               <Wrapper>
                 <Text
                   size="body1"
@@ -130,7 +143,7 @@ const MyPage = () => {
                 >
                   회원 탈퇴
                 </Text>
-                <br />
+
                 <Text size="body2" fontWeight="regular">
                   회원 탈퇴시, 모든 정보가 삭제됩니다.
                 </Text>
