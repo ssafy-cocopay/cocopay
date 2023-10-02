@@ -7,6 +7,22 @@ import { Image } from "@/components/atoms/Image/Image";
 import imgCardUpload from "@/assets/images/img-cardupload.png"
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import styled, { keyframes } from "styled-components";
+import cards from "@/assets/images/img-cardline.png";
+
+const moveRight = keyframes`
+  to {
+    transform: translateX(calc(50% + 100px));
+  }
+`;
+
+const AnimatedImage = styled(Image)`
+  left: 50%;
+  transform: translateX(10%);
+  animation: ${moveRight} 15s forwards;
+  margin : 52px 0;
+  height : 84px;
+`;
 
 type CardUploadPageProps = {
     onNextPage: () => void;
@@ -54,13 +70,14 @@ const CardUploadLoadingPage = (props:CardUploadPageProps) => {
                 >
                     코코페이에 한 번에 등록하세요
                 </Text>
-                <Image
+                <AnimatedImage src={imgCardUpload} $unit="px"/>
+                {/* <Image
                 src={imgCardUpload}
                 height={84}
                 $unit="px"
                 $margin="52px 0"
                 >
-                </Image>
+                </Image> */}
                 <Button
                 onClick={handleNextPage}
                 option="activated"
