@@ -6,7 +6,7 @@ import { PATH } from "@/constants/path";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import Penguin from "@/assets/images/img-penguin-congraturation.png";
-import ParticleMove from './ParticleMove';
+import ParticleMove from "./ParticleMove";
 
 const PayOnlineCompletePage = () => {
   const navigate = useNavigate();
@@ -22,9 +22,8 @@ const PayOnlineCompletePage = () => {
         minHeight: "100vh",
       }}
     >
-      <ParticleMove/>
+      <ParticleMove />
       <Container
-        $border={true}
         $left={true}
         $paddingTop="36px"
         style={{ position: "relative" }}
@@ -51,11 +50,7 @@ const PayOnlineCompletePage = () => {
           <br />
           {/* <Image src={Penguin} width={70} $unit="%"></Image> */}
         </Container>
-        <Container
-          style={{ position: "absolute", left: "0px" }}
-          $padding="0"
-        >
-
+        <Container style={{ position: "absolute", left: "0px" }} $padding="0">
           {/* TODO: 이미지 누르면 홈으로 이동하기 onClick */}
           <Image
             src={Penguin}
