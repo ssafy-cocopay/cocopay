@@ -4,9 +4,11 @@
  *
  * @format
  */
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import WebView from 'react-native-webview';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
+import {PermissionsAndroid} from 'react-native';
+import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 import {
   WebViewErrorEvent,
@@ -14,7 +16,25 @@ import {
   WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 
+async function requestCameraPermission() {
+  try {
+    const result = await request(PERMISSIONS.ANDROID.CAMERA);
+
+    if (result === RESULTS.GRANTED) {
+      console.log('카메라 권한 허용됨');
+    } else {
+      console.log('카메라 권한 거부됨');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+}
+
 const App = () => {
+  useEffect(() => {
+    requestCameraPermission();
+  }, []);
+
   //웹뷰와 RN과의 소통은 아래의 ref 값을 이용하여 이루어진다
   let webviewRef = useRef<WebView>(null);
   const devices = useCameraDevices(); // 사용 가능한 카메라 디바이스 목록을 가져옵니다.
@@ -83,11 +103,7 @@ const App = () => {
     <>
       {showCamera &&
         backCamera && ( // backCamera가 존재할 때만 Camera 컴포넌트를 렌더링합니다.
-          <Camera
-            style={{flex: 1}}
-            device={backCamera}
-            isActive={true}
-          />
+          <Camera style={{flex: 1}} device={backCamera} isActive={true} />
         )}
 
       <WebView
