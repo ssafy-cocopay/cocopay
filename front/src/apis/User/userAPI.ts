@@ -15,19 +15,32 @@ const addMessageConfirm = async (data: AddMessageConfirmParams) => {
 };
 
 const addPriority = async (recommendType: number) => {
-  console.log("우선순위", recommendType);
+  // console.log("우선순위", recommendType);
   await instance.put("/users", { recommendType });
 };
 const addUser = async (data: UserInfo) => {
   const response = await instance.post("/users/join", data);
-  console.log(response.data, "addUser안에서 localstorage에 userId 저장");
+  // console.log(response.data, "addUser안에서 localstorage에 userId 저장");
   localStorage.setItem("userId", response.data.userId);
 };
 
 const getOfflinePay = async () => {
   const response = await instance.get("/pay/complete");
-  console.log(response.data, "왓니");
+  // console.log(response.data, "왓니");
+  return response.data; //get은 리턴으로 값을 줘야 함.
+};
+
+const getUserMyPage = async () => {
+  const response = await instance.get("/users/mypage");
+  // console.log("마이페이지 왔니?", response);
   return response.data;
 };
 
-export { addMessage, addMessageConfirm, addUser, addPriority, getOfflinePay };
+export {
+  addMessage,
+  addMessageConfirm,
+  addUser,
+  addPriority,
+  getOfflinePay,
+  getUserMyPage,
+};
