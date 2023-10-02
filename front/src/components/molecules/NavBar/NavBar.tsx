@@ -54,7 +54,13 @@ const NavBar = () => {
                   ? src[1]
                   : src[0]
               }
-              onClick={() => navigatePage(path)}
+              onClick={() => {
+                if (path === PATH.QRCAMERA) {
+                  window.ReactNativeWebView.postMessage('OPEN_CAMERA');
+                } else {
+                  navigatePage(path);
+                }
+              }}
               height={src[0] === navbarQr ? 55 : 45}
               $unit="px"
             />
