@@ -83,7 +83,7 @@ const SignupPage: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(userInfo);
+    console.log(userInfo, "여기임?");
   }, [userInfo]);
 
   return (
@@ -180,7 +180,6 @@ const SignupLayout = ({
           //     message: "올바른 이름 형식이 아닙니다",
           //   },
           // })} //TODO: 에러메세지 text스타일컴포넌트로 커스텀하기
-
         ></Input>
         {errors.name && (
           <small style={{ color: "red", fontSize: "14px" }}>
@@ -190,7 +189,13 @@ const SignupLayout = ({
         <br />
         {/* birth input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
-          <Input width={122} name="birth" onChange={(e) => {handleBirthChange(e.target.value)}}></Input>
+          <Input
+            width={122}
+            name="birth"
+            onChange={(e) => {
+              handleBirthChange(e.target.value);
+            }}
+          ></Input>
           <Text size="subtitle1" color="grey3">
             -
           </Text>
@@ -198,6 +203,12 @@ const SignupLayout = ({
           <Image src={Dots} width={40} $unit="%"></Image>
         </Wrapper>
         <br />
+        {/* company dropdown */}
+        <Dropdown
+          options={["SKT", "KT", "LG"]}
+          defaultValue="통신사를 선택해주세요"
+          onChange={handleCompanyChange}
+        />
         {/* tel input */}
         <Input
           name="tel"
@@ -222,12 +233,7 @@ const SignupLayout = ({
           </small>
         )}
         <br />
-        {/* company dropdown */}
-        <Dropdown
-          options={["SKT", "KT", "LG"]}
-          defaultValue="통신사를 선택해주세요"
-          onChange={handleCompanyChange}
-        />
+
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
           <Input

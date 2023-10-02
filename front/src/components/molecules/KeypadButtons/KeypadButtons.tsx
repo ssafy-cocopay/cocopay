@@ -62,6 +62,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   const handlePutPassword = (newPassword: string) => {
     setUserInfo((prev) => ({ ...prev, password: newPassword }));
     addUserMutation.mutate(userInfo);
+    console.log('저장되어있냐', userInfo);
   };
 
   useEffect(() => {
@@ -177,6 +178,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
       >
         {Array.from({ length: 6 }).map(starButton)}
       </Wrapper>
+
       <Wrapper
         $flexDirection="row"
         $justifyContent="space-between"

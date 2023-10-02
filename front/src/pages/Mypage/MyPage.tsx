@@ -11,10 +11,13 @@ import Button from "@/components/atoms/Button/Button";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Modal from "@/components/atoms/Modal/Modal";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
+import { userInfoState } from "@/states/UserInfoAtoms";
+import { useRecoilValue } from "recoil";
 
 const MyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const userName = useRecoilValue(userInfoState);
+  console.log(userName);
   //모달 오픈 함수
   const toggleModal = () => {
     console.log("Modal");
@@ -29,7 +32,6 @@ const MyPage = () => {
     <Background
       $colormode="gradient"
       style={{
-        position:"fixed",
         padding: "36px 28px",
       }}
     >
@@ -55,7 +57,7 @@ const MyPage = () => {
           }}
         >
           <Text size="subtitle2" fontWeight="bold" color="black1">
-            성현
+            {userName.name}
           </Text>
           <Text size="subtitle2" fontWeight="light" color="black1">
             님의 마이페이지

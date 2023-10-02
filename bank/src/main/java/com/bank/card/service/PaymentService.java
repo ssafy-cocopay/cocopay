@@ -37,6 +37,7 @@ public class PaymentService {
     private final CardHistoryRepository cardHistoryRepository;
     private final CardHistoryMapper cardHistoryMapper;
     private final InstallmentRepository installmentRepository;
+    private final UserCardService userCardService;
 
     public Integer calculateDiscountPrice(Integer requestPrice, Integer discount) {
         return (int) (requestPrice * (double) (discount * 0.01));
@@ -140,6 +141,6 @@ public class PaymentService {
         //할인 현황 업데이트
 
         //실적 업데이트
-
+        userCardService.PerformanceCheck(userCard.getId());
     }
 }

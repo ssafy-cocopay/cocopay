@@ -25,6 +25,9 @@ import numberToAmount from "@/utils/NumToAmount";
 import StatisticsBar from "@/components/organisms/StatisticsBar/StatisticsBar";
 import StatisticsContents from "@/components/organisms/StatisticsContents/StatisticsContents";
 import { CategoryData } from "../../types/category";
+import useThisMonth from "@/states/thisMonthAtoms";
+
+//TODO: 10월 기준으로 소비내역 더미 데이터 업데이트 요청
 
 const StatisticsPage = () => {
   // Tab 선택 여부
@@ -33,13 +36,28 @@ const StatisticsPage = () => {
     setSelectedTab(tabName);
   };
 
+  const date = new Date();
+  const [month, setMonth] = useState(date.getMonth() + 1)
+
+  const handleMonthMinus = () => {
+    setMonth((prev) => prev - 1);
+  };
+
+  const handleMonthPlus = () => {
+    setMonth((prev) => prev + 1);
+  };
+
+  const handleMonthChange = (newmonth:number) => {
+    setMonth(newmonth)
+  }
+
   const TABS = [
     { name: "내 소비", key: "내 소비" },
     { name: "혜택", key: "혜택" },
   ];
 
   //TODO: currentMonth는 리코일에서
-  const currentMonth = 9;
+  const currentMonth = useThisMonth();
   const category = "주유";
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -103,12 +121,11 @@ const StatisticsPage = () => {
         </Text>
         <Text size="body2" color="white" style={{ marginTop: "4px" }}>
           이번 달에 받은 할인 혜택이에요!
-          {/* {pigImg} */}
         </Text>
       </HeaderContainer>
       <Container style={{ position: "relative", top: "-14px" }}>
         <WhiteContainer $left={true}>
-          <Calendar onMonthClick={toggleModal} />
+          <Calendar month={month} minusmonth={handleMonthMinus} plusmonth={handleMonthPlus} changemonth={handleMonthChange}/>
           <Line $margin=" 0 0 20px 0" />
           <Text size="body2" $marginLeft="8px">
             <b>{currentMonth}월</b>엔 <b>{category}</b> 카테고리에서
