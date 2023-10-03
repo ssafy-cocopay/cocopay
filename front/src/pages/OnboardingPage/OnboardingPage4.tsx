@@ -77,8 +77,8 @@ function OnboardingPage4(props: OnboardingPage4Props) {
             width={27}
             style={{
               position: "absolute",
-              left: "40%",
-              bottom: "7%",
+              left: "32%",
+              bottom: "5.7%",
             }}
           />
         </Container>
