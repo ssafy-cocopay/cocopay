@@ -46,10 +46,10 @@ function OnboardingPage1(props: OnboardingPage1Props) {
         <Image
           src={Hello}
           width={15}
-          style={{ marginLeft: "40px", marginTop: "70%" }}
+          style={{ marginLeft: "20px", marginTop: "80%" }}
         ></Image>
         <Image
-          style={{ position: "fixed", bottom: 50 }}
+          style={{ marginLeft: "-15px", position: "fixed", bottom: 50 }}
           src={Penguins}
           width={20}
         ></Image>

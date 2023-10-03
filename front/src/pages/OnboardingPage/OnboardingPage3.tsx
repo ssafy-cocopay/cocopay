@@ -49,10 +49,10 @@ function OnboardingPage3(props: OnboardingPage3Props) {
           <Text size="subtitle2" fontWeight="bold">
             매번 실적과 혜택을 고려하면서
           </Text>
-          <Text size="subtitle2" fontWeight="bold">
+          <Text $marginTop="5px" size="subtitle2" fontWeight="bold">
             적절한 카드를 선택해
           </Text>
-          <Text size="subtitle2" fontWeight="bold">
+          <Text $marginTop="5px" size="subtitle2" fontWeight="bold">
             결제하기 어려우셨죠?
           </Text>
         </Wrapper>{" "}

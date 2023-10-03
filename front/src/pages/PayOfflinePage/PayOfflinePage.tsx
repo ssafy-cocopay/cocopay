@@ -9,59 +9,12 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Penguin from "@/assets/images/img-penguin-thinking.png";
 import Dot from "@/assets/images/icon-dot-gray.png";
-import CardImg1 from "@/assets/images/img-cardimg1.png";
-import CardImg2 from "@/assets/images/img-cardimg2.png";
-import CardImg3 from "@/assets/images/img-cardimg3.png";
-import styled, { keyframes } from "styled-components";
+import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
 
 function PayOfflinePage() {
-  const CardImgList = [CardImg1, CardImg2, CardImg3];
-
-  // const handlePageTransition = () => {
-  //   // 페이지 이동 로직 추가
-  //   onNextPage(); // 다음 페이지로 이동
-  // };
-  // const navigate = useNavigate();
-
-  // const navigatePage = (path: string) => {
-  //   navigate(path);
-
-
-  const rotateLeft = keyframes`
-    0% {
-    opacity: 1;
-    transform-origin: 50% 0;
-    transform: perspective(800px) rotateY(0deg) translateZ(0px);
-  }
-
-  50% {
-    opacity: 0;
-    transform-origin: 50% 0;
-    transform: perspective(800px) rotateY(-180deg) translateZ(220px);
-  }
-
-  50.1% {
-    opacity: 0;
-    transform-origin: 50% 0;
-    transform: perspective(800px) rotateY(180deg) translateZ(220px);
-  }
-
-  100% {
-    opacity: 1;
-    transform-origin: 50% 0;
-    transform: perspective(800px) rotateY(0deg) translateZ(0px);
-  }`;
-
-  const LeftRotate = styled(Image)`
-  position: absolute;
-  top: 170px;
-  bottom: 300px;
-  /* left: 40%; */
-  /* transform: translateY(80%); */
-  animation: ${rotateLeft} 3s linear infinite;
-  transform-origin: center;
-  `;
-
+  const CardList = useGetCardList();
+  console.log(CardList, "나의 카드들"); //TODO: 카드리스트 있는지 확인
+  const firstThreeCards = CardList.slice(0, 3);
   return (
     <Background
       $colormode="gradient"
@@ -93,8 +46,12 @@ function PayOfflinePage() {
             최적의 결제 카드 파악 중...
           </Text> */}
           <br />
-          
-          
+
+          <Wrapper $flexDirection="row">
+            {firstThreeCards.map((card: any, idx: number) => {
+              return <Image src={card.cardImage} key={idx} width={7} />;
+            })}
+          </Wrapper>
           <br />
           <Container style={{ justifyContent: "flex-end" }} height="auto">
             <Wrapper

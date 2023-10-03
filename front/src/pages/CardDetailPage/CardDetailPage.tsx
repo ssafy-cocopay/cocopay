@@ -20,7 +20,7 @@ import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails";
 import { usePostCardPurchased } from "@/apis/Card/Mutations/useAddCardList";
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from "recoil";
-import { CardDetailAtom, CardDetailIdAtom } from "@/states/CardDetailAtoms";
+import { CardDetailAtom, CardDetailIdAtom, CardDetailMonthAtom } from "@/states/CardDetailAtoms";
 import { CardAmount, CardHistoryLists, CardDetail } from '@/types/card';
 import numberToAmount from "@/utils/NumToAmount";
 
@@ -48,10 +48,10 @@ const CardDetailPage = () => {
   const cardid = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
   const CardDetail = useGetCardDetail(cardid);
   const CardPurchased = usePostCardPurchased()
-  const date = new Date();
-  const [month, setMonth] = useState(date.getMonth() + 1)
+  const [month, setMonth] = useRecoilState(CardDetailMonthAtom)
   const [cardDetailId, setCardDetailId] = useRecoilState(CardDetailIdAtom)
   console.log(CardDetail)
+  const date = new Date();
 
   const handleMonthMinus = () => {
     setMonth((prev) => prev - 1);
@@ -63,6 +63,10 @@ const CardDetailPage = () => {
 
   const handleMonthChange = (newmonth:number) => {
     setMonth(newmonth)
+  }
+
+  const handleMonthReset = () => {
+    setMonth(date.getMonth() + 1)
   }
 
   // 결제내역 가져오기
@@ -102,7 +106,7 @@ const CardDetailPage = () => {
             width={24}
             height={24}
             $unit="px"
-            onClick={() => navigate(-1)}
+            onClick={() => {navigate(-1); handleMonthReset()}}
           ></Image>
           <TextCenterWrapper>
             <Text
