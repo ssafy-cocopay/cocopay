@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { postCard, postCardPurchased, postPayOnline } from '../cardAPI';
-import { CardInfo, PostCardPurchasedPayload, PayOnline } from '@/types/card';
+import { postCard, postCardPurchased, postPayOnline, postPayOnlineComplete } from '../cardAPI';
+import { CardInfo, PostCardPurchasedPayload, PayOnline, PayOnlineComplete } from '@/types/card';
 
 const usePostCard = () => {
     return useMutation((cardInfo: CardInfo) => postCard(cardInfo), {
@@ -37,5 +37,16 @@ const usePostPayOnline = () => {
     });
 }
 
+const usePostPayOnlineComplete = () => {
+    return useMutation((PayOnlineComplete: PayOnlineComplete) => postPayOnlineComplete(PayOnlineComplete), {
+        onSuccess: () => {
+            console.log('온라인 결제 성공')
+        },
+        onError: () => {
+            console.log('온라인 결제 실패');
+        },
+    });
+}
 
-export { usePostCard, usePostCardPurchased, usePostPayOnline };
+
+export { usePostCard, usePostCardPurchased, usePostPayOnline, usePostPayOnlineComplete };

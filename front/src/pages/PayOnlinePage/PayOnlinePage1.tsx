@@ -7,8 +7,8 @@ import { PayOnlineWrapper, DisplayWrapper } from "./PayOnlinePage1.styles"
 import { WhiteRoundedBox } from "@/components/atoms/WhiteRoundedBox/WhiteRoundedBox.styles"
 import { Text } from "@/components/atoms/Text/Text.styles"
 import { usePostPayOnline } from "@/apis/Card/Mutations/useAddCardList";
-import { useRecoilState } from "recoil";
-import { PayOnlineCardList } from "@/states/OnlineQrPageAtoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { PayOnlineCardList, OnlinePayDataAtom } from "@/states/OnlineQrPageAtoms";
 
 type PayOnlinePageProps = {
   onNextPage: () => void;
@@ -19,17 +19,18 @@ function PayOnlinePage1(props: PayOnlinePageProps) {
   const [payOnlineCards, setPayOnlineCards] = useRecoilState(PayOnlineCardList)
   console.log(payOnlineCards)
   const PayOnline = usePostPayOnline()
+  const OnlineShopping = useRecoilValue(OnlinePayDataAtom)
 
 // 결제내역 가져오기
 const handlePayOnline = () => {
   const Pay = {
-      "category":"주유",
-      "storeName":"GS칼텍스",
-      "orderPrice":12000
+      "category":"온라인쇼핑",
+      "storeName":"무신사",
+      "orderPrice":38700
     }
     PayOnline.mutate(Pay, {
       onSuccess: (data) => {
-        setPayOnlineCards(data);
+        setPayOnlineCards(data.data);
         console.log(payOnlineCards)
         onNextPage()
       }
