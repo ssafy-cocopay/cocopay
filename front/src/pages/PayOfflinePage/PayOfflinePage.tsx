@@ -23,6 +23,7 @@ function PayOfflinePage() {
       }}
     >
       <Container $left={true} $paddingTop="36px" height="auto">
+      
         <Container
           $paddingTop="63px"
           $backgroundColor="white"
@@ -31,9 +32,16 @@ function PayOfflinePage() {
           $padding="36px"
           // $border={true}
         >
-          <Text size="body1" fontWeight="bold">
+          <Text size="body1" fontWeight="bold" $margin="0 0 250px 0">
             최적의 결제 카드 파악 중...
-          </Text>
+          </Text> 
+          <Wrapper $flexDirection="row">
+        {CardImgList.map((card, idx) => {
+           const animationDelay = `${idx * 0.8}s`;
+           const zIndex = CardImgList.length - idx;
+          return <LeftRotate src={card} key={idx} width={7} style={{animationDelay,zIndex}} />;
+        })}
+      </Wrapper>
           {/* <Text size="body1" fontWeight="bold">
             최적의 결제 카드 파악 중...
           </Text> */}
