@@ -18,8 +18,8 @@ const moveRight = keyframes`
 const AnimatedImage = styled(Image)`
   left: 50%;
   transform: translateX(10%);
-  animation: ${moveRight} 15s forwards;
-  margin-top: 200px;
+  animation: ${moveRight} 25s forwards;
+  margin-top: 100px;
 `;
 
 type OnboardingPage3Props = {
@@ -56,7 +56,7 @@ function OnboardingPage3(props: OnboardingPage3Props) {
             결제하기 어려우셨죠?
           </Text>
         </Wrapper>{" "}
-        <AnimatedImage onClick={handlePageTransition} src={cards} width={40} />
+        <AnimatedImage onClick={handlePageTransition} src={cards} width={140} />
         {/* <Image style={{ marginTop: "30%" }} src={cards} width={40}></Image> */}
         <Image
           src={questionPerson}

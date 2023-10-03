@@ -70,6 +70,7 @@ const SignupPage: React.FC = () => {
 
   const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTel = e.target.value.toString();
+
     setUserTel(newTel);
     setUserInfo((prev) => ({ ...prev, tel: newTel }));
   };
@@ -167,7 +168,7 @@ const SignupLayout = ({
           // dear. 혜현 : 이 부분을 지워야 userInfo에 값이 들어가서 일단 주석처리
           // {...register("name", {
           //   required: true, // 필수 입력
-          //   minLength: {
+          //   minçLength: {
           //     value: 2,
           //     message: "최소 2글자 이상 입력하세요",
           //   },

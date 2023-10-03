@@ -88,7 +88,6 @@ const App = () => {
         case Event.QR_CAMERA: // 이 부분을 추가합니다.
           qrCamera();
           break;
-
         // 필요하다면 다음 actions 작성은 여기에
       }
     }
@@ -101,11 +100,6 @@ const App = () => {
 
   return (
     <>
-      {showCamera &&
-        backCamera && ( // backCamera가 존재할 때만 Camera 컴포넌트를 렌더링합니다.
-          <Camera style={{flex: 1}} device={backCamera} isActive={true} />
-        )}
-
       <WebView
         onLoadEnd={handleEndLoading}
         onMessage={handleOnMessage}
