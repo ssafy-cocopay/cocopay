@@ -124,6 +124,8 @@ public class UserCardService {
 
     //사용자별 통계 - 전체
     public CategoryResponseDto getAllamount(FindHistoryByUserId findHistoryByUserId) {
+        User user = userRepository.findById(findHistoryByUserId.getUserId()).get();
+        findHistoryByUserId.setUserId(user.getUuid());
         WebClient webClient = WebClient.create();
 
         //api 주소
@@ -143,6 +145,9 @@ public class UserCardService {
 
     //사용자별 통계 - 소비
     public CategoryPriceResponseDto getAllPrice(FindHistoryByUserId findHistoryByUserId) {
+        User user = userRepository.findById(findHistoryByUserId.getUserId()).get();
+        findHistoryByUserId.setUserId(user.getUuid());
+
         WebClient webClient = WebClient.create();
 
         //api 주소
@@ -163,6 +168,8 @@ public class UserCardService {
 
     //사용자별 통계 - 혜택
     public CategoryDiscountResponseDto getAllDiscount(FindHistoryByUserId findHistoryByUserId) {
+        User user = userRepository.findById(findHistoryByUserId.getUserId()).get();
+        findHistoryByUserId.setUserId(user.getUuid());
         WebClient webClient = WebClient.create();
 
         //api 주소

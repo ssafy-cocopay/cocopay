@@ -9,6 +9,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import numberToAmount from "@/utils/NumToAmount";
 import { useGetOfflinePay } from "@/apis/User/Queries/useGetOfflinePay";
+import ParticleMove from '../PayOnlineCompletePage/ParticleMove';
 import Performance from "@/components/molecules/Performance/Performance";
 
 const PayOfflinePage = () => {
@@ -33,6 +34,7 @@ const PayOfflinePage = () => {
         minHeight: "100vh",
       }}
     >
+      <ParticleMove/>
       <Container $left={true} $paddingTop="36px" height="auto">
         <Container
           $padding="10px"

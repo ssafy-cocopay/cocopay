@@ -179,6 +179,8 @@ public class PaymentService {
             String format = String.format("%.1f", graphRate);
             log.info("format : {}", format);
 
+            benefitKeyService.deleteByCardUuid(userCard.getCardUuid());
+
             offerResDtoList.add(paymentMapper.toCardOfferDto(userCard, cardImage, discountRate, discountType, discounted, finalPrice, remainingAmt, format, performanceKey));
         }
         return offerResDtoList;
