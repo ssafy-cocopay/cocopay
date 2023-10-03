@@ -24,11 +24,10 @@ import FlexDiv from "@/components/atoms/FlexDiv/FlexDiv.styles";
 import numberToAmount from "@/utils/NumToAmount";
 import StatisticsBar from "@/components/organisms/StatisticsBar/StatisticsBar";
 import StatisticsContents from "@/components/organisms/StatisticsContents/StatisticsContents";
-import { CategoryData } from "../../types/category";
+import { CategoryData, PurchasedCategoryData } from "../../types/category";
 import useThisMonth from "@/states/thisMonthAtoms";
 import { useGetStatisticDiscount } from "@/apis/Statistics/Queries/useGetStatisticDiscount";
-
-//TODO: 10월 기준으로 소비내역 더미 데이터 업데이트 요청
+import { useGetStatisticConsume } from "@/apis/Statistics/Queries/useGetStatisticConsume";
 
 const StatisticsPage = () => {
   // Tab 선택 여부
@@ -40,6 +39,7 @@ const StatisticsPage = () => {
   const date = new Date();
   const [month, setMonth] = useState(date.getMonth() + 1);
   const StatisticDiscount = useGetStatisticDiscount(month);
+  const StatisticConsume = useGetStatisticConsume(month);
 
   // 버튼 클릭에 따른 달 변경
   const handleMonthMinus = () => {
@@ -49,13 +49,14 @@ const StatisticsPage = () => {
     setMonth((prev) => prev + 1);
   };
 
-  // 조회하고싶은 s달 change
+  // 조회하고싶은 달 change
   const handleMonthChange = (newmonth: number) => {
     setMonth(newmonth);
   };
-  // 할인금액 numberToAmount로 변경해서 받기
-  const DiscountAccount = numberToAmount(StatisticDiscount.allDiscountAmount);
 
+  // 할인금액 numberToAmount로 변경해서 받기
+  const DiscountAmount = numberToAmount(StatisticDiscount.allDiscountAmount);
+  const ConsumeAmount = numberToAmount(StatisticConsume.allPriceAmount);
   const TABS = [
     { name: "내 소비", key: "내 소비" },
     { name: "혜택", key: "혜택" },
@@ -64,12 +65,9 @@ const StatisticsPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   // TODO: API로 get
-  const priceAmounts: CategoryData[] = [
-    { category: "편의점", price: 94970, rate: 44.7 },
-  ];
-
-  const discountedAmounts: CategoryData[] = [
-    { category: "영화", price: 82820, rate: 22.8 },
+  const priceAmounts: PurchasedCategoryData[] = [
+    { category: "편의점", price: 94970, pricePercent: 44.7 },
+    { category: "카페", price: 9490, pricePercent: 24.7 },
   ];
 
   const toggleModal = () => {
@@ -93,7 +91,7 @@ const StatisticsPage = () => {
       <HeaderContainer>
         <Image src={pigImg} width={5} $margin="0 0 14px 0" />
         <Text size="heading1" fontWeight="bold" color="white">
-          {DiscountAccount}원
+          {DiscountAmount}원
         </Text>
         <Text size="body2" color="white" style={{ marginTop: "4px" }}>
           이번 달에 받은 할인 혜택이에요!
@@ -155,10 +153,7 @@ const StatisticsPage = () => {
                 color="blue"
                 $marginTop="3px"
               >
-                {/* {selectedTab === "내 소비"
-                  ? thisMonthAmount
-                  : { DiscountAccount }} */}
-                {DiscountAccount}원
+                {selectedTab === "내 소비" ? ConsumeAmount : DiscountAmount}원
               </Text>
               <Text
                 size="subtitle2"
@@ -173,13 +168,19 @@ const StatisticsPage = () => {
           {/* bar */}
           <StatisticsBar
             contents={
-              selectedTab === "내 소비" ? priceAmounts : discountedAmounts
+              // StatisticDiscount.categoryList
+              selectedTab === "내 소비"
+                ? StatisticConsume.categoryList
+                : StatisticDiscount.categoryList
             }
           />
           {/* 카테고리별 소비/혜택순 콘텐츠 */}
           <StatisticsContents
             contents={
-              selectedTab === "내 소비" ? priceAmounts : discountedAmounts
+              // StatisticDiscount.categoryList
+              selectedTab === "내 소비"
+                ? StatisticConsume.categoryList
+                : StatisticDiscount.categoryList
             }
           />
         </StatisticsContainer>
