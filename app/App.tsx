@@ -88,7 +88,6 @@ const App = () => {
         case Event.QR_CAMERA: // 이 부분을 추가합니다.
           qrCamera();
           break;
-
         // 필요하다면 다음 actions 작성은 여기에
       }
     }
@@ -101,11 +100,6 @@ const App = () => {
 
   return (
     <>
-      {showCamera && backCamera ? (
-  // showCamera와 backCamera가 모두 true일 때만 Camera 컴포넌트를 렌더링합니다.
-  <Camera style={{flex: 1}} device={backCamera} isActive={true} />
-) : (
-
       <WebView
         onLoadEnd={handleEndLoading}
         onMessage={handleOnMessage}
@@ -115,7 +109,7 @@ const App = () => {
         source={{uri: 'https://j9b208.p.ssafy.io/'}}
         // 웹뷰에서는 로컬 주소가 안됨 -> 어랏 되네..? -> apk 내보낼때만 프론트 배포 주소 쓰자
         // API 요청 instance도 같이 바꿔줘야 함
-      />)}
+      />
     </>
   );
 };
