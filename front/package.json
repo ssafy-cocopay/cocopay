@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.2",
     "react-native-svg": "^13.14.0",
+    "react-native-touch-id": "^4.4.1",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "react-tsparticles": "^2.12.2",
@@ -70,5 +71,6 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "3.0.3"
-  }
+  },
+  "proxy": "https://j9b208.p.ssafy.io"
 }

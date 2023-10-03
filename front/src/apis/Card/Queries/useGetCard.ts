@@ -1,6 +1,6 @@
 // Queries는 Get요청
 
-import { getTotalAmountMonth, getCardList } from '@/apis/Card/cardAPI';
+import { getTotalAmountMonth, getCardList, getUserCard } from '@/apis/Card/cardAPI';
 // import { Card, TotalAmountMonth } from '@/types/card'; // 타입 api 호출 맞춰 지정해주세요
 import { useQuery } from '@tanstack/react-query';
 
@@ -26,5 +26,12 @@ const useGetCardList = () => {
     )
     return CardList;
   }
+
+  const useGetUserCard = () => {
+    const { data: UserCard } = useQuery(['UserCard'], () =>
+    getUserCard()
+    )
+    return UserCard;
+  }
   
-  export { useGetTotalAmountMonth, useGetCardList };
+  export { useGetTotalAmountMonth, useGetCardList, useGetUserCard };
