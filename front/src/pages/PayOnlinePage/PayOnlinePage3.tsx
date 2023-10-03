@@ -55,12 +55,13 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
   const [IsOpen, setIsOpen] = useState<boolean>(false);
   const [selectedModalCardIndex, setSelectedModalCardIndex] = useState<number>(100);
   const PayOnlineCardLists = useRecoilValue(PayOnlineCardList)
-  const SelectedCard : Selected = useRecoilValue(ChangeCardAtom)
+  // const SelectedCard : Selected = useRecoilValue(ChangeCardAtom)
   const PayOnlineComplete = usePostPayOnlineComplete()
+  const [changeCard, setChangeCard] = useRecoilState(ChangeCardAtom)
 
   const handlePayOnlineComplete = () => {
     const PayData = {
-        "cardId": SelectedCard.cardId,
+        "cardId": changeCard.cardId,
         "orderPrice":38700,
         "transactionType":"일시불"
       }
@@ -75,6 +76,10 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
   const handleModalCardClick = (index: number) => {
     setSelectedModalCardIndex(index);
   };
+
+  const handleChangeCard = (index : number) => {
+    setChangeCard(PayOnlineCardLists[index])
+  }
 
   return (
     <Background
@@ -137,7 +142,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
           YOUR PICK!
         </Text>
         <Image
-          src={SelectedCard && SelectedCard.cardImage}
+          src={changeCard && changeCard.cardImage}
           height={152}
           $margin="0 0 20px 0"
           $unit="px"
@@ -156,7 +161,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
         fontWeight="bold"
         color="black1"
         >
-          {SelectedCard && SelectedCard.cardName}
+          {changeCard && changeCard.cardName}
         </Text>
         <Text
         size="body2"
@@ -177,7 +182,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
         fontWeight="bold"
         color="blue"
         >
-          {SelectedCard && SelectedCard.discountRate}% {SelectedCard && SelectedCard.discountType}
+          {changeCard && changeCard.discountRate}% {changeCard && changeCard.discountType}
         </Text>
         <Text
         size="body2"
@@ -196,7 +201,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
               marginTop: "8px"
             }}
           >
-            {SelectedCard && numberToAmount(SelectedCard.finalPrice)}원 결제하기
+            {changeCard && numberToAmount(changeCard.finalPrice)}원 결제하기
           </Button>
           <Button
           $border="none"
@@ -231,6 +236,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
           <Button 
             onClick={() => {
               onNextPage();
+              handleChangeCard(selectedModalCardIndex);
               setIsOpen(false);
             }}
             option={selectedModalCardIndex !== null ? "activated" : "deActivated"}
