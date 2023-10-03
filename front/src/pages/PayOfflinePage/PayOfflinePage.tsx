@@ -12,6 +12,7 @@ import Dot from "@/assets/images/icon-dot-gray.png";
 import CardImg1 from "@/assets/images/img-cardimg1.png";
 import CardImg2 from "@/assets/images/img-cardimg2.png";
 import CardImg3 from "@/assets/images/img-cardimg3.png";
+import styled, { keyframes } from "styled-components";
 
 function PayOfflinePage() {
   const CardImgList = [CardImg1, CardImg2, CardImg3];
@@ -25,6 +26,42 @@ function PayOfflinePage() {
   // const navigatePage = (path: string) => {
   //   navigate(path);
 
+
+  const rotateLeft = keyframes`
+    0% {
+    opacity: 1;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(0deg) translateZ(0px);
+  }
+
+  50% {
+    opacity: 0;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(-180deg) translateZ(220px);
+  }
+
+  50.1% {
+    opacity: 0;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(180deg) translateZ(220px);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(0deg) translateZ(0px);
+  }`;
+
+  const LeftRotate = styled(Image)`
+  position: absolute;
+  top: 170px;
+  bottom: 300px;
+  /* left: 40%; */
+  /* transform: translateY(80%); */
+  animation: ${rotateLeft} 3s linear infinite;
+  transform-origin: center;
+  `;
+
   return (
     <Background
       $colormode="gradient"
@@ -33,6 +70,7 @@ function PayOfflinePage() {
       }}
     >
       <Container $left={true} $paddingTop="36px" height="auto">
+      
         <Container
           $paddingTop="63px"
           $backgroundColor="white"
@@ -41,19 +79,22 @@ function PayOfflinePage() {
           $padding="36px"
           // $border={true}
         >
-          <Text size="body1" fontWeight="bold">
+          <Text size="body1" fontWeight="bold" $margin="0 0 250px 0">
             최적의 결제 카드 파악 중...
-          </Text>
+          </Text> 
+          <Wrapper $flexDirection="row">
+        {CardImgList.map((card, idx) => {
+           const animationDelay = `${idx * 0.8}s`;
+           const zIndex = CardImgList.length - idx;
+          return <LeftRotate src={card} key={idx} width={7} style={{animationDelay,zIndex}} />;
+        })}
+      </Wrapper>
           {/* <Text size="body1" fontWeight="bold">
             최적의 결제 카드 파악 중...
           </Text> */}
           <br />
-
-          <Wrapper $flexDirection="row">
-            {CardImgList.map((card, idx) => {
-              return <Image src={card} key={idx} width={7} />;
-            })}
-          </Wrapper>
+          
+          
           <br />
           <Container style={{ justifyContent: "flex-end" }} height="auto">
             <Wrapper

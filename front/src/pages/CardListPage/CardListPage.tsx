@@ -128,7 +128,7 @@ const CardListPage = () => {
       {isModalOpen && (
         <ModalBg onClick={() => toggleModal(deleteCardId)}>
           <Modal toggleModal={() => toggleModal(deleteCardId)}>
-            <Wrapper $padding="10px" style={{ paddingTop: "30px" }}>
+            <Wrapper style={{ paddingTop: "20px" }}>
               <Wrapper>
                 <Text
                   size="body1"
@@ -155,7 +155,7 @@ const CardListPage = () => {
                   color="gray2"
                   $width="9rem"
                   option="deActivated"
-                  style={{ margin: 10 }}
+                  style={{ margin: "10px", padding: "10px"}}
                   onClick={() => toggleModal(deleteCardId)}
                 >
                   취소
@@ -163,7 +163,7 @@ const CardListPage = () => {
                 <Button
                   $width="9rem"
                   option="danger"
-                  style={{ margin: 10 }}
+                  style={{ margin: "10px", padding: "10px" }}
                   onClick={() => deleteCard(deleteCardId)}
                 >
                   삭제

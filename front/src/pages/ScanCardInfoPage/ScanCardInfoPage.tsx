@@ -11,6 +11,7 @@ import CardImg from "@/assets/images/icon-cardinfo.png";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { usePostCard } from "@/apis/Card/Mutations/useAddCardList";
 import { useRecoilState } from "recoil";
+import Back from "@/components/atoms/Back/Back";
 import { CardNumberAtom, CvcAtom, ValidDateAtom, CardPasswordAtom, CardIdAtom } from "@/states/CardInfoAtoms";
 import theme from "@/styles/theme";
 
@@ -111,7 +112,10 @@ interface FormValue {
 
   return (
     <Background>
-      <Container $border={false} $paddingTop="70px">
+      <Container $left={true} $paddingTop="36px">
+        <Back>뒤로가기</Back>
+        <Container $border={false} $paddingTop="70px">
+        
         <Container $padding="none">
           <Text size="body1" fontWeight="bold">카드 정보</Text>
           <Container $padding="none" $left={true}>
@@ -148,6 +152,7 @@ interface FormValue {
               {/*TODO:카드등록 버튼 end로 바꾸기 */}
               카드 등록
             </Button>
+          </Container>
           </Container>
         </Container>
       </Container>
