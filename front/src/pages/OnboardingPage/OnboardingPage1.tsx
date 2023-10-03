@@ -39,7 +39,7 @@ function OnboardingPage1(props: OnboardingPage1Props) {
             본격적으로 코코페이를
           </Text>
           <Text size="subtitle2" fontWeight="bold" color="white">
-            이용해 볼까요?
+            이용해볼까요?
           </Text>
         </Wrapper>
         {/* TODO: 이미지 크기 변하지 않게 설정하기 */}

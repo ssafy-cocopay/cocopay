@@ -41,8 +41,8 @@ function OnboardingPage5() {
     >
       <Container $border={false} $paddingTop="100px">
         <Wrapper $alignItems="start">
-          <OnboardingText>모든 카드들의</OnboardingText>
-          <OnboardingText>할인율과 실적을 분석하여</OnboardingText>
+          {/* <OnboardingText>모든 카드들의</OnboardingText>
+          <OnboardingText>할인율과 실적을 분석하여</OnboardingText> */}
           <OnboardingText>소비처별 최적의 카드를</OnboardingText>
           <OnboardingText>추천해주는 코코페이!</OnboardingText>
           <br />
