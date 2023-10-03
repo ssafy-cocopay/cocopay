@@ -6,10 +6,11 @@
  */
 import React, {useRef, useState, useEffect} from 'react';
 import WebView from 'react-native-webview';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {PermissionsAndroid} from 'react-native';
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-
+import {Camera, useCameraDevices} from 'react-native-vision-camera';
+import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
+import {RNHoleView} from 'react-native-hole-view';
 import {
   WebViewErrorEvent,
   WebViewNavigationEvent,
@@ -101,10 +102,10 @@ const App = () => {
 
   return (
     <>
-      {showCamera &&
+      {/* {showCamera &&
         backCamera && ( // backCamera가 존재할 때만 Camera 컴포넌트를 렌더링합니다.
           <Camera style={{flex: 1}} device={backCamera} isActive={true} />
-        )}
+        )} */}
       <WebView
         onLoadEnd={handleEndLoading}
         onMessage={handleOnMessage}
