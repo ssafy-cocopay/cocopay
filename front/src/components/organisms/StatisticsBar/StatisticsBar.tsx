@@ -4,28 +4,47 @@ import {
   BarRateWrapper,
   BarRate,
 } from "../StatisticsBar/StatisticsBar.styles";
-import { CATEGORY_COLORS, CategoryData } from "@/types/category";
+import {
+  CATEGORY_COLORS,
+  CategoryData,
+  PurchasedCategoryData,
+} from "@/types/category";
 
 interface StatisticsContentsProps {
-  contents: CategoryData[];
+  contents: CategoryData[] | PurchasedCategoryData[];
 }
 
 const StatisticsBar = ({ contents }: StatisticsContentsProps) => {
   const tempAmounts = contents;
+  console.log(tempAmounts, "왓니");
   return (
     <>
       <StatisticsBarWrapper>
         <BarRateWrapper>
-          {tempAmounts.map((category, index) => {
-            return (
-              <BarRate
-                key={index}
-                style={{
-                  flexGrow: category.rate,
-                  backgroundColor: CATEGORY_COLORS[category.category],
-                }}
-              ></BarRate>
-            );
+          {tempAmounts.map((category, index: number) => {
+            if ("discountPercent" in category) {
+              // category는 CategoryData 타입
+              return (
+                <BarRate
+                  key={index}
+                  style={{
+                    flexGrow: parseFloat(category.discountPercent.toString()),
+                    backgroundColor: CATEGORY_COLORS[category.category],
+                  }}
+                ></BarRate>
+              );
+            } else {
+              // category는 PurchasedCategoryData 타입
+              return (
+                <BarRate
+                  key={index}
+                  style={{
+                    flexGrow: parseFloat(category.pricePercent.toString()),
+                    backgroundColor: CATEGORY_COLORS[category.category],
+                  }}
+                ></BarRate>
+              );
+            }
           })}
         </BarRateWrapper>
       </StatisticsBarWrapper>

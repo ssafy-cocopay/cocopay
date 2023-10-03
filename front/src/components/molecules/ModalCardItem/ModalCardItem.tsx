@@ -5,52 +5,45 @@ import cardImg1 from "@/assets/images/img-card1.png";
 import cardImg2 from "@/assets/images/img-card2.png";
 import cardImg3 from "@/assets/images/img-card3.png";
 import korImg from "@/assets/images/img-kor.png";
+import imgMaster from "@/assets/images/img-master.png"
+import imgVisa from "@/assets/images/img-visa.png"
 import iconHamburgerGrey from "@/assets/images/icon-hamburger-grey.png";
 import { CardItemWrapper, CardListBar, BenefitBtn } from "./ModalCardItem.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import numberToAmount from "@/utils/NumToAmount";
 
 type ModalCardItemProps = {
   onClick?: () => void;
   style?: React.CSSProperties;
+  card: Selected
 };
 
-const ModalCardItem = ({ onClick, style, ...otherProps }: ModalCardItemProps) => {
-  const CardInfo = [
-    {
-      cardImg: cardImg1,
-      cardName: "위버스 신한카드 체크(BTS)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 30,
-    },
-    {
-      cardImg: cardImg2,
-      cardName: "신한카드 플리(산리오캐릭터즈)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "신용",
-      master: true,
-      percennt: 50,
-    },
-    {
-      cardImg: cardImg3,
-      cardName: "신한카드 Way 체크 (최고심)",
-      serialNumber: "2128-46**-****-3510",
-      cardType: "체크",
-      master: true,
-      percennt: 10,
-    },
-  ];
+type Selected = {
+  cardId: number;
+  cardImage: string;
+  cardName: string;
+  cardOrder: number;
+  cardType: string;
+  curPerLevel: number;
+  discountRate: number;
+  discountType: string;
+  discounted: number;
+  finalPrice: number;
+  graphRate: number;
+  master: boolean;
+  pastPerfornamce: boolean;
+  remainingAmt: number;
+  serialNumber: string;
+  visa: boolean;
+}
+
+const ModalCardItem = ({ onClick, style, card, ...otherProps }: ModalCardItemProps) => {
 
   return (
     <div onClick={onClick} style={style}>
-      {/* TODO: 서영이가 위에 만들어놓은 더미로 맵 뿌리기 ! */}
-      {/* {CardInfo.map((card,idx) => {
-        return
-      })} */}
-      <CardItemWrapper $margin="36px 0">
+      <CardItemWrapper $margin="24px 0" style={{height: "64px", width:"100%"}}>
         <Image 
-        src={cardImg1} 
+        src={card && card.cardImage} 
         width={64} 
         height={40} 
         $unit="px"
@@ -60,18 +53,17 @@ const ModalCardItem = ({ onClick, style, ...otherProps }: ModalCardItemProps) =>
         }}
         >
         </Image>
-        {/* TODO: 이부분 asset에 이미지 저장해놓고 api값이랑 맞춰서 국내인지 master 인지 뿌리는건가요? 확인부탁 */}
         <Image
-          src={korImg}
+          src={card && card.master ? imgMaster : card.visa ? imgVisa : korImg}
           width={24}
           height={16}
           $unit="px"
-          $margin="4px 4px 0 0"
+          $margin="6px 4px 0 0"
         ></Image>
-        <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around">
+        <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around" width="43%">
           <CardItemWrapper>
             <Text size="small2" fontWeight="regular" color="black1">
-              위버스 신한카드 체크(BTS)
+            {card && card.cardName}
             </Text>
           </CardItemWrapper>
           <CardItemWrapper>
@@ -81,42 +73,54 @@ const ModalCardItem = ({ onClick, style, ...otherProps }: ModalCardItemProps) =>
               color="grey1"
               $margin="0 4px 0 0"
             >
-              체크
+              {card && card.cardType}
             </Text>
             <Text size="small3" fontWeight="light" color="grey1">
-              3571-89**-****-4485
+              {card && card.serialNumber}
             </Text>
           </CardItemWrapper>
           <div style={{position: 'relative', width: '90%'}}>
             <CardListBar
-            width="80%"
+            width="100%"
             $bgc="grey4"
             >
             </CardListBar>
             <CardListBar
-            width="30%"
+            width={`${card && card.graphRate}%`}
             $bgc="blue"
             $isAbsolute={true}
             >
             </CardListBar>
           </div>
         </Wrapper>
-        <CardItemWrapper $alignItems="center">
+        <CardItemWrapper $alignItems="center" style={{width:"31%", justifyContent:"end"}}>
           <BenefitBtn>
-            <Text
-            size="small3"
-            fontWeight="bold"
-            color="blue"
-            >
-                200원
-            </Text>
-            <Text
-            size="small3"
-            fontWeight="light"
-            color="blue"
-            >
-                페이백
-            </Text>
+            {card.discounted === 0 ? (
+              <Text
+                size="small3"
+                fontWeight="bold"
+                color="blue"
+              >
+                혜택 없음
+              </Text>
+            ) : (
+              <>
+                <Text
+                  size="small3"
+                  fontWeight="bold"
+                  color="blue"
+                >
+                  {card && numberToAmount(card.discounted)}원
+                </Text>
+                <Text
+                  size="small3"
+                  fontWeight="light"
+                  color="blue"
+                >
+                  {card && card.discountType}
+                </Text>
+              </>
+            )}
           </BenefitBtn>
         </CardItemWrapper>
       </CardItemWrapper>

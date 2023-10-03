@@ -30,4 +30,9 @@ public class BenefitKeyService {
         return benefitKeyRepository.findById(String.valueOf(cardUuid));
     }
 
+    //혜택 정보 삭제
+    public void deleteByCardUuid(int cardUuid) {
+        benefitKeyRepository.deleteById(String.valueOf(cardUuid));
+    }
+
 }

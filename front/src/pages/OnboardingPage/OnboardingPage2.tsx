@@ -16,9 +16,9 @@ const moveRight = keyframes`
 const AnimatedImage = styled(Image)`
   position: absolute;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: ${moveRight} 5s forwards;
+  left: 0%;
+  transform: translateX(-70%);
+  animation: ${moveRight} 20s forwards;
 `;
 
 type OnboardingPage2Props = {
@@ -33,9 +33,7 @@ function OnboardnigPage2(props: OnboardingPage2Props) {
   };
 
   return (
-    <Container
-      $overflow="visible"
-    >
+    <Container $overflow="visible">
       <Container $padding="20px" onClick={handlePageTransition}>
         <Wrapper $alignItems="start" style={{ paddingTop: "100px" }}>
           <Text size="subtitle2" fontWeight="bold">
@@ -48,7 +46,7 @@ function OnboardnigPage2(props: OnboardingPage2Props) {
       </Container>
       <br />
       {/* TODO:크기 조절해서 맞추기 */}
-      <AnimatedImage onClick={handlePageTransition} src={cards} width={30} />
+      <AnimatedImage onClick={handlePageTransition} src={cards} width={130} />
     </Container>
   );
 }

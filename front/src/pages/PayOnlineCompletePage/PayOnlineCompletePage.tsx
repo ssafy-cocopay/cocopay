@@ -34,14 +34,15 @@ const PayOnlineCompletePage = () => {
           $borderRadius="38px"
           $padding="36px"
         >
-          <Text size="body1" fontWeight="bold">
+          <Text size="subtitle1" fontWeight="bold">
             결제 완료!
           </Text>
-          <Text size="body2" fontWeight="medium">
+          <br />
+          <Text size="subtitle2" fontWeight="medium">
             웹페이지로 이동하면
           </Text>
 
-          <Text size="body2" fontWeight="medium">
+          <Text size="subtitle2" fontWeight="medium">
             결제가 완료돼요
           </Text>
           <br />
@@ -54,6 +55,7 @@ const PayOnlineCompletePage = () => {
             width={88}
             $unit="%"
             style={{ marginLeft: "auto", marginTop: "70%" }}
+            onClick={() => navigatePage(PATH.MAIN)}
           ></Image>
         </Container>
       </Container>
