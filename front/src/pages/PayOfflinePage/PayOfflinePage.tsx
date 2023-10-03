@@ -9,22 +9,12 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Penguin from "@/assets/images/img-penguin-thinking.png";
 import Dot from "@/assets/images/icon-dot-gray.png";
-import CardImg1 from "@/assets/images/img-cardimg1.png";
-import CardImg2 from "@/assets/images/img-cardimg2.png";
-import CardImg3 from "@/assets/images/img-cardimg3.png";
+import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
 
 function PayOfflinePage() {
-  const CardImgList = [CardImg1, CardImg2, CardImg3];
-
-  // const handlePageTransition = () => {
-  //   // 페이지 이동 로직 추가
-  //   onNextPage(); // 다음 페이지로 이동
-  // };
-  // const navigate = useNavigate();
-
-  // const navigatePage = (path: string) => {
-  //   navigate(path);
-
+  const CardList = useGetCardList();
+  console.log(CardList, "나의 카드들"); //TODO: 카드리스트 있는지 확인
+  const firstThreeCards = CardList.slice(0, 3);
   return (
     <Background
       $colormode="gradient"
@@ -50,8 +40,8 @@ function PayOfflinePage() {
           <br />
 
           <Wrapper $flexDirection="row">
-            {CardImgList.map((card, idx) => {
-              return <Image src={card} key={idx} width={7} />;
+            {firstThreeCards.map((card: any, idx: number) => {
+              return <Image src={card.cardImage} key={idx} width={7} />;
             })}
           </Wrapper>
           <br />

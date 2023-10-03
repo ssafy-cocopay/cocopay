@@ -35,11 +35,11 @@ function OnboardnigPage2(props: OnboardingPage2Props) {
   return (
     <Container $overflow="visible">
       <Container $padding="20px" onClick={handlePageTransition}>
-        <Wrapper $alignItems="start" style={{ paddingTop: "85px" }}>
-          <Text size="subtitle2" fontWeight="bold">
+        <Wrapper $alignItems="start" style={{ paddingTop: "75px" }}>
+          <Text size="subtitle1" fontWeight="bold">
             지갑속의
           </Text>
-          <Text size="subtitle2" fontWeight="bold">
+          <Text size="subtitle1" fontWeight="bold">
             수많은 카드들..
           </Text>
           <br />
