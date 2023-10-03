@@ -1,12 +1,4 @@
 {
   "name": "app",
-  "plugins": [
-    [
-      "react-native-vision-camera",
-      {
-        "cameraPermissionText": "COCOPAY needs access to your Camera."
-      }
-    ]
-  ],
   "displayName": "app"
 }
