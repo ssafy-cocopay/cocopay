@@ -12,7 +12,7 @@ const PayOnlineCompletePage = () => {
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
-    navigate(path);
+      navigate(path);
   };
 
   return (
@@ -54,6 +54,7 @@ const PayOnlineCompletePage = () => {
             width={88}
             $unit="%"
             style={{ marginLeft: "auto", marginTop: "70%" }}
+            onClick={() => navigatePage(PATH.MAIN)}
           ></Image>
         </Container>
       </Container>

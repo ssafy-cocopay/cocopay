@@ -17,6 +17,8 @@ import { CardHistoryLists } from "@/types/card";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { usePostCardPurchased } from "@/apis/Card/Mutations/useAddCardList";
+import { useRecoilValue } from "recoil";
+import { CardDetailIdAtom } from "@/states/CardDetailAtoms";
 
 const CardDetailPurchasedPage = () => {
     const navigate = useNavigate();
@@ -28,6 +30,7 @@ const CardDetailPurchasedPage = () => {
     const CardPurchased = usePostCardPurchased()
     const date = new Date();
     const [month, setMonth] = useState(date.getMonth() + 1)
+    const cardid = useRecoilValue(CardDetailIdAtom)
 
     const handleMonthMinus = () => {
         setMonth((prev) => prev - 1);
@@ -45,7 +48,7 @@ const CardDetailPurchasedPage = () => {
     useEffect(() => {
         const handleCardPurchased = () => {
         const payload = {
-            cardId: 72,
+            cardId: cardid,
             month: month.toString()
         };
         CardPurchased.mutate(payload, {

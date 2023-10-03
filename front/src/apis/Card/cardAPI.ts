@@ -1,6 +1,6 @@
 // apis/User/UserAPI.ts
 import { instance } from "@/apis/instance";
-import { CardInfo, PostCardPurchasedPayload, PayOnline } from "@/types/card";
+import { CardInfo, PostCardPurchasedPayload, PayOnline, PayOnlineComplete } from "@/types/card";
 
 // 카드 정보를 업데이트할 일은 없으나 다른 put 요청이 있다면~
 // 필요없으면 이 부분 지워주삼
@@ -67,6 +67,10 @@ const postPayOnline = async (payOnline: PayOnline) => {
   return response.data; // 응답 데이터를 반환
 };
 
+const postPayOnlineComplete = async (PayOnlineComplete: PayOnlineComplete) => {
+  await instance.post("/pay", PayOnlineComplete);
+}
+
 export {
   getTotalAmountMonth,
   getMainCards,
@@ -76,4 +80,5 @@ export {
   postCard,
   postCardPurchased,
   postPayOnline,
+  postPayOnlineComplete
 };
