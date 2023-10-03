@@ -8,6 +8,8 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { OnboardingText } from "@/pages/OnboardingPage/OnboardingPage.styles";
 import styled, { keyframes } from "styled-components";
 import handcard from "@/assets/images/img-hancard.png";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "@/states/UserInfoAtoms";
 
 // onNextPage의 타입을 명시적으로 정의
 type OnboardingPage4Props = {
@@ -44,13 +46,13 @@ const AnimatedImage = styled(Image)`
 
 function OnboardingPage4(props: OnboardingPage4Props) {
   const { onNextPage } = props;
+  const userInfo = useRecoilValue(userInfoState);
+  console.log(userInfo);
   const handlePageTransition = () => {
     // 페이지 이동 로직 추가
     onNextPage(); // 다음 페이지로 이동
   };
 
-  //TODO: username API로부터 받기
-  const Username = { name: "성현" };
   return (
     // TODO: 반응형 크기 맞추기
     <Container
@@ -65,22 +67,20 @@ function OnboardingPage4(props: OnboardingPage4Props) {
       <Container $paddingTop="100px">
         <Wrapper $alignItems="start">
           <OnboardingText>이제부터는 코코가</OnboardingText>
-          <OnboardingText>{Username.name}님의</OnboardingText>
           <OnboardingText>슬기로운 소비생활을</OnboardingText>
           <OnboardingText>도와드릴게요!</OnboardingText>
         </Wrapper>
-        <AnimatedImage
-            src={handcard}
-            width={17} />
+        <AnimatedImage src={handcard} width={17} />
         <Container>
           <Image
-              src={Peng}
-              width={27}
-          style={{
-            position:"absolute",
-            left: "40%",
-            bottom: "7%"
-          }}/>
+            src={Peng}
+            width={27}
+            style={{
+              position: "absolute",
+              left: "40%",
+              bottom: "7%",
+            }}
+          />
         </Container>
       </Container>
     </Container>
