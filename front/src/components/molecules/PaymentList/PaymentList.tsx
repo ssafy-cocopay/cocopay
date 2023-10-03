@@ -44,7 +44,7 @@ const PaymentList = ({ CardHistory }: paymentListProps) => {
             {formatDate(isoString)}
           </Text>
           {CardHistory.discountAmount !== 0 && <Text size="small3" fontWeight="light" color="blue">
-            {numberToAmount(CardHistory.discountAmount)}원 {CardHistory.discountType === "페이백" ? "페이백 예정" : "현장할인"}
+            {numberToAmount(CardHistory.discountAmount)}원 {CardHistory.discountType}
           </Text>}
         </Wrapper>
       </Box>
