@@ -15,6 +15,15 @@ interface TotalAmountMonth {
   totalDiscountByMonth: number;
 }
 
+interface OfflinePay {
+  cardImage: string;
+  cardName: string;
+  discounted: number;
+  remainingAmt: number;
+  graphRate: string;
+  nextPerLevel: number;
+}
+
 interface CardDetail {
   userCardId: number;
   cardName: string;
@@ -70,6 +79,12 @@ interface Data {
   cardHistoryList: CardHistoryLists[];
 }
 
+interface PayOnlineComplete {
+    cardId : number;
+    orderPrice : number;
+    transactionType : string;
+}
+
 export type {
   Card,
   TotalAmountMonth,
@@ -80,4 +95,6 @@ export type {
   CardAmount,
   CardHistoryLists,
   MainCard,
+  PayOnlineComplete,
+  OfflinePay
 };

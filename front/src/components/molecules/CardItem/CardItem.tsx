@@ -47,36 +47,62 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
   }, [resetSwipe]);
 
   // 카드 스와이핑 하는 코드
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    onSwipeStart(); // 외부에서 전달받은 함수를 호출
-    setIsDragging(true); // 드래그 시작을 알리기 위해 isDragging을 true로 설정
-    setStartX(e.clientX - x);  // 시작 위치 저장(startX를 현재 마우스 위치에서 카드의 위치 x를 뺀 값으로 설정)
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    onSwipeStart();
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX - x);
   };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return; // isDragging이 false면 함수를 종료
-    const newX = e.clientX - startX; // newX를 계산하여 현재 마우스 위치에서 시작점 startX를 뺀 값으로 설정
-    if (newX < 0 && newX > -window.innerWidth / 16) {  // 4분의 1 제한
-      setX(newX); // newX가 0보다 작고 화면 너비의 1/16보다 큰 값이면, x를 newX로 업데이트하여 카드의 위치를 변경
+  
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (!isDragging) return;
+    const newX = e.touches[0].clientX - startX;
+    if (newX < 0 && newX > -window.innerWidth / 16) {
+      setX(newX);
     }
   };
-
-  const handleMouseUp = () => {
-    setIsDragging(false); // 드래그 종료를 알리기 위해 isDragging을 false로 설정
-    if (x < -window.innerWidth / 32) {  // 8분의 1 지점에서 놓으면 완전히 이동
+  
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIsDragging(false);
+    if (x < -window.innerWidth / 32) {
       setX(-window.innerWidth / 16);
     } else {
-      setX(0);  // 원래 위치로 복귀
+      setX(0);
     }
   };
+  
+
+  // const handleTouchStart = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   onSwipeStart(); // 외부에서 전달받은 함수를 호출
+  //   setIsDragging(true); // 드래그 시작을 알리기 위해 isDragging을 true로 설정
+  //   setStartX(e.clientX - x);  // 시작 위치 저장(startX를 현재 마우스 위치에서 카드의 위치 x를 뺀 값으로 설정)
+  // };
+
+  // const handleTouchMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   if (!isDragging) return; // isDragging이 false면 함수를 종료
+  //   const newX = e.clientX - startX; // newX를 계산하여 현재 마우스 위치에서 시작점 startX를 뺀 값으로 설정
+  //   if (newX < 0 && newX > -window.innerWidth / 16) {  // 4분의 1 제한
+  //     setX(newX); // newX가 0보다 작고 화면 너비의 1/16보다 큰 값이면, x를 newX로 업데이트하여 카드의 위치를 변경
+  //   }
+  // };
+
+  // const handleTouchEnd = () => {
+  //   setIsDragging(false); // 드래그 종료를 알리기 위해 isDragging을 false로 설정
+  //   if (x < -window.innerWidth / 32) {  // 8분의 1 지점에서 놓으면 완전히 이동
+  //     setX(-window.innerWidth / 16);
+  //   } else {
+  //     setX(0);  // 원래 위치로 복귀
+  //   }
+  // };
 
 
   return (
     <div
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       style={{
           position: "relative",
           transform: `translateX(${x}px)`,
@@ -96,19 +122,19 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
         return
       })} */}
       <CardItemWrapper $margin="12px 24px">
-        <Image src={card.cardImage} width={90} height={56} $unit="px"></Image>
+        <Image src={card && card.cardImage} width={90} height={56} $unit="px"></Image>
         {/* TODO: 이부분 asset에 이미지 저장해놓고 api값이랑 맞춰서 국내인지 master 인지 뿌리는건가요? 확인부탁 */}
         <Image
-          src={card.master ? imgMaster : card.visa ? imgVisa : korImg}
+          src={card && card.master ? imgMaster : card.visa ? imgVisa : korImg}
           width={24}
           height={16}
           $unit="px"
           style={{ margin: "6px 0 8px 12px" }}
         ></Image>
-        <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around" >
+        <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around" width="48%" >
           <CardItemWrapper>
             <Text size="small2" fontWeight="regular" color="black1">
-              {card.cardName}
+              {card && card.cardName}
             </Text>
           </CardItemWrapper>
           <CardItemWrapper>
@@ -118,10 +144,10 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
               color="grey1"
               $margin="0 4px 0 0"
             >
-              {card.cardType}
+              {card && card.cardType}
             </Text>
             <Text size="small3" fontWeight="light" color="grey1">
-              {card.serialNumber}
+              {card && card.serialNumber}
             </Text>
           </CardItemWrapper>
           <div style={{position: 'relative', width: '100%'}}>
@@ -131,14 +157,14 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
             >
             </CardListBar>
             <CardListBar
-            width={`${card.graphRate}%`}
+            width={`${card && card.graphRate}%`}
             $bgc="blue"
             $isAbsolute={true}
             >
             </CardListBar>
           </div>
         </Wrapper>
-        <CardItemWrapper $alignItems="center">
+        <CardItemWrapper $alignItems="center" $margin='0 0 0 24px'>
           <Image
             src={iconHamburgerGrey}
             width={16}
@@ -157,7 +183,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
           width: "17%",
           height: "100%",  // 버튼의 높이를 부모 div와 동일하게 설정
           position: "absolute",
-          right: "-17%",
+          right: 0,
           border: "none",
           backgroundColor: theme.color.danger,
           color: "white",
