@@ -20,8 +20,8 @@ import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails";
 import { usePostCardPurchased } from "@/apis/Card/Mutations/useAddCardList";
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from "recoil";
-import { CardDetailAtom } from "@/states/CardDetailAtoms";
-import { CardAmount, CardHistoryLists } from "@/types/card";
+import { CardDetailAtom, CardDetailIdAtom } from "@/states/CardDetailAtoms";
+import { CardAmount, CardHistoryLists, CardDetail } from '@/types/card';
 import numberToAmount from "@/utils/NumToAmount";
 
 
@@ -45,11 +45,12 @@ const CardDetailPage = () => {
       discountAmount: 0,
       cardHistoryList: []
   });
-  const cardId = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
-  const CardDetail = useGetCardDetail(cardId);
+  const cardid = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
+  const CardDetail = useGetCardDetail(cardid);
   const CardPurchased = usePostCardPurchased()
   const date = new Date();
   const [month, setMonth] = useState(date.getMonth() + 1)
+  const [cardDetailId, setCardDetailId] = useRecoilState(CardDetailIdAtom)
   console.log(CardDetail)
 
   const handleMonthMinus = () => {
@@ -67,8 +68,9 @@ const CardDetailPage = () => {
   // 결제내역 가져오기
   useEffect(() => {
     const handleCardPurchased = () => {
+      setCardDetailId(cardid)
       const payload = {
-          cardId: 72,
+          cardId: cardid,
           month: month.toString()
       };
       CardPurchased.mutate(payload, {
@@ -127,30 +129,37 @@ const CardDetailPage = () => {
           size="body2"
           fontWeight="bold"
           color="black1"
-          style={{ textAlign: "center" }}
+          style={{ 
+            textAlign: "center", 
+            marginBottom: "44px"
+          }}
         >
           {CardDetail.cardName}
         </Text>
-        <WhiteRoundedBox
-          height="144px"
-          $margin="44px 0 16px 0"
-          $padding="20px 28px"
-          $borderRadius="20px"
-          $boxShadow="shadow1"
-        >
-          <Text size="body2" fontWeight="regular" color="black1">
-            다음 실적까지 남은 금액
-          </Text>
-          <Text
-            size="subtitle1"
-            fontWeight="bold"
-            color="black1"
-            $margin="4px 0 16px 0"
-          >
-            {numberToAmount(CardDetail.price)}원
-          </Text>
-          {CardDetail && <Performance Performance={CardDetail} />}
-        </WhiteRoundedBox>
+        {
+          (CardDetail.level !== 0 || CardDetail.nextLevel !== 0) && (
+            <WhiteRoundedBox
+              height="144px"
+              $margin="0 0 16px 0"
+              $padding="20px 28px"
+              $borderRadius="20px"
+              $boxShadow="shadow1"
+            >
+              <Text size="body2" fontWeight="regular" color="black1">
+                다음 실적까지 남은 금액
+              </Text>
+              <Text
+                size="subtitle1"
+                fontWeight="bold"
+                color="black1"
+                $margin="4px 0 16px 0"
+              >
+                {numberToAmount(CardDetail.price)}원
+              </Text>
+              {CardDetail && <Performance data={CardDetail} dataType="cardDetail" />}
+            </WhiteRoundedBox>
+          )
+        }
         <WhiteRoundedBox
           height="auto"
           $padding="28px"
@@ -172,7 +181,7 @@ const CardDetailPage = () => {
               <PaymentList key={index} CardHistory={item} />
           ))}
           <Button
-            onClick={() => navigatePage(PATH.CARD_DETAIL_PURCHASED)}
+            onClick={() => navigatePage(`${PATH.CARD_DETAIL_PURCHASED.replace(":cardId", cardid.toString())}`)}
             option="activated"
             size="medium"
             style={{

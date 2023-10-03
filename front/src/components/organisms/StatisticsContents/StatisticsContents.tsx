@@ -1,5 +1,5 @@
 import React from "react";
-import { CategoryData } from "@/types/category";
+import { CategoryData, PurchasedCategoryData } from "@/types/category";
 import { Image } from "@/components/atoms/Image/Image";
 import { Text } from "@/components/atoms/Text/Text.styles";
 
@@ -35,14 +35,27 @@ const categoryIcons = {
 };
 
 interface StatisticsContentsProps {
-  contents: CategoryData[];
+  contents: CategoryData[] | PurchasedCategoryData[];
 }
 
 const StatisticsContents = ({ contents }: StatisticsContentsProps) => {
-  const tempAmounts = contents;
+  const Amounts = contents;
+  console.log(Amounts, "Amounts");
   return (
     <Wrapper $alignItems="start" style={{ marginBottom: "100px" }}>
-      {tempAmounts.map((category, index) => {
+      {Amounts.map((category, index: number) => {
+        const discountAmount =
+          "discountAmount" in category
+            ? category.discountAmount
+            : category.price;
+
+        const discountPercent =
+          "discountPercent" in category
+            ? category.discountPercent
+            : category.pricePercent;
+
+        const categoryName = "category" in category;
+
         return (
           <React.Fragment key={index}>
             <FlexDiv
@@ -63,11 +76,11 @@ const StatisticsContents = ({ contents }: StatisticsContentsProps) => {
                   {category.category}
                 </Text>
                 <Text size="body2" $marginLeft="10px" color="grey2">
-                  {category.rate}%
+                  {discountPercent}%
                 </Text>
               </FlexDiv>
               <Text size="body1" $marginLeft="10px">
-                {numberToAmount(category.price)}원
+                {numberToAmount(discountAmount)}원
               </Text>
             </FlexDiv>
           </React.Fragment>

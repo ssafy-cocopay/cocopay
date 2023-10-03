@@ -11,20 +11,41 @@ import ImgCard1 from "@/assets/images/img-card1.png"
 import imgOnlinePenguin from "@/assets/images/img-online-penguin.png"
 import imgOnlinePenguinArm from "@/assets/images/img-online-penguin-arm.png"
 import ModalCardItem from "@/components/molecules/ModalCardItem/ModalCardItem"
-import { useRecoilState } from 'recoil';
-import { IsPurchasedAtom } from '@/states/OnlineQrPageAtoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { PayOnlineCardList, ChangeCardAtom } from '@/states/OnlineQrPageAtoms';
+import numberToAmount from "@/utils/NumToAmount";
+import { usePostPayOnlineComplete } from "@/apis/Card/Mutations/useAddCardList";
 
 
 type PayOnlinePageProps = {
   onNextPage: () => void;
 };
 
+type Selected = {
+  cardId: number;
+  cardImage: string;
+  cardName: string;
+  cardOrder: number;
+  cardType: string;
+  curPerLevel: number;
+  discountRate: number;
+  discountType: string;
+  discounted: number;
+  finalPrice: number;
+  graphRate: number;
+  master: boolean;
+  pastPerfornamce: boolean;
+  remainingAmt: number;
+  serialNumber: string;
+  visa: boolean;
+}
+
 function PayOnlinePage3(props: PayOnlinePageProps) {
   const { onNextPage } = props;
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
-    setIsPurchased(true); // 먼저 상태를 업데이트
+    localStorage.setItem('isPurchased', 'true');
   
     setTimeout(() => { // 딜레이 후 페이지 이동
       navigate(path);
@@ -32,9 +53,24 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
   };
 
   const [IsOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedModalCardIndex, setSelectedModalCardIndex] = useState<number | null>(null);
-  const [isPurchased, setIsPurchased] = useRecoilState<boolean>(IsPurchasedAtom);
-  console.log(isPurchased)
+  const [selectedModalCardIndex, setSelectedModalCardIndex] = useState<number>(100);
+  const PayOnlineCardLists = useRecoilValue(PayOnlineCardList)
+  const SelectedCard : Selected = useRecoilValue(ChangeCardAtom)
+  const PayOnlineComplete = usePostPayOnlineComplete()
+
+  const handlePayOnlineComplete = () => {
+    const PayData = {
+        "cardId": SelectedCard.cardId,
+        "orderPrice":38700,
+        "transactionType":"일시불"
+      }
+      PayOnlineComplete.mutate(PayData, {
+        onSuccess: () => {
+          console.log("결제 성공!!")
+          navigatePage(PATH.PAYONLINECOMPLETE)
+        }
+    });
+  }
 
   const handleModalCardClick = (index: number) => {
     setSelectedModalCardIndex(index);
@@ -84,7 +120,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
       $margin="-92px 0 0 0"
     >
       <WhiteRoundedBox
-          height="592px"
+          height="480px"
           $boxShadow="shadow1"
           $borderRadius="38px"
           $padding="52px 48px"
@@ -101,7 +137,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
           YOUR PICK!
         </Text>
         <Image
-          src={ImgCard1}
+          src={SelectedCard && SelectedCard.cardImage}
           height={152}
           $margin="0 0 20px 0"
           $unit="px"
@@ -120,7 +156,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
         fontWeight="bold"
         color="black1"
         >
-          B.Big(삑)카드
+          {SelectedCard && SelectedCard.cardName}
         </Text>
         <Text
         size="body2"
@@ -141,7 +177,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
         fontWeight="bold"
         color="blue"
         >
-          10% 페이백
+          {SelectedCard && SelectedCard.discountRate}% {SelectedCard && SelectedCard.discountType}
         </Text>
         <Text
         size="body2"
@@ -151,22 +187,21 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
           이 가능해요
         </Text>
         </DisplayWrapper>
-          <Button
-          option="deActivated"
-          size="medium"
-          style={{
-            margin:"0 0 8px 0",
-            borderRadius: "21px",
-          }}
-          >
-            할부선택
-          </Button>
-          <Button
-            onClick={() => navigatePage(PATH.PAYONLINECOMPLETE)}
+        <Button
+            onClick={() => handlePayOnlineComplete()}
             option="activated"
             size="medium"
+            style={{
+              borderRadius: "21px",
+              marginTop: "8px"
+            }}
           >
-            50,000원 결제하기
+            {SelectedCard && numberToAmount(SelectedCard.finalPrice)}원 결제하기
+          </Button>
+          <Button
+          $border="none"
+          >
+            할부선택
           </Button>
         </WhiteRoundedBox>
         <Button
@@ -183,18 +218,16 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
         </Button>
         <StyledModal $IsOpen={IsOpen}>
           <Hr></Hr>
-          <ModalCardItem
-            onClick={() => handleModalCardClick(0)}
-            style={selectedModalCardIndex !== null && selectedModalCardIndex !== 0 ? { filter: 'grayscale(1) opacity(0.5)' } : {}}
-          ></ModalCardItem>
-          <ModalCardItem
-            onClick={() => handleModalCardClick(1)}
-            style={selectedModalCardIndex !== null && selectedModalCardIndex !== 1 ? { filter: 'grayscale(1) opacity(0.5)' } : {}}
-          ></ModalCardItem>
-          <ModalCardItem
-            onClick={() => handleModalCardClick(2)}
-            style={selectedModalCardIndex !== null && selectedModalCardIndex !== 2 ? { filter: 'grayscale(1) opacity(0.5)' } : {}}
-          ></ModalCardItem>
+          {
+          PayOnlineCardLists.length > 0 &&
+          PayOnlineCardLists.slice(0, 3).map((card: Selected, idx: number) => (
+            <ModalCardItem
+              key={idx}
+              card={card}
+              onClick={() => handleModalCardClick(idx)}
+              style={selectedModalCardIndex !== 100 && selectedModalCardIndex !== idx ? { filter: 'grayscale(1) opacity(0.5)' } : {}}
+            />
+          ))}
           <Button 
             onClick={() => {
               onNextPage();

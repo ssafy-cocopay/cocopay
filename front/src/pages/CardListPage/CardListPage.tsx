@@ -116,6 +116,7 @@ const CardListPage = () => {
             size="medium"
             $borderRadius="16px"
             $fontSize="16px"
+            style={{marginBottom: "90px"}}
           >
             <Image src={iconPlusGrey} width={12} height={12} $unit="px"></Image>
             카드 등록
