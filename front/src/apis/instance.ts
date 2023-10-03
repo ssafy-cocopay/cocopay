@@ -2,10 +2,10 @@ import axios, { Axios } from "axios";
 
 // to.. 리액트 쿼리 느낌코딩 예정 서영이와 혜혀니
 // Axios를 사용하여 기본 설정을 가진 인스턴스 생성
-const APP_SERVER_URL = "https://j9b208.p.ssafy.io";
+// const APP_SERVER_URL = "https://j9b208.p.ssafy.io";
 
 // 프록시 있고 로컬로 해야 로컬 디벨롭 가능
-// const APP_SERVER_URL = "http://localhost:3000";
+const APP_SERVER_URL = "http://localhost:3000";
 // const APP_SERVER_URL = "http://192.168.219.102:3000";
 
 // const userIdFromLocalStorage = localStorage.getItem("userId");
@@ -15,7 +15,7 @@ const APP_SERVER_URL = "https://j9b208.p.ssafy.io";
 //   ? parseInt(userIdFromLocalStorage, 10)
 //   : 2;
 
-const userId = 4;
+const userId = 2;
 
 const instance: Axios = axios.create({
   baseURL: `${APP_SERVER_URL}/api`, // 여기 오류나면 https://j9b208.p.ssafy.io/api로 변경

@@ -19,7 +19,7 @@ const moveRight = keyframes`
 const AnimatedImage = styled(Image)`
   left: 50%;
   transform: translateX(10%);
-  animation: ${moveRight} 20s forwards;
+  animation: ${moveRight} 15s forwards;
   margin: 52px 0;
   height: 84px;
 `;
@@ -58,7 +58,7 @@ const CardUploadLoadingPage = (props: CardUploadPageProps) => {
           보유 중인 카드 정보를
         </Text>
         <Text size="body1" fontWeight="regular">
-          코코페이에 한 번에 등록하세요
+          한 번에 등록하세요
         </Text>
         <AnimatedImage src={imgCardUpload} $unit="px" />
         {/* <Image
