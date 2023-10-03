@@ -66,14 +66,23 @@ public class UserCardService {
     public void PerformanceCheck(Integer UserCardId){
         UserCard userCard = userCardRepository.findById(UserCardId).get();
         Card card = cardRepository.findById(userCard.getCard().getId()).get();
-        Performance performance = performanceRepository.findPerformance(null,card.getId(),userCard.getPerformanceLevel()).get(0);
+        int nextLevel = userCard.getPerformanceLevel()+1;
+        List<Performance> performanceList = performanceRepository.findPerformance(null,card.getId(),nextLevel);
+        if(performanceList.size()>=1){
+            Performance performance = performanceList.get(0);
+            if (performance.getLevelPrice()<=userCard.getTotalPrice()){
+                userCard.setPerformanceLevel(userCard.getPerformanceLevel()+1);
+                userCardRepository.save(userCard);
+            }
+        }
 
-        log.info("level price : " + performance.getLevelPrice());
+
+//        log.info("level price : " + performance.getLevelPrice());
         log.info("total price :" + userCard.getTotalPrice());
 
-        if (performance.getLevelPrice()<=userCard.getTotalPrice()){
-            userCard.setPerformanceLevel(userCard.getPerformanceLevel()+1);
-            userCardRepository.save(userCard);
-        }
+
+
+
+
     }
 }

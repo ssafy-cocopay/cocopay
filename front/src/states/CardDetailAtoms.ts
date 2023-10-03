@@ -8,3 +8,8 @@ export const CardDetailAtom = atom({
         cardHistoryList: []
     }
 });
+
+export const CardDetailIdAtom = atom({
+    key: 'CardDetailIdAtom',
+    default: 0
+})

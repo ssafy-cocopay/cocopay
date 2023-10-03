@@ -38,5 +38,5 @@ export const BenefitBtn = styled.div`
     background-color: ${(props) => props.theme.color.grey4};
     margin: 0 8px 0 0;
     height: 32px;
-    width: 92px;
+    width: auto;
 `

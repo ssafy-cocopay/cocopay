@@ -8,7 +8,7 @@ import axios, { Axios } from "axios";
 const APP_SERVER_URL = "http://localhost:3000";
 // const APP_SERVER_URL = "http://192.168.219.102:3000";
 
-const userIdFromLocalStorage = localStorage.getItem("userId");
+// const userIdFromLocalStorage = localStorage.getItem("userId");
 
 // TODO:  여긴 나중에 씁시다 지금은 화면 개발용 테스트 userId 필요함
 // const userId = userIdFromLocalStorage

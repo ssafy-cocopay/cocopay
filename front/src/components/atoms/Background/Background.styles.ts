@@ -17,7 +17,7 @@ const Background = styled.div<BackgroundProps>`
   }};
   background-size: 100% 100%;
   // 여기가 100vh였다가 auto일 때 nav바 위치가 바뀜....
-  min-height: 100vh;
+  height: 100vh;
   /* overflow-y: none; */
   /* height: 100vh; */
   width: 100vw;

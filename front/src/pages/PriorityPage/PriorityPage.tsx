@@ -31,6 +31,7 @@ const PriorityPage = () => {
 
   const prioritysave = () => {
     addUseAddPriority.mutate(clikedBtn);
+    navigatePage(PATH.MAIN);
   };
   return (
     <Background

@@ -16,6 +16,7 @@
     "apexcharts": "^3.42.0",
     "axios": "^1.5.1",
     "components-gauge": "^0.0.41",
+    "firebase": "^10.4.0",
     "p5": "^1.7.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
@@ -69,6 +70,5 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "3.0.3"
-  },
-  "proxy": "https://j9b208.p.ssafy.io"
+  }
 }
