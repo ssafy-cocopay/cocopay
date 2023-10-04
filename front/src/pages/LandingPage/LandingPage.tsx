@@ -35,7 +35,12 @@ export const LandingPage = ({ receivedMessage }: any) => {
 
   return (
     <Background
-      $colormode={receivedMessage === "tt" ? "gradient" : "blue"}
+      $colormode={
+        receivedMessage ===
+        "dkB9mGohTVGvMV60EMzN6D:APA91bHkdHGlNJ3UrzWpiVpSNzKEBOSaK545kVy9lPLcCynXFdj9yVAHY72FanTJcQIArMJUvbeRR4k9s7eE_rQguMLc2GhzK0lLS222Sn9r7q0zSlAiQWArROrGBPOLcRbnZD2-dagJ"
+          ? "gradient"
+          : "blue"
+      }
       style={{
         display: "flex",
         flexDirection: "column",
