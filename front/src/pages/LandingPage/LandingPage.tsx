@@ -48,7 +48,7 @@ export const LandingPage = ({ receivedMessage }: any) => {
         <Wrapper $flexGrow={5}>
           <Image src={coco} width={12} style={imageStyle} />
           <Text size="body1">
-            {receivedMessage ? receivedMessage.data : "안 온거임"}
+            {receivedMessage ? receivedMessage.data.toString() : "안 온거임"}
           </Text>
           <Text size="body1">TEST</Text>
         </Wrapper>
