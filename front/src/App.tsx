@@ -16,7 +16,10 @@ const App = () => {
   }, [receivedMessage]);
 
   useEffect(() => {
-    window.addEventListener("message", handleMessage);
+    console.log("여기 실행됨");
+    window.addEventListener("message", function (event) {
+      console.log("RN에서옴", event.data);
+    });
     return () => {
       window.removeEventListener("message", handleMessage);
     };
