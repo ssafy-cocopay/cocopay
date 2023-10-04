@@ -107,7 +107,7 @@ const App = () => {
     const fcmToken = await messaging().getToken();
 
     try {
-      console.log(fcmToken);
+      console.log("FCM TOKEN : + " + fcmToken);
       setFcmToken(fcmToken);
       webviewRef.current.postMessage(fcmToken);
     } catch (e) {

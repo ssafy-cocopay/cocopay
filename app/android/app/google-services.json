@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:783105738433:android:a483fb214a555e539db640",
+        "android_client_info": {
+          "package_name": "com.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783105738433-6vejale6s3mq9cucbn9het8l0vbh6cid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGemXXYQceXFYgFbiDY5LcG5n3T53Ei24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783105738433-6vejale6s3mq9cucbn9het8l0vbh6cid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:783105738433:android:0ee9dc54efd1c4319db640",
         "android_client_info": {
           "package_name": "com.ssafy.cocopay"
