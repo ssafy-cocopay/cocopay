@@ -12,6 +12,7 @@ export const LandingPage = ({ receivedMessage }: any) => {
   const navigate = useNavigate();
   const [buttonAnimation, setButtonAnimation] = useState(false);
   const bgColor = receivedMessage ? "gradient" : "blue";
+  console.log("here::receivedMessage", receivedMessage);
 
   const navigatePage = (path: string) => {
     navigate(path);
