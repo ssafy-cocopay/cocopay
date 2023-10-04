@@ -28,9 +28,10 @@ const CardUploadCompletePage = () => {
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
   console.log(isModalOpen);
-  const CardList = useGetUserCard();
-  console.log(CardList);
+  const CardUploadList = useGetUserCard();
+  console.log(CardUploadList);
   const [deleteCardId, setDeleteCardId] = useState(0);
+  console.log(deleteCardId)
   const queryClient = useQueryClient();
   const useDeleteCardMutation = useDeleteCard();
   const [priority, setPriority] = useRecoilState(priorityAtom)
@@ -42,7 +43,7 @@ const CardUploadCompletePage = () => {
   const deleteCard = (deleteCardId: number) => {
     useDeleteCardMutation.mutate(deleteCardId, {
       onSuccess: () => {
-        queryClient.invalidateQueries(["CardList"]);
+        queryClient.invalidateQueries(["CardUploadList"]);
         setIsModalOpen(false); // 모달 닫기
         setSwipedIndex(null); // 현재 스와이프 된 카드 초기화
       },
@@ -101,8 +102,8 @@ const CardUploadCompletePage = () => {
         </Text>
         <Hr />
         {
-          CardList.length > 0 &&
-          CardList.map((card: Card, idx: number) => (
+          CardUploadList.length > 0 &&
+          CardUploadList.map((card: CardUpload, idx: number) => (
             <CardItem
               key={idx}
               card={card}
@@ -111,8 +112,8 @@ const CardUploadCompletePage = () => {
               resetSwipe={swipedIndex !== null && swipedIndex !== idx}
               swipedIndex={swipedIndex} // 추가
               index={idx} // 추가
-              opendeletemodal={() => toggleModal(card.id)}
-              onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
+              opendeletemodal={() => toggleModal(card.userCardId)}
+              onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.userCardId.toString())}`)}
             />
           ))}
         <Layout>

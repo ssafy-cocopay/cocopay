@@ -13,10 +13,10 @@ export const StatisticsContainer = styled(Container)`
 export const CategoryWhiteBox = styled(Container)`
   background-color: white;
   border-radius: 38px;
-  height: 138px;
-  width: 47%;
+  height: 120px;
+  width: 42%;
   box-shadow: ${(props) => props.theme.shadow.shadow1};
-  padding-top: 20px;
+  padding-top: 12px;
 `;
 
 export const HeaderContainer = styled(Container)`
