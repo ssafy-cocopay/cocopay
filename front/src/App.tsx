@@ -6,7 +6,7 @@ const App = () => {
   const [receivedMessage, setReceivedMessage] = useState(null);
 
   const handleMessage = (e: any) => {
-    console.log(e.data);
+    console.log(e);
     setReceivedMessage(e.data);
     console.log("here::receivedMessage", receivedMessage);
   };
