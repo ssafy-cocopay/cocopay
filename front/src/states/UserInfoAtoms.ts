@@ -9,6 +9,7 @@ export const userInfoState = atom<UserInfo>({
     company: "",
     tel: "",
     password: "",
+    fcmToken: "",
   },
 });
 

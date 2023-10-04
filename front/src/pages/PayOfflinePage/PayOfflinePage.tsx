@@ -10,9 +10,45 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import Penguin from "@/assets/images/img-penguin-thinking.png";
 import Dot from "@/assets/images/icon-dot-gray.png";
 import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
-
+import styled, { keyframes } from "styled-components";
 function PayOfflinePage() {
   const CardList = useGetCardList();
+
+  const rotateLeft = keyframes`
+    0% {
+    opacity: 1;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(0deg) translateZ(0px);
+  }
+
+  50% {
+    opacity: 0;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(-180deg) translateZ(220px);
+  }
+
+  50.1% {
+    opacity: 0;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(180deg) translateZ(220px);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 50% 0;
+    transform: perspective(800px) rotateY(0deg) translateZ(0px);
+  }`;
+
+  const LeftRotate = styled(Image)`
+    position: absolute;
+    top: 170px;
+    bottom: 300px;
+    /* left: 40%; */
+    /* transform: translateY(80%); */
+    animation: ${rotateLeft} 3s linear infinite;
+    transform-origin: center;
+  `;
+
   console.log(CardList, "나의 카드들"); //TODO: 카드리스트 있는지 확인
   const firstThreeCards = CardList.slice(0, 3);
   return (
@@ -23,6 +59,7 @@ function PayOfflinePage() {
       }}
     >
       <Container $left={true} $paddingTop="36px" height="auto">
+      
         <Container
           $paddingTop="63px"
           $backgroundColor="white"
@@ -31,9 +68,16 @@ function PayOfflinePage() {
           $padding="36px"
           // $border={true}
         >
-          <Text size="body1" fontWeight="bold">
+          <Text size="body1" fontWeight="bold" $margin="0 0 250px 0">
             최적의 결제 카드 파악 중...
-          </Text>
+          </Text> 
+          <Wrapper $flexDirection="row">
+        {CardImgList.map((card, idx) => {
+           const animationDelay = `${idx * 0.8}s`;
+           const zIndex = CardImgList.length - idx;
+          return <LeftRotate src={card} key={idx} width={7} style={{animationDelay,zIndex}} />;
+        })}
+      </Wrapper>
           {/* <Text size="body1" fontWeight="bold">
             최적의 결제 카드 파악 중...
           </Text> */}
@@ -41,7 +85,22 @@ function PayOfflinePage() {
 
           <Wrapper $flexDirection="row">
             {firstThreeCards.map((card: any, idx: number) => {
-              return <Image src={card.cardImage} key={idx} width={7} />;
+              const animationDelay = `${idx * 0.8}s`;
+              const zIndex = firstThreeCards.length - idx;
+              const cardStyle = {
+                animationDelay,
+                zIndex,
+                transform: "rotate(90deg)", // Rotate the card 90 degrees
+              };
+              //TODO:이미지 90도 회전시키기
+              return (
+                <LeftRotate
+                  src={card.cardImage}
+                  key={idx}
+                  width={7}
+                  style={cardStyle}
+                />
+              );
             })}
           </Wrapper>
           <br />
