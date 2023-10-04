@@ -8,6 +8,7 @@ const App = () => {
   const handleMessage = (e: any) => {
     console.log(e.data);
     setReceivedMessage(e.data);
+    console.log("here::receivedMessage", receivedMessage);
   };
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const App = () => {
 
   return (
     <Suspense fallback={<Text>로딩중</Text>}>
-      <LandingPage receivedMessage={receivedMessage}/>
+      <LandingPage receivedMessage={receivedMessage} />
     </Suspense>
   );
 };

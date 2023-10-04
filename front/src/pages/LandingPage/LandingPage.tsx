@@ -11,8 +11,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 export const LandingPage = ({ receivedMessage }: any) => {
   const navigate = useNavigate();
   const [buttonAnimation, setButtonAnimation] = useState(false);
-  const bgColor = receivedMessage ? "gradient" : "blue";
-  console.log("here::receivedMessage", receivedMessage);
+  // const bgColor = receivedMessage === "tt" ? "gradient" : "blue";
 
   const navigatePage = (path: string) => {
     navigate(path);
@@ -36,7 +35,7 @@ export const LandingPage = ({ receivedMessage }: any) => {
 
   return (
     <Background
-      $colormode={bgColor}
+      $colormode={receivedMessage === "tt" ? "gradient" : "blue"}
       style={{
         display: "flex",
         flexDirection: "column",
