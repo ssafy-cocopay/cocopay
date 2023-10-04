@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
@@ -46,11 +46,15 @@ const HomePage = () => {
     const centeredCardIndex = Math.round(scrollPosition / cardWidth);
 
     if (MainCards && MainCards[centeredCardIndex]) {
-      console.log(MainCards[centeredCardIndex].barcodeNum);
       setBarcodeValue(MainCards[centeredCardIndex].barcodeNum);
       setResetTimerFlag(!resetTimerFlag);
     }
   };
+
+  useEffect(() => {
+    handleScroll();
+  }, [MainCards]);
+
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
