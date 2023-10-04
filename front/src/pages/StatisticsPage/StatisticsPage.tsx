@@ -39,6 +39,7 @@ const StatisticsPage = () => {
   const date = new Date();
   const [month, setMonth] = useState(date.getMonth() + 1);
   const StatisticDiscount = useGetStatisticDiscount(month);
+  console.log(StatisticDiscount)
   const StatisticConsume = useGetStatisticConsume(month);
 
   // 버튼 클릭에 따른 달 변경
@@ -46,7 +47,9 @@ const StatisticsPage = () => {
     setMonth((prev) => prev - 1);
   };
   const handleMonthPlus = () => {
-    setMonth((prev) => prev + 1);
+    if (month < date.getMonth() + 1) {
+      setMonth((prev) => prev + 1);
+    }
   };
 
   // 조회하고싶은 달 change
@@ -55,8 +58,8 @@ const StatisticsPage = () => {
   };
 
   // 할인금액 numberToAmount로 변경해서 받기
-  const DiscountAmount = numberToAmount(StatisticDiscount.allDiscountAmount);
-  const ConsumeAmount = numberToAmount(StatisticConsume.allPriceAmount);
+  const DiscountAmount = numberToAmount(StatisticDiscount && StatisticDiscount.allDiscountAmount);
+  const ConsumeAmount = numberToAmount(StatisticConsume && StatisticConsume.allPriceAmount);
   const TABS = [
     { name: "내 소비", key: "내 소비" },
     { name: "혜택", key: "혜택" },
@@ -106,14 +109,17 @@ const StatisticsPage = () => {
             changemonth={handleMonthChange}
           />
           <Line $margin=" 0 0 20px 0" />
-          <Text size="body2" $marginLeft="8px">
+          {StatisticDiscount.categoryList.length > 0 ? <Text size="body2" $marginLeft="8px">
             <b>{month}월</b>엔{" "}
-            <b>{StatisticDiscount.categoryList[0].category}</b> 카테고리에서
+            <b>{StatisticDiscount && StatisticDiscount.categoryList && StatisticDiscount.categoryList.length > 0 ? StatisticDiscount.categoryList[0].category : 'Default Value'}</b> 카테고리에서
+            {/* <b>{StatisticDiscount && StatisticDiscount.categoryList && StatisticDiscount.categoryList[0].category}</b> 카테고리에서 */}
           </Text>
-          <Text size="body2" $marginLeft="8px" $marginTop="4px">
+          : <></> }
+          {StatisticDiscount.categoryList.length > 0 ? <Text size="body2" $marginLeft="8px" $marginTop="4px">
             <b>제일 많은 혜택</b>을 받았어요 !
           </Text>
-          <FourCategory StatisticDiscount={StatisticDiscount}></FourCategory>
+          : <></> }
+          {StatisticDiscount.categoryList.length > 0 ? <FourCategory StatisticDiscount={StatisticDiscount}></FourCategory> : <Text size="body1" color="grey1" style={{textAlign:"center", width:"100%", margin:"20px 0"}}>결제 내역이 없어요.. </Text>}
         </WhiteContainer>
         <StatisticsContainer
           $borderRadius="38px"

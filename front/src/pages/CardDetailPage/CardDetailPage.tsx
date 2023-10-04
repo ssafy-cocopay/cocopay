@@ -20,7 +20,7 @@ import { useGetCardDetail } from "@/apis/Card/Queries/useGetCardDetails";
 import { usePostCardPurchased } from "@/apis/Card/Mutations/useAddCardList";
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from "recoil";
-import { CardDetailAtom, CardDetailIdAtom } from "@/states/CardDetailAtoms";
+import { CardDetailAtom, CardDetailIdAtom, CardDetailMonthAtom } from "@/states/CardDetailAtoms";
 import { CardAmount, CardHistoryLists, CardDetail } from '@/types/card';
 import numberToAmount from "@/utils/NumToAmount";
 
@@ -48,21 +48,27 @@ const CardDetailPage = () => {
   const cardid = Number(cardIdStr); // cardId를 문자열에서 숫자로 변환
   const CardDetail = useGetCardDetail(cardid);
   const CardPurchased = usePostCardPurchased()
-  const date = new Date();
-  const [month, setMonth] = useState(date.getMonth() + 1)
+  const [month, setMonth] = useRecoilState(CardDetailMonthAtom)
   const [cardDetailId, setCardDetailId] = useRecoilState(CardDetailIdAtom)
   console.log(CardDetail)
+  const date = new Date();
 
   const handleMonthMinus = () => {
     setMonth((prev) => prev - 1);
   };
 
   const handleMonthPlus = () => {
-    setMonth((prev) => prev + 1);
+    if (month < date.getMonth() + 1) {
+      setMonth((prev) => prev + 1);
+    }
   };
 
   const handleMonthChange = (newmonth:number) => {
     setMonth(newmonth)
+  }
+
+  const handleMonthReset = () => {
+    setMonth(date.getMonth() + 1)
   }
 
   // 결제내역 가져오기
@@ -102,7 +108,7 @@ const CardDetailPage = () => {
             width={24}
             height={24}
             $unit="px"
-            onClick={() => navigate(-1)}
+            onClick={() => {navigate(-1); handleMonthReset()}}
           ></Image>
           <TextCenterWrapper>
             <Text
@@ -118,7 +124,7 @@ const CardDetailPage = () => {
         </Wrapper>
         <CardWrapper>
           <Image
-            src={CardDetail.cardImage}
+            src={CardDetail && CardDetail.cardImage}
             height={180}
             $unit="px"
             $margin="46px 0 12px 0"
@@ -134,10 +140,10 @@ const CardDetailPage = () => {
             marginBottom: "44px"
           }}
         >
-          {CardDetail.cardName}
+          {CardDetail && CardDetail.cardName}
         </Text>
         {
-          (CardDetail.level !== 0 || CardDetail.nextLevel !== 0) && (
+          (CardDetail && CardDetail.level !== 0 || CardDetail && CardDetail.nextLevel !== 0) && (
             <WhiteRoundedBox
               height="144px"
               $margin="0 0 16px 0"
@@ -154,7 +160,7 @@ const CardDetailPage = () => {
                 color="black1"
                 $margin="4px 0 16px 0"
               >
-                {numberToAmount(CardDetail.price)}원
+                {numberToAmount(CardDetail && CardDetail.price)}원
               </Text>
               {CardDetail && <Performance data={CardDetail} dataType="cardDetail" />}
             </WhiteRoundedBox>

@@ -38,6 +38,11 @@ const getUserMyPage = async () => {
   return response.data;
 };
 
+const deleteUser = async () => {
+  console.log("회원탈퇴");
+  await instance.put("/users/quit");
+};
+
 export {
   addMessage,
   addMessageConfirm,
@@ -45,4 +50,5 @@ export {
   addPriority,
   getOfflinePay,
   getUserMyPage,
+  deleteUser
 };

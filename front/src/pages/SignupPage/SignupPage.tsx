@@ -69,7 +69,7 @@ const SignupPage: React.FC = () => {
   };
 
   const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTel = e.target.value.toString();
+    const newTel = e.target.value.slice(0, 11).toString();
 
     setUserTel(newTel);
     setUserInfo((prev) => ({ ...prev, tel: newTel }));
@@ -158,7 +158,9 @@ const SignupLayout = ({
           <b>본인확인</b>을 진행해주세요
         </Text>
         {/* name input */}
+        <Wrapper>
         <Input
+          height={65}
           name="name"
           placeholder="이름을 작성해주세요"
           onChange={(e) => {
@@ -182,6 +184,7 @@ const SignupLayout = ({
           //   },
           // })} //TODO: 에러메세지 text스타일컴포넌트로 커스텀하기
         ></Input>
+        </Wrapper>
         {errors.name && (
           <small style={{ color: "red", fontSize: "14px" }}>
             {errors.name.message}
@@ -191,8 +194,10 @@ const SignupLayout = ({
         {/* birth input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
           <Input
+            height={65}
             width={122}
             name="birth"
+            maxLength={6}
             onChange={(e) => {
               handleBirthChange(e.target.value);
             }}
@@ -200,7 +205,7 @@ const SignupLayout = ({
           <Text size="subtitle1" color="grey3">
             -
           </Text>
-          <Input width={35} $textAlign="center" $paddingLeft={0}></Input>
+          <Input maxLength={1} height={65} width={35} $textAlign="center" $paddingLeft={0}></Input>
           <Image src={Dots} width={40} $unit="%"></Image>
         </Wrapper>
         <br />
@@ -211,7 +216,9 @@ const SignupLayout = ({
           onChange={handleCompanyChange}
         />
         {/* tel input */}
+        <Wrapper>
         <Input
+          height={65}
           name="tel"
           placeholder="핸드폰 번호를 입력해주세요"
           {...register("phone_number", {
@@ -228,6 +235,7 @@ const SignupLayout = ({
             handleTelChange(e);
           }}
         ></Input>
+        </Wrapper>
         {errors.phone_number && (
           <small style={{ color: "red", fontSize: "14px" }}>
             {errors.phone_number.message}
@@ -238,6 +246,7 @@ const SignupLayout = ({
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
           <Input
+            height={65}
             width={150}
             value={messageNum}
             onChange={(e) => {
@@ -263,9 +272,11 @@ const SignupLayout = ({
         ></TimerComponent> */}
 
         <br />
-        <Button option="deActivated" onClick={numberCheck} size="large">
+        <Wrapper>
+        <Button option={messageNum.length >= 6 ? "activated" : "deActivated"} onClick={numberCheck} size="large">
           확인
         </Button>
+        </Wrapper>
         {isModalOpen && (
           <ModalBg onClick={toggleModal}>
             <Modal toggleModal={toggleModal}>
@@ -291,7 +302,10 @@ const SignupLayout = ({
                 >
                   정보 확인 후 재시도해주세요.
                 </Text>
-                <Button option="deActivated" onClick={toggleModal}>
+                <Button 
+                  option="deActivated"
+                  onClick={numberCheck} 
+                  size="large">
                   확인
                 </Button>
               </ModalWrapper>

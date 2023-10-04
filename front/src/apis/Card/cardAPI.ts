@@ -39,6 +39,15 @@ const getCardList = async () => {
   }
 };
 
+const getUserCard = async () => {
+  try {
+    const response = await instance.get("/users/card");
+    return response.data;
+  } catch (error) {
+    throw new Error("getCardList error");
+}
+};
+
 const deleteCard = async (cardId: number) => {
   await instance.delete(`/cards/${cardId}`);
 };
@@ -80,5 +89,6 @@ export {
   postCard,
   postCardPurchased,
   postPayOnline,
-  postPayOnlineComplete
+  postPayOnlineComplete,
+  getUserCard
 };

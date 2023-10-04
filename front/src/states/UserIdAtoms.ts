@@ -1,12 +1,13 @@
-import { atom, useRecoilValue } from 'recoil';
+import { atom } from 'recoil';
 
-export const userIdState = atom({
+const userIdFromLocalStorage = localStorage.getItem("userId");
+export const userIdState = atom<number>({
   key: 'userId',
-  default: 1, // null으로 해야하나?
+  default: userIdFromLocalStorage ? parseInt(userIdFromLocalStorage, 10) : 4
 });
 
-function useUserId() {
-    return useRecoilValue(userIdState);
-}
+// function useUserId() {
+//     return useRecoilValue(userIdState);
+// }
 
-export default useUserId;
+// export default useUserId;

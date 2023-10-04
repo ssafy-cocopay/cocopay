@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import styled, { keyframes } from "styled-components";
 import cards from "@/assets/images/img-cardline.png";
+import { useRecoilState } from "recoil";
 
 const moveRight = keyframes`
   to {
@@ -19,7 +20,7 @@ const moveRight = keyframes`
 const AnimatedImage = styled(Image)`
   left: 50%;
   transform: translateX(10%);
-  animation: ${moveRight} 20s forwards;
+  animation: ${moveRight} 15s forwards;
   margin: 52px 0;
   height: 84px;
 `;
@@ -30,7 +31,6 @@ type CardUploadPageProps = {
 
 const CardUploadLoadingPage = (props: CardUploadPageProps) => {
   const { onNextPage } = props;
-
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
@@ -42,6 +42,7 @@ const CardUploadLoadingPage = (props: CardUploadPageProps) => {
       onNextPage();
     });
   };
+
 
   return (
     <Background
@@ -58,7 +59,7 @@ const CardUploadLoadingPage = (props: CardUploadPageProps) => {
           보유 중인 카드 정보를
         </Text>
         <Text size="body1" fontWeight="regular">
-          코코페이에 한 번에 등록하세요
+          한 번에 등록하세요
         </Text>
         <AnimatedImage src={imgCardUpload} $unit="px" />
         {/* <Image
