@@ -46,7 +46,6 @@ export const LandingPage = ({ receivedMessage }: any) => {
         <Wrapper $flexGrow={5}>
           <Image src={coco} width={12} style={imageStyle} />
         </Wrapper>
-        {receivedMessage}
         <Wrapper $flexGrow={3} style={{ gap: "15px" }}>
           <Button
             onClick={() => navigatePage(PATH.LOGIN_FINGER)}
