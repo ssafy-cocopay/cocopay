@@ -72,14 +72,14 @@ const StatisticsContents = ({ contents }: StatisticsContentsProps) => {
                 }}
               >
                 <Image src={categoryIcons[category.category]} width={3.1} />
-                <Text size="body1" fontWeight="bold" $marginLeft="20px">
+                <Text size="body2" fontWeight="bold" $marginLeft="17px">
                   {category.category}
                 </Text>
                 <Text size="body2" $marginLeft="10px" color="grey2">
                   {discountPercent}%
                 </Text>
               </FlexDiv>
-              <Text size="body1" $marginLeft="10px">
+              <Text size="body2" $marginLeft="10px">
                 {numberToAmount(discountAmount)}원
               </Text>
             </FlexDiv>

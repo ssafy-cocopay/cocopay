@@ -9,7 +9,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import numberToAmount from "@/utils/NumToAmount";
 import { useGetOfflinePay } from "@/apis/User/Queries/useGetOfflinePay";
-import ParticleMove from '../PayOnlineCompletePage/ParticleMove';
+import ParticleMove from "../PayOnlineCompletePage/ParticleMove";
 import Performance from "@/components/molecules/Performance/Performance";
 
 const PayOfflinePage = () => {
@@ -34,7 +34,7 @@ const PayOfflinePage = () => {
         minHeight: "100vh",
       }}
     >
-      <ParticleMove/>
+      <ParticleMove />
       <Container $left={true} $paddingTop="36px" height="auto">
         <Container
           $padding="10px"
@@ -65,7 +65,7 @@ const PayOfflinePage = () => {
               <Text size="subtitle2" fontWeight="bold" color="blue">
                 {OfflinePayCard.cardName}
               </Text>
-              <Text size="subtitle2" fontWeight="light">
+              <Text size="body1" fontWeight="light">
                 카드로
               </Text>
             </Wrapper>
@@ -93,7 +93,9 @@ const PayOfflinePage = () => {
             </Wrapper>
             <br />
             {/* TODO: 실적바 퍼포먼스 재사용가능하게 수정해서 넣기 */}
-            {OfflinePayCard && <Performance data={OfflinePayCard} dataType="offlinePay" />}
+            {OfflinePayCard && (
+              <Performance data={OfflinePayCard} dataType="offlinePay" />
+            )}
             <br />
             <Button onClick={() => navigatePage(PATH.MAIN)} option="activated">
               홈으로

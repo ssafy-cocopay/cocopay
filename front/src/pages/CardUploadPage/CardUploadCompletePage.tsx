@@ -12,7 +12,7 @@ import { PATH } from "@/constants/path";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
-import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
+import { useGetUserCard } from "@/apis/Card/Queries/useGetCard";
 import { useDeleteCard } from "@/apis/Card/Mutations/useDeleteCard";
 import { Card } from "@/types/card";
 import { useQueryClient } from '@tanstack/react-query';
@@ -26,7 +26,7 @@ const CardUploadCompletePage = () => {
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
   console.log(isModalOpen);
-  const CardList = useGetCardList();
+  const CardList = useGetUserCard();
   console.log(CardList);
   const [deleteCardId, setDeleteCardId] = useState(0);
   const queryClient = useQueryClient();
@@ -107,18 +107,6 @@ const CardUploadCompletePage = () => {
               onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
             />
           ))}
-        <Layout>
-          <Button
-            onClick={() => navigatePage(PATH.SCAN_CARDINFO)}
-            option="dashed"
-            size="medium"
-            $borderRadius="16px"
-            $fontSize="16px"
-          >
-            <Image src={iconPlusGrey} width={12} height={12} $unit="px"></Image>
-            카드 등록
-          </Button>
-        </Layout>
         <Layout>
             <Button
                 onClick={() => navigatePage(PATH.PRIORITY)}

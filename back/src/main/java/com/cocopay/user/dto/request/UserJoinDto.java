@@ -13,4 +13,5 @@ public class UserJoinDto {
     private String company;
     private String tel;
     private String password;
+    private String fcmToken;
 }

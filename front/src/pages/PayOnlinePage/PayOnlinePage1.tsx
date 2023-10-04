@@ -68,7 +68,7 @@ const handlePayOnline = () => {
           }}
         >
           <Text
-          size="subtitle2"
+          size="body1"
           fontWeight="bold"
           color="black1"
           >
@@ -76,14 +76,14 @@ const handlePayOnline = () => {
           </Text>
           <DisplayWrapper>
           <Text
-          size="subtitle2"
+          size="body1"
           fontWeight="bold"
           color="blue"
           >
             결제하기
           </Text>
           <Text
-          size="subtitle2"
+          size="body1"
           fontWeight="bold"
           color="black1"
           >

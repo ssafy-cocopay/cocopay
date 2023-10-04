@@ -16,7 +16,7 @@ import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { useGetCardList } from "@/apis/Card/Queries/useGetCard";
 import { useDeleteCard } from "@/apis/Card/Mutations/useDeleteCard";
 import { Card } from "@/types/card";
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 
@@ -45,7 +45,7 @@ const CardListPage = () => {
         console.log("삭제 실패");
       },
     });
-};
+  };
 
   //모달 오픈 함수
   const toggleModal = (cardId: number) => {
@@ -67,9 +67,7 @@ const CardListPage = () => {
 
   return (
     <Background>
-      <CardListContainer
-        $padding="36px 0 0 0"
-      >
+      <CardListContainer $padding="36px 0 0 0">
         <Text
           size="body1"
           fontWeight="bold"
@@ -95,20 +93,23 @@ const CardListPage = () => {
           오른쪽 아이콘을 눌러 카드 순서를 변경할 수 있어요.
         </Text>
         <Hr />
-        {
-        CardList.length > 0 &&
-        CardList.map((card: Card, idx: number) => (
-          <CardItem
-            key={idx}
-            card={card}
-            onSwipeStart={() => handleSwipeStart(idx)}
-            resetSwipe={swipedIndex !== null && swipedIndex !== idx}
-            swipedIndex={swipedIndex} // 추가
-            index={idx} // 추가
-            opendeletemodal={() => toggleModal(card.id)}
-            onClick={() => navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`)}
-          />
-        ))}
+        {CardList.length > 0 &&
+          CardList.map((card: Card, idx: number) => (
+            <CardItem
+              key={idx}
+              card={card}
+              onSwipeStart={() => handleSwipeStart(idx)}
+              resetSwipe={swipedIndex !== null && swipedIndex !== idx}
+              swipedIndex={swipedIndex} // 추가
+              index={idx} // 추가
+              opendeletemodal={() => toggleModal(card.id)}
+              onClick={() =>
+                navigatePage(
+                  `${PATH.CARD_DETAIL.replace(":cardId", card.id.toString())}`
+                )
+              }
+            />
+          ))}
         <Layout>
           <Button
             onClick={() => navigatePage(PATH.SCAN_CARDINFO)}
@@ -116,7 +117,7 @@ const CardListPage = () => {
             size="medium"
             $borderRadius="16px"
             $fontSize="16px"
-            style={{marginBottom: "90px"}}
+            style={{ marginBottom: "90px" }}
           >
             <Image src={iconPlusGrey} width={12} height={12} $unit="px"></Image>
             카드 등록
@@ -128,7 +129,7 @@ const CardListPage = () => {
       {isModalOpen && (
         <ModalBg onClick={() => toggleModal(deleteCardId)}>
           <Modal toggleModal={() => toggleModal(deleteCardId)}>
-            <Wrapper $padding="10px" style={{ paddingTop: "30px" }}>
+            <Wrapper style={{ paddingTop: "20px" }}>
               <Wrapper>
                 <Text
                   size="body1"
@@ -139,31 +140,30 @@ const CardListPage = () => {
                 >
                   카드삭제
                 </Text>
-                <Text size="body2" fontWeight="regular">
+                <Text size="body1" fontWeight="regular">
                   카드 정보를 삭제하면
                 </Text>
-                <Text size="body2" fontWeight="regular">
-                  추후 다시 등록하셔야 합니다.
+                <Text size="body1" fontWeight="regular">
+                  추후 재등록이 필요합니다.
                 </Text>
-                <Text size="body2" fontWeight="regular">
+                <Text size="body1" fontWeight="regular">
                   계속 진행할까요?
                 </Text>
               </Wrapper>
               <br />
               <Wrapper $flexDirection="coloum" $justifyContent="space-evenly">
                 <Button
-                  color="gray2"
-                  $width="9rem"
+                  $width="10rem"
                   option="deActivated"
-                  style={{ margin: 10 }}
+                  style={{ margin: "10px", padding: "10px"}}
                   onClick={() => toggleModal(deleteCardId)}
                 >
                   취소
                 </Button>
                 <Button
-                  $width="9rem"
+                  $width="10rem"
                   option="danger"
-                  style={{ margin: 10 }}
+                  style={{ margin: "10px", padding: "10px" }}
                   onClick={() => deleteCard(deleteCardId)}
                 >
                   삭제

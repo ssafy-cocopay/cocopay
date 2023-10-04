@@ -79,6 +79,7 @@ public class UserService {
                     throw new CustomException(ErrorCode.DUPLICATE_USER);
                 });
 
+
         // uuid 불러오기
         UserFindResponseDto result = userApiCallService.getUserUuid(new UserFindRequestDto(userJoinDto.getTel()));
 
@@ -93,6 +94,7 @@ public class UserService {
                 .build();
 
         int userId = userRepository.save(user).getId();
+        fcmKeyService.saveFcmKey(String.valueOf(userId), userJoinDto.getFcmToken());
 
         // 사용자카드 코코페이 저장
         UserCard userCard = UserCard.builder()
