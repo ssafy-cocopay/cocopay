@@ -8,9 +8,13 @@ interface BodyAndHeadingProps {
   amount?: number;
 }
 
+
 const BodyAndHeading = (props: BodyAndHeadingProps) => {
+  //시스템 시간 기준 'month' 받아옴
+  const date = new Date().getMonth() + 1;
+
   // TODO: currentMonth 리코일로?
-  const currentMonth = 9;
+  const currentMonth = date;
   let korAmount: string;
   if (props.amount) {
     korAmount = numberToAmount(props.amount);
