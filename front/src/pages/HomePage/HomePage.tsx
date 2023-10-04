@@ -27,6 +27,8 @@ import {
   CircleIconContainer,
 } from "@/components/atoms/Container/Containers.styles";
 import { MainCard } from "@/types/card";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "@/constants/path";
 
 const HomePage = () => {
   const MainCards = useGetMainCards();
@@ -47,6 +49,11 @@ const HomePage = () => {
       setBarcodeValue(MainCards[centeredCardIndex].barcodeNum);
       setResetTimerFlag(!resetTimerFlag);
     }
+  };
+  const navigate = useNavigate();
+
+  const navigatePage = (path: string) => {
+    navigate(path);
   };
 
   return (
@@ -95,7 +102,9 @@ const HomePage = () => {
               <Checkbox type="checkbox" id="toggle" />
             </FlexDiv>
           </BarcodeUnderWrapper>
-          <CircleIconContainer>
+          <CircleIconContainer
+          onClick={() => navigatePage(PATH.STATISTICS)}
+          >
             <Image src={search} width={2.5} $margin="auto"></Image>
           </CircleIconContainer>
         </BarcodeWhiteContainer>

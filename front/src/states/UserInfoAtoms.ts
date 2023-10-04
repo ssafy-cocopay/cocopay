@@ -12,3 +12,14 @@ export const userInfoState = atom<UserInfo>({
     fcmToken: "",
   },
 });
+
+
+export const priorityAtom = atom({
+  key: "priorityAtom",
+  default: "priority"
+})
+
+export const myPagePriorityAtom = atom({
+  key: "myPagePriorityAtom",
+  default: 2
+})

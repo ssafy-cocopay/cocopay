@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardItem from "@/components/molecules/CardItem/CardItem";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import {
@@ -19,6 +19,7 @@ import { Card } from "@/types/card";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { useRecoilState } from "recoil";
 
 const CardListPage = () => {
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ const CardListPage = () => {
     }
   };
 
+
   return (
     <Background>
       <CardListContainer $padding="36px 0 0 0">
@@ -98,6 +100,7 @@ const CardListPage = () => {
             <CardItem
               key={idx}
               card={card}
+              cardType="cardlist"
               onSwipeStart={() => handleSwipeStart(idx)}
               resetSwipe={swipedIndex !== null && swipedIndex !== idx}
               swipedIndex={swipedIndex} // 추가
