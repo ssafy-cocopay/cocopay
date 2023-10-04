@@ -8,24 +8,17 @@ import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 
-export const LandingPage = () => {
+export const LandingPage = ({ receivedMessage }: any) => {
   const navigate = useNavigate();
   const [buttonAnimation, setButtonAnimation] = useState(false);
+  const bgColor = receivedMessage ? "gradient" : "blue";
+
   const navigatePage = (path: string) => {
     navigate(path);
   };
 
   useEffect(() => {
-    // 페이지가 로드될 때 버튼 애니메이션 시작
     setButtonAnimation(true);
-
-    // 3초 후에 버튼 애니메이션을 멈춥니다.
-    // const timer = setTimeout(() => {
-    //   setButtonAnimation(false);
-    // }, 3000);
-
-    // 컴포넌트가 unmount 되면 타이머를 해제합니다.
-    // return () => clearTimeout(timer);
     return () => setButtonAnimation(true);
   }, []);
 
@@ -42,7 +35,7 @@ export const LandingPage = () => {
 
   return (
     <Background
-      $colormode="blue"
+      $colormode={bgColor}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -51,7 +44,7 @@ export const LandingPage = () => {
     >
       <Container>
         <Wrapper $flexGrow={5}>
-          <Image src={coco} width={12} style={imageStyle}/>
+          <Image src={coco} width={12} style={imageStyle} />
         </Wrapper>
         <Wrapper $flexGrow={3} style={{ gap: "15px" }}>
           <Button
