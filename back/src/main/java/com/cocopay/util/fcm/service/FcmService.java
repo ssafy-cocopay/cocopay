@@ -76,10 +76,10 @@ public class FcmService {
     //targetToken : 푸쉬 알림을 받을 클라이언트 앱의 식별 토큰
     public void sendMessageTo(int userId, String title, String body, String name, String desc) throws IOException {
 
-        String targetToken = fcmKeyRepository.findById(String.valueOf(userId))
-                .orElseThrow(() -> new CustomException(ErrorCode.FCMTOKEN_NOT_FOUND))
-                .getFcmToken();
-        //String targetToken = "c8Ga8_FXxfSxmGEnnbJfs5:APA91bHrPQ3sVtM4NubeAYE0eOkxle_9GwoJ_aIb1C_D-LwfJR2t2TpQkCkiwkIwOD9VQ64ZB2grweArndggWO7yLH7-Yvnl0rWQ8A6e8U4-pD4LHJmgVCgNVvdvzT8SrhRNF3aviA-M";
+//        String targetToken = fcmKeyRepository.findById(String.valueOf(userId))
+//                .orElseThrow(() -> new CustomException(ErrorCode.FCMTOKEN_NOT_FOUND))
+//                .getFcmToken();
+        String targetToken = "c8Ga8_FXxfSxmGEnnbJfs5:APA91bHrPQ3sVtM4NubeAYE0eOkxle_9GwoJ_aIb1C_D-LwfJR2t2TpQkCkiwkIwOD9VQ64ZB2grweArndggWO7yLH7-Yvnl0rWQ8A6e8U4-pD4LHJmgVCgNVvdvzT8SrhRNF3aviA-M";
         log.info("FCM TOKEN : " + targetToken);
 
         String message = makeMessage(targetToken, title, body, name, desc);

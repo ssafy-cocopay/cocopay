@@ -7,8 +7,9 @@
 import React, {useRef, useState, useEffect} from 'react';
 import WebView from 'react-native-webview';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import {PermissionsAndroid} from 'react-native';
+import {PermissionsAndroid, Alert} from 'react-native';
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import messaging from '@react-native-firebase/messaging'; // 리액트 메시징
 
 import {
   WebViewErrorEvent,
@@ -33,13 +34,16 @@ async function requestCameraPermission() {
 const App = () => {
   useEffect(() => {
     requestCameraPermission();
+    requestUserPermission();
+    requestPermission();
   }, []);
 
   //웹뷰와 RN과의 소통은 아래의 ref 값을 이용하여 이루어진다
-  let webviewRef = useRef<WebView>(null);
+  let webviewRef = useRef<any>(null);
   const devices = useCameraDevices(); // 사용 가능한 카메라 디바이스 목록을 가져옵니다.
   const backCamera = devices.find(device => device.position === 'back'); // 후면 카메라를 선택합니다.
   const [showCamera, setShowCamera] = useState(false);
+  const [fcmToken, setFcmToken] = useState<string | null>(null);
 
   const qrCamera = () => {
     setShowCamera(true);
@@ -96,6 +100,106 @@ const App = () => {
   const handleBioAuth = () => {
     //complete
     webviewRef.current?.postMessage('SUCCESS');
+  };
+
+  //FCM
+  const getToken = async () => {
+    const fcmToken = await messaging().getToken();
+
+    try {
+      console.log(fcmToken);
+      setFcmToken(fcmToken);
+      webviewRef.current.postMessage(fcmToken);
+    } catch (e) {
+      console.log(e, 'Error -------------------------------------------');
+    }
+  };
+
+  const requestPermission = () => {
+    try {
+      PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+      ]).then(result => {
+        if (
+          result['android.permission.POST_NOTIFICATIONS'] === 'granted' &&
+          result['android.permission.READ_MEDIA_IMAGES'] === 'granted'
+        ) {
+          console.log('모든 권한 획득', result);
+          //showToast();
+        } else if (
+          result['android.permission.POST_NOTIFICATIONS'] === 'denied' ||
+          result['android.permission.READ_MEDIA_IMAGES'] === 'denied'
+        ) {
+          console.log('거절된 권한있음', result);
+          recheckPermissions();
+        } else {
+          console.log('never_ask_again', result);
+          neverPermissions();
+        }
+      });
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  // 토큰 값 가져오기 관련 로직
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      return getToken();
+    }
+  };
+
+  const recheckPermissions = () => {
+    Alert.alert(
+      '권한 설정에 문제가 발생하였어요.',
+      '권한 설정을 다시 시도해주세요',
+      [
+        {
+          text: '재시도',
+          onPress: () => {
+            PermissionsAndroid.requestMultiple([
+              PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+              PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+            ]);
+          },
+          style: 'default',
+        },
+        {
+          text: '나중에 하기',
+          onPress: () => {},
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => {},
+      },
+    );
+  };
+
+  // 권한 설정이 불가능한 경우 표시되는 Alert차
+  const neverPermissions = () => {
+    Alert.alert(
+      '권한 설정에 문제가 발생하였어요.',
+      '설정에서 직접 권한을 설정하시거나 앱을 재설치 해주세요',
+      [
+        {
+          text: '확인',
+          onPress: () => {},
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => {},
+      },
+    );
   };
 
   return (
