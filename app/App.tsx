@@ -33,9 +33,16 @@ async function requestCameraPermission() {
 
 const App = () => {
   useEffect(() => {
-    requestCameraPermission();
     requestUserPermission();
-    requestPermission();
+    //requestCameraPermission();
+    //requestPermission();
+    const unsubscribe = messaging().onMessage(async (remoteMessage : any) => {
+      console.log("푸쉬알림 날라옴 : ", remoteMessage);
+      setRemoteMessage(remoteMessage);//
+      //webviewRef.current.postMessage(remoteMessage.data.description);
+
+      return () => unsubscribe();
+    })
   }, []);
 
   //웹뷰와 RN과의 소통은 아래의 ref 값을 이용하여 이루어진다
@@ -44,6 +51,21 @@ const App = () => {
   const backCamera = devices.find(device => device.position === 'back'); // 후면 카메라를 선택합니다.
   const [showCamera, setShowCamera] = useState(false);
   const [fcmToken, setFcmToken] = useState<string | null>(null);
+  const [remoteMessage, setRemoteMessage] = useState<any | null>(null);
+
+
+
+    // WebView 로딩 완료시
+    // const handleEndLoading = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
+    //   console.log('handleEndLoading', e);
+    //   // 웹뷰가 로딩 완료되었을 때, 저장된 remoteMessage가 있다면 전송
+    //   if (remoteMessage) {
+    //     webviewRef.current.postMessage(remoteMessage.data.description);
+    //     // 메시지 전송 후 remoteMessage 초기화
+    //     // setRemoteMessage(null);
+    //   }
+    // };
+
 
   const qrCamera = () => {
     setShowCamera(true);
@@ -57,12 +79,13 @@ const App = () => {
   const handleEndLoading = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
     console.log('handleEndLoading', e);
     // RN에서 웹뷰로 정보 보내는 메소드
-    webviewRef.current?.postMessage('로딩완료시 webview로 정보 보내는 곳');
+    webviewRef.current.postMessage(fcmToken);
+    console.log("webLoading 완료");
   };
 
   enum Event {
     BIO_AUTH,
-    QR_CAMERA,
+    QR_CAMERA
   }
 
   const convertToEvent = (data: any): Event | undefined => {
@@ -73,7 +96,6 @@ const App = () => {
     if (data === 'QR_CAMERA') {
       return Event.QR_CAMERA;
     }
-
     return undefined;
   };
 
@@ -109,10 +131,12 @@ const App = () => {
     try {
       console.log("FCM TOKEN : + " + fcmToken);
       setFcmToken(fcmToken);
-      webviewRef.current.postMessage(fcmToken);
+//      webviewRef.current.postMessage(fcmToken);
     } catch (e) {
       console.log(e, 'Error -------------------------------------------');
     }
+
+
   };
 
   const requestPermission = () => {
@@ -208,6 +232,10 @@ const App = () => {
         onLoadEnd={handleEndLoading}
         onMessage={handleOnMessage}
         webviewRef={webviewRef}
+        sharedCookiesEnabled={true}
+        domStorageEnabled={true}
+        allowFileAccess={true}
+        javaScriptEnabledAndroid={true}
         // source={{uri: 'http://localhost:3000'}}
         // source={{uri: 'http://172.28.128.1:3000'}}
         source={{uri: 'https://j9b208.p.ssafy.io/'}}
