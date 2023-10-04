@@ -33,11 +33,12 @@ export const LandingPage = ({ receivedMessage }: any) => {
     transition: "transform 2s ease", // 3초 동안 위로 이동하면서 애니메이션을 적용
   };
 
+  // "dkB9mGohTVGvMV60EMzN6D:APA91bHkdHGlNJ3UrzWpiVpSNzKEBOSaK545kVy9lPLcCynXFdj9yVAHY72FanTJcQIArMJUvbeRR4k9s7eE_rQguMLc2GhzK0lLS222Sn9r7q0zSlAiQWArROrGBPOLcRbnZD2-dagJ"
   return (
     <Background
       $colormode={
-        receivedMessage ===
-        "dkB9mGohTVGvMV60EMzN6D:APA91bHkdHGlNJ3UrzWpiVpSNzKEBOSaK545kVy9lPLcCynXFdj9yVAHY72FanTJcQIArMJUvbeRR4k9s7eE_rQguMLc2GhzK0lLS222Sn9r7q0zSlAiQWArROrGBPOLcRbnZD2-dagJ"
+        receivedMessage !==
+        null
           ? "gradient"
           : "blue"
       }
