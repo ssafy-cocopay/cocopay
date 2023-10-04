@@ -12,9 +12,9 @@ export const StatisticsContainer = styled(Container)`
 
 export const CategoryWhiteBox = styled(Container)`
   background-color: white;
-  border-radius: 38px;
-  height: 120px;
-  width: 42%;
+  border-radius: 30px;
+  height: 110px;
+  width: 40%;
   box-shadow: ${(props) => props.theme.shadow.shadow1};
   padding-top: 12px;
 `;
