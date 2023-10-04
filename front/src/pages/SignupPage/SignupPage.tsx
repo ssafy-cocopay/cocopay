@@ -210,11 +210,13 @@ const SignupLayout = ({
         </Wrapper>
         <br />
         {/* company dropdown */}
+        <Wrapper>
         <Dropdown
           options={["SKT", "KT", "LG"]}
           defaultValue="통신사를 선택해주세요"
           onChange={handleCompanyChange}
         />
+        </Wrapper>
         {/* tel input */}
         <Wrapper>
         <Input

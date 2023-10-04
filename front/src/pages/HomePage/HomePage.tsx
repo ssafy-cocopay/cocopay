@@ -32,6 +32,7 @@ import { PATH } from "@/constants/path";
 
 const HomePage = () => {
   const MainCards = useGetMainCards();
+  console.log(MainCards)
   const [barcodeValue, setBarcodeValue] = useState("491731284377");
   const [resetTimerFlag, setResetTimerFlag] = useState(false);
   // TODO: 3분 만료랑 새로고침, 큐알....

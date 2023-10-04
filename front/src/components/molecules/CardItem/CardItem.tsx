@@ -79,6 +79,8 @@ function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index
   };
 
   return (
+    <div>
+      {cardType === 'cardlist' && (
     <div
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -90,8 +92,7 @@ function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index
           display: "flex",
           width: "100%"
       }}
-    >
-      {cardType === 'cardlist' && (
+      >
       <div
       onClick={onClick}
       style={{
@@ -105,7 +106,7 @@ function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index
           width={24}
           height={16}
           $unit="px"
-          style={{ margin: "6px 0 8px 12px" }}
+          style={{ margin: "6px 0 8-px 12px" }}
         ></Image>
         <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around" width="48%" >
           <CardItemWrapper>
@@ -151,8 +152,10 @@ function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index
       </CardItemWrapper>
       <Hr />
     </div>
+    </div>
     )}
     {cardType === 'cardupload' && (
+      <div>
       <div
       style={{
         width: "100%"
@@ -211,25 +214,8 @@ function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index
       </CardItemWrapper>
       <Hr />
     </div>
+    </div>
     )}
-    {
-      isDeleteVisible &&
-      <button
-        onClick={opendeletemodal}
-        style={{
-          width: "17%",
-          height: "100%",  // 버튼의 높이를 부모 div와 동일하게 설정
-          position: "absolute",
-          right: 0,
-          border: "none",
-          backgroundColor: theme.color.danger,
-          color: "white",
-          fontSize: "16px",
-        }}
-      >
-        삭제
-      </button>
-    }
     </div>
   );
 }
