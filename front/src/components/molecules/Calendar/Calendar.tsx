@@ -21,7 +21,7 @@ type CalendarProps = {
   const Calendar = (props: CalendarProps) => {
     const { minusmonth, plusmonth, changemonth } = props;
     const [isModalOpen, setModalOpen] = useState(false);
-    const keypad = ['10월', '11월', '12월', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월'];
+    const keypad = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월','10월', '11월', '12월'];
     const [selectedMonth, setSelectedMonth] = useState("");
     console.log(selectedMonth.slice(0, -1))
     const numberButton = (string: string | "", index: number) => (
@@ -37,7 +37,8 @@ type CalendarProps = {
             backgroundColor: string === selectedMonth ? theme.color.white : theme.color.grey5,
             color: string === selectedMonth ? theme.color.blue : theme.color.grey2,
             marginBottom: "4px",
-            border: string === selectedMonth ? `2px solid ${theme.color.blue}` : "none"
+            border: string === selectedMonth ? `2px solid ${theme.color.blue}` : "none",
+            pointerEvents: string === "11월" || string === "12월" ? "none" : "auto",
           }}
         >
           {string}
@@ -66,24 +67,6 @@ type CalendarProps = {
                         size="body2"
                         fontWeight="bold"
                         style={{
-                            margin: "16px 0 12px 12px"
-                        }}
-                        >
-                        2022
-                        </Text>
-                        <Wrapper
-                            $flexDirection="row"
-                            $justifyContent="space-evenly"
-                            style={{ marginBottom: "28px", gap: "10px", flexWrap: "wrap" }}
-                        >
-                            {keypad.slice(0, 3).map((btn, index) => {
-                                return numberButton(btn, index);
-                            })}
-                        </Wrapper>
-                        <Text
-                        size="body2"
-                        fontWeight="bold"
-                        style={{
                         margin: "0 0 12px 12px"
                         }}
                         >
@@ -94,7 +77,7 @@ type CalendarProps = {
                             $justifyContent="space-evenly"
                             style={{ marginBottom: "28px", gap: "10px", flexWrap: "wrap" }}
                         >
-                            {keypad.slice(3, 12).map((btn, index) => {
+                            {keypad.slice(0, 13).map((btn, index) => {
                                 return numberButton(btn, index);
                             })}
                         </Wrapper>
@@ -105,7 +88,14 @@ type CalendarProps = {
                         >
                             <Button
                             option="activated"
-                            onClick={() => {toggleModal(); {selectedMonth !== "" ? changemonth(parseInt(selectedMonth.slice(0, -1))) : props.month}}}
+                            // onClick={() => {toggleModal(); {selectedMonth !== "" ? changemonth(parseInt(selectedMonth.slice(0, -1))) : props.month}}}
+                            onClick={() => {
+                                toggleModal();
+                                // 수정된 부분: selectedMonth !== '11월' && selectedMonth !== '12월' 인 경우에만 changemonth 호출
+                                if (selectedMonth !== '11월' && selectedMonth !== '12월') {
+                                  changemonth(parseInt(selectedMonth.slice(0, -1)));
+                                }
+                              }}
                             >
                             확인
                             </Button>
