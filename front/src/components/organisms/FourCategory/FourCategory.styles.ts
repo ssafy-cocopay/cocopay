@@ -6,4 +6,5 @@ export const FourCategoryWrapper = styled(FlexDiv)`
   gap: 15px;
   flex-wrap: wrap;
   margin-top: 24px;
+  margin-left: 8px;
 `;
