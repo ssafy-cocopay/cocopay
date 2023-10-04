@@ -72,9 +72,9 @@ function PayOfflinePage() {
             최적의 결제 카드 파악 중...
           </Text> 
           <Wrapper $flexDirection="row">
-        {CardImgList.map((card, idx) => {
+        {CardList.map((card:string, idx:number) => {
            const animationDelay = `${idx * 0.8}s`;
-           const zIndex = CardImgList.length - idx;
+           const zIndex = CardList.length - idx;
           return <LeftRotate src={card} key={idx} width={7} style={{animationDelay,zIndex}} />;
         })}
       </Wrapper>

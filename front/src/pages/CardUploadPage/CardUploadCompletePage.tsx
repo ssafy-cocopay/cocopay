@@ -14,8 +14,10 @@ import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import Modal from "@/components/atoms/Modal/Modal";
 import { useGetUserCard } from "@/apis/Card/Queries/useGetCard";
 import { useDeleteCard } from "@/apis/Card/Mutations/useDeleteCard";
-import { Card } from "@/types/card";
+import { Card, CardUpload } from "@/types/card";
 import { useQueryClient } from '@tanstack/react-query';
+import { useRecoilState } from "recoil";
+import { priorityAtom } from "@/states/UserInfoAtoms";
 
 const CardUploadCompletePage = () => {
 
@@ -31,6 +33,11 @@ const CardUploadCompletePage = () => {
   const [deleteCardId, setDeleteCardId] = useState(0);
   const queryClient = useQueryClient();
   const useDeleteCardMutation = useDeleteCard();
+  const [priority, setPriority] = useRecoilState(priorityAtom)
+
+  const handleSetPriority = () => {
+    setPriority("upload")
+  }
 
   const deleteCard = (deleteCardId: number) => {
     useDeleteCardMutation.mutate(deleteCardId, {
@@ -99,6 +106,7 @@ const CardUploadCompletePage = () => {
             <CardItem
               key={idx}
               card={card}
+              cardType="cardupload"
               onSwipeStart={() => handleSwipeStart(idx)}
               resetSwipe={swipedIndex !== null && swipedIndex !== idx}
               swipedIndex={swipedIndex} // 추가
@@ -109,7 +117,7 @@ const CardUploadCompletePage = () => {
           ))}
         <Layout>
             <Button
-                onClick={() => navigatePage(PATH.PRIORITY)}
+                onClick={() => {navigatePage(PATH.PRIORITY); handleSetPriority()}}
                 option="activated"
                 $borderRadius="16px"
                 $fontSize="16px"

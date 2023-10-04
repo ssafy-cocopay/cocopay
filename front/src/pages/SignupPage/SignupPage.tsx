@@ -69,7 +69,7 @@ const SignupPage: React.FC = () => {
   };
 
   const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTel = e.target.value.toString();
+    const newTel = e.target.value.slice(0, 11).toString();
 
     setUserTel(newTel);
     setUserInfo((prev) => ({ ...prev, tel: newTel }));
@@ -159,6 +159,7 @@ const SignupLayout = ({
         </Text>
         {/* name input */}
         <Input
+          height={65}
           name="name"
           placeholder="이름을 작성해주세요"
           onChange={(e) => {
@@ -191,8 +192,10 @@ const SignupLayout = ({
         {/* birth input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
           <Input
+            height={65}
             width={122}
             name="birth"
+            maxLength={6}
             onChange={(e) => {
               handleBirthChange(e.target.value);
             }}
@@ -200,7 +203,7 @@ const SignupLayout = ({
           <Text size="subtitle1" color="grey3">
             -
           </Text>
-          <Input width={35} $textAlign="center" $paddingLeft={0}></Input>
+          <Input maxLength={1} height={65} width={35} $textAlign="center" $paddingLeft={0}></Input>
           <Image src={Dots} width={40} $unit="%"></Image>
         </Wrapper>
         <br />
@@ -212,6 +215,7 @@ const SignupLayout = ({
         />
         {/* tel input */}
         <Input
+          height={65}
           name="tel"
           placeholder="핸드폰 번호를 입력해주세요"
           {...register("phone_number", {
@@ -238,6 +242,7 @@ const SignupLayout = ({
         {/* 인증번호 input */}
         <Wrapper $flexDirection="row" $justifyContent="space-between">
           <Input
+            height={65}
             width={150}
             value={messageNum}
             onChange={(e) => {
@@ -263,7 +268,7 @@ const SignupLayout = ({
         ></TimerComponent> */}
 
         <br />
-        <Button option="deActivated" onClick={numberCheck} size="large">
+        <Button option={messageNum.length >= 6 ? "activated" : "deActivated"} onClick={numberCheck} size="large">
           확인
         </Button>
         {isModalOpen && (
@@ -291,7 +296,10 @@ const SignupLayout = ({
                 >
                   정보 확인 후 재시도해주세요.
                 </Text>
-                <Button option="deActivated" onClick={toggleModal}>
+                <Button 
+                  option="deActivated"
+                  onClick={numberCheck} 
+                  size="large">
                   확인
                 </Button>
               </ModalWrapper>
