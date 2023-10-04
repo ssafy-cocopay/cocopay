@@ -8,20 +8,25 @@ import { CardItemWrapper, Hr, CardListBar } from "./CardItem.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import imgMaster from "@/assets/images/img-master.png"
 import imgVisa from "@/assets/images/img-visa.png"
-import { Card } from '@/types/card';
+import { Card, CardUpload } from '@/types/card';
 import theme from '@/styles/theme';
+import { useRecoilValue } from "recoil";
 
 interface CardItemProps {
-  card: Card;
+  card: Card | CardUpload;
+  cardType: 'cardlist' | 'cardupload'
   onSwipeStart: () => void;
   resetSwipe: boolean;
   swipedIndex: number | null;  // 추가
   index: number;               // 추가
   opendeletemodal: () => void;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
-function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendeletemodal, onClick }: CardItemProps) {
+function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index, opendeletemodal, onClick }: CardItemProps) {
+  const cardListData = card as Card;
+  const cardUploadData = card as CardUpload;
+  
   // 카드의 현재 위치 (픽셀 기준)를 나타냄, 초기값 0
   const [x, setX] = useState<number>(0);
   // 현재 드래그 중인지의 여부, 초기값 false
@@ -72,31 +77,6 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
       setX(0);
     }
   };
-  
-
-  // const handleTouchStart = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   onSwipeStart(); // 외부에서 전달받은 함수를 호출
-  //   setIsDragging(true); // 드래그 시작을 알리기 위해 isDragging을 true로 설정
-  //   setStartX(e.clientX - x);  // 시작 위치 저장(startX를 현재 마우스 위치에서 카드의 위치 x를 뺀 값으로 설정)
-  // };
-
-  // const handleTouchMove = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   if (!isDragging) return; // isDragging이 false면 함수를 종료
-  //   const newX = e.clientX - startX; // newX를 계산하여 현재 마우스 위치에서 시작점 startX를 뺀 값으로 설정
-  //   if (newX < 0 && newX > -window.innerWidth / 16) {  // 4분의 1 제한
-  //     setX(newX); // newX가 0보다 작고 화면 너비의 1/16보다 큰 값이면, x를 newX로 업데이트하여 카드의 위치를 변경
-  //   }
-  // };
-
-  // const handleTouchEnd = () => {
-  //   setIsDragging(false); // 드래그 종료를 알리기 위해 isDragging을 false로 설정
-  //   if (x < -window.innerWidth / 32) {  // 8분의 1 지점에서 놓으면 완전히 이동
-  //     setX(-window.innerWidth / 16);
-  //   } else {
-  //     setX(0);  // 원래 위치로 복귀
-  //   }
-  // };
-
 
   return (
     <div
@@ -111,21 +91,17 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
           width: "100%"
       }}
     >
+      {cardType === 'cardlist' && (
       <div
       onClick={onClick}
       style={{
         width: "100%"
       }}
       >
-      {/* TODO: 서영이가 위에 만들어놓은 더미로 맵 뿌리기 ! */}
-      {/* {CardInfo.map((card,idx) => {
-        return
-      })} */}
       <CardItemWrapper $margin="12px 24px">
-        <Image src={card && card.cardImage} width={90} height={56} $unit="px"></Image>
-        {/* TODO: 이부분 asset에 이미지 저장해놓고 api값이랑 맞춰서 국내인지 master 인지 뿌리는건가요? 확인부탁 */}
+        <Image src={cardListData && cardListData.cardImage} width={90} height={56} $unit="px"></Image>
         <Image
-          src={card && card.master ? imgMaster : card.visa ? imgVisa : korImg}
+          src={cardListData && cardListData.master ? imgMaster : cardListData.visa ? imgVisa : korImg}
           width={24}
           height={16}
           $unit="px"
@@ -134,7 +110,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
         <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around" width="48%" >
           <CardItemWrapper>
             <Text size="small2" fontWeight="regular" color="black1">
-              {card && card.cardName}
+              {cardListData && cardListData.cardName}
             </Text>
           </CardItemWrapper>
           <CardItemWrapper>
@@ -144,10 +120,10 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
               color="grey1"
               $margin="0 4px 0 0"
             >
-              {card && card.cardType}
+              {cardListData && cardListData.cardType}
             </Text>
             <Text size="small3" fontWeight="light" color="grey1">
-              {card && card.serialNumber}
+              {cardListData && cardListData.serialNumber}
             </Text>
           </CardItemWrapper>
           <div style={{position: 'relative', width: '100%'}}>
@@ -157,7 +133,7 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
             >
             </CardListBar>
             <CardListBar
-            width={`${card && card.graphRate}%`}
+            width={`${cardListData && cardListData.graphRate}%`}
             $bgc="blue"
             $isAbsolute={true}
             >
@@ -175,6 +151,67 @@ function CardItem({ card, onSwipeStart, resetSwipe, swipedIndex, index, opendele
       </CardItemWrapper>
       <Hr />
     </div>
+    )}
+    {cardType === 'cardupload' && (
+      <div
+      style={{
+        width: "100%"
+      }}
+      >
+      <CardItemWrapper $margin="12px 24px">
+        <Image src={cardUploadData && cardUploadData.cardDefaultImage} width={90} height={56} $unit="px"></Image>
+        <Image
+          src={cardUploadData && cardUploadData.master ? imgMaster : cardUploadData.visa ? imgVisa : korImg}
+          width={24}
+          height={16}
+          $unit="px"
+          style={{ margin: "6px 0 8px 12px" }}
+        ></Image>
+        <Wrapper $padding="0 0 0 8px" $alignItems="start" $justifyContent="space-around" width="48%" >
+          <CardItemWrapper>
+            <Text size="small2" fontWeight="regular" color="black1">
+              {cardUploadData && cardUploadData.cardName}
+            </Text>
+          </CardItemWrapper>
+          <CardItemWrapper>
+            <Text
+              size="small3"
+              fontWeight="light"
+              color="grey1"
+              $margin="0 4px 0 0"
+            >
+              {cardUploadData && cardUploadData.cardType}
+            </Text>
+            <Text size="small3" fontWeight="light" color="grey1">
+              {cardUploadData && cardUploadData.serialNumber}
+            </Text>
+          </CardItemWrapper>
+          <div style={{position: 'relative', width: '100%'}}>
+            <CardListBar
+            width="100%"
+            $bgc="grey4"
+            >
+            </CardListBar>
+            <CardListBar
+            width={`${cardUploadData && cardUploadData.graphRate}%`}
+            $bgc="blue"
+            $isAbsolute={true}
+            >
+            </CardListBar>
+          </div>
+        </Wrapper>
+        <CardItemWrapper $alignItems="center" $margin='0 0 0 24px'>
+          <Image
+            src={iconHamburgerGrey}
+            width={16}
+            height={12}
+            $unit="px"
+          ></Image>
+        </CardItemWrapper>
+      </CardItemWrapper>
+      <Hr />
+    </div>
+    )}
     {
       isDeleteVisible &&
       <button

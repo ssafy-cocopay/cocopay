@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import styled, { keyframes } from "styled-components";
 import cards from "@/assets/images/img-cardline.png";
+import { useRecoilState } from "recoil";
 
 const moveRight = keyframes`
   to {
@@ -30,7 +31,6 @@ type CardUploadPageProps = {
 
 const CardUploadLoadingPage = (props: CardUploadPageProps) => {
   const { onNextPage } = props;
-
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
@@ -42,6 +42,7 @@ const CardUploadLoadingPage = (props: CardUploadPageProps) => {
       onNextPage();
     });
   };
+
 
   return (
     <Background

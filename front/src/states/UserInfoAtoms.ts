@@ -11,3 +11,14 @@ export const userInfoState = atom<UserInfo>({
     password: "",
   },
 });
+
+
+export const priorityAtom = atom({
+  key: "priorityAtom",
+  default: "priority"
+})
+
+export const myPagePriorityAtom = atom({
+  key: "myPagePriorityAtom",
+  default: 2
+})

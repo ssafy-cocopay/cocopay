@@ -22,10 +22,10 @@ const PayOfflinePage = () => {
   console.log(OfflinePayCard);
 
   // OfflinePayCard.remainingAmt를 numberToAmount 함수를 사용하여 변환합니다.
-  const formattedRemainingAmt = numberToAmount(OfflinePayCard.remainingAmt);
+  const formattedRemainingAmt = numberToAmount(OfflinePayCard && OfflinePayCard.remainingAmt);
 
   // OfflinePayCard.discounted를 numberToAmount 함수를 사용하여 변환합니다.
-  const formattedDiscounted = numberToAmount(OfflinePayCard.discounted);
+  const formattedDiscounted = numberToAmount(OfflinePayCard && OfflinePayCard.discounted);
 
   return (
     <Background
@@ -51,7 +51,7 @@ const PayOfflinePage = () => {
 
           <Image
             style={{ transform: "rotate(90deg)" }}
-            src={OfflinePayCard.cardImage}
+            src={OfflinePayCard && OfflinePayCard.cardImage}
             width={73}
             $unit="%"
           ></Image>
@@ -63,7 +63,7 @@ const PayOfflinePage = () => {
             {/* TODO: 글씨 크기 커졌을 때 어떻게 할지 의논 후 수정 */}
             <Wrapper $flexDirection="row" $justifyContent="start">
               <Text size="subtitle2" fontWeight="bold" color="blue">
-                {OfflinePayCard.cardName}
+                {OfflinePayCard && OfflinePayCard.cardName}
               </Text>
               <Text size="body1" fontWeight="light">
                 카드로
@@ -92,7 +92,6 @@ const PayOfflinePage = () => {
               </Text>
             </Wrapper>
             <br />
-            {/* TODO: 실적바 퍼포먼스 재사용가능하게 수정해서 넣기 */}
             {OfflinePayCard && (
               <Performance data={OfflinePayCard} dataType="offlinePay" />
             )}

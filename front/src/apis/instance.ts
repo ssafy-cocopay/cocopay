@@ -15,7 +15,7 @@ const APP_SERVER_URL = "https://j9b208.p.ssafy.io";
 //   ? parseInt(userIdFromLocalStorage, 10)
 //   : 2;
 
-const userId = 24;
+const userId = 35;
 
 const instance: Axios = axios.create({
   baseURL: `${APP_SERVER_URL}/api`, // 여기 오류나면 https://j9b208.p.ssafy.io/api로 변경
