@@ -60,17 +60,22 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   };
 
   const handlePutPassword = (newPassword: string) => {
-    setUserInfo((prev) => ({ ...prev, password: newPassword }));
+    // setUserInfo((prev) => ({ ...prev, password: newPassword }));
+    setUserInfo((prev) => ({ ...prev, password: enteredPassword }));
     addUserMutation.mutate(userInfo);
-    console.log('저장되어있냐', userInfo);
+    console.log("저장되어있냐", userInfo);
+    localStorage.setItem("userInfo", userInfo.password);
   };
 
   useEffect(() => {
+    console.log(step, "step");
     if (pressedCount === 6) {
       if (step === 1) {
         // 첫 번째 단계: 비밀번호 설정
         setSetPassword(enteredPassword);
-        setEnteredPassword(""); // 입력 상태 초기화
+        console.log("setSetPassword", setPassword, enteredPassword, "step 1");
+        // setEnteredPassword(""); // 입력 상태 초기화
+        handlePutPassword(enteredPassword);
         setPressedCount(0);
         setStep(2); // 다음 단계로 전환
       } else if (step === 2) {
@@ -78,7 +83,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
       }
 
       // 로그인시 유저가 입력한 비밀번호와 userPassword가 동일한지 검사
-      if (enteredPassword === userPassword) {
+      else if (enteredPassword === userPassword) {
         onPasswordMatch?.(); // 비밀번호가 일치하면 callback 호출
       } else {
         console.log("틀렸어!");
@@ -93,7 +98,7 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
     if (step === 2 && confirmPassword) {
       if (setPassword === confirmPassword) {
         console.log("step2: 비밀번호 왕왕 일치");
-        handlePutPassword(setPassword);
+        // handlePutPassword(setPassword);
         navigatePage(PATH.FIGNER_SETTING);
       } else {
         console.log("비밀번호 일치하지 않음");
