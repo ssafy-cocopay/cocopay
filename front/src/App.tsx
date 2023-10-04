@@ -12,9 +12,9 @@ const App = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("message", handleMessage);
+    window.addEventListener("message", handleMessage);
     return () => {
-      document.removeEventListener("message", handleMessage);
+      window.removeEventListener("message", handleMessage);
     };
   }, []);
 
