@@ -1699,6 +1699,11 @@
     "opencollective-postinstall" "^2.0.1"
     "superstruct" "^0.6.2"
 
+"@react-native-firebase/dynamic-links@^18.5.0":
+  "integrity" "sha512-RQDhEmPN6w+1MFdpzlzS4DZShAfkVxObQTXZ9CCeO7dUdwlkUcJfXZSwDKl770C8hiuNUXlumztFepvoprrjlQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/dynamic-links/-/dynamic-links-18.5.0.tgz"
+  "version" "18.5.0"
+
 "@react-native-firebase/messaging@^18.5.0":
   "integrity" "sha512-y1FApYxBMcygmbWBqUPFC+fCfvx6Yf6TdZewun7kPwx+S+tkYzoKx1IsXtxOXtqyJjCNEYirjFgNrs5SSd02zA=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-18.5.0.tgz"
