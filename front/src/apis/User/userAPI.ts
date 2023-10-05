@@ -18,10 +18,12 @@ const addPriority = async (recommendType: number) => {
   // console.log("우선순위", recommendType);
   await instance.put("/users", { recommendType });
 };
+
 const addUser = async (data: UserInfo) => {
   const response = await instance.post("/users/join", data);
   // console.log(response.data, "addUser안에서 localstorage에 userId 저장");
   localStorage.setItem("userId", response.data.userId);
+  console.log("userId", response.data.userId, '추가');
 };
 
 const getOfflinePay = async () => {
@@ -36,6 +38,11 @@ const getUserMyPage = async () => {
   return response.data;
 };
 
+const deleteUser = async () => {
+  console.log("회원탈퇴");
+  await instance.put("/users/quit");
+};
+
 export {
   addMessage,
   addMessageConfirm,
@@ -43,4 +50,5 @@ export {
   addPriority,
   getOfflinePay,
   getUserMyPage,
+  deleteUser
 };

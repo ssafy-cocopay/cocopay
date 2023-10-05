@@ -14,25 +14,47 @@ import { ModalBg } from "@/components/atoms/Modal/Modal.styles";
 import { useGetMyPage } from "@/apis/User/Queries/useGetMyPage";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { priorityAtom, myPagePriorityAtom } from "@/states/UserInfoAtoms";
+import { useDeleteUser } from "@/apis/User/Mutations/useDeleteUser";
 
 const MyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const navigatePage = (path: string) => {
+    navigate(path);
+  };
+  const DeleteUser = useDeleteUser()
+  const handleDeleteUser = () => {
+    DeleteUser.mutate(undefined, {
+        onSuccess: () => {
+          navigatePage("/")
+            // 원하는 추가 동작을 여기에 작성하세요.
+        },
+        onError: (error) => {
+            console.log("handleDeleteUser에서의 추가 동작: 회원 탈퇴 실패!");
+            // 실패했을 때 원하는 추가 동작을 여기에 작성하세요.
+        }
+    });
+};
 
   //모달 오픈 함수
   const toggleModal = () => {
     console.log("Modal");
     setIsModalOpen((prev) => !prev);
   };
-  const navigate = useNavigate();
-
-  const navigatePage = (path: string) => {
-    navigate(path);
-  };
   const withdrawal = () => {
     toggleModal();
   };
   const UserMyPage = useGetMyPage();
   console.log(UserMyPage, "유저마이페이지");
+  const [priority, setPriority] = useRecoilState(priorityAtom)
+  const Priority = useRecoilValue(myPagePriorityAtom)
+
+  const handleSetPriority = () => {
+    setPriority("mypage")
+  }
 
   return (
     <Background
@@ -99,7 +121,7 @@ const MyPage = () => {
             <Image src={iconChevronRightGrey} height={24} $unit="px"></Image>
           </MypageWrapper>
           <MypageWrapper
-            onClick={() => navigatePage(PATH.PRIORITY)}
+            onClick={() => {navigatePage(PATH.PRIORITY); handleSetPriority();}}
             $justifyContent="space-between"
           >
             <Text size="body2" fontWeight="bold" color="black1">
@@ -115,7 +137,7 @@ const MyPage = () => {
                 color="blue"
                 style={{ lineHeight: "24px" }}
               >
-                할인율
+                {Priority === 0 ? "할인율" : "실적"}
               </Text>
               <Image src={iconChevronRightGrey} height={24} $unit="px"></Image>
             </MypageWrapper>
@@ -169,7 +191,7 @@ const MyPage = () => {
                 $width="12rem"
                 option="danger"
                 style={{ margin: 10 }}
-                onClick={withdrawal}
+                onClick={() => {withdrawal(); handleDeleteUser();}}
               >
                 네, 삭제하겠습니다
               </Button>

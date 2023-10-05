@@ -70,7 +70,7 @@ const CategoryTextBoxWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  margin-top: 68px;
+  margin-top: 56px;
 `;
 
 const CategoryBox = (props: CategoryBoxProps) => {
@@ -79,11 +79,11 @@ const CategoryBox = (props: CategoryBoxProps) => {
 
   return (
     <CategoryWhiteBox>
-      <Image src={gauge} width={5}></Image>
+      <Image src={gauge} width={4}></Image>
       <Image
         src={categoryImg}
-        width={4}
-        style={{ position: "relative", top: "-70px" }}
+        width={3.2}
+        style={{ position: "relative", top: "-55px" }}
       ></Image>
 
       <CategoryTextBoxWrapper>

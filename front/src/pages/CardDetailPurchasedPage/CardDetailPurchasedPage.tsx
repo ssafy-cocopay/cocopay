@@ -30,14 +30,17 @@ const CardDetailPurchasedPage = () => {
     const CardPurchased = usePostCardPurchased()
     const [month, setMonth] = useRecoilState(CardDetailMonthAtom)
     const cardid = useRecoilValue(CardDetailIdAtom)
+    const date = new Date();
 
     const handleMonthMinus = () => {
         setMonth((prev) => prev - 1);
     };
 
     const handleMonthPlus = () => {
-        setMonth((prev) => prev + 1);
-    };
+        if (month < date.getMonth() + 1) {
+          setMonth((prev) => prev + 1);
+        }
+      };    
 
     const handleMonthChange = (newmonth:number) => {
         setMonth(newmonth)

@@ -12,7 +12,7 @@ const Modal = ({ toggleModal, children }: ModalProps) => {
   return (
     <>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        {children}  {/* children을 렌더링합니다 */}
+        {children} {/* children을 렌더링합니다 */}
       </ModalContent>
     </>
   );

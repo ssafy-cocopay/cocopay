@@ -9,11 +9,14 @@ import { WhiteRoundedBox } from "@/components/atoms/WhiteRoundedBox/WhiteRounded
 import imgPriorityPerformance from "@/assets/images/img-priority-performane.png";
 import imgPrioritySale from "@/assets/images/img-priority-sale.png";
 import { useAddPriority } from "@/apis/User/Mutations/useAddPriority";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { priorityAtom, myPagePriorityAtom } from "@/states/UserInfoAtoms";
 
 const PriorityPage = () => {
   const addUseAddPriority = useAddPriority();
-  const [clikedBtn, setClickedBtn] = useState(2);
+  const [clikedBtn, setClickedBtn] = useRecoilState(myPagePriorityAtom);
   const [selectedBox, setSelectedBox] = useState<string | null>(null);
+  const Priority = useRecoilValue(priorityAtom)
 
   const navigate = useNavigate();
 
@@ -31,7 +34,11 @@ const PriorityPage = () => {
 
   const prioritysave = () => {
     addUseAddPriority.mutate(clikedBtn);
-    navigatePage(PATH.MAIN);
+    if (Priority === "upload") {
+      navigatePage(PATH.MAIN);
+    } else if (Priority === "mypage") {
+      navigatePage(PATH.MYPAGE);
+    }
   };
   return (
     <Background
@@ -83,7 +90,6 @@ const PriorityPage = () => {
       ></WhiteRoundedBox>
       <Button
         onClick={prioritysave}
-        // () => navigatePage(PATH.MAIN)}
         option="activated"
         size="medium"
       >

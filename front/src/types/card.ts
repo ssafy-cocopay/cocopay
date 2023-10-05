@@ -10,6 +10,18 @@ interface Card {
   graphRate: number;
 }
 
+interface CardUpload {
+  serialNumber: string;
+  cardType: string;
+  cardName: string;
+  visa: boolean;
+  master: boolean;
+  cardDefaultImage: string;
+  graphRate: number;
+  validDate: string;
+  userCardId: number;
+}
+
 interface TotalAmountMonth {
   totalPayByMonth: number;
   totalDiscountByMonth: number;
@@ -96,5 +108,6 @@ export type {
   CardHistoryLists,
   MainCard,
   PayOnlineComplete,
-  OfflinePay
+  OfflinePay,
+  CardUpload
 };

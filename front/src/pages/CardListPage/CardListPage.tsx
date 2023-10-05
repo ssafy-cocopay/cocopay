@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardItem from "@/components/molecules/CardItem/CardItem";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import {
@@ -19,6 +19,7 @@ import { Card } from "@/types/card";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { useRecoilState } from "recoil";
 
 const CardListPage = () => {
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ const CardListPage = () => {
     }
   };
 
+
   return (
     <Background>
       <CardListContainer $padding="36px 0 0 0">
@@ -98,6 +100,7 @@ const CardListPage = () => {
             <CardItem
               key={idx}
               card={card}
+              cardType="cardlist"
               onSwipeStart={() => handleSwipeStart(idx)}
               resetSwipe={swipedIndex !== null && swipedIndex !== idx}
               swipedIndex={swipedIndex} // 추가
@@ -129,7 +132,7 @@ const CardListPage = () => {
       {isModalOpen && (
         <ModalBg onClick={() => toggleModal(deleteCardId)}>
           <Modal toggleModal={() => toggleModal(deleteCardId)}>
-            <Wrapper>
+            <Wrapper style={{ paddingTop: "20px" }}>
               <Wrapper>
                 <Text
                   size="body1"
@@ -155,7 +158,7 @@ const CardListPage = () => {
                 <Button
                   $width="10rem"
                   option="deActivated"
-                  style={{ margin: 10 }}
+                  style={{ margin: "10px", padding: "10px"}}
                   onClick={() => toggleModal(deleteCardId)}
                 >
                   취소
@@ -163,7 +166,7 @@ const CardListPage = () => {
                 <Button
                   $width="10rem"
                   option="danger"
-                  style={{ margin: 5 }}
+                  style={{ margin: "10px", padding: "10px" }}
                   onClick={() => deleteCard(deleteCardId)}
                 >
                   삭제

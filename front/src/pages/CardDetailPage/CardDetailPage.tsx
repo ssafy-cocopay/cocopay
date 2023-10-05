@@ -58,7 +58,9 @@ const CardDetailPage = () => {
   };
 
   const handleMonthPlus = () => {
-    setMonth((prev) => prev + 1);
+    if (month < date.getMonth() + 1) {
+      setMonth((prev) => prev + 1);
+    }
   };
 
   const handleMonthChange = (newmonth:number) => {
@@ -122,7 +124,7 @@ const CardDetailPage = () => {
         </Wrapper>
         <CardWrapper>
           <Image
-            src={CardDetail.cardImage}
+            src={CardDetail && CardDetail.cardImage}
             height={180}
             $unit="px"
             $margin="46px 0 12px 0"
@@ -138,10 +140,10 @@ const CardDetailPage = () => {
             marginBottom: "44px"
           }}
         >
-          {CardDetail.cardName}
+          {CardDetail && CardDetail.cardName}
         </Text>
         {
-          (CardDetail.level !== 0 || CardDetail.nextLevel !== 0) && (
+          (CardDetail && CardDetail.level !== 0 || CardDetail && CardDetail.nextLevel !== 0) && (
             <WhiteRoundedBox
               height="144px"
               $margin="0 0 16px 0"
@@ -158,7 +160,7 @@ const CardDetailPage = () => {
                 color="black1"
                 $margin="4px 0 16px 0"
               >
-                {numberToAmount(CardDetail.price)}원
+                {numberToAmount(CardDetail && CardDetail.price)}원
               </Text>
               {CardDetail && <Performance data={CardDetail} dataType="cardDetail" />}
             </WhiteRoundedBox>

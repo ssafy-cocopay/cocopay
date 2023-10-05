@@ -1,46 +1,22 @@
-// import React, { useState } from "react";
-// import { Image } from "@/components/atoms/Image/Image";
-// import { useNavigate } from "react-router-dom";
-// import { Container } from "@/components/atoms/Container/Container.styles";
-// import { Text } from "@/components/atoms/Text/Text.styles";
-// import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
-// import Penguin from "@/assets/images/img-penguin-thinking.png";
-// import PayOfflinePage from "./PayOfflinePage";
-// import PayOfflineCompletePage from "./PayOfflineCompletePage";
-
-// function PayOffline() {
-//   const [currentPage, setCurrentPage] = useState(1);
-
-//   const handleNextPage = () => {
-//     if (currentPage < 2) {
-//       setCurrentPage((prevPage) => prevPage + 1);
-//     }
-//   };
-
-//   //페이지 번호에 따라 해당 페이지 컴포넌트를 렌더링.
-
-//   const renderPage = () => {
-//     switch (currentPage) {
-//       case 1:
-//         return <PayOfflinePage onNextPage={handleNextPage} />;
-//       case 2:
-//         return <PayOfflineCompletePage onNextPage={handleNextPage} />;
-//     }
-//   };
-
-//   return <div>{renderPage()}</div>;
-// }
-
-// export default PayOffline;
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PayOfflinePage from "./PayOfflinePage";
 import PayOfflineCompletePage from "./PayOfflineCompletePage";
+import { useGetIsPurchased } from "@/apis/Purchase/Queries/useGetIsPurchased";
+import { useRecoilState } from "recoil";
+import { IsPurchasedAtom } from '../../states/OfflinePageAtoms';
+
 
 function PayOffline() {
   const [currentPage, setCurrentPage] = useState("PayOfflinePage");
   const navigate = useNavigate();
+
+  const IsPurchased = useGetIsPurchased()
+  const [isPurchased, setIsPurchased] = useRecoilState(IsPurchasedAtom)
+
+  useEffect(() => {
+    setIsPurchased(IsPurchased);
+  }, [IsPurchased, setIsPurchased]);
 
   // 3초 후에 페이지를 전환하는 함수
   const navigateToCompletePage = () => {
