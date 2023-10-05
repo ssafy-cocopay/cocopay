@@ -10,6 +10,7 @@ import com.cocopay.payment.service.PaymentService;
 import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.key.PayCompleteKey;
 import com.cocopay.redis.service.BarcodeKeyService;
+import com.cocopay.redis.service.CheckKeyService;
 import com.cocopay.redis.service.OrderKeyService;
 import com.cocopay.redis.service.PayCompleteKeyService;
 import com.cocopay.usercard.entity.UserCard;
@@ -31,6 +32,7 @@ public class PaymentController {
     private final PaymentMapper paymentMapper;
     private final BarcodeKeyService barcodeKeyService;
     private final PayCompleteKeyService payCompleteKeyService;
+    private final CheckKeyService checkKeyService;
 
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
@@ -51,6 +53,7 @@ public class PaymentController {
 
         //주문 정보 redis에서 삭제
         orderKeyService.deleteOrderKey(findOrderKey);
+        checkKeyService.checkSave(userId);
 
         return ResponseEntity.ok("결제 요청 완료");
     }
@@ -104,11 +107,19 @@ public class PaymentController {
 
     //결제가 되었는지 체크하는 api
     @GetMapping("/check")
-    public ResponseEntity check(@RequestHeader("userId") int userId) {
+    public ResponseEntity offlineCheck(@RequestHeader("userId") int userId) {
         //redis에서 결제내역 사이즈 조회
         String res = payCompleteKeyService.checkComplete(userId);
         //결제내역 사이즈 조회
 
         return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/online-check")
+    public ResponseEntity onlineCheck(@RequestHeader("userId") int userId) {
+        String check = checkKeyService.findCheck(userId);
+        checkKeyService.deleteCheck(userId);
+
+        return ResponseEntity.ok(check);
     }
 }
