@@ -177,8 +177,8 @@ const router = createBrowserRouter([
   },
   {
     path: PATH.TEST,
-    element: <TestPage />
-  }
+    element: <TestPage />,
+  },
 ]);
 
 const AppRouter = () => {
