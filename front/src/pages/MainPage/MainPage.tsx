@@ -95,6 +95,7 @@ const MainPage = () => {
         $colormode="gradient"
         style={{
           minHeight: "100vh",
+          minWidth:"100vw"
         }}
       >
         <Outlet />

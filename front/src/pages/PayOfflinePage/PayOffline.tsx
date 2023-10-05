@@ -2,10 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PayOfflinePage from "./PayOfflinePage";
 import PayOfflineCompletePage from "./PayOfflineCompletePage";
+import { useGetIsPurchased } from "@/apis/Purchase/Queries/useGetIsPurchased";
+import { useRecoilState } from "recoil";
+import { IsPurchasedAtom } from '../../states/OfflinePageAtoms';
+
 
 function PayOffline() {
   const [currentPage, setCurrentPage] = useState("PayOfflinePage");
   const navigate = useNavigate();
+
+  const IsPurchased = useGetIsPurchased()
+  const [isPurchased, setIsPurchased] = useRecoilState(IsPurchasedAtom)
+
+  useEffect(() => {
+    setIsPurchased(IsPurchased);
+  }, [IsPurchased, setIsPurchased]);
 
   // 3초 후에 페이지를 전환하는 함수
   const navigateToCompletePage = () => {
