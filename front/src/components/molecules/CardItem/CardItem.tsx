@@ -152,6 +152,24 @@ function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index
       </CardItemWrapper>
       <Hr />
     </div>
+    {
+      isDeleteVisible &&
+      <button
+        onClick={opendeletemodal}
+        style={{
+          width: "17%",
+          height: "100%",  // 버튼의 높이를 부모 div와 동일하게 설정
+          position: "absolute",
+          right: 0,
+          border: "none",
+          backgroundColor: theme.color.danger,
+          color: "white",
+          fontSize: "16px",
+        }}
+      >
+        삭제
+      </button>
+    }
     </div>
     )}
     {cardType === 'cardupload' && (
@@ -213,27 +231,9 @@ function CardItem({ card, cardType, onSwipeStart, resetSwipe, swipedIndex, index
         </CardItemWrapper>
       </CardItemWrapper>
       <Hr />
-    </div>
-    </div>
+      </div>
+      </div>
     )}
-     {
-      isDeleteVisible &&
-      <button
-        onClick={opendeletemodal}
-        style={{
-          width: "17%",
-          height: "100%",  // 버튼의 높이를 부모 div와 동일하게 설정
-          position: "absolute",
-          right: 0,
-          border: "none",
-          backgroundColor: theme.color.danger,
-          color: "white",
-          fontSize: "16px",
-        }}
-      >
-        삭제
-      </button>
-    }
     </div>
   );
 }
