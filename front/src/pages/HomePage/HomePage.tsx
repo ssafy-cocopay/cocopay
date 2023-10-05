@@ -6,6 +6,7 @@ import { Line } from "@/components/atoms/Line/Line.style";
 import search from "@/assets/images/icon-search-blue.png";
 import refresh from "@/assets/images/icon-refresh-grey.png";
 import { useGetMainCards } from "@/apis/Card/Queries/useGetMainCards";
+import { useGetIsPurchased } from "@/apis/Purchase/Queries/useGetIsPurchased";
 
 import {
   BlueContainerWrapper,
@@ -29,10 +30,14 @@ import {
 import { MainCard } from "@/types/card";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { useRecoilState } from "recoil";
+import { IsPurchasedAtom } from '../../states/OfflinePageAtoms';
 
 const HomePage = () => {
   const MainCards = useGetMainCards();
-  console.log(MainCards)
+  const IsPurchased = useGetIsPurchased()
+  const [isPurchased, setIsPurchased] = useRecoilState(IsPurchasedAtom)
+  console.log(IsPurchased, isPurchased)
   const [barcodeValue, setBarcodeValue] = useState("491731284377");
   const [resetTimerFlag, setResetTimerFlag] = useState(false);
   // TODO: 3분 만료랑 새로고침, 큐알....
@@ -51,15 +56,25 @@ const HomePage = () => {
     }
   };
 
-  useEffect(() => {
-    handleScroll();
-  }, [MainCards]);
-
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {
     navigate(path);
   };
+
+  useEffect(() => {
+    if (isPurchased === "있음") {
+      navigate('/pay/offline');
+    }
+  }, [isPurchased, navigate]);
+
+  useEffect(() => {
+    setIsPurchased(IsPurchased);
+  }, [IsPurchased, setIsPurchased]);
+
+  useEffect(() => {
+    handleScroll();
+  }, [MainCards]);
 
   return (
     <Background

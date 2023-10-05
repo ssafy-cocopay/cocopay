@@ -92,7 +92,8 @@ const PayOfflinePage = () => {
               </Text>
             </Wrapper>
             <br />
-            {OfflinePayCard && (
+            {
+              OfflinePayCard && OfflinePayCard.nextPerLevel !== 0 && (
               <Performance data={OfflinePayCard} dataType="offlinePay" />
             )}
             <br />
