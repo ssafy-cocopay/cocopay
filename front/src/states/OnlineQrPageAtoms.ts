@@ -35,3 +35,8 @@ export const OnlinePayDataAtom = atom({
         "orderPrice":0 //주문 총금액
     }
 })
+
+export const IsOnlinePurchasedAtom = atom({
+    key: 'IsOnlinePurchasedAtom',
+    default:'없음'
+})
