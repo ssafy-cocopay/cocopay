@@ -43,9 +43,9 @@ const getUserCard = async () => {
   try {
     const response = await instance.get("/users/card");
     return response.data;
-  } catch {
-    new Error("getCardList error");
-  }
+  } catch (error) {
+    throw new Error("getCardList error");
+}
 };
 
 const deleteCard = async (cardId: number) => {

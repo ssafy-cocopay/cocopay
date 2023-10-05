@@ -158,6 +158,7 @@ const SignupLayout = ({
           <b>본인확인</b>을 진행해주세요
         </Text>
         {/* name input */}
+        <Wrapper>
         <Input
           height={65}
           name="name"
@@ -183,6 +184,7 @@ const SignupLayout = ({
           //   },
           // })} //TODO: 에러메세지 text스타일컴포넌트로 커스텀하기
         ></Input>
+        </Wrapper>
         {errors.name && (
           <small style={{ color: "red", fontSize: "14px" }}>
             {errors.name.message}
@@ -208,12 +210,15 @@ const SignupLayout = ({
         </Wrapper>
         <br />
         {/* company dropdown */}
+        <Wrapper>
         <Dropdown
           options={["SKT", "KT", "LG"]}
           defaultValue="통신사를 선택해주세요"
           onChange={handleCompanyChange}
         />
+        </Wrapper>
         {/* tel input */}
+        <Wrapper>
         <Input
           height={65}
           name="tel"
@@ -232,6 +237,7 @@ const SignupLayout = ({
             handleTelChange(e);
           }}
         ></Input>
+        </Wrapper>
         {errors.phone_number && (
           <small style={{ color: "red", fontSize: "14px" }}>
             {errors.phone_number.message}
@@ -268,9 +274,11 @@ const SignupLayout = ({
         ></TimerComponent> */}
 
         <br />
+        <Wrapper>
         <Button option={messageNum.length >= 6 ? "activated" : "deActivated"} onClick={numberCheck} size="large">
           확인
         </Button>
+        </Wrapper>
         {isModalOpen && (
           <ModalBg onClick={toggleModal}>
             <Modal toggleModal={toggleModal}>

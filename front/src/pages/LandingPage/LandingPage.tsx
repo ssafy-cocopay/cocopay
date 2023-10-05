@@ -7,25 +7,19 @@ import { PATH } from "@/constants/path";
 import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import { Text } from "@/components/atoms/Text/Text.styles";
 
-export const LandingPage = () => {
+export const LandingPage = ({ receivedMessage }: any) => {
   const navigate = useNavigate();
   const [buttonAnimation, setButtonAnimation] = useState(false);
+  // const bgColor = receivedMessage === "tt" ? "gradient" : "blue";
+
   const navigatePage = (path: string) => {
     navigate(path);
   };
 
   useEffect(() => {
-    // 페이지가 로드될 때 버튼 애니메이션 시작
     setButtonAnimation(true);
-
-    // 3초 후에 버튼 애니메이션을 멈춥니다.
-    // const timer = setTimeout(() => {
-    //   setButtonAnimation(false);
-    // }, 3000);
-
-    // 컴포넌트가 unmount 되면 타이머를 해제합니다.
-    // return () => clearTimeout(timer);
     return () => setButtonAnimation(true);
   }, []);
 
@@ -40,6 +34,7 @@ export const LandingPage = () => {
     transition: "transform 2s ease", // 3초 동안 위로 이동하면서 애니메이션을 적용
   };
 
+  // "dkB9mGohTVGvMV60EMzN6D:APA91bHkdHGlNJ3UrzWpiVpSNzKEBOSaK545kVy9lPLcCynXFdj9yVAHY72FanTJcQIArMJUvbeRR4k9s7eE_rQguMLc2GhzK0lLS222Sn9r7q0zSlAiQWArROrGBPOLcRbnZD2-dagJ"
   return (
     <Background
       $colormode="blue"
@@ -51,7 +46,11 @@ export const LandingPage = () => {
     >
       <Container>
         <Wrapper $flexGrow={5}>
-          <Image src={coco} width={12} style={imageStyle}/>
+          <Image src={coco} width={12} style={imageStyle} />
+          <Text size="body1">
+            {receivedMessage ? receivedMessage.data.toString() : "안 온거임"}
+          </Text>
+          <Text size="body1">TEST</Text>
         </Wrapper>
         <Wrapper $flexGrow={3} style={{ gap: "15px" }}>
           <Button

@@ -41,8 +41,8 @@ function PayOfflinePage() {
 
   const LeftRotate = styled(Image)`
     position: absolute;
-    top: 170px;
-    bottom: 300px;
+    top: 28%;
+    /* bottom: 60%; */
     /* left: 40%; */
     /* transform: translateY(80%); */
     animation: ${rotateLeft} 3s linear infinite;
@@ -68,16 +68,10 @@ function PayOfflinePage() {
           $padding="36px"
           // $border={true}
         >
-          <Text size="body1" fontWeight="bold" $margin="0 0 250px 0">
+          <Text size="subtitle2" fontWeight="bold" $margin="10% 0 250px 0">
             최적의 결제 카드 파악 중...
           </Text> 
-          <Wrapper $flexDirection="row">
-        {firstThreeCards.map((card:string, idx:number) => {
-           const animationDelay = `${idx * 0.8}s`;
-           const zIndex = firstThreeCards.length - idx;
-          return <LeftRotate src={card} key={idx} width={7} style={{animationDelay,zIndex}} />;
-        })}
-      </Wrapper>
+          
           {/* <Text size="body1" fontWeight="bold">
             최적의 결제 카드 파악 중...
           </Text> */}
@@ -90,14 +84,14 @@ function PayOfflinePage() {
               const cardStyle = {
                 animationDelay,
                 zIndex,
-                transform: "rotate(90deg)", // Rotate the card 90 degrees
+                // transform: "rotate(90deg)", // Rotate the card 90 degrees
               };
               //TODO:이미지 90도 회전시키기
               return (
                 <LeftRotate
                   src={card.cardImage}
                   key={idx}
-                  width={7}
+                  width={8}
                   style={cardStyle}
                 />
               );
@@ -109,18 +103,18 @@ function PayOfflinePage() {
               $flexDirection="row"
               // width="20%"
               // $justifyContent="space-between"
-              style={{ gap: "10px" }}
+              style={{ gap: "10px", paddingBottom:"30px" }}
             >
-              <Image src={Dot} width={13} $unit="px"></Image>
-              <Image src={Dot} width={13} $unit="px"></Image>
-              <Image src={Dot} width={13} $unit="px"></Image>
+              <Image src={Dot} width={20} $unit="px"></Image>
+              <Image src={Dot} width={20} $unit="px"></Image>
+              <Image src={Dot} width={20} $unit="px"></Image>
             </Wrapper>
             {/* TODO: 이미지 하단 고정하기 */}
             <Image
               src={Penguin}
-              width={55}
+              width={80}
               $unit="%"
-              style={{ marginRight: "1.5rem" }}
+              style={{ marginRight: "2.2rem" }}
             ></Image>
           </Container>
           {/* <Button onClick={() => navigatePage(PATH.MAIN)} option="activated">
