@@ -1,6 +1,6 @@
 // Queries는 Get요청
 
-import { getIsPurchased } from '../purchaseAPI';
+import { getIsPurchased, getIsOnlinePurchased } from '../purchaseAPI';
 import { useQuery } from '@tanstack/react-query';
 
 
@@ -10,5 +10,12 @@ const useGetIsPurchased = () => {
     });
     return IsPurchased;
   }
+
+const useGetIsOnlinePurchased = () => {
+  const { data: IsOnlinePurchased } = useQuery(['IsOnlinePurchased'], getIsOnlinePurchased, {
+    refetchInterval: 3000,  // 3초마다 리페치
+  });
+  return IsOnlinePurchased;
+}
   
-  export { useGetIsPurchased };
+  export { useGetIsPurchased, useGetIsOnlinePurchased };
