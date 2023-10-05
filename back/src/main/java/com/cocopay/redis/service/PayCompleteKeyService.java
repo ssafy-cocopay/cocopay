@@ -36,4 +36,15 @@ public class PayCompleteKeyService {
     public void deleteComplete(int userId) {
         payCompleteKeyRepository.deleteById(userId);
     }
+
+    //결제되었는지 체킹 진행용 api
+    public String checkComplete(int userId) {
+        Optional<PayCompleteKey> byId = payCompleteKeyRepository.findById(userId);
+        
+        if(byId.isPresent()){
+            return "있음";
+        }
+        
+        return "없음";
+    }
 }
