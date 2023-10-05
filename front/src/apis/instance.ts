@@ -13,13 +13,15 @@ const instance: Axios = axios.create({
 
 // 요청 인터셉터
 instance.interceptors.request.use(
-  config => {
+  (config) => {
     const userIdFromLocalStorage = localStorage.getItem("userId");
-    const userId = userIdFromLocalStorage ? parseInt(userIdFromLocalStorage, 10) : 4;
+    const userId = userIdFromLocalStorage
+      ? parseInt(userIdFromLocalStorage, 10)
+      : 4;
     config.headers.userId = userId;
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );

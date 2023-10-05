@@ -9,7 +9,7 @@ import { Container } from "@/components/atoms/Container/Container.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 
-export const LandingPage = ({ receivedMessage }: any) => {
+export const LandingPage = () => {
   const navigate = useNavigate();
   const [buttonAnimation, setButtonAnimation] = useState(false);
   // const bgColor = receivedMessage === "tt" ? "gradient" : "blue";
@@ -48,7 +48,7 @@ export const LandingPage = ({ receivedMessage }: any) => {
         <Wrapper $flexGrow={5}>
           <Image src={coco} width={12} style={imageStyle} />
           <Text size="body1">
-            {receivedMessage ? receivedMessage.data.toString() : "안 온거임"}
+            {/* {receivedMessage ? receivedMessage.data.toString() : "안 온거임"} */}
           </Text>
           <Text size="body1">TEST</Text>
         </Wrapper>
