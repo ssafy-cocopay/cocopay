@@ -18,7 +18,7 @@ const Performance = ({ data, dataType }: CardPerformanceProps) => {
         <BarWrapper $position="relative">
           <Level
             $bgc="blue"
-            width={`calc(28px + ${(280 * cardData.percent) / 100}px)`}
+            width={`calc(28px + ${(200 * cardData.percent) / 100}px)`}
             height="28px"
             $position="absolute"
             $left="0"
@@ -50,7 +50,7 @@ const Performance = ({ data, dataType }: CardPerformanceProps) => {
           <Level
             $bgc="blue"
             width={`calc(28px + ${
-              (280 * parseInt(offlineData.graphRate)) / 100
+              (200 * parseInt(offlineData.graphRate)) / 100
             }px)`}
             height="28px"
             $position="absolute"
