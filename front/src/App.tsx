@@ -7,12 +7,19 @@ const App = () => {
 
   const handleMessage = (e: any) => {
     console.log(e);
-    setReceivedMessage(e.data);
-    console.log("here::receivedMessage", receivedMessage);
+    setReceivedMessage(e);
   };
 
+  // 상태변화 이후에만 콘솔
   useEffect(() => {
-    window.addEventListener("message", handleMessage);
+    console.log("here::receivedMessage", receivedMessage);
+  }, [receivedMessage]);
+
+  useEffect(() => {
+    console.log("여기 실행됨");
+    window.addEventListener("message", function (event) {
+      console.log("RN에서옴", event.data);
+    });
     return () => {
       window.removeEventListener("message", handleMessage);
     };

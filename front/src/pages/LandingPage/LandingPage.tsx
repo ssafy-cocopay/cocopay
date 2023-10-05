@@ -7,6 +7,7 @@ import { PATH } from "@/constants/path";
 import { Image } from "@/components/atoms/Image/Image";
 import { Container } from "@/components/atoms/Container/Container.styles";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
+import { Text } from "@/components/atoms/Text/Text.styles";
 
 export const LandingPage = ({ receivedMessage }: any) => {
   const navigate = useNavigate();
@@ -36,12 +37,7 @@ export const LandingPage = ({ receivedMessage }: any) => {
   // "dkB9mGohTVGvMV60EMzN6D:APA91bHkdHGlNJ3UrzWpiVpSNzKEBOSaK545kVy9lPLcCynXFdj9yVAHY72FanTJcQIArMJUvbeRR4k9s7eE_rQguMLc2GhzK0lLS222Sn9r7q0zSlAiQWArROrGBPOLcRbnZD2-dagJ"
   return (
     <Background
-      $colormode={
-        receivedMessage !==
-        null
-          ? "gradient"
-          : "blue"
-      }
+      $colormode="blue"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -51,6 +47,10 @@ export const LandingPage = ({ receivedMessage }: any) => {
       <Container>
         <Wrapper $flexGrow={5}>
           <Image src={coco} width={12} style={imageStyle} />
+          <Text size="body1">
+            {receivedMessage ? receivedMessage.data.toString() : "안 온거임"}
+          </Text>
+          <Text size="body1">TEST</Text>
         </Wrapper>
         <Wrapper $flexGrow={3} style={{ gap: "15px" }}>
           <Button
