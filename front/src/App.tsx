@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { LandingPage } from "@/pages/LandingPage/LandingPage";
 import { Text } from "@/components/atoms/Text/Text.styles";
 
@@ -8,7 +8,6 @@ const App = () => {
     console.log("Received message:", data);
   });
 
-function App() {
   useEffect(() => {
     // 메시지 이벤트 핸들러
     const handleMessage = (event: MessageEvent) => {
