@@ -3,31 +3,24 @@ import { LandingPage } from "@/pages/LandingPage/LandingPage";
 import { Text } from "@/components/atoms/Text/Text.styles";
 
 const App = () => {
-  const [receivedMessage, setReceivedMessage] = useState(null);
+  window.addEventListener('message', function(event) {
+    if (event.origin !== 'http://172.22.128.1:3000') {
+        return;
+    }
 
-  const handleMessage = (e: any) => {
-    console.log(e);
-    setReceivedMessage(e);
-  };
+    // Parse the data received
+    const data = event.data;
 
-  // 상태변화 이후에만 콘솔
-  useEffect(() => {
-    console.log("here::receivedMessage", receivedMessage);
-  }, [receivedMessage]);
+    // Now you can use the received data (e.g., the FCM token)
+    console.log('Received message:', data);
 
-  useEffect(() => {
-    console.log("여기 실행됨");
-    window.addEventListener("message", function (event) {
-      console.log("RN에서옴", event.data);
-    });
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, []);
+    // ... Handle the data as needed ...
+});
+
 
   return (
     <Suspense fallback={<Text>로딩중</Text>}>
-      <LandingPage receivedMessage={receivedMessage} />
+      <LandingPage/>
     </Suspense>
   );
 };
