@@ -10,7 +10,7 @@ import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {PermissionsAndroid, Alert} from 'react-native';
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging'; // 리액트 메시징
-import {firebase} from '@react-native-firebase/dynamic-links';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 import {
   WebViewErrorEvent,
@@ -49,7 +49,7 @@ const App = () => {
   }
 
   useEffect(() => {
-  //   //requestUserPermission();
+      requestUserPermission();
   //   //requestCameraPermission();
   //   //requestPermission();
   //   const unsubscribe = messaging().onMessage(async (remoteMessage : any) => {
@@ -68,15 +68,16 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = firebase.dynamicLinks().onLink((link) => {
+    const unsubscribe = dynamicLinks().onLink((link) => {
       console.log(link.url);
       // WebView의 URL을 동적 링크의 URL로 설정하여 웹뷰 페이지로 이동합니다.
       navigateToURL(link.url);
       console.log("hi");;
 
-      firebase.dynamicLinks()
+      dynamicLinks()
       .getInitialLink()
       .then(link => {
+        console.log("hi------------");
         if (link && webviewRef.current) {
           webviewRef.current.loadUrl(link.url);
         }
@@ -266,7 +267,7 @@ const App = () => {
       <WebView
         onLoadEnd={handleEndLoading}
         onMessage={handleOnMessage}
-        webviewRef={webviewRef}
+        ref={webviewRef}
         //sharedCookiesEnabled={true}//
         //domStorageEnabled={true}
         //allowFileAccess={true}
