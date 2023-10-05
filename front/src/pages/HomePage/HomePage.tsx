@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Background } from "@/components/atoms/Background/Background.styles";
 import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
@@ -32,6 +32,7 @@ import { PATH } from "@/constants/path";
 
 const HomePage = () => {
   const MainCards = useGetMainCards();
+  console.log(MainCards)
   const [barcodeValue, setBarcodeValue] = useState("491731284377");
   const [resetTimerFlag, setResetTimerFlag] = useState(false);
   // TODO: 3분 만료랑 새로고침, 큐알....
@@ -45,11 +46,15 @@ const HomePage = () => {
     const centeredCardIndex = Math.round(scrollPosition / cardWidth);
 
     if (MainCards && MainCards[centeredCardIndex]) {
-      console.log(MainCards[centeredCardIndex].barcodeNum);
       setBarcodeValue(MainCards[centeredCardIndex].barcodeNum);
       setResetTimerFlag(!resetTimerFlag);
     }
   };
+
+  useEffect(() => {
+    handleScroll();
+  }, [MainCards]);
+
   const navigate = useNavigate();
 
   const navigatePage = (path: string) => {

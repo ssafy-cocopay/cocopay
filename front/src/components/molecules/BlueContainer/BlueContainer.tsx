@@ -60,12 +60,12 @@ const BlueContainer = () => {
       <RightRotate
         src={cone}
         width={5}
-        style={{ position: "absolute", top: "4rem", left: "-3rem" }}
+        style={{ position: "absolute", top: "4rem", left: "-2rem" }}
       ></RightRotate>
       <RightRotate
         src={pyramid}
         width={7}
-        style={{ position: "absolute", top: "1rem", right: "0rem" }}
+        style={{ position: "absolute", top: "1rem", right: "-1rem" }}
       ></RightRotate>
     </Container>
   );
