@@ -90,7 +90,6 @@ public class PaymentController {
         //실적 정보 -> 해당 카드의 실적 정보
         //카드 이용내역 pk로 할인된 금액 받아오기
         paymentService.payAfter(userId, cardHistoryId, paymentReqDto.getCardUuid());
-        //
         return ResponseEntity.ok("결제 완료");
     }
 
