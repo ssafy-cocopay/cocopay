@@ -90,17 +90,26 @@ public class PaymentController {
         //실적 정보 -> 해당 카드의 실적 정보
         //카드 이용내역 pk로 할인된 금액 받아오기
         paymentService.payAfter(userId, cardHistoryId, paymentReqDto.getCardUuid());
-
-        //fcm call 예정
+        //
         return ResponseEntity.ok("결제 완료");
     }
 
     @GetMapping("/complete")
     public ResponseEntity complete(@RequestHeader("userId") int userId) {
         PayCompleteKey findComplete = payCompleteKeyService.findComplete(userId);
-//        payCompleteKeyService.deleteComplete(userId);
+        payCompleteKeyService.deleteComplete(userId);
         PayCompleteResDto payCompleteResDto = paymentMapper.toPayCompleteResDto(findComplete);
 
         return ResponseEntity.ok(payCompleteResDto);
+    }
+
+    //결제가 되었는지 체크하는 api
+    @GetMapping("/check")
+    public ResponseEntity check(@RequestHeader("userId") int userId) {
+        //redis에서 결제내역 사이즈 조회
+        String res = payCompleteKeyService.checkComplete(userId);
+        //결제내역 사이즈 조회
+
+        return ResponseEntity.ok(res);
     }
 }
