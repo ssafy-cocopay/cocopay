@@ -1700,9 +1700,9 @@
     superstruct "^0.6.2"
 
 "@react-native-firebase/dynamic-links@^18.5.0":
-  "integrity" "sha512-RQDhEmPN6w+1MFdpzlzS4DZShAfkVxObQTXZ9CCeO7dUdwlkUcJfXZSwDKl770C8hiuNUXlumztFepvoprrjlQ=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/dynamic-links/-/dynamic-links-18.5.0.tgz"
-  "version" "18.5.0"
+  version "18.5.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/dynamic-links/-/dynamic-links-18.5.0.tgz"
+  integrity sha512-RQDhEmPN6w+1MFdpzlzS4DZShAfkVxObQTXZ9CCeO7dUdwlkUcJfXZSwDKl770C8hiuNUXlumztFepvoprrjlQ==
 
 "@react-native-firebase/messaging@^18.5.0":
   version "18.5.0"
