@@ -47,10 +47,6 @@ export const LandingPage = () => {
       <Container>
         <Wrapper $flexGrow={5}>
           <Image src={coco} width={12} style={imageStyle} />
-          <Text size="body1">
-            {/* {receivedMessage ? receivedMessage.data.toString() : "안 온거임"} */}
-          </Text>
-          <Text size="body1">TEST</Text>
         </Wrapper>
         <Wrapper $flexGrow={3} style={{ gap: "15px" }}>
           <Button
