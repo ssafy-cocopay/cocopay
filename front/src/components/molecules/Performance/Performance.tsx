@@ -61,7 +61,7 @@ const Performance = ({ data, dataType }: CardPerformanceProps) => {
               size="small2"
               fontWeight="bold"
               color="white"
-              style={{ textAlign: "center", lineHeight: "26px" }}
+              style={{ paddingLeft: "10px", lineHeight: "26px" }}
             >
               {offlineData.nextPerLevel - 1}
             </Text>
