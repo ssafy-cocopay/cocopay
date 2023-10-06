@@ -9,9 +9,14 @@ import com.bank.benefit.entity.UserCardBenefit;
 import com.bank.benefit.repository.BenefitRepository;
 import com.bank.benefit.repository.UserCardBenefitRepository;
 import com.bank.card.entity.Card;
+import com.bank.card.entity.CardType;
 import com.bank.card.entity.UserCard;
 import com.bank.card.repository.card.CardRepository;
 import com.bank.card.repository.usercard.UserCardRepository;
+import com.bank.card_history.entity.Category;
+import com.bank.enumlist.CardList;
+import com.bank.performance.entity.Performance;
+import com.bank.performance.repository.PerformanceRepository;
 import com.bank.user.entity.User;
 import com.bank.user.repository.UserRepository;
 import com.bank.user.service.UserService;
@@ -38,6 +43,7 @@ import static com.bank.card.entity.QCard.card;
 public class DummyDataTest {
 
     Faker faker = new Faker(new Locale("ko"));
+
 
     JPAQueryFactory jpaQueryFactory;
 
@@ -68,15 +74,19 @@ public class DummyDataTest {
     @Autowired
     UserCardBenefitRepository userCardBenefitRepository;
 
+    @Autowired
+    PerformanceRepository performanceRepository;
+
     enum CardList {
-        Deep_Dream_체크("신한", "Deep Dream 체크카드", "체크"),
-        Nori2_체크("국민", "노리2 체크카드", "체크");
+        Deep_Dream_체크("신한", "Deep Dream 체크카드", CardType.체크카드),
+        Nori2_체크("국민", "노리2 체크카드", CardType.체크카드);
 
         final String bankName;
         final String cardName;
-        final String type;
 
-        CardList(String bankName, String cardName, String type) {
+        final CardType type;
+
+        CardList(String bankName, String cardName, CardType type) {
             this.bankName = bankName;
             this.cardName = cardName;
             this.type = type;
@@ -91,18 +101,15 @@ public class DummyDataTest {
     @Test
     public void userDummy() {
 
+
         for (int i = 0; i < 10; i++) {
             User user = new User();
 
             String name = faker.name().fullName().replace(" ", "");
-            String email = faker.bothify("???####@gmail.com");
             String tel = faker.bothify("010-####-####");
-            String password = faker.internet().password(4, 13);
 
             user.setName(name);
             user.setTel(tel);
-            user.setPassword(password);
-            user.setEmail(email);
 
             userService.registUser(user);
         }
@@ -132,6 +139,7 @@ public class DummyDataTest {
 
     @Test
     public void accountDummy() {
+
         List<User> userList = userRepository.findAll();
 
         List<Bank> bankList = bankRepository.findAll();
@@ -166,6 +174,10 @@ public class DummyDataTest {
                     Card card = new Card();
                     card.setBank(findBank);
                     card.setCardName(enumCard.cardName);
+                    card.setType(enumCard.type);
+                    card.setCardDefaultImage("url");
+                    card.setVisa(true);
+                    card.setMaster(true);
 
                     return card;
                 }).toList();
@@ -185,20 +197,37 @@ public class DummyDataTest {
     @Test
     public void benefitDummy() {
         //변수들로 수정
-        int cardId = 2;
+        int cardId = 1;
 
         Card card = cardRepository.findById(cardId).get();
 
         Benefit benefit = new Benefit();
 
         benefit.setCard(card);
-        benefit.setCategory("편의점");
-        benefit.setStoreName("CU");
-        benefit.setDiscount(10);
+        benefit.setCategory(Category.영화);
+        benefit.setStoreName("CGV");
+        benefit.setDiscount(20);
         benefit.setLimit(3000);
-        benefit.setType(true);
 
         benefitRepository.save(benefit);
+    }
+
+    @Test
+    public void performanceDummy() {
+        int cardId = 2;
+        Card findCard = cardRepository.findById(cardId).get();
+        List<Performance> performanceList = new ArrayList<>();
+
+        for (int i = 4; i <= 1000; i++) {
+            Performance performance = Performance.builder()
+                    .card(findCard)
+                    .level(i)
+                    .levelPrice(i * 100000)
+                    .build();
+
+            performanceList.add(performance);
+        }
+        performanceRepository.saveAll(performanceList);
     }
 
     //사용자 카드 더미
@@ -207,7 +236,7 @@ public class DummyDataTest {
     public void userCardAndUserBenefitDummy() {
         //유저가 가지고 있는 해당 은행의 계좌와 카드를 랜덤으로 가지고 옴
         //데이터가 꼬임을 방지하기 위함
-        int uuid = 1;
+        int uuid = 4;
         String bankName = "신한";
 
         Bank findBank = findBankByBankName(bankName);
@@ -242,9 +271,14 @@ public class DummyDataTest {
     private UserCard getUserCard(List<Account> accountList, int accountIdx, Card card) {
         UserCard userCard = new UserCard();
         userCard.setCard(card);
+        userCard.setPassword(faker.numerify("####"));
+        userCard.setValidDate("12/25");
+        userCard.setCvc(faker.numerify("###"));
         userCard.setAccount(accountList.get(accountIdx));
         userCard.setSerialNumber(faker.numerify("####-####-####-####"));
         userCard.setIsPerformanced(true);
+        userCard.setTotalPrice(297607);
+
         return userCard;
     }
 

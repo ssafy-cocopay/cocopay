@@ -1,14 +1,16 @@
 package com.bank.benefit.entity;
 
 import com.bank.card.entity.Card;
+import com.bank.card_history.entity.Category;
+import com.bank.card_history.entity.DiscountType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "benefit",indexes = @Index(name = "idx__store_name", columnList = "category"))
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Benefit {
@@ -22,7 +24,8 @@ public class Benefit {
     private Card card;
 
     @Column(name = "category")
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @Column(name = "store_name")
     private String storeName;
@@ -34,5 +37,6 @@ public class Benefit {
     private Integer limit;
 
     @Column(name = "type")
-    private Boolean type;
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
 }
