@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "Pretendard";
+    src: local("Pretendard"), url('@/assets/fonts/Pretendard-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Pretendard";
+    src: local("Pretendard"), url('@/assets/fonts/Pretendard-Medium.ttf') format('truetype'); 
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Pretendard";
+    src: local("Pretendard"), url('@/assets/fonts/Pretendard-Regular.ttf') format('truetype'); 
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Pretendard";
+    src: local("Pretendard"), url('@/assets/fonts/Pretendard-Light.ttf') format('truetype'); 
+    font-weight: 300;
+}
