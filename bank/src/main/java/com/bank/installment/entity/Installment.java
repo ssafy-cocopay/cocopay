@@ -40,7 +40,8 @@ public class Installment {
 
     //이용날짜
     @Column(name = "transaction_date")
-    private LocalDate transactionDate;
+    @Builder.Default
+    private LocalDate transactionDate = LocalDate.now();
 
     //mapping
     @ManyToOne

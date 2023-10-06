@@ -10,9 +10,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@react-native-firebase/app": "^18.5.0",
+    "@react-native-firebase/dynamic-links": "^18.5.0",
+    "@react-native-firebase/messaging": "^18.5.0",
     "react": "18.2.0",
-    "react-native": "0.72.4",
-    "react-native-webview": "^13.6.0"
+    "react-native": "0.72.5",
+    "react-native-permissions": "^3.9.2",
+    "react-native-toast-message": "^2.1.6",
+    "react-native-vision-camera": "^3.2.2",
+    "react-native-webview": "^13.6.0",
+    "react-native-worklets-core": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -34,5 +42,6 @@
   },
   "engines": {
     "node": ">=16"
-  }
+  },
+  "proxy": "https://j9b208.p.ssafy.io"
 }

@@ -1,18 +1,18 @@
 package com.bank.performance.controller;
 
-import com.bank.performance.dto.PerformanceFindDto;
-import com.bank.performance.dto.PerformanceRegistDto;
+import com.bank.performance.dto.*;
 import com.bank.performance.entity.Performance;
 import com.bank.performance.service.PerformanceService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/bank/performance")
 public class PerformanceController {
     private final PerformanceService performanceService;
@@ -29,5 +29,15 @@ public class PerformanceController {
     public ResponseEntity<List<Performance>> findPerformance(@RequestBody PerformanceFindDto performanceFindDto){
         List<Performance> performanceList = performanceService.findPerformance(performanceFindDto.getId(),performanceFindDto.getCardId(),performanceFindDto.getLevel());
         return ResponseEntity.ok(performanceList);
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity findAllPerformance(@RequestBody UserCardPerformanceFindDto userCardPerformanceFindDto){
+        log.info("userCardPerformanceFindDto : {}", userCardPerformanceFindDto);
+
+        List<PerformanceResponseDto> performanceResponseListDto = performanceService.findPerformanceList(userCardPerformanceFindDto.getCardUuidList());
+
+        PerformanceResponseListDto responseListDto = new PerformanceResponseListDto(performanceResponseListDto);
+        return ResponseEntity.ok(responseListDto);
     }
 }

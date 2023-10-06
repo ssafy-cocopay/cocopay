@@ -2,14 +2,14 @@ package com.bank.card.entity;
 
 import com.bank.account.entity.Account;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "user_card")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCard {
@@ -19,7 +19,7 @@ public class UserCard {
     @Column(name = "card_uuid")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
 
@@ -47,4 +47,11 @@ public class UserCard {
 
     @Column(name = "performance_level")
     private Integer performanceLevel;
+
+    @Column(name = "total_price", nullable = false)
+    private Integer totalPrice;
+
+    public void addTotalPrice(int totalPrice, int paymentPrice) {
+        this.totalPrice = totalPrice + paymentPrice;
+    }
 }

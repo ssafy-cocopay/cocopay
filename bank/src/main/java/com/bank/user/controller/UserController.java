@@ -29,20 +29,12 @@ public class UserController {
     }
 
     //사용자 조회
-    @GetMapping
+    @PostMapping
     public ResponseEntity findUser(@RequestBody UserFindDto userFindDto) {
         User user = userService.findUser(userFindDto.getUuid(), userFindDto.getTel());
 
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         return ResponseEntity.ok(userResponseDto);
-    }
-
-    //사용자 탈퇴
-    @DeleteMapping("/{uuid}")
-    public ResponseEntity deleteUser(@PathVariable("uuid") Integer uuid) {
-        userService.deleteUser(uuid);
-
-        return ResponseEntity.ok("회원 탈퇴 완료");
     }
 }

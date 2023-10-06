@@ -1,20 +1,33 @@
-import React from "react";
-import { Suspense } from "react"; // 추후에 비동기 처리하면서 시간 지연시 활용할 예정
+import React, { Suspense, useEffect } from "react";
+import { LandingPage } from "@/pages/LandingPage/LandingPage";
+import { Text } from "@/components/atoms/Text/Text.styles";
 
-function App() {
+const App = () => {
+  window.addEventListener("message", function (event) {
+    const data = event.data;
+    console.log("Received message:", data);
+  });
+
+  useEffect(() => {
+    // 메시지 이벤트 핸들러
+    const handleMessage = (event: MessageEvent) => {
+      const receivedToken = event.data;
+      console.log('Received FCM Token:', receivedToken);
+    };
+
+    // 이벤트 리스너 등록
+    window.addEventListener('message', handleMessage);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
   return (
-    <div
-      style={{
-        paddingTop: "100px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <div className="App">COCOPAY</div>
-      <button style={{ width: "100px", marginTop: "30px" }}>인증하기</button>
-    </div>
+    <Suspense fallback={<Text>로딩중</Text>}>
+      <LandingPage />
+    </Suspense>
   );
-}
+};
 
 export default App;
