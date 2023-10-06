@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// <code> 태그에 적용되는 스타일
+code {
+  font-family: 'Pretendard', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
