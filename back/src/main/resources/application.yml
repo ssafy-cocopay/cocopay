@@ -6,7 +6,7 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:mysql://localhost:3306/cocopay?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/cocopay?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul
     username: ssafy
     password: ssafy
   jpa:

@@ -36,6 +36,7 @@ public enum ErrorCode {
     KAKAO_ERROR(HttpStatus.BAD_REQUEST, "카카오 오류"),
     DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "데이터가 존재하지 않습니다."),
     WEATHER_NOT_FOUND(HttpStatus.NOT_FOUND, "날씨 정보를 가져오는데 실패했습니다."),
+    CARDTYPE_NOT_INVALID(HttpStatus.BAD_REQUEST, "타입이 유효하지 않습니다."),
     ;
 
     private final HttpStatus httpStatus;
