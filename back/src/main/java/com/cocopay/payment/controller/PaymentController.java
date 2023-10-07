@@ -34,12 +34,16 @@ public class PaymentController {
     private final PayCompleteKeyService payCompleteKeyService;
     private final CheckKeyService checkKeyService;
 
+    //온라인 최종 결제
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
                                          @RequestBody PayPostDto payPostDto) {
         log.info("payPostDto : {}", payPostDto);
         payPostDto.setUserId(userId);
         UserCard findUserCard = paymentService.findUserCardById(payPostDto.getCardId());
+
+        //할부 예외처리
+        paymentService.isTypeCheck(findUserCard.getCardType().getName(), payPostDto.getTransactionType());
 
         OrderKey findOrderKey = orderKeyService.findOrderKey(payPostDto.getUserId());
 
@@ -70,6 +74,7 @@ public class PaymentController {
         return ResponseEntity.ok(onlineResponse);
     }
 
+    //오프라인
     @PostMapping("/offline/{barcode-num}")
     public ResponseEntity offlinePayTest(@RequestBody PayPostDto payPostDto,
                                          @PathVariable("barcode-num") String barcodeNum,
