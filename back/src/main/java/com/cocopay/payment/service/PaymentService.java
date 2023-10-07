@@ -322,10 +322,9 @@ public class PaymentService {
         //온라인일 때는 무시해야함
         if (transactionType != null && transactionType.equals("할부")) {
             //오프라인일 때는 체크해봐야함
-            List<CardOfferResDto> res = list.stream()
+            return list.stream()
                     .filter(dto -> dto.getCardType().equals("신용"))
                     .toList();
-            return res;
         }
         return list;
     }
