@@ -65,12 +65,14 @@ public class PaymentService {
         User findUser = findUserById(dto.getUserId());
         if (findUser.isRecommendType()) {
             log.info("할인 기준 카드 정렬 진행");
-            return benefitOrder(offerResDtoList);
+            List<CardOfferResDto> res = benefitOrder(offerResDtoList);
+            return isTypeCheck(res, dto.getTransactionType());
         }
         //실적 기준 카드 리스트업
         else {
             log.info("실적 기준 카드 정렬 진행");
-            return performanceOrder(offerResDtoList);
+            List<CardOfferResDto> res = performanceOrder(offerResDtoList);
+            return isTypeCheck(res, dto.getTransactionType());
         }
     }
 
@@ -95,8 +97,8 @@ public class PaymentService {
         //코코카드가 아님
         else {
             log.info("코코카드 아님");
-            cardUuid = findUserCardById(payPostDto.getCardId()).getCardUuid();
-            return paymentMapper.toPaymentReqDto(cardUuid, payPostDto);
+            isTypeCheck(findUserCard.getCardType().getName(), payPostDto.getTransactionType());
+            return paymentMapper.toPaymentReqDto(findUserCard.getCardUuid(), payPostDto);
         }
     }
 
@@ -307,6 +309,24 @@ public class PaymentService {
 
         return findUser
                 .orElseThrow(() -> new RuntimeException("회원 조회 결과 없음"));
+    }
+
+    //카드타입 판별 (할부 신용, 체크인지 판별)
+    public void isTypeCheck(String cardType, String transactionType) {
+        if (transactionType.equals("할부") && cardType.equals("체크")) {
+            throw new CustomException(ErrorCode.CARDTYPE_NOT_INVALID);
+        }
+    }
+
+    public List<CardOfferResDto> isTypeCheck(List<CardOfferResDto> list, String transactionType) {
+        //온라인일 때는 무시해야함
+        if (transactionType != null && transactionType.equals("할부")) {
+            //오프라인일 때는 체크해봐야함
+            return list.stream()
+                    .filter(dto -> dto.getCardType().equals("신용"))
+                    .toList();
+        }
+        return list;
     }
 
 }
