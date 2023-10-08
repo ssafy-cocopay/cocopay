@@ -62,7 +62,7 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
   const handlePayOnlineComplete = () => {
     const PayData = {
         "cardId": changeCard.cardId,
-        "orderPrice":38700,
+        "orderPrice":428000,
         "transactionType":"일시불"
       }
       PayOnlineComplete.mutate(PayData, {

@@ -24,4 +24,7 @@ public interface RedisMapper {
     BarcodeKey toBarcodeKey(int userId, int cardId, String barcodeNum);
 
     PayCompleteKey toPayCompleteKey(int userId, String cardImage, String cardName, int remainingAmt, String graphRate, int nextPerLevel, int discounted);
+
+
+    CheckKey toCheckKey(String userId);
 }

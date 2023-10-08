@@ -37,6 +37,15 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   const userPassword = "123456";
   const keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "back"];
 
+  useEffect(() => {
+    console.log(userInfo.password); // userInfo가 업데이트될 때마다 출력됩니다.
+    if (userInfo.password) {
+      // password가 유효한 값이면 (설정되었다면)
+      addUserMutation.mutate(userInfo);
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    }
+  }, [userInfo]);
+
   // 네비게이팅
   const navigate = useNavigate();
   const navigatePage = (path: string) => {
@@ -60,48 +69,40 @@ const KeypadButtons = (props: KeypadButtonsProps) => {
   };
 
   const handlePutPassword = (newPassword: string) => {
+    // setUserInfo((prev) => ({ ...prev, password: newPassword }));
     setUserInfo((prev) => ({ ...prev, password: newPassword }));
-    addUserMutation.mutate(userInfo);
-    console.log('저장되어있냐', userInfo);
   };
 
+  // 회원가입시 두 번째 단계: 비밀번호 확인
   useEffect(() => {
     if (pressedCount === 6) {
       if (step === 1) {
         // 첫 번째 단계: 비밀번호 설정
         setSetPassword(enteredPassword);
-        setEnteredPassword(""); // 입력 상태 초기화
-        setPressedCount(0);
+        console.log("setSetPassword", setPassword, enteredPassword, "step 1");
         setStep(2); // 다음 단계로 전환
       } else if (step === 2) {
-        setConfirmPassword(enteredPassword);
-      }
-
-      // 로그인시 유저가 입력한 비밀번호와 userPassword가 동일한지 검사
-      if (enteredPassword === userPassword) {
+        if (setPassword === enteredPassword) {
+          console.log("step2: 비밀번호 왕왕 일치");
+          handlePutPassword(enteredPassword);
+          navigatePage(PATH.FIGNER_SETTING);
+        } else {
+          console.log("비밀번호 일치하지 않음");
+        }
+      } else if (enteredPassword === userPassword) {
         onPasswordMatch?.(); // 비밀번호가 일치하면 callback 호출
       } else {
         console.log("틀렸어!");
-        setEnteredPassword(""); // 입력 상태 초기화
-        setPressedCount(0);
       }
+      // 마지막에 항상 초기화
+      setEnteredPassword("");
+      setPressedCount(0);
     }
   }, [pressedCount, enteredPassword, step]);
 
-  // 회원가입시 두 번째 단계: 비밀번호 확인
   useEffect(() => {
-    if (step === 2 && confirmPassword) {
-      if (setPassword === confirmPassword) {
-        console.log("step2: 비밀번호 왕왕 일치");
-        handlePutPassword(setPassword);
-        navigatePage(PATH.FIGNER_SETTING);
-      } else {
-        console.log("비밀번호 일치하지 않음");
-        setEnteredPassword("");
-        setPressedCount(0);
-      }
-    }
-  }, [confirmPassword, setPassword, step]);
+    console.log(userInfo.password); // userInfo가 업데이트될 때마다 출력됩니다.
+  }, [userInfo]);
 
   const starButton = (_: unknown, index: number) => (
     <Button

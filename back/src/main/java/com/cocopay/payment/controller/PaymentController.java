@@ -10,6 +10,7 @@ import com.cocopay.payment.service.PaymentService;
 import com.cocopay.redis.key.OrderKey;
 import com.cocopay.redis.key.PayCompleteKey;
 import com.cocopay.redis.service.BarcodeKeyService;
+import com.cocopay.redis.service.CheckKeyService;
 import com.cocopay.redis.service.OrderKeyService;
 import com.cocopay.redis.service.PayCompleteKeyService;
 import com.cocopay.usercard.entity.UserCard;
@@ -31,13 +32,18 @@ public class PaymentController {
     private final PaymentMapper paymentMapper;
     private final BarcodeKeyService barcodeKeyService;
     private final PayCompleteKeyService payCompleteKeyService;
+    private final CheckKeyService checkKeyService;
 
+    //온라인 최종 결제
     @PostMapping()
     public ResponseEntity onlineFinalPay(@RequestHeader("userId") int userId,
                                          @RequestBody PayPostDto payPostDto) {
         log.info("payPostDto : {}", payPostDto);
         payPostDto.setUserId(userId);
         UserCard findUserCard = paymentService.findUserCardById(payPostDto.getCardId());
+
+        //할부 예외처리
+        paymentService.isTypeCheck(findUserCard.getCardType().getName(), payPostDto.getTransactionType());
 
         OrderKey findOrderKey = orderKeyService.findOrderKey(payPostDto.getUserId());
 
@@ -51,6 +57,7 @@ public class PaymentController {
 
         //주문 정보 redis에서 삭제
         orderKeyService.deleteOrderKey(findOrderKey);
+        checkKeyService.checkSave(userId);
 
         return ResponseEntity.ok("결제 요청 완료");
     }
@@ -67,6 +74,7 @@ public class PaymentController {
         return ResponseEntity.ok(onlineResponse);
     }
 
+    //오프라인
     @PostMapping("/offline/{barcode-num}")
     public ResponseEntity offlinePayTest(@RequestBody PayPostDto payPostDto,
                                          @PathVariable("barcode-num") String barcodeNum,
@@ -90,17 +98,33 @@ public class PaymentController {
         //실적 정보 -> 해당 카드의 실적 정보
         //카드 이용내역 pk로 할인된 금액 받아오기
         paymentService.payAfter(userId, cardHistoryId, paymentReqDto.getCardUuid());
-
-        //fcm call 예정
         return ResponseEntity.ok("결제 완료");
     }
 
     @GetMapping("/complete")
     public ResponseEntity complete(@RequestHeader("userId") int userId) {
         PayCompleteKey findComplete = payCompleteKeyService.findComplete(userId);
-//        payCompleteKeyService.deleteComplete(userId);
+        payCompleteKeyService.deleteComplete(userId);
         PayCompleteResDto payCompleteResDto = paymentMapper.toPayCompleteResDto(findComplete);
 
         return ResponseEntity.ok(payCompleteResDto);
+    }
+
+    //결제가 되었는지 체크하는 api
+    @GetMapping("/check")
+    public ResponseEntity offlineCheck(@RequestHeader("userId") int userId) {
+        //redis에서 결제내역 사이즈 조회
+        String res = payCompleteKeyService.checkComplete(userId);
+        //결제내역 사이즈 조회
+
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/online-check")
+    public ResponseEntity onlineCheck(@RequestHeader("userId") int userId) {
+        String check = checkKeyService.findCheck(userId);
+        checkKeyService.deleteCheck(userId);
+
+        return ResponseEntity.ok(check);
     }
 }

@@ -5,7 +5,7 @@ import { CardDetail, OfflinePay } from "@/types/card";
 
 interface CardPerformanceProps {
   data: CardDetail | OfflinePay;
-  dataType: 'cardDetail' | 'offlinePay';
+  dataType: "cardDetail" | "offlinePay";
 }
 
 const Performance = ({ data, dataType }: CardPerformanceProps) => {
@@ -14,31 +14,65 @@ const Performance = ({ data, dataType }: CardPerformanceProps) => {
 
   return (
     <PerformanceWrapper>
-      {dataType === 'cardDetail' && (
+      {dataType === "cardDetail" && (
         <BarWrapper $position="relative">
-          <Level $bgc="lightblue" width="28px" height="28px" $position="absolute" $left="0" $zIndex="2">
-            <Text size="small2" fontWeight="bold" color="white" style={{ textAlign: "center", lineHeight: "26px" }}>
+          <Level
+            $bgc="blue"
+            width={`calc(28px + ${(225 * cardData.percent) / 100}px)`}
+            height="28px"
+            $position="absolute"
+            $left="0"
+            $zIndex="2"
+          >
+            <Text
+              size="small2"
+              fontWeight="bold"
+              color="white"
+              style={{ paddingLeft: "10px", lineHeight: "27px" }}
+            >
               {cardData.level}
             </Text>
           </Level>
-          <Level $bgc="blue" width={`${cardData.percent}%`} height="28px" $position="absolute" $left="0" $zIndex="1" />
-          <Level $bgc="grey2" width="28px" height="28px" $zIndex="2">
-            <Text size="small2" fontWeight="bold" color="white" style={{ textAlign: "center", lineHeight: "26px" }}>
+          <Level $bgc="grey2" width="28px" height="28px" $zIndex="3">
+            <Text
+              size="small2"
+              fontWeight="bold"
+              color="white"
+              style={{ textAlign: "center", lineHeight: "27px" }}
+            >
               {cardData.nextLevel}
             </Text>
           </Level>
         </BarWrapper>
       )}
-      {dataType === 'offlinePay' && (
+      {dataType === "offlinePay" && (
         <BarWrapper $position="relative">
-          <Level $bgc="lightblue" width="28px" height="28px" $position="absolute" $left="0" $zIndex="2">
-            <Text size="small2" fontWeight="bold" color="white" style={{ textAlign: "center", lineHeight: "26px" }}>
-              {offlineData.nextPerLevel  - 1}
+          <Level
+            $bgc="blue"
+            width={`calc(28px + ${
+              (225 * parseInt(offlineData.graphRate)) / 100
+            }px)`}
+            height="28px"
+            $position="absolute"
+            $left="0"
+            $zIndex="2"
+          >
+            <Text
+              size="small2"
+              fontWeight="bold"
+              color="white"
+              style={{ paddingLeft: "10px", lineHeight: "26px" }}
+            >
+              {offlineData.nextPerLevel - 1}
             </Text>
           </Level>
-          <Level $bgc="blue" width={`${parseInt(offlineData.graphRate)}%`} height="28px" $position="absolute" $left="0" $zIndex="1" />
-          <Level $bgc="grey2" width="28px" height="28px" $zIndex="2">
-            <Text size="small2" fontWeight="bold" color="white" style={{ textAlign: "center", lineHeight: "26px" }}>
+          <Level $bgc="grey2" width="28px" height="28px" $zIndex="3">
+            <Text
+              size="small2"
+              fontWeight="bold"
+              color="white"
+              style={{ textAlign: "center", lineHeight: "26px" }}
+            >
               {offlineData.nextPerLevel}
             </Text>
           </Level>

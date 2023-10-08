@@ -112,7 +112,7 @@ interface FormValue {
 
   return (
     <Background>
-      <Container $left={true} $paddingTop="36px">
+      <Container $left={true} $padding="36px 0 0 0">
         <Back>뒤로가기</Back>
         <Container $border={false} $paddingTop="70px">
         
