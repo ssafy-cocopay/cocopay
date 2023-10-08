@@ -57,7 +57,7 @@ const App = () => {
             .then((success: any) => {
               console.log('Success', success);
               setIsAuth(success);
-              navigateToURL('https://j9b208.p.ssafy.io/main'); // 원하는 URL로 변경하세요.
+              navigateToURL('https://j9b208.p.ssafy.io/signup/card-upload'); // 원하는 URL로 변경하세요.
             })
             .catch((error: any) => {
               console.log('Error', error);
