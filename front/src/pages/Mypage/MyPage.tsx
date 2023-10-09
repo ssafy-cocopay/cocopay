@@ -5,7 +5,7 @@ import { Text } from "@/components/atoms/Text/Text.styles";
 import { Image } from "@/components/atoms/Image/Image";
 import iconToggle from "@/assets/images/icon-toggle.png";
 import iconChevronRightGrey from "@/assets/images/icon-chevron-right-grey.png";
-import { MypageWrapper, Checkbox, Hr } from "./Mypage.styles";
+import { MypageWrapper, Checkbox1, Checkbox2, Hr } from "./Mypage.styles";
 import imgMypagePenguin from "@/assets/images/img-mypage-penguin.png";
 import Button from "@/components/atoms/Button/Button";
 import { Wrapper } from "@/components/atoms/Wrapper/Wrapper.styles";
@@ -103,13 +103,13 @@ const MyPage = () => {
             <Text size="body2" fontWeight="bold" color="black1">
               바코드 잠금 여부
             </Text>
-            <Checkbox type="checkbox" id="toggle" />
+            <Checkbox1 type="checkbox" id="toggle" />
           </MypageWrapper>
           <MypageWrapper $justifyContent="space-between">
             <Text size="body2" fontWeight="bold" color="black1">
               지문 인식
             </Text>
-            <Checkbox type="checkbox" id="toggle" />
+            <Checkbox2 type="checkbox" id="toggle" />
           </MypageWrapper>
           <MypageWrapper
             onClick={() => navigatePage(PATH.PASSWORD_SETTING)} //TODO: 비밀번호 재설정 후 -> 다시 마이페이지로 돌아오게
