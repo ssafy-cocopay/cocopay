@@ -38,10 +38,6 @@ const App = () => {
     passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
   };
 
-  // useEffect(() => {
-  //   handleBiometric();
-  // });
-
   // isSupported 안에 optionalConfigObject 없애보기
   const handleBiometric = () => {
     TouchID.isSupported()
@@ -57,7 +53,7 @@ const App = () => {
             .then((success: any) => {
               console.log('Success', success);
               setIsAuth(success);
-              navigateToURL('https://j9b208.p.ssafy.io/signup/card-upload'); // 원하는 URL로 변경하세요.
+              navigateToURL('https://j9b208.p.ssafy.io/onboarding'); // 원하는 URL로 변경하세요.
             })
             .catch((error: any) => {
               console.log('Error', error);
