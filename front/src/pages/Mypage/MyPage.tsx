@@ -32,7 +32,7 @@ const MyPage = () => {
         navigatePage("/");
         // 원하는 추가 동작을 여기에 작성하세요.
       },
-      onError: (error) => {
+      onError: () => {
         console.log("handleDeleteUser에서의 추가 동작: 회원 탈퇴 실패!");
         // 실패했을 때 원하는 추가 동작을 여기에 작성하세요.
       },
