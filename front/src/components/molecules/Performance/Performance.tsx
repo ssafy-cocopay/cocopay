@@ -11,6 +11,7 @@ interface CardPerformanceProps {
 const Performance = ({ data, dataType }: CardPerformanceProps) => {
   const cardData = data as CardDetail;
   const offlineData = data as OfflinePay;
+  console.log(offlineData)
 
   return (
     <PerformanceWrapper>
@@ -50,7 +51,7 @@ const Performance = ({ data, dataType }: CardPerformanceProps) => {
           <Level
             $bgc="blue"
             width={`calc(28px + ${
-              (225 * parseInt(offlineData.graphRate)) / 100
+              (190 * parseInt(offlineData.graphRate)) / 100
             }px)`}
             height="28px"
             $position="absolute"
