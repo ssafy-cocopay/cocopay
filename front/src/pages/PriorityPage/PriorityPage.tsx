@@ -32,8 +32,8 @@ const PriorityPage = () => {
     setSelectedBox(boxType);
   };
 
-  const handleSetPriority = (prioritynum: number) => {
-    localStorage.setItem('priority', JSON.stringify(prioritynum))
+  const handleSetPriority = () => {
+    localStorage.setItem('priority', JSON.stringify(clikedBtn))
   }
 
   const prioritysave = () => {
@@ -77,7 +77,6 @@ const PriorityPage = () => {
         onClick={() => {
           handleBoxClick("sale");
           setClickedBtn(1);
-          handleSetPriority(1)
         }}
         $isGrayscale={selectedBox === "performance"}
       ></WhiteRoundedBox>
@@ -90,12 +89,11 @@ const PriorityPage = () => {
         onClick={() => {
           handleBoxClick("performance");
           setClickedBtn(0);
-          handleSetPriority(0)
         }}
         $isGrayscale={selectedBox === "sale"} //performance를 누르면 sale 부분이 graybox로 바껴야 함.
       ></WhiteRoundedBox>
       <Button
-        onClick={prioritysave}
+        onClick={() => {prioritysave(); handleSetPriority();}}
         option="activated"
         size="medium"
       >
