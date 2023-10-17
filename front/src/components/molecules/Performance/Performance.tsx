@@ -11,7 +11,6 @@ interface CardPerformanceProps {
 const Performance = ({ data, dataType }: CardPerformanceProps) => {
   const cardData = data as CardDetail;
   const offlineData = data as OfflinePay;
-  console.log(offlineData)
 
   return (
     <PerformanceWrapper>

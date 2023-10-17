@@ -16,7 +16,6 @@ const ShoppingPage = () => {
   const navigate = useNavigate();
   const IsOnlinePurchased = useGetIsOnlinePurchased();
   const [isOnlinePurchased, setIsOnlinePurchased] = useRecoilState(IsOnlinePurchasedAtom)
-  console.log(IsOnlinePurchased, isOnlinePurchased);
 
   useEffect(() => {
     if (isOnlinePurchased === "있음") {
@@ -31,7 +30,6 @@ const ShoppingPage = () => {
   useEffect(() => {
     // 로컬 스토리지의 변경을 감지하는 함수
     const handleStorageChange = (e: StorageEvent) => {
-      console.log("Storage event detected!");
       if (e.key === "goToComplete") {
         setGotoComplete(JSON.parse(e.newValue || "false"));
       }
