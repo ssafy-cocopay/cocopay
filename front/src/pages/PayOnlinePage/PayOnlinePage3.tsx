@@ -67,7 +67,6 @@ function PayOnlinePage3(props: PayOnlinePageProps) {
       }
       PayOnlineComplete.mutate(PayData, {
         onSuccess: () => {
-          console.log("결제 성공!!")
           navigatePage(PATH.PAYONLINECOMPLETE)
         }
     });

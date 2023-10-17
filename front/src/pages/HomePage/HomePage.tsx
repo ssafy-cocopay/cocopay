@@ -37,7 +37,6 @@ const HomePage = () => {
   const MainCards = useGetMainCards();
   const IsPurchased = useGetIsPurchased()
   const [isPurchased, setIsPurchased] = useRecoilState(IsPurchasedAtom)
-  console.log(IsPurchased, isPurchased)
   const [barcodeValue, setBarcodeValue] = useState("491731284377");
   const [resetTimerFlag, setResetTimerFlag] = useState(false);
   // TODO: 3분 만료랑 새로고침, 큐알....

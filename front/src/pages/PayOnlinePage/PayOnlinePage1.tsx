@@ -17,7 +17,6 @@ type PayOnlinePageProps = {
 function PayOnlinePage1(props: PayOnlinePageProps) {
   const { onNextPage } = props;
   const [payOnlineCards, setPayOnlineCards] = useRecoilState(PayOnlineCardList)
-  console.log(payOnlineCards)
   const PayOnline = usePostPayOnline()
   const OnlineShopping = useRecoilValue(OnlinePayDataAtom)
 
@@ -31,7 +30,6 @@ const handlePayOnline = () => {
     PayOnline.mutate(Pay, {
       onSuccess: (data) => {
         setPayOnlineCards(data.data);
-        console.log(payOnlineCards)
         onNextPage()
       }
   });
