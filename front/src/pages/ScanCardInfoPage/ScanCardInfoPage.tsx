@@ -81,7 +81,6 @@ interface FormValue {
       setCardPassword(newPassword);
     };
 
-    console.log(cardNumber, CVC, validDate, cardPassword, maskedCardNumber)
     const handleSubmit = () => {
       // 유효성 검사
       if (cardNumber.length !== 19) {
@@ -98,7 +97,6 @@ interface FormValue {
       // 유효성 검사 후 카드 정보를 서버에 보냅니다.
       PostCard.mutate(CardData,{
         onSuccess: (data) => {
-          console.log(data)
           navigatePage(`${PATH.CARD_DETAIL.replace(":cardId", data.userCardId.toString())}`)
         },
         onError: (error) => {

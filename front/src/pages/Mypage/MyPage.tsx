@@ -41,14 +41,12 @@ const MyPage = () => {
 
   //모달 오픈 함수
   const toggleModal = () => {
-    console.log("Modal");
     setIsModalOpen((prev) => !prev);
   };
   const withdrawal = () => {
     toggleModal();
   };
   const UserMyPage = useGetMyPage();
-  console.log(UserMyPage, "유저마이페이지");
   const [priority, setPriority] = useRecoilState(priorityAtom);
   const Priority = useRecoilValue(myPagePriorityAtom);
 
