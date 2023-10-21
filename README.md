@@ -1,6 +1,7 @@
 <div>
   <h3 align="center"> Change Or Choise One</h3>
   <h1 align="center">COCO PAY</h1>
+  <img src="assets/cocopay.png" width="700px">
 </div>
 
 ## 🏆삼성 청년 SW아카데미(SSAFY) 9th 특화프로젝트 최우수상(1위)🏆
@@ -10,9 +11,9 @@
 2023.08.28 ~ 2023.10.05
 
 ## ✅ 팀 모토 및 그라운드룰 사진
-
-![그라운드룰](assets/그라운드룰.jpg){:width="100px"}
-
+<div align="center">
+  <img src="assets/그라운드룰.jpg" alt="그라운드룰" width="400">
+</div>
 
 ## ✅ 멤버소개→PPT
 
