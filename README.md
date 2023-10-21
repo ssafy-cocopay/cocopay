@@ -1,11 +1,6 @@
-<div style="text-align: center;">
-<style>
-    h1, h3 {
-      margin: 0; 
-    }
-  </style>
-  <h3> Change Or Choise One</h3>
-  <h1>COCO PAY</h1>
+<div>
+  <h3 align="center"> Change Or Choise One</h3>
+  <h1 align="center">COCO PAY</h1>
 </div>
 
 ## 🏆삼성 청년 SW아카데미(SSAFY) 9th 특화프로젝트 최우수상(1위)🏆
