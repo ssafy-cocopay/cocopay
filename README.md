@@ -1,11 +1,6 @@
-<div style="text-align: center;">
-<style>
-    h1, h3 {
-      margin: 0; 
-    }
-  </style>
-  <h3> Change Or Choise One</h3>
-  <h1>COCO PAY</h1>
+<div>
+  <h3 align="center"> Change Or Choise One</h3>
+  <h1 align="center">COCO PAY</h1>
 </div>
 
 ## 🏆삼성 청년 SW아카데미(SSAFY) 9th 특화프로젝트 최우수상(1위)🏆
@@ -1601,112 +1596,145 @@
 [코코페이 UCC](https://youtu.be/W53HnyE2SZE)
 
 ## ✅ 추억들~.~(우리사진)
-<div align="center">
-    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-        <div style="margin: 10px;">
+
+<table>
+    <tr>
+        <td>
             <a href="assets/첫날.jpg">
-                <img src="assets/첫날.jpg" alt="부트캠프 첫날!" width="300">
+                <img src="assets/첫날.jpg" width="300">
             </a>
-            <p align="center">부트캠프 첫날!</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
             <a href="assets/그라운드룰적는중.jpg">
-                <img src="assets/그라운드룰적는중.jpg" alt="그라운드 룰 적는 중~!" width="300">
+                <img src="assets/그라운드룰적는중.jpg" width="300">
             </a>
-            <p align="center">그라운드 룰 적는 중~!</p>
-        </div>
-        <div style="margin: 10px;">
-            <a href="assets/그라운드룰.jpg">
-                <img src="assets/그라운드룰.jpg" alt="우리팀 그라운드 룰!" width="300">
-            </a>
-            <p align="center">우리팀 그라운드 룰!</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
             <a href="assets/인증샷.jpg">
-                <img src="assets/인증샷.jpg" alt="그라운드 룰 앞에서 인증 샷!" width="300">
+                <img src="assets/인증샷.jpg" width="300">
             </a>
-            <p align="center">그라운드 룰 앞에서 인증 샷!</p>
-        </div>
-        <div style="margin: 10px;">
-            <a href="assets/소개그림.jpg">
-                <img src="assets/소개그림.jpg" alt="우리팀 소개!" width="300">
+        </td>
+    </tr>
+    <tr>
+        <td align="center">부트캠프 첫날!</td>
+        <td align="center">그라운드 룰 적는 중~!</td>
+        <td align="center">그라운드 룰 앞에서 인증 샷!</td>
+    </tr>   
+    <tr>
+        <td>
+            <a href="assets/그라운드룰.jpg">
+                <img src="assets/그라운드룰.jpg" width="300">
             </a>
-            <p align="center">우리팀 소개!</p>
-        </div>
-        <div style="margin: 10px;">
-            <a href="assets/소개컨셉.png">
-                <img src="assets/소개컨셉.png" alt="우리팀 소개 컨셉" width="300">
-            </a>
-            <p align="center">우리팀 소개 컨셉</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
             <a href="assets/소개이미지.png">
-                <img src="assets/소개이미지.png" alt="우리팀 소개 이미지" width="300">
+                <img src="assets/소개이미지.png" width="300">
             </a>
-            <p align="center">우리팀 소개 이미지</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
+            <a href="assets/소개컨셉.png">
+                <img src="assets/소개컨셉.png" width="300">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">부트캠프 첫날!</td>
+        <td align="center">우리팀 소개 이미지</td>
+        <td align="center">우리팀 소개 컨셉</td>
+    </tr>
+    <tr>
+        <td>
             <a href="assets/인생네컷.jpg">
-                <img src="assets/인생네컷.jpg" alt="첫 인생네컷!" width="300">
+                <img src="assets/인생네컷.jpg" width="300">
             </a>
-            <p align="center">첫 인생네컷!</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
             <a href="assets/회식.jpg">
-                <img src="assets/회식.jpg" alt="팔딱팔딱 조~! 첫 회식!" width="300">
+                <img src="assets/회식.jpg" width="300">
             </a>
-            <p align="center">팔딱팔딱 조~! 첫 회식!</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
             <a href="assets/코로나이슈.jpg">
-                <img src="assets/코로나이슈.jpg" alt="코로나 이슈로... 3명 불참" width="300">
+                <img src="assets/코로나이슈.jpg" width="300">
             </a>
-            <p align="center">코로나 이슈로... 3명 불참</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+    </tr>
+    <tr>
+        <td align="center">첫 인생네컷</td>
+        <td align="center">팔딱팔딱 조~! 첫 회식!</td>
+        <td align="center">코로나 이슈로… 3명 불참</td>
+    </tr>
+    <tr>
+        <td>
             <a href="assets/신발던지기.png">
-                <img src="assets/신발던지기.png" alt="자리 정하기 게임(신발던지기)" width="300">
+                <img src="assets/신발던지기.png" width="300">
             </a>
-            <p align="center">자리 정하기 게임(신발던지기)</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
             <a href="assets/자리정하기.jpg">
-                <img src="assets/자리정하기.jpg" alt="자리 정하기 게임(제로게임)" width="300">
+                <img src="assets/자리정하기.jpg" width="300">
             </a>
-            <p align="center">자리 정하기 게임(제로게임)</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
             <a href="assets/그냥.jpg">
-                <img src="assets/그냥.jpg" alt="우리팀 소개" width="300">
+                <img src="assets/그냥.jpg" width="300">
             </a>
-            <p align="center">우리팀 소개</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+    </tr>
+    <tr>
+        <td align="center">자리 정하기 게임(신발던지기)</td>
+        <td align="center">자리 정하기 게임(제로게임)</td>
+        <td align="center">그냥 만들어 본 우리팀 소개</td>
+    </tr>
+    <tr>
+        <td align="center">첫 인생네컷</td>
+        <td align="center">팔딱팔딱 조~! 첫 회식!</td>
+        <td align="center">코로나 이슈로… 3명 불참</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="assets/중간발표.jpg">
+                <img src="assets/중간발표.jpg" width="300">
+            </a>
+        </td>
+        <td>
             <a href="assets/ucc비하인드.jpg">
-                <img src="assets/ucc비하인드.jpg" alt="코코페이 UCC 비하인드" width="300">
+                <img src="assets/ucc비하인드.jpg" width="300">
             </a>
-            <p align="center">코코페이 UCC 비하인드</p>
-        </div>
-        <div style="margin: 10px;">
-            <a href="assets/스벤.jpg">
-                <img src="assets/스벤.jpg" alt="명예멤버인 혜현언니의 스벤~~ " width="300">
+        </td>
+        <td>
+            <a href="assets/야근.jpg">
+                <img src="assets/야근.jpg" width="300">
             </a>
-            <p align="center">명예멤버인 혜현언니의 스벤~~ </p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+    </tr>
+    <tr>
+        <td align="center">중간 발표!</td>
+        <td align="center">코코페이 UCC 비하인드</td>
+        <td align="center">최종발표 전 마지막 야근!</td>
+    </tr>  
+    <tr>
+        <td>
             <a href="assets/ucc비하인드2.jpg">
-                <img src="assets/ucc비하인드2.jpg" alt="진짜 즐거웠어요! 코코페이~~ 우리팀 진짜진짜 사랑합니다! 우리 이멤버 포에버~~" width="300">
+                <img src="assets/ucc비하인드2.jpg" width="300">
             </a>
-            <p align="center">코코페이~~ 우리팀 진짜진짜 사랑합니다!</p>
-        </div>
-        <div style="margin: 10px;">
+        </td>
+        <td>
+            <a href="assets/스벤.jpg">
+                <img src="assets/스벤.jpg" width="300">
+            </a>
+        </td>
+        <td>
             <a href="assets/인생네컷2.png">
-                <img src="assets/인생네컷2.png" alt="최종 끝나고 인생네컷! 모두모두 수고했다!" width="300">
+                <img src="assets/인생네컷2.png" width="300">
             </a>
-            <p align="center">최종 끝나고 인생네컷! 모두모두 수고했다!</p>
-        </div>
-    </div>
-</div>
-
-
-
+        </td>
+    </tr>
+    <tr>
+        <td align="center">코코페이~~ 우리팀 진짜진짜 사랑합니다! 
+        <br>
+          우리 이멤버 포에버~~</td>
+        <td align="center">명예멤버인 혜현언니의 스벤~~ </td>
+        <td align="center">최종 끝나고 인생네컷! 모두모두 수고했다!</td>
+    </tr>
+</table>
