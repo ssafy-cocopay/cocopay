@@ -102,20 +102,15 @@
 기간 : 2023.09.04~ 2023.09.06 (3일간 진행)
 
 결과
-
-![설문_성별](assets/설문_성별.png)
-
-![설문_나이.png](assets/설문_나이.png)
-
-![설문_카드갯수.png](assets/설문_카드갯수.png)
-
-![설문_실사용카드.png](assets/설문_실사용카드.png)
-
-![설문_선택기준.png](assets/설문_선택기준.png)
-
-![설문_평균결제액.png](assets/설문_평균결제액.png)
-
-![설문_소비처.png](assets/설문_소비처.png)
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <img src="assets/설문_성별.png" alt="설문_성별" style="width: 45%;">
+    <img src="assets/설문_나이.png" alt="설문_나이" style="width: 45%;">
+    <img src="assets/설문_카드갯수.png" alt="설문_카드갯수" style="width: 45%;">
+    <img src="assets/설문_실사용카드.png" alt="설문_실사용카드" style="width: 45%;">
+    <img src="assets/설문_선택기준.png" alt="설문_선택기준" style="width: 45%;">
+    <img src="assets/설문_평균결제액.png" alt="설문_평균결제액" style="width: 45%;">
+    <img src="assets/설문_소비처.png" alt="설문_소비처" style="width: 45%;">
+</div>
 
 ▪️**서비스 목적**
 
@@ -150,7 +145,7 @@
                     .sorted(Comparator.comparing(MainCardDto::getCardOrder))
                     .toList();
     ```
-
+ 
   ![병렬스트림.png](assets/병렬스트림.png)
 
 - **아토믹 패턴**
@@ -169,9 +164,10 @@
 
 ### ERD (bank, cocopay)
 
-![스크린샷 2023-10-16 오후 9.10.28.png](assets/erd_bank.png)
-
-![스크린샷 2023-10-16 오후 9.13.50.png](assets/erd_cocopay.png)
+<div style="display: flex; justify-content: space-between;">
+    <img src="assets/erd_bank.png" alt="ERD for Bank" style="width: 48%;">
+    <img src="assets/erd_cocopay.png" alt="ERD for Cocopay" style="width: 48%;">
+</div>
 
 ### 명세서
 
@@ -188,7 +184,10 @@
 
 ### 파일 구조
 
-- bank
+<details>
+<summary>Bank-Directory</summary>
+
+### bank
 
     ```
     .
@@ -793,8 +792,13 @@
     
     207 directories, 392 files
     ```
+</details>
 
-- back
+<details>
+<summary>Back-Directory</summary>
+
+
+### Back
 
     ```
     .
@@ -1197,8 +1201,12 @@
     
     130 directories, 267 files
     ```
+</details>
 
-- front
+<details>
+<summary>Front-Directory</summary>
+
+### front
 
     ```
     .
@@ -1578,6 +1586,8 @@
     
     85 directories, 289 files
     ```
+</details>
+
 
 ## ✅ 결과공유, 느낀점(모두작성)
 
@@ -1667,3 +1677,115 @@
 ![최종 끝나고 인생네컷! 모두모두 수고했다!](assets/인생네컷2.png)
 
 최종 끝나고 인생네컷! 모두모두 수고했다!
+
+## 📷 Our Memorable Moments
+
+<div align="center">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <div style="margin: 10px;">
+            <a href="assets/첫날.jpg">
+                <img src="assets/첫날.jpg" alt="부트캠프 첫날!" width="300">
+            </a>
+            <p align="center">부트캠프 첫날!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/그라운드룰적는중.jpg">
+                <img src="assets/그라운드룰적는중.jpg" alt="그라운드 룰 적는 중~!" width="300">
+            </a>
+            <p align="center">그라운드 룰 적는 중~!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/그라운드룰.jpg">
+                <img src="assets/그라운드룰.jpg" alt="우리팀 그라운드 룰!" width="300">
+            </a>
+            <p align="center">우리팀 그라운드 룰!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/인증샷.jpg">
+                <img src="assets/인증샷.jpg" alt="그라운드 룰 앞에서 인증 샷!" width="300">
+            </a>
+            <p align="center">그라운드 룰 앞에서 인증 샷!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/소개그림.jpg">
+                <img src="assets/소개그림.jpg" alt="우리팀 소개!" width="300">
+            </a>
+            <p align="center">우리팀 소개!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/소개컨셉.png">
+                <img src="assets/소개컨셉.png" alt="우리팀 소개 컨셉" width="300">
+            </a>
+            <p align="center">우리팀 소개 컨셉</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/소개이미지.png">
+                <img src="assets/소개이미지.png" alt="우리팀 소개 이미지" width="300">
+            </a>
+            <p align="center">우리팀 소개 이미지</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/인생네컷.jpg">
+                <img src="assets/인생네컷.jpg" alt="첫 인생네컷!" width="300">
+            </a>
+            <p align="center">첫 인생네컷!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/회식.jpg">
+                <img src="assets/회식.jpg" alt="팔딱팔딱 조~! 첫 회식!" width="300">
+            </a>
+            <p align="center">팔딱팔딱 조~! 첫 회식!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/코로나이슈.jpg">
+                <img src="assets/코로나이슈.jpg" alt="코로나 이슈로... 3명 불참" width="300">
+            </a>
+            <p align="center">코로나 이슈로... 3명 불참</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/신발던지기.png">
+                <img src="assets/신발던지기.png" alt="자리 정하기 게임(신발던지기)" width="300">
+            </a>
+            <p align="center">자리 정하기 게임(신발던지기)</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/자리정하기.jpg">
+                <img src="assets/자리정하기.jpg" alt="자리 정하기 게임(제로게임)" width="300">
+            </a>
+            <p align="center">자리 정하기 게임(제로게임)</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/그냥.jpg">
+                <img src="assets/그냥.jpg" alt="우리팀 소개" width="300">
+            </a>
+            <p align="center">우리팀 소개</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/ucc비하인드.jpg">
+                <img src="assets/ucc비하인드.jpg" alt="코코페이 UCC 비하인드" width="300">
+            </a>
+            <p align="center">코코페이 UCC 비하인드</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/스벤.jpg">
+                <img src="assets/스벤.jpg" alt="명예멤버인 혜현언니의 스벤~~ " width="300">
+            </a>
+            <p align="center">명예멤버인 혜현언니의 스벤~~ </p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/ucc비하인드2.jpg">
+                <img src="assets/ucc비하인드2.jpg" alt="진짜 즐거웠어요! 코코페이~~ 우리팀 진짜진짜 사랑합니다! 우리 이멤버 포에버~~" width="300">
+            </a>
+            <p align="center">코코페이~~ 우리팀 진짜진짜 사랑합니다!</p>
+        </div>
+        <div style="margin: 10px;">
+            <a href="assets/인생네컷2.png">
+                <img src="assets/인생네컷2.png" alt="최종 끝나고 인생네컷! 모두모두 수고했다!" width="300">
+            </a>
+            <p align="center">최종 끝나고 인생네컷! 모두모두 수고했다!</p>
+        </div>
+    </div>
+</div>
+
+
+
