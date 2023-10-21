@@ -1,7 +1,6 @@
-<div>
-  <h3 align="center"> Change Or Choise One</h3>
-  <h1 align="center">COCO PAY</h1>
-  <img src="assets/cocopay.png" width="700px">
+# COCO PAY
+<div align="center">
+  <img src="assets/cocopay.png" width="700px" align="center">
 </div>
 
 ## 🏆삼성 청년 SW아카데미(SSAFY) 9th 특화프로젝트 최우수상(1위)🏆
