@@ -118,12 +118,12 @@
 
 ### 로그인, 회원 가입
 <table>    
-    <tr> 
-        <td align="center"> 초기 화면 </td>
+    <tr align="center"> 
+        <td> 초기 화면 </td>
         <td> 회원 가입</td>
     </tr>
-    <tr style="text-align: center"> 
-        <td> <img src= "assets/gif/mobile/01_opening.gif" height="450"> </td>
+    <tr align="center"> 
+        <td> <img src="assets/gif/mobile/01_opening.gif" height="450"> </td>
         <td> <img src="assets/gif/mobile/02_signin.gif" height="450"> </td>
     </tr>
     <tr> 
@@ -135,16 +135,16 @@
             2. 수신 받은 인증번호를 통해 회원 가입 진행
         </td>
     </tr>
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center"> 
         <td>간편 비밀번호</td>
         <td>지문 등록</td>
     </tr>
-    <tr style="text-align: center"> 
-        <td> <img src= "assets/gif/mobile/03_password.gif" height="450"> </td>
+    <tr align="center"> 
+        <td> <img src="assets/gif/mobile/03_password.gif" height="450"> </td>
         <td> <img src="assets/gif/mobile/04_fingerprint.gif" height="450"> </td>
     </tr>
     <tr> 
-        <td>
+        <td >
             1. 간편 비밀번호 등록 가능<br>
             2. 재확인을 통해 오입력, 실수 방지
         </td>
@@ -158,10 +158,10 @@
 
 ### 스플래시 화면
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>스플래시</td>
     </tr>
-    <tr style="text-align: center"> 
+    <tr align="center"> 
         <td> <img src= "assets/gif/mobile/05_splash.gif" height="450"> </td>
     </tr>
     <tr> 
@@ -172,11 +172,11 @@
 
 ### 카드 불러오기, 추천 타입
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>카드 불러오기</td>
         <td>추천 타입 설정</td>
     </tr>
-    <tr style="text-align: center"> 
+    <tr align="center"> 
         <td> <img src= "assets/gif/mobile/06_getCard.gif" height="450"> </td>
         <td> <img src= "assets/gif/mobile/07_setPrimary.gif" height="450"> </td>
     </tr>
@@ -192,10 +192,10 @@
 
 ### 메인화면
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>메인 화면</td>
     </tr>
-    <tr style="text-align: center"> 
+    <tr align="center"> 
         <td> <img src= "assets/gif/mobile/08_main.gif" height="450"> </td>
     </tr>
     <tr> 
@@ -209,11 +209,11 @@
 
 ### 온라인 결제
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>바코드 잠금, 지문 인식 설정</td>
         <td>최종 결제</td>
     </tr>
-    <tr style="text-align: center">
+    <tr align="center">
         <td> <img src= "assets/gif/mobile/18_purchaseOnline.gif" height="450"> </td>
         <td> <img src= "assets/gif/mobile/19_purchaseOnlineComplete.gif" height="450"> </td>
     </tr>
@@ -232,7 +232,7 @@
         </td>
 </table>
 <table>
-  <tr style="text-align: center">
+  <tr align="center">
     <td>결제 준비</td>
     <td>결제 후</td>
   </tr>
@@ -254,11 +254,11 @@
 
 ### 오프라인 결제
 <table>
-  <tr style="text-align: center">
+  <tr align="center">
     <td>오프라인 결제(할인순)</td>
     <td>오프라인 결제(실적순)</td>
   </tr>
-  <tr style="text-align: center">
+  <tr align="center">
     <td><img src="assets/gif/mobile/20_purchaseOffline.gif" height="450"></td>
     <td><img src="assets/gif/mobile/21_purchaseOfflineOtherPrimary.gif" height="450"></td>
   </tr>
@@ -278,11 +278,11 @@
   </tr>
 </table>
 <table>
-  <tr style="text-align: center">
+  <tr align="center">
     <td>오프라인 결제(할인순) </td>
     <td>오프라인 결제(실적순)</td>
   </tr>
-  <tr style="text-align: center">
+  <tr align="center">
     <td><img src="assets/gif/cam/offline_02.gif"></td>
     <td><img src="assets/gif/cam/offline_01.gif"></td>
   </tr>
@@ -303,11 +303,11 @@
 
 ### 카드
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>카드 세부 정보 조회</td>
         <td>카드 삭제</td>
     </tr>
-    <tr style="text-align: center">
+    <tr align="center">
         <td> <img src= "assets/gif/mobile/10_cardA.gif" height="450"> </td>
         <td> <img src= "assets/gif/mobile/09_cardList.gif" height="450"> </td>
     </tr>
@@ -322,11 +322,11 @@
             1. 카드를 왼쪽으로 스와이핑하여 카드 삭제 <br>
             2. 실수 방지를 위한 추가 확인 진행
         </td>
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>카드 세부 정보 조회</td>
         <td>카드 세부 정보 조회</td>
     </tr>
-    <tr style="text-align: center">
+    <tr align="center">
         <td> <img src= "assets/gif/mobile/11_cardADetail.gif" height="450"> </td>
         <td> <img src= "assets/gif/mobile/12_cardBDetail.gif" height="450"> </td>
     </tr>
@@ -345,11 +345,11 @@
 
 ### 통계
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>이번 달 할인 내역, 이용내역</td>
         <td>내 소비, 혜택</td>
     </tr>
-    <tr style="text-align: center">
+    <tr align="center">
         <td> <img src= "assets/gif/mobile/13_statistics.gif" height="450"> </td>
         <td> <img src= "assets/gif/mobile/14_statisticsMonths.gif" height="450"> </td>
     </tr>
@@ -367,12 +367,12 @@
 
 ### 마이페이지
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
+    <tr align="center" > 
         <td>바코드 잠금, 지문 인식 설정</td>
         <td>추천 타입 변경</td>
         <td>회원 탈퇴</td>
     </tr>
-    <tr style="text-align: center">
+    <tr align="center">
         <td> <img src= "assets/gif/mobile/15_mypage.gif" height="450"> </td>
         <td> <img src= "assets/gif/mobile/16_mypagePrimary.gif" height="450"> </td>
         <td> <img src= "assets/gif/mobile/17_deleteUser.gif" height="450"> </td>
