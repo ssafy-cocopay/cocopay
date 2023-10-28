@@ -15,11 +15,11 @@
   <img src="assets/그라운드룰.jpg" alt="그라운드룰" width="400">
 </div>
 
-## ✅ 멤버소개→PPT
+## ✅ 멤버소개
 
 ![팀원소개](assets/팀원소개.png)
 
-## ✅ 기술스택→벳지로 달기
+## ✅ 기술스택
 
 ## :pushpin: 기술 스택
 
@@ -73,7 +73,7 @@
 
 ![시스템 아키텍처](assets/시스템아키텍처.png)
 
-## ✅ 프로젝트 소개 (PPT 활용)
+## ✅ 프로젝트 소개
 
 **🚩 서비스 한줄 소개**
 
@@ -115,9 +115,281 @@
 
 ▪️**기대효과**
 
-## ✅ 기능 소개 (녹화완료! → 편집하고 쪼개서 나눌게요!)
+## ✅ 기능 소개 
 
-- GIF와 한줄소개 , 상세설명
+### 로그인, 회원 가입
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td> 초기 화면 </td>
+        <td> 회원 가입</td>
+    </tr>
+    <tr style="text-align: center"> 
+        <td> <img src= "assets/gif/mobile/01_opening.gif" height="450"> </td>
+        <td> <img src="assets/gif/mobile/02_signin.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+            1. 앱 실행 시 로그인 및 회원가입 진행 가능 <br>
+        </td>
+        <td>
+            1. 이름, 주민 번호, 통신사, 핸드폰 번호 입력<br>
+            2. 수신 받은 인증번호를 통해 회원 가입 진행
+        </td>
+    </tr>
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>간편 비밀번호</td>
+        <td>지문 등록</td>
+    </tr>
+    <tr style="text-align: center"> 
+        <td> <img src= "assets/gif/mobile/03_password.gif" height="450"> </td>
+        <td> <img src="assets/gif/mobile/04_fingerprint.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+            1. 간편 비밀번호 등록 가능<br>
+            2. 재확인을 통해 오입력, 실수 방지
+        </td>
+        <td>
+            1. 보안성 강화를 위한 지문 등록<br>
+            2. 건너뛰기를 통해 지문 인식 넘기기 가능 <br>
+            3. 지문 등록 실패 시 재시도 화면을 통해 알림
+        </td>
+    </tr>
+</table>
+
+### 스플래시 화면
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>스플래시</td>
+    </tr>
+    <tr style="text-align: center"> 
+        <td> <img src= "assets/gif/mobile/05_splash.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+            1. 회원 가입 이후 코코페이 간단한 소개 진행
+        </td>
+</table>
+
+### 카드 불러오기, 추천 타입
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>카드 불러오기</td>
+        <td>추천 타입 설정</td>
+    </tr>
+    <tr style="text-align: center"> 
+        <td> <img src= "assets/gif/mobile/06_getCard.gif" height="450"> </td>
+        <td> <img src= "assets/gif/mobile/07_setPrimary.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+            1. 각 은행에 있는 사용자의 카드를 조회<br>
+            2. 카드 정보와 실적 달성률을 그래프로 표현
+        </td>
+        <td>
+            1. 사용자가 원하는 카드 추천 로직 설정<br>
+        </td>
+</table>
+
+### 메인화면
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>메인 화면</td>
+    </tr>
+    <tr style="text-align: center"> 
+        <td> <img src= "assets/gif/mobile/08_main.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+            1. 해당 월에 할인, 소비한 금액을 확인 가능<br>
+            2. 하단 바코드를 통해 오프라인 결제 가능<br>
+            3. 스와이핑을 통해 오프라인 결제 카드 선택 가능
+        </td>
+</table>
+
+
+### 온라인 결제
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>바코드 잠금, 지문 인식 설정</td>
+        <td>최종 결제</td>
+    </tr>
+    <tr style="text-align: center">
+        <td> <img src= "assets/gif/mobile/18_purchaseOnline.gif" height="450"> </td>
+        <td> <img src= "assets/gif/mobile/19_purchaseOnlineComplete.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+          사용자가 설정한 타입 기반 추천 진행<br>
+          1. 결제 QR 인식 시 자동 앱 구동<br>
+          2. 결제하기 진행 시 카드 추천<br>
+          3. 추천된 카드와 할인율, 남은 실적 확인<br>
+          4. 추천 외 다른 카드로 결제 가능
+        </td>
+        <td>
+          1. 결제하기 버튼을 눌러 최종 결제 진행<br>
+          2. 신용 카드의 경우 할부 선택 가능<br>
+          3. 홈으로 이동 가능
+        </td>
+</table>
+<table>
+  <tr style="text-align: center">
+    <td>결제 준비</td>
+    <td>결제 후</td>
+  </tr>
+  <tr>
+    <td><img src="assets/gif/cam/web_01_samsungStore.gif"></td>
+    <td><img src="assets/gif/cam/web_02_samsungStore.gif"></td>
+  </tr>
+  <tr>
+    <td>
+      결제 진행을 위한 가상의 홈페이지<br>
+      1. 상품 선택 후 하단의 코코페이 버튼 선택<br>
+      2. 결제하기 버튼 클릭 시 코코페이 QR 결제 창 오픈
+    </td>
+    <td>
+      1. 앱 결제 완료 시 자동 페이지 전환<br>
+    </td> 
+  </tr>
+</table>
+
+### 오프라인 결제
+<table>
+  <tr style="text-align: center">
+    <td>오프라인 결제(할인순)</td>
+    <td>오프라인 결제(실적순)</td>
+  </tr>
+  <tr style="text-align: center">
+    <td><img src="assets/gif/mobile/20_purchaseOffline.gif" height="450"></td>
+    <td><img src="assets/gif/mobile/21_purchaseOfflineOtherPrimary.gif" height="450"></td>
+  </tr>
+  <tr>
+    <td>
+      사용자가 설정한 타입 기반 추천 진행<br>
+      1. 바코드 인식 시 카드 추천 진행 <br>
+      2. 추천 후 자동 결제 진행<br>
+      3. 결제 카드와 할인 금액, 남은 실적 확인
+    </td>
+    <td>
+      사용자가 설정한 타입 기반 추천 진행<br>
+      1. 추천 타입 변경 후 오프라인 결제 진행<br>
+      2. 실적순으로 인한 다른 카드로 결제 진행<br>
+      3. 결제 카드와 할인 금액, 남은 실적 확인
+    </td> 
+  </tr>
+</table>
+<table>
+  <tr style="text-align: center">
+    <td>오프라인 결제(할인순) </td>
+    <td>오프라인 결제(실적순)</td>
+  </tr>
+  <tr style="text-align: center">
+    <td><img src="assets/gif/cam/offline_02.gif"></td>
+    <td><img src="assets/gif/cam/offline_01.gif"></td>
+  </tr>
+  <tr>
+    <td>
+      사용자가 설정한 타입 기반 추천 진행<br>
+      1. 바코드 인식 시 카드 추천 진행 <br>
+      2. 추천 후 자동 결제 진행<br>
+      3. 결제 카드와 할인 금액, 남은 실적 확인
+    </td>
+    <td>
+      1. 추천 타입 변경 후 오프라인 결제 진행<br>
+      2. 실적순으로 인한 다른 카드로 결제 진행<br>
+      3. 결제 카드와 할인 금액, 남은 실적 확인
+    </td> 
+  </tr>
+</table>
+
+### 카드
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>카드 세부 정보 조회</td>
+        <td>카드 삭제</td>
+    </tr>
+    <tr style="text-align: center">
+        <td> <img src= "assets/gif/mobile/10_cardA.gif" height="450"> </td>
+        <td> <img src= "assets/gif/mobile/09_cardList.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+            1. 카드를 클릭하여 카드 세부 정보 조회<br>
+            2. 현재 실적률을 그래프로 확인<br>
+            3. 실적 단계 확인<br>
+            4. 달력을 통해 월별 이용내역 확인
+        </td>
+        <td>
+            1. 카드를 왼쪽으로 스와이핑하여 카드 삭제 <br>
+            2. 실수 방지를 위한 추가 확인 진행
+        </td>
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>카드 세부 정보 조회</td>
+        <td>카드 세부 정보 조회</td>
+    </tr>
+    <tr style="text-align: center">
+        <td> <img src= "assets/gif/mobile/11_cardADetail.gif" height="450"> </td>
+        <td> <img src= "assets/gif/mobile/12_cardBDetail.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+            1. 월별 카드 명세 확인 가능<br>
+            2. 월별 이용내역, 받은 혜택 확인 가능<br>
+            2. 전체 내역 확인 가능
+        </td>
+        <td>
+            1. 월별 카드 명세 확인 가능<br>
+            2. 월별 이용내역, 받은 혜택 확인 가능<br>
+            2. 전체 내역 확인 가능
+        </td>
+</table>
+
+### 통계
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>이번 달 할인 내역, 이용내역</td>
+        <td>내 소비, 혜택</td>
+    </tr>
+    <tr style="text-align: center">
+        <td> <img src= "assets/gif/mobile/13_statistics.gif" height="450"> </td>
+        <td> <img src= "assets/gif/mobile/14_statisticsMonths.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+          1. 이번 달에 받은 총 할인 혜택 금액 확인<br>
+          2. 이미지를 통해 상위 4개 확인<br>
+          3. 그래프를 통해 카테고리별 세부 금액 확인
+        </td>
+        <td>
+            1. 달력을 통해 다른 월 확인<br>
+            2. 내 소비, 혜택 전환 
+        </td>
+</table>
+
+### 마이페이지
+<table>    
+    <tr style="text-align: center; font-weight: bold" > 
+        <td>바코드 잠금, 지문 인식 설정</td>
+        <td>추천 타입 변경</td>
+        <td>회원 탈퇴</td>
+    </tr>
+    <tr style="text-align: center">
+        <td> <img src= "assets/gif/mobile/15_mypage.gif" height="450"> </td>
+        <td> <img src= "assets/gif/mobile/16_mypagePrimary.gif" height="450"> </td>
+        <td> <img src= "assets/gif/mobile/17_deleteUser.gif" height="450"> </td>
+    </tr>
+    <tr> 
+        <td>
+          1. 바코드 잠금 여부 설정<br>
+          2. 지문 인식 사용 여부<br>
+        </td>
+        <td>
+          1. 카드 추천 타입 변경<br>
+        </td>
+        <td>
+          1. 회원 탈퇴
+        </td>
+</table>
 
 ## ✅ 활용기술, 기술 설명
 
