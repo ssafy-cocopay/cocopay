@@ -119,8 +119,8 @@
 ### 로그인, 회원 가입
 <table>    
     <tr align="center"> 
-        <td> 초기 화면 </td>
-        <td> 회원 가입</td>
+        <td><strong> 초기 화면 </strong></td>
+        <td><strong> 회원 가입</strong></td>
     </tr>
     <tr align="center"> 
         <td> <img src="assets/gif/mobile/01_opening.gif" height="450"> </td>
@@ -136,8 +136,8 @@
         </td>
     </tr>
     <tr align="center"> 
-        <td>간편 비밀번호</td>
-        <td>지문 등록</td>
+        <td><strong>간편 비밀번호</strong></td>
+        <td><strong>지문 등록</strong>/td>
     </tr>
     <tr align="center"> 
         <td> <img src="assets/gif/mobile/03_password.gif" height="450"> </td>
@@ -159,7 +159,7 @@
 ### 스플래시 화면
 <table>    
     <tr align="center" > 
-        <td>스플래시</td>
+        <td><strong>스플래시</strong></td>
     </tr>
     <tr align="center"> 
         <td> <img src= "assets/gif/mobile/05_splash.gif" height="450"> </td>
@@ -173,8 +173,8 @@
 ### 카드 불러오기, 추천 타입
 <table>    
     <tr align="center" > 
-        <td>카드 불러오기</td>
-        <td>추천 타입 설정</td>
+        <td><strong>카드 불러오기</strong></td>
+        <td><strong>추천 타입 설정</strong></td>
     </tr>
     <tr align="center"> 
         <td> <img src= "assets/gif/mobile/06_getCard.gif" height="450"> </td>
@@ -193,7 +193,7 @@
 ### 메인화면
 <table>    
     <tr align="center" > 
-        <td>메인 화면</td>
+        <td><strong>메인 화면</strong></td>
     </tr>
     <tr align="center"> 
         <td> <img src= "assets/gif/mobile/08_main.gif" height="450"> </td>
@@ -210,8 +210,8 @@
 ### 온라인 결제
 <table>    
     <tr align="center" > 
-        <td>바코드 잠금, 지문 인식 설정</td>
-        <td>최종 결제</td>
+        <td><strong>바코드 잠금, 지문 인식 설정</strong></td>
+        <td><strong>최종 결제</strong></td>
     </tr>
     <tr align="center">
         <td> <img src= "assets/gif/mobile/18_purchaseOnline.gif" height="450"> </td>
@@ -233,8 +233,8 @@
 </table>
 <table>
   <tr align="center">
-    <td>결제 준비</td>
-    <td>결제 후</td>
+    <td><strong>결제 준비</strong></td>
+    <td><strong>결제 후</strong></td>
   </tr>
   <tr>
     <td><img src="assets/gif/cam/web_01_samsungStore.gif"></td>
@@ -255,8 +255,8 @@
 ### 오프라인 결제
 <table>
   <tr align="center">
-    <td>오프라인 결제(할인순)</td>
-    <td>오프라인 결제(실적순)</td>
+    <td><strong>오프라인 결제(할인순)</strong></td>
+    <td><strong>오프라인 결제(실적순)</strong></td>
   </tr>
   <tr align="center">
     <td><img src="assets/gif/mobile/20_purchaseOffline.gif" height="450"></td>
@@ -279,8 +279,8 @@
 </table>
 <table>
   <tr align="center">
-    <td>오프라인 결제(할인순) </td>
-    <td>오프라인 결제(실적순)</td>
+    <td><strong>오프라인 결제(할인순)</strong></td>
+    <td><strong>오프라인 결제(실적순)</strong></td>
   </tr>
   <tr align="center">
     <td><img src="assets/gif/cam/offline_02.gif"></td>
@@ -304,8 +304,8 @@
 ### 카드
 <table>    
     <tr align="center" > 
-        <td>카드 세부 정보 조회</td>
-        <td>카드 삭제</td>
+        <td><strong>카드 세부 정보 조회</strong></td>
+        <td><strong>카드 삭제</strong></td>
     </tr>
     <tr align="center">
         <td> <img src= "assets/gif/mobile/10_cardA.gif" height="450"> </td>
@@ -323,8 +323,8 @@
             2. 실수 방지를 위한 추가 확인 진행
         </td>
     <tr align="center" > 
-        <td>카드 세부 정보 조회</td>
-        <td>카드 세부 정보 조회</td>
+        <td><strong>카드 세부 정보 조회</strong></td>
+        <td><strong>카드 세부 정보 조회</strong></td>
     </tr>
     <tr align="center">
         <td> <img src= "assets/gif/mobile/11_cardADetail.gif" height="450"> </td>
@@ -346,8 +346,8 @@
 ### 통계
 <table>    
     <tr align="center" > 
-        <td>이번 달 할인 내역, 이용내역</td>
-        <td>내 소비, 혜택</td>
+        <td><strong>이번 달 할인 내역, 이용내역</strong></td>
+        <td><strong>내 소비, 혜택</strong></td>
     </tr>
     <tr align="center">
         <td> <img src= "assets/gif/mobile/13_statistics.gif" height="450"> </td>
@@ -368,9 +368,9 @@
 ### 마이페이지
 <table>    
     <tr align="center" > 
-        <td>바코드 잠금, 지문 인식 설정</td>
-        <td>추천 타입 변경</td>
-        <td>회원 탈퇴</td>
+        <td><strong>바코드 잠금, 지문 인식 설정</strong></td>
+        <td><strong>추천 타입 변경</strong></td>
+        <td><strong>회원 탈퇴</strong></td>
     </tr>
     <tr align="center">
         <td> <img src= "assets/gif/mobile/15_mypage.gif" height="450"> </td>
