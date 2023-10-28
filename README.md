@@ -118,8 +118,8 @@
 
 ### 로그인, 회원 가입
 <table>    
-    <tr style="text-align: center; font-weight: bold" > 
-        <td> 초기 화면 </td>
+    <tr> 
+        <td style="text-align: center; font-weight: bold"> 초기 화면 </td>
         <td> 회원 가입</td>
     </tr>
     <tr style="text-align: center"> 
